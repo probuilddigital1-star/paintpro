@@ -71,10 +71,14 @@ const currentDate = new Date().toISOString().split('T')[0];
     <link rel="alternate" type="text/plain" href={`${siteUrl}/llms.txt`} title="LLM Site Summary" />
     <link rel="alternate" type="text/plain" href={`${siteUrl}/ai.txt`} title="AI Training Permissions" />
 
-    <!-- Google Fonts - DM Sans -->
+    <!-- Google Fonts - DM Sans (Optimized for Performance) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    </noscript>
 
     <!-- Schema.org markup for WebApplication -->
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -178,17 +182,14 @@ const currentDate = new Date().toISOString().split('T')[0];
           console.log(`[Web Vitals] ${metric.name}: ${metric.value.toFixed(2)}ms (ID: ${metric.id})`);
         }
 
-        // Send to analytics in production
-        // Replace with your analytics endpoint
-        if (import.meta.env.PROD && typeof navigator.sendBeacon === 'function') {
-          const body = JSON.stringify({
-            name: metric.name,
-            value: metric.value,
-            id: metric.id,
-            page: window.location.pathname,
-            timestamp: Date.now()
+        // Send to Google Analytics 4 in production
+        if (import.meta.env.PROD && typeof window.gtag === 'function') {
+          window.gtag('event', metric.name, {
+            value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+            event_category: 'Web Vitals',
+            event_label: metric.id,
+            non_interaction: true
           });
-          navigator.sendBeacon('/api/vitals', body);
         }
       }
 

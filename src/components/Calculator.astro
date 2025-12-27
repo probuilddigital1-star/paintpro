@@ -1,0 +1,964 @@
+---
+// Paint Coverage Calculator - Professional Grade
+// Mobile-first design with large touch targets (44px min)
+// Enhanced with pro painter recommendations: texture, primer, surface condition
+---
+
+<section id="calculator" class="max-w-2xl mx-auto px-4 py-8">
+  <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+    <h1 class="text-2xl md:text-3xl font-bold text-heading mb-2">Paint Calculator</h1>
+    <p class="text-body mb-6">Professional-grade estimates for your painting project</p>
+
+    <form id="paint-calculator-form" class="space-y-6">
+      <!-- Room Dimensions -->
+      <fieldset class="space-y-4">
+        <legend class="text-lg font-semibold text-heading flex items-center gap-2 mb-3">
+          <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+          </svg>
+          Room Dimensions
+        </legend>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div>
+            <label for="length" class="block text-sm font-medium text-body mb-1">
+              Room Length
+            </label>
+            <div class="relative">
+              <input
+                type="number"
+                id="length"
+                name="length"
+                min="1"
+                max="100"
+                step="0.5"
+                placeholder="12"
+                required
+                class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+              />
+              <span class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">ft</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="width" class="block text-sm font-medium text-body mb-1">
+              Room Width
+            </label>
+            <div class="relative">
+              <input
+                type="number"
+                id="width"
+                name="width"
+                min="1"
+                max="100"
+                step="0.5"
+                placeholder="10"
+                required
+                class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+              />
+              <span class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">ft</span>
+            </div>
+          </div>
+
+          <div class="col-span-1 sm:col-span-2 md:col-span-1">
+            <label for="height" class="block text-sm font-medium text-body mb-1">
+              Ceiling Height
+            </label>
+            <select
+              id="height"
+              name="height"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
+            >
+              <option value="8" selected>8 ft (Standard)</option>
+              <option value="9">9 ft</option>
+              <option value="10">10 ft</option>
+              <option value="12">12 ft</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Custom height input (hidden by default) -->
+        <div id="custom-height-container" class="hidden">
+          <label for="custom-height" class="block text-sm font-medium text-body mb-1">
+            Custom Height
+          </label>
+          <div class="relative max-w-[150px]">
+            <input
+              type="number"
+              id="custom-height"
+              name="custom-height"
+              min="6"
+              max="30"
+              step="0.5"
+              placeholder="10"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+            />
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">ft</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Room Type & Surface Condition -->
+      <fieldset class="space-y-4">
+        <legend class="text-lg font-semibold text-heading flex items-center gap-2 mb-3">
+          <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          Room & Surface Details
+        </legend>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="room-type" class="block text-sm font-medium text-body mb-1">
+              Room Type
+            </label>
+            <select
+              id="room-type"
+              name="room-type"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
+            >
+              <option value="bedroom" selected>Bedroom / Living Room</option>
+              <option value="kitchen">Kitchen</option>
+              <option value="bathroom">Bathroom</option>
+              <option value="hallway">Hallway / High Traffic</option>
+              <option value="basement">Basement</option>
+              <option value="garage">Garage</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="surface-condition" class="block text-sm font-medium text-body mb-1">
+              Wall Condition
+            </label>
+            <select
+              id="surface-condition"
+              name="surface-condition"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
+            >
+              <option value="good" selected>Previously Painted (Good)</option>
+              <option value="fair">Previously Painted (Fair/Patched)</option>
+              <option value="new-drywall">New Drywall</option>
+              <option value="stained">Stained / Water Damage</option>
+              <option value="glossy">Glossy / Semi-Gloss Surface</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="wall-texture" class="block text-sm font-medium text-body mb-1">
+              Wall Texture
+            </label>
+            <select
+              id="wall-texture"
+              name="wall-texture"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
+            >
+              <option value="smooth" selected>Smooth</option>
+              <option value="light">Light Texture (Orange Peel)</option>
+              <option value="medium">Medium Texture (Knockdown)</option>
+              <option value="heavy">Heavy Texture</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="ceiling-texture" class="block text-sm font-medium text-body mb-1">
+              Ceiling Texture
+            </label>
+            <select
+              id="ceiling-texture"
+              name="ceiling-texture"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
+            >
+              <option value="smooth" selected>Smooth</option>
+              <option value="light">Light Texture</option>
+              <option value="popcorn">Popcorn / Acoustic</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Openings to Deduct -->
+      <fieldset class="space-y-4">
+        <legend class="text-lg font-semibold text-heading flex items-center gap-2 mb-3">
+          <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h8m-8 5h8m-8 5h8M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" />
+          </svg>
+          Openings to Deduct
+        </legend>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div>
+            <label for="doors" class="block text-sm font-medium text-body mb-1">
+              Standard Doors
+            </label>
+            <input
+              type="number"
+              id="doors"
+              name="doors"
+              min="0"
+              max="20"
+              value="1"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-center"
+            />
+            <p class="text-xs text-gray-500 mt-1">(21 sq ft each)</p>
+          </div>
+
+          <div>
+            <label for="french-doors" class="block text-sm font-medium text-body mb-1">
+              French Doors
+            </label>
+            <input
+              type="number"
+              id="french-doors"
+              name="french-doors"
+              min="0"
+              max="10"
+              value="0"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-center"
+            />
+            <p class="text-xs text-gray-500 mt-1">(18 sq ft each)</p>
+          </div>
+
+          <div>
+            <label for="closet-doors" class="block text-sm font-medium text-body mb-1">
+              Closet/Bifold
+            </label>
+            <input
+              type="number"
+              id="closet-doors"
+              name="closet-doors"
+              min="0"
+              max="10"
+              value="0"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-center"
+            />
+            <p class="text-xs text-gray-500 mt-1">(25 sq ft each)</p>
+          </div>
+
+          <div>
+            <label for="windows" class="block text-sm font-medium text-body mb-1">
+              Standard Windows
+            </label>
+            <input
+              type="number"
+              id="windows"
+              name="windows"
+              min="0"
+              max="20"
+              value="2"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-center"
+            />
+            <p class="text-xs text-gray-500 mt-1">(15 sq ft each)</p>
+          </div>
+
+          <div>
+            <label for="large-windows" class="block text-sm font-medium text-body mb-1">
+              Picture/Sliding
+            </label>
+            <input
+              type="number"
+              id="large-windows"
+              name="large-windows"
+              min="0"
+              max="10"
+              value="0"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-center"
+            />
+            <p class="text-xs text-gray-500 mt-1">(50 sq ft each)</p>
+          </div>
+
+          <div>
+            <label for="small-windows" class="block text-sm font-medium text-body mb-1">
+              Small Windows
+            </label>
+            <input
+              type="number"
+              id="small-windows"
+              name="small-windows"
+              min="0"
+              max="10"
+              value="0"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-center"
+            />
+            <p class="text-xs text-gray-500 mt-1">(8 sq ft each)</p>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Paint Details -->
+      <fieldset class="space-y-4">
+        <legend class="text-lg font-semibold text-heading flex items-center gap-2 mb-3">
+          <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+          </svg>
+          Paint Details
+        </legend>
+
+        <div class="space-y-4">
+          <div>
+            <label for="surface-type" class="block text-sm font-medium text-body mb-1">
+              What are you painting?
+            </label>
+            <select
+              id="surface-type"
+              name="surface-type"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
+            >
+              <option value="walls" selected>Walls Only</option>
+              <option value="walls-ceiling">Walls + Ceiling</option>
+              <option value="ceiling">Ceiling Only</option>
+              <option value="trim">Trim Only</option>
+            </select>
+          </div>
+
+          <!-- Trim Height (shown when trim selected) -->
+          <div id="trim-height-container" class="hidden">
+            <label for="trim-height" class="block text-sm font-medium text-body mb-1">
+              Trim/Baseboard Height
+            </label>
+            <select
+              id="trim-height"
+              name="trim-height"
+              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
+            >
+              <option value="4">4 inches</option>
+              <option value="6" selected>6 inches (Standard)</option>
+              <option value="8">8 inches</option>
+              <option value="10">10 inches</option>
+              <option value="12">12 inches (Crown Molding)</option>
+            </select>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="coats" class="block text-sm font-medium text-body mb-1">
+                Number of Coats
+              </label>
+              <select
+                id="coats"
+                name="coats"
+                class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
+              >
+                <option value="1">1 Coat</option>
+                <option value="2" selected>2 Coats (Recommended)</option>
+                <option value="3">3 Coats</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="paint-quality" class="block text-sm font-medium text-body mb-1">
+                Paint Quality
+              </label>
+              <select
+                id="paint-quality"
+                name="paint-quality"
+                class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
+              >
+                <option value="budget">Budget (350 sq ft/gal)</option>
+                <option value="standard" selected>Standard (400 sq ft/gal)</option>
+                <option value="premium">Premium (450 sq ft/gal)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Primer Options -->
+      <fieldset class="space-y-4">
+        <legend class="text-lg font-semibold text-heading flex items-center gap-2 mb-3">
+          <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+          Primer (Recommended for Best Results)
+        </legend>
+
+        <div class="space-y-3">
+          <div class="flex items-center gap-3">
+            <input
+              type="checkbox"
+              id="needs-primer"
+              name="needs-primer"
+              class="w-5 h-5 text-primary border-border rounded focus:ring-primary cursor-pointer"
+            />
+            <label for="needs-primer" class="text-sm text-body cursor-pointer">
+              Include primer in estimate
+            </label>
+          </div>
+
+          <div id="primer-options" class="hidden pl-8 space-y-3">
+            <div>
+              <label for="primer-type" class="block text-sm font-medium text-body mb-1">
+                Primer Type
+              </label>
+              <select
+                id="primer-type"
+                name="primer-type"
+                class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
+              >
+                <option value="standard" selected>Standard Primer (300 sq ft/gal)</option>
+                <option value="high-hide">High-Hide/Stain Block (250 sq ft/gal)</option>
+                <option value="pva">PVA Drywall Primer (300 sq ft/gal)</option>
+              </select>
+            </div>
+            <div>
+              <label for="primer-coats" class="block text-sm font-medium text-body mb-1">
+                Primer Coats
+              </label>
+              <select
+                id="primer-coats"
+                name="primer-coats"
+                class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
+              >
+                <option value="1" selected>1 Coat (Standard)</option>
+                <option value="2">2 Coats (Stains/Dark Colors)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Primer recommendation alert -->
+          <div id="primer-recommendation" class="hidden p-3 bg-amber-50 border border-amber-200 rounded-lg">
+            <p class="text-sm text-amber-800 flex items-start gap-2">
+              <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <span id="primer-recommendation-text">Primer recommended for this surface condition.</span>
+            </p>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Options -->
+      <div class="flex items-center gap-3 py-2">
+        <input
+          type="checkbox"
+          id="waste-buffer"
+          name="waste-buffer"
+          checked
+          class="w-5 h-5 text-primary border-border rounded focus:ring-primary cursor-pointer"
+        />
+        <label for="waste-buffer" class="text-sm text-body cursor-pointer">
+          Include 15% waste buffer (recommended for touch-ups)
+        </label>
+      </div>
+
+      <!-- Calculate Button with INP-optimized visual feedback -->
+      <button
+        type="submit"
+        id="calculate-btn"
+        class="w-full bg-accent hover:bg-accent-dark text-white font-semibold py-4 px-6 rounded-lg transition-all shadow-md hover:shadow-lg focus:ring-4 focus:ring-accent/30 text-lg relative overflow-hidden group"
+      >
+        <span id="btn-text" class="flex items-center justify-center gap-2">
+          Calculate Paint Needed
+        </span>
+        <span id="btn-loading" class="hidden flex items-center justify-center gap-2" role="status" aria-live="polite">
+          <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Calculating...
+        </span>
+        <!-- Ripple effect for immediate visual feedback (INP optimization) -->
+        <span class="absolute inset-0 bg-white/20 scale-0 group-active:scale-100 transition-transform duration-150 rounded-lg"></span>
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- Results Section (hidden initially) -->
+<section id="results" class="max-w-2xl mx-auto px-4 pb-8 hidden">
+  <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 border-t-4 border-accent">
+    <h2 class="text-xl font-bold text-heading mb-4 flex items-center gap-2">
+      <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      Your Paint Estimate
+    </h2>
+
+    <!-- Main Result -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+      <div class="text-center py-6 bg-light-gray rounded-xl">
+        <p class="text-sm text-body mb-1">Paint Needed</p>
+        <p class="text-4xl md:text-5xl font-bold text-primary" id="gallons-result">0</p>
+        <p class="text-lg font-medium text-heading">gallons</p>
+      </div>
+      <div id="primer-result-box" class="text-center py-6 bg-amber-50 rounded-xl hidden">
+        <p class="text-sm text-body mb-1">Primer Needed</p>
+        <p class="text-4xl md:text-5xl font-bold text-amber-600" id="primer-gallons-result">0</p>
+        <p class="text-lg font-medium text-heading">gallons</p>
+      </div>
+    </div>
+
+    <!-- Result Summary -->
+    <p class="text-body text-center mb-6" id="result-summary">
+      This covers <span id="total-area">0</span> square feet with <span id="num-coats">2</span> coats.
+    </p>
+
+    <!-- Room-specific recommendation -->
+    <div id="room-recommendation" class="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-100 hidden">
+      <p class="text-sm text-blue-800 flex items-start gap-2">
+        <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span id="room-recommendation-text"></span>
+      </p>
+    </div>
+
+    <!-- Breakdown (collapsible) -->
+    <details class="border border-border rounded-lg">
+      <summary class="px-4 py-3 cursor-pointer font-medium text-heading hover:bg-gray-50 transition-colors">
+        View Detailed Breakdown
+      </summary>
+      <div class="px-4 py-4 border-t border-border space-y-2 text-sm">
+        <div class="flex justify-between">
+          <span class="text-body">Wall Area:</span>
+          <span class="font-medium" id="wall-area">0 sq ft</span>
+        </div>
+        <div class="flex justify-between" id="ceiling-row">
+          <span class="text-body">Ceiling Area:</span>
+          <span class="font-medium" id="ceiling-area">0 sq ft</span>
+        </div>
+        <div class="flex justify-between text-red-600">
+          <span>Deductions:</span>
+          <span class="font-medium" id="deductions">-0 sq ft</span>
+        </div>
+        <hr class="my-2" />
+        <div class="flex justify-between font-semibold">
+          <span class="text-heading">Net Paintable Area:</span>
+          <span id="net-area">0 sq ft</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-body">Base Coverage Rate:</span>
+          <span class="font-medium" id="coverage-rate">400 sq ft/gal</span>
+        </div>
+        <div class="flex justify-between" id="texture-adjustment-row">
+          <span class="text-body">Texture Adjustment:</span>
+          <span class="font-medium" id="texture-adjustment">None</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-body">Adjusted Coverage:</span>
+          <span class="font-medium" id="adjusted-coverage">400 sq ft/gal</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-body">With <span id="coats-display">2</span> Coats:</span>
+          <span class="font-medium" id="total-coverage">0 sq ft needed</span>
+        </div>
+        <div class="flex justify-between" id="waste-row">
+          <span class="text-body">+ 15% Waste Buffer:</span>
+          <span class="font-medium" id="waste-amount">0 gal</span>
+        </div>
+        <hr class="my-2" id="primer-breakdown-hr" />
+        <div class="flex justify-between" id="primer-breakdown-row">
+          <span class="text-body">Primer (<span id="primer-coats-display">1</span> coat):</span>
+          <span class="font-medium" id="primer-breakdown">0 gal</span>
+        </div>
+      </div>
+    </details>
+
+    <!-- Pro Tips -->
+    <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+      <h3 class="font-semibold text-primary mb-2 flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        Pro Tips
+      </h3>
+      <ul class="text-sm text-body space-y-1" id="tips-list">
+        <li>• Buy slightly more than calculated—extra paint is useful for touch-ups.</li>
+      </ul>
+    </div>
+
+    <!-- Reset Button -->
+    <button
+      type="button"
+      id="reset-btn"
+      class="w-full mt-6 bg-gray-100 hover:bg-gray-200 text-heading font-medium py-3 px-6 rounded-lg transition-colors"
+    >
+      Start Over
+    </button>
+  </div>
+</section>
+
+<script>
+  // Professional Paint Calculator Logic
+  const form = document.getElementById('paint-calculator-form') as HTMLFormElement;
+  const resultsSection = document.getElementById('results') as HTMLElement;
+  const heightSelect = document.getElementById('height') as HTMLSelectElement;
+  const customHeightContainer = document.getElementById('custom-height-container') as HTMLElement;
+  const resetBtn = document.getElementById('reset-btn') as HTMLButtonElement;
+  const calculateBtn = document.getElementById('calculate-btn') as HTMLButtonElement;
+  const btnText = document.getElementById('btn-text') as HTMLElement;
+  const btnLoading = document.getElementById('btn-loading') as HTMLElement;
+  const needsPrimerCheckbox = document.getElementById('needs-primer') as HTMLInputElement;
+  const primerOptions = document.getElementById('primer-options') as HTMLElement;
+  const primerRecommendation = document.getElementById('primer-recommendation') as HTMLElement;
+  const surfaceConditionSelect = document.getElementById('surface-condition') as HTMLSelectElement;
+  const surfaceTypeSelect = document.getElementById('surface-type') as HTMLSelectElement;
+  const trimHeightContainer = document.getElementById('trim-height-container') as HTMLElement;
+
+  // Base coverage rates (sq ft per gallon) - smooth surfaces
+  const baseCoverageRates: Record<string, number> = {
+    budget: 350,
+    standard: 400,
+    premium: 450
+  };
+
+  // Texture multipliers (reduce coverage)
+  const textureMultipliers: Record<string, number> = {
+    smooth: 1.0,
+    light: 0.85,    // 15% reduction
+    medium: 0.75,   // 25% reduction
+    heavy: 0.65     // 35% reduction
+  };
+
+  // Ceiling texture multipliers
+  const ceilingTextureMultipliers: Record<string, number> = {
+    smooth: 0.9,    // Ceilings generally absorb more
+    light: 0.75,
+    popcorn: 0.50   // Popcorn absorbs significantly more
+  };
+
+  // Surface condition adjustments
+  const surfaceConditionMultipliers: Record<string, number> = {
+    'good': 1.0,
+    'fair': 0.9,
+    'new-drywall': 0.7,  // New drywall absorbs 30% more
+    'stained': 0.85,
+    'glossy': 0.9
+  };
+
+  // Primer coverage rates
+  const primerCoverageRates: Record<string, number> = {
+    'standard': 300,
+    'high-hide': 250,
+    'pva': 300
+  };
+
+  // Room type recommendations
+  const roomRecommendations: Record<string, string> = {
+    'bedroom': 'Flat or eggshell finish recommended for bedrooms. Low-VOC paint is ideal for better air quality.',
+    'kitchen': 'Semi-gloss or satin finish recommended for kitchens. These finishes are easier to clean and resist moisture.',
+    'bathroom': 'Use moisture-resistant, mildew-resistant paint. Semi-gloss finish recommended for humidity protection.',
+    'hallway': 'Satin or semi-gloss finish recommended for high-traffic areas. Consider scuff-resistant paint.',
+    'basement': 'Use moisture-blocking primer first. Consider waterproofing paint for below-grade walls. Add 30% extra for concrete block.',
+    'garage': 'Epoxy-based or garage floor paint recommended for durability. Standard latex works for walls.'
+  };
+
+  // Deduction values (sq ft)
+  const deductionValues = {
+    doors: 21,
+    frenchDoors: 18,
+    closetDoors: 25,
+    windows: 15,
+    largeWindows: 50,
+    smallWindows: 8
+  };
+
+  // INP-optimized button feedback functions
+  function showLoadingState() {
+    btnText.classList.add('hidden');
+    btnLoading.classList.remove('hidden');
+    calculateBtn.disabled = true;
+    calculateBtn.classList.add('cursor-wait');
+  }
+
+  function hideLoadingState() {
+    btnText.classList.remove('hidden');
+    btnLoading.classList.add('hidden');
+    calculateBtn.disabled = false;
+    calculateBtn.classList.remove('cursor-wait');
+  }
+
+  // Show/hide custom height input
+  heightSelect.addEventListener('change', () => {
+    if (heightSelect.value === 'custom') {
+      customHeightContainer.classList.remove('hidden');
+      (document.getElementById('custom-height') as HTMLInputElement).required = true;
+    } else {
+      customHeightContainer.classList.add('hidden');
+      (document.getElementById('custom-height') as HTMLInputElement).required = false;
+    }
+  });
+
+  // Show/hide trim height when trim selected
+  surfaceTypeSelect.addEventListener('change', () => {
+    if (surfaceTypeSelect.value === 'trim') {
+      trimHeightContainer.classList.remove('hidden');
+    } else {
+      trimHeightContainer.classList.add('hidden');
+    }
+  });
+
+  // Show/hide primer options
+  needsPrimerCheckbox.addEventListener('change', () => {
+    if (needsPrimerCheckbox.checked) {
+      primerOptions.classList.remove('hidden');
+    } else {
+      primerOptions.classList.add('hidden');
+    }
+  });
+
+  // Show primer recommendation based on surface condition
+  surfaceConditionSelect.addEventListener('change', () => {
+    const condition = surfaceConditionSelect.value;
+    const recommendationText = document.getElementById('primer-recommendation-text') as HTMLElement;
+
+    if (condition === 'new-drywall') {
+      primerRecommendation.classList.remove('hidden');
+      recommendationText.textContent = 'Primer strongly recommended for new drywall. It seals the surface and prevents uneven absorption.';
+    } else if (condition === 'stained') {
+      primerRecommendation.classList.remove('hidden');
+      recommendationText.textContent = 'Stain-blocking primer required. Use shellac-based primer for water stains or smoke damage.';
+    } else if (condition === 'glossy') {
+      primerRecommendation.classList.remove('hidden');
+      recommendationText.textContent = 'Bonding primer recommended for glossy surfaces to ensure proper paint adhesion.';
+    } else {
+      primerRecommendation.classList.add('hidden');
+    }
+  });
+
+  // Calculate paint needed
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    showLoadingState();
+
+    // Get input values
+    const length = parseFloat((document.getElementById('length') as HTMLInputElement).value);
+    const width = parseFloat((document.getElementById('width') as HTMLInputElement).value);
+
+    let height: number;
+    if (heightSelect.value === 'custom') {
+      height = parseFloat((document.getElementById('custom-height') as HTMLInputElement).value);
+    } else {
+      height = parseFloat(heightSelect.value);
+    }
+
+    // Get all opening counts
+    const numDoors = parseInt((document.getElementById('doors') as HTMLInputElement).value) || 0;
+    const numFrenchDoors = parseInt((document.getElementById('french-doors') as HTMLInputElement).value) || 0;
+    const numClosetDoors = parseInt((document.getElementById('closet-doors') as HTMLInputElement).value) || 0;
+    const numWindows = parseInt((document.getElementById('windows') as HTMLInputElement).value) || 0;
+    const numLargeWindows = parseInt((document.getElementById('large-windows') as HTMLInputElement).value) || 0;
+    const numSmallWindows = parseInt((document.getElementById('small-windows') as HTMLInputElement).value) || 0;
+
+    const surfaceType = surfaceTypeSelect.value;
+    const numCoats = parseInt((document.getElementById('coats') as HTMLSelectElement).value);
+    const paintQuality = (document.getElementById('paint-quality') as HTMLSelectElement).value;
+    const includeWaste = (document.getElementById('waste-buffer') as HTMLInputElement).checked;
+    const wallTexture = (document.getElementById('wall-texture') as HTMLSelectElement).value;
+    const ceilingTexture = (document.getElementById('ceiling-texture') as HTMLSelectElement).value;
+    const surfaceCondition = surfaceConditionSelect.value;
+    const roomType = (document.getElementById('room-type') as HTMLSelectElement).value;
+    const needsPrimer = needsPrimerCheckbox.checked;
+
+    // Calculate areas
+    const wallArea = 2 * (length + width) * height;
+    const ceilingArea = length * width;
+
+    // Calculate deductions
+    const totalDeduction =
+      (numDoors * deductionValues.doors) +
+      (numFrenchDoors * deductionValues.frenchDoors) +
+      (numClosetDoors * deductionValues.closetDoors) +
+      (numWindows * deductionValues.windows) +
+      (numLargeWindows * deductionValues.largeWindows) +
+      (numSmallWindows * deductionValues.smallWindows);
+
+    // Calculate paintable area based on surface type
+    let paintableArea = 0;
+    let ceilingPaintableArea = 0;
+    let includesCeiling = false;
+
+    if (surfaceType === 'walls' || surfaceType === 'walls-ceiling') {
+      paintableArea += wallArea - totalDeduction;
+    }
+    if (surfaceType === 'ceiling' || surfaceType === 'walls-ceiling') {
+      ceilingPaintableArea = ceilingArea;
+      includesCeiling = true;
+    }
+    if (surfaceType === 'trim') {
+      // Improved trim calculation using actual trim height
+      const trimHeightInches = parseInt((document.getElementById('trim-height') as HTMLSelectElement).value);
+      const trimHeightFeet = trimHeightInches / 12;
+      const perimeter = 2 * (length + width);
+      paintableArea = perimeter * trimHeightFeet;
+    }
+
+    // Ensure paintable area is not negative
+    paintableArea = Math.max(0, paintableArea);
+
+    // Get base coverage rate
+    const baseCoverage = baseCoverageRates[paintQuality];
+
+    // Apply texture multiplier for walls
+    const wallTextureMultiplier = textureMultipliers[wallTexture];
+    const adjustedWallCoverage = baseCoverage * wallTextureMultiplier * surfaceConditionMultipliers[surfaceCondition];
+
+    // Apply texture multiplier for ceiling
+    const ceilingTextureMultiplier = ceilingTextureMultipliers[ceilingTexture];
+    const adjustedCeilingCoverage = baseCoverage * ceilingTextureMultiplier * surfaceConditionMultipliers[surfaceCondition];
+
+    // Calculate gallons needed for walls
+    const wallCoverageNeeded = paintableArea * numCoats;
+    const wallGallons = wallCoverageNeeded / adjustedWallCoverage;
+
+    // Calculate gallons needed for ceiling
+    const ceilingCoverageNeeded = ceilingPaintableArea * numCoats;
+    const ceilingGallons = ceilingCoverageNeeded / adjustedCeilingCoverage;
+
+    // Total base gallons
+    const baseGallons = wallGallons + ceilingGallons;
+
+    // Apply waste buffer (15%)
+    const wasteMultiplier = includeWaste ? 0.15 : 0;
+    const wasteAmount = baseGallons * wasteMultiplier;
+    const gallonsNeeded = Math.ceil(baseGallons + wasteAmount);
+
+    // Calculate primer if needed
+    let primerGallons = 0;
+    if (needsPrimer) {
+      const primerType = (document.getElementById('primer-type') as HTMLSelectElement).value;
+      const primerCoats = parseInt((document.getElementById('primer-coats') as HTMLSelectElement).value);
+      const primerCoverage = primerCoverageRates[primerType];
+      const totalPrimerArea = (paintableArea + ceilingPaintableArea) * primerCoats;
+      primerGallons = Math.ceil((totalPrimerArea / primerCoverage) * (1 + wasteMultiplier));
+    }
+
+    // Update results display
+    (document.getElementById('gallons-result') as HTMLElement).textContent = gallonsNeeded.toString();
+    (document.getElementById('total-area') as HTMLElement).textContent = Math.round(paintableArea + ceilingPaintableArea).toString();
+    (document.getElementById('num-coats') as HTMLElement).textContent = numCoats.toString();
+
+    // Update primer display
+    const primerResultBox = document.getElementById('primer-result-box') as HTMLElement;
+    const primerBreakdownRow = document.getElementById('primer-breakdown-row') as HTMLElement;
+    const primerBreakdownHr = document.getElementById('primer-breakdown-hr') as HTMLElement;
+
+    if (needsPrimer && primerGallons > 0) {
+      primerResultBox.classList.remove('hidden');
+      primerBreakdownRow.classList.remove('hidden');
+      primerBreakdownHr.classList.remove('hidden');
+      (document.getElementById('primer-gallons-result') as HTMLElement).textContent = primerGallons.toString();
+      (document.getElementById('primer-coats-display') as HTMLElement).textContent = (document.getElementById('primer-coats') as HTMLSelectElement).value;
+      (document.getElementById('primer-breakdown') as HTMLElement).textContent = `${primerGallons} gal`;
+    } else {
+      primerResultBox.classList.add('hidden');
+      primerBreakdownRow.classList.add('hidden');
+      primerBreakdownHr.classList.add('hidden');
+    }
+
+    // Update breakdown
+    (document.getElementById('wall-area') as HTMLElement).textContent = `${Math.round(wallArea)} sq ft`;
+    (document.getElementById('ceiling-area') as HTMLElement).textContent = `${Math.round(ceilingArea)} sq ft`;
+    (document.getElementById('deductions') as HTMLElement).textContent = `-${Math.round(totalDeduction)} sq ft`;
+    (document.getElementById('net-area') as HTMLElement).textContent = `${Math.round(paintableArea + ceilingPaintableArea)} sq ft`;
+    (document.getElementById('coverage-rate') as HTMLElement).textContent = `${baseCoverage} sq ft/gal`;
+
+    // Texture adjustment display
+    const textureAdjustmentRow = document.getElementById('texture-adjustment-row') as HTMLElement;
+    if (wallTextureMultiplier < 1 || surfaceConditionMultipliers[surfaceCondition] < 1) {
+      textureAdjustmentRow.classList.remove('hidden');
+      const totalReduction = Math.round((1 - (wallTextureMultiplier * surfaceConditionMultipliers[surfaceCondition])) * 100);
+      (document.getElementById('texture-adjustment') as HTMLElement).textContent = `-${totalReduction}% (texture/surface)`;
+    } else {
+      textureAdjustmentRow.classList.add('hidden');
+    }
+
+    (document.getElementById('adjusted-coverage') as HTMLElement).textContent = `${Math.round(adjustedWallCoverage)} sq ft/gal`;
+    (document.getElementById('coats-display') as HTMLElement).textContent = numCoats.toString();
+    (document.getElementById('total-coverage') as HTMLElement).textContent = `${Math.round(wallCoverageNeeded + ceilingCoverageNeeded)} sq ft needed`;
+
+    // Show/hide ceiling row based on surface type
+    const ceilingRow = document.getElementById('ceiling-row') as HTMLElement;
+    if (includesCeiling) {
+      ceilingRow.classList.remove('hidden');
+    } else {
+      ceilingRow.classList.add('hidden');
+    }
+
+    // Show/hide waste row and update label
+    const wasteRow = document.getElementById('waste-row') as HTMLElement;
+    if (includeWaste) {
+      wasteRow.classList.remove('hidden');
+      (document.getElementById('waste-amount') as HTMLElement).textContent = `+${wasteAmount.toFixed(2)} gal`;
+    } else {
+      wasteRow.classList.add('hidden');
+    }
+
+    // Show room-specific recommendation
+    const roomRecommendationDiv = document.getElementById('room-recommendation') as HTMLElement;
+    const roomRecommendationText = document.getElementById('room-recommendation-text') as HTMLElement;
+    if (roomRecommendations[roomType]) {
+      roomRecommendationDiv.classList.remove('hidden');
+      roomRecommendationText.textContent = roomRecommendations[roomType];
+    } else {
+      roomRecommendationDiv.classList.add('hidden');
+    }
+
+    // Generate contextual tips
+    const tipsList = document.getElementById('tips-list') as HTMLElement;
+    const tips: string[] = [];
+
+    tips.push('• Buy all paint at once from the same batch number for consistent color.');
+
+    if (numCoats < 2) {
+      tips.push('• Consider 2 coats for better coverage and durability.');
+    }
+
+    if (wallTexture !== 'smooth') {
+      tips.push('• Textured walls absorb more paint. We\'ve adjusted your estimate accordingly.');
+    }
+
+    if (surfaceCondition === 'new-drywall' && !needsPrimer) {
+      tips.push('• New drywall strongly benefits from primer—consider adding it to your order.');
+    }
+
+    if (roomType === 'bathroom' || roomType === 'kitchen') {
+      tips.push('• Use moisture-resistant paint and ensure proper ventilation while painting.');
+    }
+
+    if (roomType === 'basement') {
+      tips.push('• Check for moisture issues before painting. Use waterproofing primer on concrete.');
+    }
+
+    if (gallonsNeeded >= 5) {
+      tips.push('• For 5+ gallons, consider buying a 5-gallon bucket for better value and color consistency.');
+    }
+
+    if (surfaceType === 'walls-ceiling') {
+      tips.push('• Paint the ceiling first, then walls to avoid drips on finished surfaces.');
+    }
+
+    if (needsPrimer) {
+      tips.push('• Allow primer to fully dry (typically 1-2 hours) before applying paint.');
+    }
+
+    tipsList.innerHTML = tips.map(tip => `<li>${tip}</li>`).join('');
+
+    // Show results section
+    resultsSection.classList.remove('hidden');
+
+    // Smooth scroll to results
+    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Hide loading state
+    requestAnimationFrame(() => {
+      hideLoadingState();
+    });
+  });
+
+  // Reset form
+  resetBtn.addEventListener('click', () => {
+    form.reset();
+    resultsSection.classList.add('hidden');
+    customHeightContainer.classList.add('hidden');
+    trimHeightContainer.classList.add('hidden');
+    primerOptions.classList.add('hidden');
+    primerRecommendation.classList.add('hidden');
+    (document.getElementById('custom-height') as HTMLInputElement).required = false;
+
+    // Scroll back to calculator
+    document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>

@@ -1,0 +1,281 @@
+---
+// SEO Content Sections - Help with search rankings and provide value
+// Includes Ohio-specific "Information Gain" content for 2026 SEO requirements
+
+const currentDate = new Date().toISOString().split('T')[0];
+
+// HowTo Schema for paint calculation (high-impact SEO for featured snippets)
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Calculate Paint Coverage",
+  "description": "Step-by-step guide to calculate exactly how much paint you need for your painting project, including wall area calculation, deductions for doors and windows, and coating requirements.",
+  "image": "https://paintprocalculator.com/og-image.png",
+  "totalTime": "PT5M",
+  "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "value": "0"
+  },
+  "supply": [
+    { "@type": "HowToSupply", "name": "Tape measure" },
+    { "@type": "HowToSupply", "name": "Calculator or paint calculator app" },
+    { "@type": "HowToSupply", "name": "Notepad for recording measurements" }
+  ],
+  "tool": [
+    { "@type": "HowToTool", "name": "PaintPro Calculator" }
+  ],
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Measure Room Dimensions",
+      "text": "Measure your room's length, width, and ceiling height in feet. Record each measurement.",
+      "position": 1
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Calculate Wall Area",
+      "text": "Use the formula: Wall Area = 2 × (Length + Width) × Height. For a 12' × 14' room with 8' ceilings: 2 × (12 + 14) × 8 = 416 sq ft.",
+      "position": 2
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Deduct Openings",
+      "text": "Subtract door areas (21 sq ft each) and window areas (15 sq ft standard, 50 sq ft for large/sliding). For 1 door and 2 windows: 21 + 30 = 51 sq ft deduction.",
+      "position": 3
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Calculate Net Paintable Area",
+      "text": "Subtract deductions from wall area: 416 - 51 = 365 sq ft net paintable area.",
+      "position": 4
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Determine Gallons Needed",
+      "text": "Divide net area by paint coverage rate (400 sq ft/gal standard). Multiply by number of coats (2 recommended). 365 ÷ 400 × 2 = 1.825 gallons. Round up to 2 gallons.",
+      "position": 5
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Add Waste Buffer",
+      "text": "Add 10% for touch-ups and coverage variation. Final estimate: 2 gallons for this example room.",
+      "position": 6
+    }
+  ],
+  "author": {
+    "@type": "Organization",
+    "name": "ProBuild Digital LLC"
+  },
+  "datePublished": "2025-12-26",
+  "dateModified": currentDate
+};
+---
+
+<section id="how-to-calculate" class="max-w-4xl mx-auto px-4 py-12 md:py-16">
+  <div class="space-y-12">
+    <!-- How to Calculate -->
+    <article class="prose prose-slate max-w-none">
+      <h2 class="text-2xl font-bold text-heading mb-4 flex items-center gap-2">
+        <span class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm">1</span>
+        How to Calculate Paint Coverage
+      </h2>
+      <div class="bg-white rounded-xl p-6 shadow-sm border border-border">
+        <p class="text-body mb-4">
+          Calculating paint coverage is straightforward once you know the formula. First, measure your room's dimensions—length, width, and ceiling height in feet. Then calculate the wall area using this formula:
+        </p>
+        <div class="bg-light-gray rounded-lg p-4 font-mono text-sm mb-4">
+          Wall Area = 2 × (Length + Width) × Height
+        </div>
+        <p class="text-body mb-4">
+          For example, a 12' × 14' room with 8' ceilings has:
+        </p>
+        <ul class="list-disc list-inside text-body space-y-1 mb-4">
+          <li>Wall area: 2 × (12 + 14) × 8 = <strong>416 sq ft</strong></li>
+          <li>After deducting a door (-21 sq ft) and 2 windows (-30 sq ft)</li>
+          <li>Net paintable area: <strong>365 sq ft</strong></li>
+        </ul>
+        <p class="text-body mb-4">
+          Standard paint covers about 400 square feet per gallon. With two coats, you'd need approximately <strong>2 gallons</strong> for this room.
+        </p>
+        <p class="text-body text-sm">
+          Ready to buy supplies? Check out our <a href="#affiliate-section" class="text-primary hover:underline font-medium">recommended paint supplies</a> or <a href="#lead-section" class="text-primary hover:underline font-medium">get free quotes from local painters</a>.
+        </p>
+      </div>
+    </article>
+
+    <!-- Tips for Accuracy -->
+    <article id="tips">
+      <h2 class="text-2xl font-bold text-heading mb-4 flex items-center gap-2">
+        <span class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm">2</span>
+        Tips for Accurate Paint Estimates
+      </h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-white rounded-xl p-5 shadow-sm border border-border">
+          <h3 class="font-semibold text-heading mb-2">Measure Twice</h3>
+          <p class="text-body text-sm">
+            Double-check your measurements before purchasing. It's easier to buy extra than to make multiple trips to the store.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-sm border border-border">
+          <h3 class="font-semibold text-heading mb-2">Account for Texture</h3>
+          <p class="text-body text-sm">
+            Textured walls absorb more paint. If your walls have knockdown, orange peel, or other textures, add 15-20% to your estimate.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-sm border border-border">
+          <h3 class="font-semibold text-heading mb-2">Consider Color Changes</h3>
+          <p class="text-body text-sm">
+            Going from dark to light? You may need 3 coats or a tinted primer. Light to dark usually needs standard 2 coats.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-sm border border-border">
+          <h3 class="font-semibold text-heading mb-2">Don't Forget Trim</h3>
+          <p class="text-body text-sm">
+            Baseboards, door frames, and crown molding add up. Budget about 1 quart per 100 linear feet of trim.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- When to Use Primer -->
+    <article id="primer">
+      <h2 class="text-2xl font-bold text-heading mb-4 flex items-center gap-2">
+        <span class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm">3</span>
+        When to Use Primer
+      </h2>
+      <div class="bg-white rounded-xl p-6 shadow-sm border border-border">
+        <p class="text-body mb-4">
+          Primer isn't always necessary, but it's essential in these situations:
+        </p>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <div class="flex items-start gap-3 p-3 bg-light-gray rounded-lg">
+            <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-sm text-body"><strong>New drywall</strong> - absorbs paint unevenly without primer</span>
+          </div>
+          <div class="flex items-start gap-3 p-3 bg-light-gray rounded-lg">
+            <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-sm text-body"><strong>Stained surfaces</strong> - primer blocks water stains and smoke damage</span>
+          </div>
+          <div class="flex items-start gap-3 p-3 bg-light-gray rounded-lg">
+            <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-sm text-body"><strong>Dark to light colors</strong> - helps achieve true color in fewer coats</span>
+          </div>
+          <div class="flex items-start gap-3 p-3 bg-light-gray rounded-lg">
+            <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-sm text-body"><strong>Glossy surfaces</strong> - primer helps paint adhere better</span>
+          </div>
+          <div class="flex items-start gap-3 p-3 bg-light-gray rounded-lg">
+            <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-sm text-body"><strong>High-humidity rooms</strong> - mold-resistant primer protects bathrooms</span>
+          </div>
+          <div class="flex items-start gap-3 p-3 bg-light-gray rounded-lg">
+            <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-sm text-body"><strong>Previously unpainted wood</strong> - seals and prevents tannin bleed</span>
+          </div>
+        </div>
+        <p class="text-body mt-4 text-sm">
+          <strong>Pro tip:</strong> Many premium paints now include primer. Check the label—you might be able to skip this step. Not sure which to buy? Browse our <a href="#affiliate-section" class="text-primary hover:underline">recommended paint products</a>.
+        </p>
+      </div>
+    </article>
+
+    <!-- PaintPro Insights: Ohio & Midwest Regional Tips (Information Gain Section) -->
+    <article id="regional-insights" class="relative">
+      <div class="absolute -top-2 left-4 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">
+        PaintPro Insights
+      </div>
+      <h2 class="text-2xl font-bold text-heading mb-4 flex items-center gap-2 pt-4">
+        <span class="w-8 h-8 bg-accent/10 rounded-full flex items-center justify-center text-accent font-bold text-sm">4</span>
+        Ohio & Midwest Climate Painting Tips
+      </h2>
+      <div class="bg-gradient-to-br from-accent/5 to-primary/5 rounded-xl p-6 shadow-sm border border-accent/20">
+        <p class="text-body mb-4">
+          <strong>Based on our regional data:</strong> Painting conditions in Ohio and the Midwest require special considerations due to humidity fluctuations and seasonal temperature swings. Here's what the generic paint calculators won't tell you:
+        </p>
+
+        <div class="space-y-4">
+          <!-- Humidity Impact -->
+          <div class="bg-white rounded-lg p-4 border border-border">
+            <h3 class="font-semibold text-heading mb-2 flex items-center gap-2">
+              <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+              </svg>
+              Summer Humidity Factor
+            </h3>
+            <p class="text-body text-sm mb-2">
+              Ohio summers average <strong>70-80% relative humidity</strong>. During July and August, interior paint requires <strong>25-40% longer drying time</strong> between coats compared to manufacturer specifications.
+            </p>
+            <div class="bg-light-gray rounded p-3 text-sm">
+              <strong>PaintPro Recommendation:</strong> Wait 4-6 hours between coats (vs. standard 2-4 hours) when humidity exceeds 65%. Use a dehumidifier to maintain 40-50% indoor humidity for optimal results.
+            </div>
+          </div>
+
+          <!-- Temperature Swings -->
+          <div class="bg-white rounded-lg p-4 border border-border">
+            <h3 class="font-semibold text-heading mb-2 flex items-center gap-2">
+              <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707" />
+              </svg>
+              Spring/Fall Temperature Swings
+            </h3>
+            <p class="text-body text-sm mb-2">
+              Midwest spring and fall can see <strong>30°F+ temperature swings</strong> within 24 hours. Paint applied when temperatures drop below 50°F overnight may not cure properly, leading to adhesion failure.
+            </p>
+            <div class="bg-light-gray rounded p-3 text-sm">
+              <strong>PaintPro Recommendation:</strong> Check the 48-hour forecast before painting. Ensure temperatures stay above 50°F (10°C) for at least 24 hours after application. Best months: May-June and September.
+            </div>
+          </div>
+
+          <!-- Basement Considerations -->
+          <div class="bg-white rounded-lg p-4 border border-border">
+            <h3 class="font-semibold text-heading mb-2 flex items-center gap-2">
+              <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+              Ohio Basement Paint Calculations
+            </h3>
+            <p class="text-body text-sm mb-2">
+              Ohio homes frequently have <strong>high water tables</strong> causing basement moisture issues. Standard paint calculations don't account for the <strong>30% increased paint consumption</strong> on porous concrete block walls.
+            </p>
+            <div class="bg-light-gray rounded p-3 text-sm">
+              <strong>PaintPro Recommendation:</strong> For basement walls, add 30% to your calculated amount and always use moisture-blocking primer. Consider waterproofing paint for areas below grade.
+            </div>
+          </div>
+
+          <!-- Local Paint Store Insight -->
+          <div class="bg-white rounded-lg p-4 border border-border">
+            <h3 class="font-semibold text-heading mb-2 flex items-center gap-2">
+              <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+              </svg>
+              Regional Product Availability
+            </h3>
+            <p class="text-body text-sm">
+              Northeast Ohio Sherwin-Williams stores report that <strong>low-VOC interior latex</strong> performs best for the region's humidity. Ask for products specifically formulated for high-humidity environments—they typically cost 10-15% more but provide better coverage and durability.
+            </p>
+          </div>
+        </div>
+
+        <p class="text-body mt-6 text-sm text-center">
+          Need professional help? <a href="#lead-section" class="text-accent hover:underline font-semibold">Get free quotes from local Ohio painters</a> who understand these regional factors.
+        </p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- HowTo Schema for Featured Snippets -->
+<script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />

@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Calculator from '../components/Calculator.astro';
+import AffiliateCards from '../components/AffiliateCards.astro';
+import LeadGenForm from '../components/LeadGenForm.astro';
+import SEOContent from '../components/SEOContent.astro';
+import FAQ from '../components/FAQ.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Free Paint Calculator - How Much Paint Do I Need? | PaintPro Calculator"
+  description="Free paint calculator to estimate how many gallons you need. Calculate paint coverage for walls, ceilings & trim. Works for any room size with door/window deductions."
+>
+  <Header />
+
+  <main>
+    <Calculator />
+    <AffiliateCards />
+    <LeadGenForm />
+    <SEOContent />
+    <FAQ />
+  </main>
+
+  <Footer />
+</Layout>

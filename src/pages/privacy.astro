@@ -1,0 +1,197 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const currentDate = new Date().toISOString().split('T')[0];
+const lastUpdated = "December 2024";
+const siteUrl = "https://paintprocalculator.com";
+
+// Breadcrumb Schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": siteUrl
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Privacy Policy",
+      "item": `${siteUrl}/privacy`
+    }
+  ]
+};
+
+// Article Schema
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Privacy Policy - PaintPro Calculator",
+  "description": "Privacy policy for PaintPro Calculator. Learn how we collect, use, and protect your information when using our free paint coverage calculator.",
+  "url": `${siteUrl}/privacy`,
+  "datePublished": "2025-12-26",
+  "dateModified": currentDate,
+  "author": {
+    "@type": "Organization",
+    "name": "ProBuild Digital LLC",
+    "url": "https://probuilddigital.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ProBuild Digital LLC"
+  },
+  "inLanguage": "en-US"
+};
+---
+
+<Layout
+  title="Privacy Policy - Paint Calculator | PaintPro Calculator"
+  description="Privacy policy for PaintPro Calculator. Learn how we collect, use, and protect your information when using our free paint coverage calculator."
+>
+  <Header />
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <!-- Article Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
+  <main class="max-w-3xl mx-auto px-4 py-12">
+    <article class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-heading mb-2">Privacy Policy</h1>
+      <p class="text-sm text-gray-500 mb-8">Last updated: {lastUpdated}</p>
+
+      <div class="prose prose-slate max-w-none space-y-6">
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-6 mb-3">Introduction</h2>
+          <p class="text-body">
+            ProBuild Digital LLC ("we," "us," or "our") operates PaintPro Calculator (paintprocalculator.com). This Privacy Policy explains how we collect, use, and protect information when you use our paint calculator tool.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-6 mb-3">Information We Collect</h2>
+
+          <h3 class="text-lg font-semibold text-heading mt-4 mb-2">Calculator Usage</h3>
+          <p class="text-body mb-3">
+            The paint calculator runs entirely in your browser. Room dimensions and other inputs you enter are not sent to our servers or stored anywhere.
+          </p>
+
+          <h3 class="text-lg font-semibold text-heading mt-4 mb-2">Lead Generation Form</h3>
+          <p class="text-body mb-3">
+            If you choose to request quotes from local painters, we collect:
+          </p>
+          <ul class="list-disc list-inside text-body space-y-1 mb-3">
+            <li>Zip code</li>
+            <li>Project type</li>
+            <li>Email address</li>
+          </ul>
+          <p class="text-body">
+            This information is shared with our lead generation partners to connect you with local painting professionals.
+          </p>
+
+          <h3 class="text-lg font-semibold text-heading mt-4 mb-2">Analytics</h3>
+          <p class="text-body">
+            We use privacy-friendly analytics to understand how visitors use our site. This may include general information like page views, browser type, and approximate location (country/region level).
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-6 mb-3">How We Use Information</h2>
+          <ul class="list-disc list-inside text-body space-y-2">
+            <li>To provide the paint calculator service</li>
+            <li>To connect you with painting professionals (if you request quotes)</li>
+            <li>To improve our website and user experience</li>
+            <li>To respond to your inquiries</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-6 mb-3">Affiliate Links</h2>
+          <p class="text-body">
+            Our site includes affiliate links to Amazon and other retailers. When you click these links, those sites may use cookies to track that the referral came from our site. Please review their respective privacy policies.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-6 mb-3">Cookies</h2>
+          <p class="text-body">
+            We use minimal cookies necessary for the site to function. Third-party services (like analytics or affiliate programs) may set their own cookies. You can manage cookie preferences in your browser settings.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-6 mb-3">Third-Party Services</h2>
+          <p class="text-body">
+            We may use the following third-party services:
+          </p>
+          <ul class="list-disc list-inside text-body space-y-1 mt-2">
+            <li>Cloudflare (hosting and security)</li>
+            <li>Amazon Associates (affiliate program)</li>
+            <li>Lead generation partners (for painter quotes)</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-6 mb-3">Data Security</h2>
+          <p class="text-body">
+            We implement appropriate security measures to protect any information we collect. Our site uses HTTPS encryption for all connections.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-6 mb-3">Your Rights</h2>
+          <p class="text-body">
+            Depending on your location, you may have rights regarding your personal data, including the right to access, correct, or delete information. Contact us to exercise these rights.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-6 mb-3">Children's Privacy</h2>
+          <p class="text-body">
+            Our service is not directed at children under 13. We do not knowingly collect personal information from children.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-6 mb-3">Changes to This Policy</h2>
+          <p class="text-body">
+            We may update this Privacy Policy periodically. We'll post any changes on this page with an updated revision date.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-6 mb-3">Contact Us</h2>
+          <p class="text-body">
+            If you have questions about this Privacy Policy, contact us at:
+          </p>
+          <p class="text-body mt-2">
+            Email: <a href="mailto:contact@probuilddigital.com" class="text-primary hover:underline">contact@probuilddigital.com</a>
+          </p>
+          <p class="text-body mt-2">
+            ProBuild Digital LLC
+          </p>
+        </section>
+      </div>
+
+      <div class="mt-10 pt-6 border-t border-border">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 text-primary font-medium hover:underline"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to Calculator
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

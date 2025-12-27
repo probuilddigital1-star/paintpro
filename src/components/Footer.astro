@@ -1,0 +1,42 @@
+---
+// Footer component
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-heading text-white mt-auto">
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <!-- Brand -->
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <svg
+            class="w-6 h-6 text-primary"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+            <path d="M7 17h10c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1zm1-4h8v2H8v-2z"/>
+            <path d="M17 7H7v2h10V7z"/>
+          </svg>
+          <span class="font-bold">PaintPro Calculator</span>
+        </div>
+        <p class="text-gray-300 text-sm">Calculate paint coverage with confidence</p>
+      </div>
+
+      <!-- Links -->
+      <nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm" aria-label="Footer navigation">
+        <a href="/about" class="text-gray-300 hover:text-white transition-colors">About</a>
+        <a href="/privacy" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a>
+        <a href="/affiliate-disclosure" class="text-gray-300 hover:text-white transition-colors">Affiliate Disclosure</a>
+        <a href="mailto:contact@probuilddigital.com" class="text-gray-300 hover:text-white transition-colors">Contact</a>
+      </nav>
+    </div>
+
+    <hr class="border-gray-700 my-6" />
+
+    <p class="text-center text-gray-300 text-sm">
+      &copy; {currentYear} ProBuild Digital LLC. All rights reserved.
+    </p>
+  </div>
+</footer>

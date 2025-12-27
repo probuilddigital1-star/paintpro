@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create astro@latest:*)",
+      "Bash(npx create-astro@latest:*)",
+      "Bash(npx astro:*)",
+      "Bash(npm run build)",
+      "Bash(cat:*)",
+      "Bash(npm install:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(timeout:*)",
+      "Bash(node scripts/convert-images.mjs:*)",
+      "Bash(ping:*)",
+      "Bash(curl:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+/* Design System - Paint Pro Calc */
+@theme {
+  /* Colors */
+  --color-primary: #1E40AF;
+  --color-primary-dark: #1e3a8a;
+  --color-secondary: #F8F7F4;
+  --color-accent: #16A34A;
+  --color-accent-dark: #15803d;
+  --color-heading: #1E293B;
+  --color-body: #475569;
+  --color-light-gray: #f1f5f9;
+  --color-border: #e2e8f0;
+
+  /* Font family */
+  --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-body);
+  background-color: var(--color-secondary);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-heading);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Form input base styles */
+input[type="number"],
+input[type="text"],
+input[type="email"],
+select {
+  min-height: 44px;
+  font-size: 16px; /* Prevents iOS zoom */
+}
+
+/* Remove number input spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}

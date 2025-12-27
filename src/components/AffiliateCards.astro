@@ -1,0 +1,81 @@
+---
+// Affiliate product cards - Add your Amazon Associates tag once approved
+// Replace the links below with: https://www.amazon.com/s?k=KEYWORD&tag=YOUR-ACTUAL-TAG-20
+const affiliates = [
+  {
+    title: "Paint Supplies",
+    description: "Quality rollers, brushes, tape, and drop cloths for a professional finish.",
+    icon: "brush",
+    link: "https://www.amazon.com/s?k=paint+supplies+kit",
+    cta: "Shop Supplies"
+  },
+  {
+    title: "Premium Paint",
+    description: "Top-rated interior and exterior paints for lasting, beautiful results.",
+    icon: "paint",
+    link: "https://www.amazon.com/s?k=interior+wall+paint",
+    cta: "Browse Paint"
+  },
+  {
+    title: "Paint Sprayers",
+    description: "Save time on big projects with an electric or airless paint sprayer.",
+    icon: "sprayer",
+    link: "https://www.amazon.com/s?k=paint+sprayer",
+    cta: "View Sprayers"
+  }
+];
+---
+
+<section id="affiliate-section" class="max-w-4xl mx-auto px-4 py-12">
+  <div class="text-center mb-8">
+    <h2 class="text-2xl md:text-3xl font-bold text-heading mb-2">Ready to Start Your Project?</h2>
+    <p class="text-body">Everything you need to get professional results.</p>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-6">
+    {affiliates.map((item) => (
+      <a
+        href={item.link}
+        target="_blank"
+        rel="noopener noreferrer sponsored"
+        class="group bg-white rounded-xl shadow-md hover:shadow-xl p-6 transition-all duration-300 border border-border hover:border-primary/30 flex flex-col"
+      >
+        <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+          {item.icon === "brush" && (
+            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+            </svg>
+          )}
+          {item.icon === "paint" && (
+            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+            </svg>
+          )}
+          {item.icon === "sprayer" && (
+            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+          )}
+        </div>
+
+        <h3 class="text-lg font-semibold text-heading mb-2 group-hover:text-primary transition-colors">
+          {item.title}
+        </h3>
+        <p class="text-body text-sm mb-4 flex-grow">
+          {item.description}
+        </p>
+
+        <span class="inline-flex items-center text-primary font-medium text-sm group-hover:translate-x-1 transition-transform">
+          {item.cta}
+          <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </span>
+      </a>
+    ))}
+  </div>
+
+  <p class="text-center text-xs text-gray-400 mt-6">
+    Product links go to Amazon.com
+  </p>
+</section>

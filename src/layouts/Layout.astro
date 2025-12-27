@@ -1,0 +1,201 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = "Calculate exactly how much paint you need for your project. Free paint coverage calculator for walls, ceilings, and trim."
+} = Astro.props;
+
+const siteUrl = "https://paintprocalculator.com";
+const currentPath = Astro.url.pathname;
+const canonicalURL = currentPath === '/' ? siteUrl : `${siteUrl}${currentPath.replace(/\/$/, '')}`;
+const ogImage = `${siteUrl}/og-image.png`;
+const currentDate = new Date().toISOString().split('T')[0];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Google Analytics (Production Only) -->
+    {import.meta.env.PROD && (
+      <>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-C766XS9QKY"></script>
+        <script is:inline>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-C766XS9QKY');
+        </script>
+      </>
+    )}
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content="ProBuild Digital LLC" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="keywords" content="paint calculator, how much paint do I need, paint coverage calculator, gallons of paint, wall paint calculator, room paint estimator, free paint calculator, interior paint calculator" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="PaintPro Calculator" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+
+    <!-- Canonical URL (Dynamic per page) -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- AI Crawler Discovery -->
+    <link rel="alternate" type="text/plain" href={`${siteUrl}/llms.txt`} title="LLM Site Summary" />
+    <link rel="alternate" type="text/plain" href={`${siteUrl}/ai.txt`} title="AI Training Permissions" />
+
+    <!-- Google Fonts - DM Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+
+    <!-- Schema.org markup for WebApplication -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Paint Pro Calculator",
+      "alternateName": "PaintPro Calculator",
+      "description": "Calculate exactly how much paint you need for your project. Free paint coverage calculator for walls, ceilings, and trim.",
+      "url": siteUrl,
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Web Browser",
+      "browserRequirements": "Requires JavaScript",
+      "softwareVersion": "1.0",
+      "datePublished": "2025-12-26",
+      "dateModified": currentDate,
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "image": ogImage,
+      "screenshot": ogImage,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "ProBuild Digital LLC",
+        "url": "https://probuilddigital.com",
+        "email": "contact@probuilddigital.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ProBuild Digital LLC"
+      },
+      "featureList": [
+        "Room dimension calculator",
+        "Door and window deductions",
+        "Multiple coat calculations",
+        "Paint quality tiers",
+        "Waste buffer estimation",
+        "Mobile-friendly interface"
+      ],
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Homeowners, DIY enthusiasts, Contractors"
+      }
+    })} />
+
+    <!-- Organization Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ProBuild Digital LLC",
+      "url": "https://probuilddigital.com",
+      "logo": ogImage,
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "contact@probuilddigital.com",
+        "contactType": "customer service"
+      }
+    })} />
+
+    <!-- LocalBusiness Schema for Ohio SEO -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "PaintPro Calculator",
+      "description": "Free paint calculator serving Ohio and Midwest homeowners with accurate paint coverage estimates",
+      "url": siteUrl,
+      "email": "contact@probuilddigital.com",
+      "areaServed": [
+        {
+          "@type": "State",
+          "name": "Ohio",
+          "sameAs": "https://en.wikipedia.org/wiki/Ohio"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Midwest United States"
+        }
+      ],
+      "serviceType": "Paint Coverage Calculator",
+      "priceRange": "Free"
+    })} />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <!-- Skip Navigation Link for Accessibility -->
+    <a href="#calculator" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-medium">
+      Skip to Calculator
+    </a>
+    <slot />
+
+    <!-- Web Vitals INP Monitoring -->
+    <script>
+      import { onINP, onCLS, onLCP } from 'web-vitals';
+
+      function sendToAnalytics(metric: { name: string; value: number; id: string }) {
+        // Log to console in development
+        if (import.meta.env.DEV) {
+          console.log(`[Web Vitals] ${metric.name}: ${metric.value.toFixed(2)}ms (ID: ${metric.id})`);
+        }
+
+        // Send to analytics in production
+        // Replace with your analytics endpoint
+        if (import.meta.env.PROD && typeof navigator.sendBeacon === 'function') {
+          const body = JSON.stringify({
+            name: metric.name,
+            value: metric.value,
+            id: metric.id,
+            page: window.location.pathname,
+            timestamp: Date.now()
+          });
+          navigator.sendBeacon('/api/vitals', body);
+        }
+      }
+
+      // Monitor Core Web Vitals (2026 ranking factors)
+      onINP(sendToAnalytics);  // Interaction to Next Paint - critical for 2026
+      onCLS(sendToAnalytics);  // Cumulative Layout Shift
+      onLCP(sendToAnalytics);  // Largest Contentful Paint
+    </script>
+  </body>
+</html>

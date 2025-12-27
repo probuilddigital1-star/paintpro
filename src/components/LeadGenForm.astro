@@ -1,0 +1,163 @@
+---
+// Email List Signup - Connects to n8n webhook → Google Sheets
+const webhookUrl = import.meta.env.PUBLIC_N8N_WEBHOOK_URL || '';
+---
+
+<section id="lead-section" class="bg-heading py-12 md:py-16">
+  <div class="max-w-2xl mx-auto px-4">
+    <div class="text-center mb-8">
+      <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">Get Pro Painting Tips</h2>
+      <p class="text-gray-300">Join our list for painting tips, project guides, and be first to know when we launch local painter matching.</p>
+    </div>
+
+    <form id="email-signup-form" class="bg-white rounded-xl shadow-xl p-6 md:p-8 space-y-4">
+      <!-- Honeypot field for spam protection (hidden from users) -->
+      <div class="hidden" aria-hidden="true">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="md:col-span-2">
+          <label for="signup-email" class="block text-sm font-medium text-body mb-1">
+            Email Address
+          </label>
+          <input
+            type="email"
+            id="signup-email"
+            name="email"
+            placeholder="you@example.com"
+            required
+            class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+          />
+        </div>
+
+        <div>
+          <label for="signup-zip" class="block text-sm font-medium text-body mb-1">
+            Zip Code <span class="text-gray-400">(optional)</span>
+          </label>
+          <input
+            type="text"
+            id="signup-zip"
+            name="zip"
+            pattern="[0-9]{5}"
+            maxlength="5"
+            placeholder="12345"
+            class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+          />
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        id="submit-btn"
+        class="w-full bg-accent hover:bg-accent-dark text-white font-semibold py-4 px-6 rounded-lg transition-colors shadow-md hover:shadow-lg focus:ring-4 focus:ring-accent/30 text-lg flex items-center justify-center gap-2"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+        <span id="btn-text">Subscribe for Tips</span>
+      </button>
+
+      <p class="text-center text-xs text-gray-400">
+        Free tips, no spam. Unsubscribe anytime.
+      </p>
+    </form>
+
+    <!-- Success message (hidden by default) -->
+    <div id="signup-success" class="hidden bg-white rounded-xl shadow-xl p-8 text-center">
+      <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <h3 class="text-xl font-bold text-heading mb-2">You're In!</h3>
+      <p class="text-body">
+        Thanks for subscribing! We'll send you painting tips and let you know when local painter matching goes live.
+      </p>
+    </div>
+
+    <!-- Error message (hidden by default) -->
+    <div id="signup-error" class="hidden bg-white rounded-xl shadow-xl p-8 text-center">
+      <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <h3 class="text-xl font-bold text-heading mb-2">Oops!</h3>
+      <p class="text-body mb-4">
+        Something went wrong. Please try again or email us directly.
+      </p>
+      <button id="try-again-btn" class="text-primary font-medium hover:underline">
+        Try Again
+      </button>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ webhookUrl }}>
+  const form = document.getElementById('email-signup-form');
+  const successEl = document.getElementById('signup-success');
+  const errorEl = document.getElementById('signup-error');
+  const submitBtn = document.getElementById('submit-btn');
+  const btnText = document.getElementById('btn-text');
+  const tryAgainBtn = document.getElementById('try-again-btn');
+
+  const WEBHOOK_URL = webhookUrl;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    // Check honeypot (spam protection)
+    if (formData.get('website')) {
+      // Bot detected, silently "succeed"
+      form.classList.add('hidden');
+      successEl.classList.remove('hidden');
+      return;
+    }
+
+    const data = {
+      email: formData.get('email'),
+      zip: formData.get('zip') || '',
+      source: 'paintprocalculator.com',
+      timestamp: new Date().toISOString()
+    };
+
+    // Show loading state
+    submitBtn.disabled = true;
+    btnText.textContent = 'Subscribing...';
+
+    try {
+      if (WEBHOOK_URL) {
+        const response = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (!response.ok) throw new Error('Webhook failed');
+      } else {
+        console.warn('N8N webhook not configured.');
+      }
+
+      // Success
+      form.classList.add('hidden');
+      successEl.classList.remove('hidden');
+
+    } catch (error) {
+      console.error('Signup error:', error);
+      form.classList.add('hidden');
+      errorEl.classList.remove('hidden');
+    } finally {
+      submitBtn.disabled = false;
+      btnText.textContent = 'Subscribe for Tips';
+    }
+  });
+
+  // Try again button
+  tryAgainBtn.addEventListener('click', () => {
+    errorEl.classList.add('hidden');
+    form.classList.remove('hidden');
+  });
+</script>

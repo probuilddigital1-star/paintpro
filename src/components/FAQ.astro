@@ -1,0 +1,120 @@
+---
+// FAQ Component with 2026-Compliant Schema
+// Includes lastReviewed and author properties for Google's enhanced FAQ requirements
+
+const currentDate = new Date().toISOString().split('T')[0];
+
+const faqs = [
+  {
+    question: "How much paint do I need for a 12x12 room?",
+    answer: "For a standard 12x12 foot room with 8-foot ceilings, you'll need approximately 1.5 to 2 gallons of paint for two coats on walls only. This calculation accounts for one door (21 sq ft) and two windows (30 sq ft) deducted from the total wall area of 384 square feet."
+  },
+  {
+    question: "What is the standard paint coverage rate per gallon?",
+    answer: "Standard quality paint covers approximately 400 square feet per gallon on smooth surfaces. Budget paints typically cover 350 sq ft/gallon, while premium paints can cover up to 450 sq ft/gallon. These rates assume one coat on a properly prepared, non-porous surface."
+  },
+  {
+    question: "Do I need primer before painting?",
+    answer: "Primer is essential in six situations: new drywall (absorbs paint unevenly), stained surfaces (blocks water stains and smoke damage), dramatic color changes (dark to light), glossy surfaces (helps adhesion), high-humidity rooms (mold-resistant primer), and unpainted wood (seals and prevents tannin bleed). Many premium paints now include primer—check your label."
+  },
+  {
+    question: "How many coats of paint should I apply?",
+    answer: "Two coats is the professional standard for most interior painting projects. One coat may suffice for touch-ups or when painting a similar color. Three coats are recommended when covering dark colors with light ones, painting over stains, or achieving maximum durability in high-traffic areas."
+  },
+  {
+    question: "What's the difference between budget, standard, and premium paint?",
+    answer: "Budget paint ($15-25/gallon) covers 350 sq ft/gallon and may require 3 coats. Standard paint ($25-40/gallon) covers 400 sq ft/gallon with good durability. Premium paint ($40-70/gallon) covers 450 sq ft/gallon, offers superior coverage in fewer coats, better color retention, and increased washability—often saving money long-term despite higher upfront cost."
+  },
+  {
+    question: "How do I account for textured walls in my paint calculation?",
+    answer: "Textured walls (knockdown, orange peel, popcorn) absorb 15-25% more paint than smooth surfaces. Our calculator automatically adjusts for texture: light texture reduces coverage by 15%, medium by 25%, and heavy texture by 35%. The built-in 15% waste buffer provides additional safety margin."
+  }
+];
+
+// Speakable schema for voice assistants (Alexa, Google Assistant, Siri)
+const speakableSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Paint Calculator FAQ",
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": ["#faq h2", "#faq h3", "#faq p"]
+  },
+  "url": "https://paintprocalculator.com/#faq"
+};
+
+// Generate 2026-compliant FAQ schema with lastReviewed and author
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer,
+      "author": {
+        "@type": "Organization",
+        "name": "ProBuild Digital LLC",
+        "url": "https://probuilddigital.com"
+      },
+      "dateCreated": "2025-12-26",
+      "dateModified": currentDate
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "ProBuild Digital LLC"
+    },
+    "dateCreated": "2025-12-26",
+    "dateModified": currentDate
+  })),
+  "author": {
+    "@type": "Organization",
+    "name": "ProBuild Digital LLC",
+    "url": "https://probuilddigital.com",
+    "email": "contact@probuilddigital.com"
+  },
+  "lastReviewed": currentDate,
+  "reviewedBy": {
+    "@type": "Organization",
+    "name": "ProBuild Digital LLC"
+  },
+  "datePublished": "2025-12-26",
+  "dateModified": currentDate
+};
+---
+
+<section id="faq" class="max-w-4xl mx-auto px-4 py-12 md:py-16">
+  <div class="text-center mb-10">
+    <h2 class="text-2xl md:text-3xl font-bold text-heading mb-3">Frequently Asked Questions</h2>
+    <p class="text-body max-w-2xl mx-auto">Expert answers to common paint calculation questions, reviewed by our team at ProBuild Digital LLC.</p>
+  </div>
+
+  <div class="space-y-4">
+    {faqs.map((faq, index) => (
+      <details class="group bg-white rounded-xl shadow-sm border border-border overflow-hidden">
+        <summary class="flex items-center justify-between p-5 cursor-pointer hover:bg-gray-50 transition-colors">
+          <h3 class="text-left font-semibold text-heading pr-4">{faq.question}</h3>
+          <span class="flex-shrink-0 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center group-open:rotate-180 transition-transform">
+            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
+        </summary>
+        <div class="px-5 pb-5 pt-2 border-t border-border">
+          <p class="text-body leading-relaxed">{faq.answer}</p>
+        </div>
+      </details>
+    ))}
+  </div>
+
+  <p class="text-center text-xs text-gray-400 mt-8">
+    Last reviewed: {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} by ProBuild Digital LLC
+  </p>
+
+  <!-- 2026-Compliant FAQ Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <!-- Speakable Schema for Voice Assistants -->
+  <script type="application/ld+json" set:html={JSON.stringify(speakableSchema)} />
+</section>

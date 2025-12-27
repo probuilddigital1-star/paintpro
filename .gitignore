@@ -23,3 +23,6 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+
+# Personal docs
+SITE_TEMPLATE_SPEC.md

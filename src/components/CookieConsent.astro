@@ -1,0 +1,88 @@
+---
+// Cookie Consent Banner - GDPR Compliance
+// Stores preference in localStorage, controls GA4 loading
+---
+
+<div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-50 hidden">
+  <div class="bg-heading text-white p-4 shadow-lg">
+    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-center sm:text-left">
+        We use cookies for analytics to improve your experience.
+        <a href="/privacy" class="underline hover:text-gray-300">Privacy Policy</a>
+      </p>
+      <div class="flex gap-3">
+        <button
+          id="cookie-reject"
+          class="px-4 py-2 text-sm border border-white/30 rounded-lg hover:bg-white/10 transition-colors"
+        >
+          Reject
+        </button>
+        <button
+          id="cookie-accept"
+          class="px-4 py-2 text-sm bg-accent hover:bg-accent-dark rounded-lg transition-colors font-medium"
+        >
+          Accept
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function() {
+    const CONSENT_KEY = 'cookie_consent';
+    const banner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('cookie-accept');
+    const rejectBtn = document.getElementById('cookie-reject');
+
+    // Check if user has already made a choice
+    const consent = localStorage.getItem(CONSENT_KEY);
+
+    if (consent === null) {
+      // No choice made yet - show banner
+      banner.classList.remove('hidden');
+    } else if (consent === 'accepted') {
+      // User accepted - load GA4
+      loadGA4();
+    }
+    // If rejected, do nothing (GA4 won't load)
+
+    acceptBtn.addEventListener('click', function() {
+      localStorage.setItem(CONSENT_KEY, 'accepted');
+      banner.classList.add('hidden');
+      loadGA4();
+    });
+
+    rejectBtn.addEventListener('click', function() {
+      localStorage.setItem(CONSENT_KEY, 'rejected');
+      banner.classList.add('hidden');
+    });
+
+    function loadGA4() {
+      // Only load in production
+      if (window.location.hostname === 'localhost') return;
+
+      // Check if already loaded
+      if (window.gtag) return;
+
+      // Load GA4 script
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-C766XS9QKY';
+      document.head.appendChild(script);
+
+      script.onload = function() {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-C766XS9QKY');
+      };
+    }
+
+    // Expose function to reopen banner (for footer link)
+    window.openCookieSettings = function() {
+      banner.classList.remove('hidden');
+    };
+  })();
+</script>

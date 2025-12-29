@@ -47,6 +47,20 @@ const webhookUrl = import.meta.env.PUBLIC_N8N_WEBHOOK_URL || '';
         </div>
       </div>
 
+      <!-- Consent checkbox (GDPR) -->
+      <div class="flex items-start gap-3">
+        <input
+          type="checkbox"
+          id="email-consent"
+          name="consent"
+          required
+          class="w-5 h-5 mt-0.5 text-primary border-border rounded focus:ring-primary cursor-pointer flex-shrink-0"
+        />
+        <label for="email-consent" class="text-sm text-body cursor-pointer">
+          I agree to receive emails and accept the <a href="/privacy" class="text-primary hover:underline">Privacy Policy</a>
+        </label>
+      </div>
+
       <button
         type="submit"
         id="submit-btn"
@@ -120,6 +134,7 @@ const webhookUrl = import.meta.env.PUBLIC_N8N_WEBHOOK_URL || '';
     const data = {
       email: formData.get('email'),
       zip: formData.get('zip') || '',
+      consent: true,
       source: 'paintprocalculator.com',
       timestamp: new Date().toISOString()
     };

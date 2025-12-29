@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import CookieConsent from '../components/CookieConsent.astro';
 
 interface Props {
   title: string;
@@ -27,18 +28,7 @@ const currentDate = new Date().toISOString().split('T')[0];
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Google Analytics (Production Only) -->
-    {import.meta.env.PROD && (
-      <>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-C766XS9QKY"></script>
-        <script is:inline>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-C766XS9QKY');
-        </script>
-      </>
-    )}
+    <!-- GA4 loaded conditionally by CookieConsent component -->
 
     <!-- Primary Meta Tags -->
     <title>{title}</title>
@@ -198,5 +188,8 @@ const currentDate = new Date().toISOString().split('T')[0];
       onCLS(sendToAnalytics);  // Cumulative Layout Shift
       onLCP(sendToAnalytics);  // Largest Contentful Paint
     </script>
+
+    <!-- Cookie Consent Banner (GDPR) -->
+    <CookieConsent />
   </body>
 </html>

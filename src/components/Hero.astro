@@ -1,0 +1,134 @@
+---
+// Hero Section - Visual impact with paint-themed design
+---
+
+<section class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+  <!-- Paint drip decoration -->
+  <div class="absolute top-0 left-0 right-0 h-3 bg-gradient-to-r from-amber-400 via-rose-400 to-cyan-400"></div>
+
+  <!-- Animated paint splatter background -->
+  <div class="absolute inset-0 opacity-10">
+    <svg class="absolute top-10 left-10 w-32 h-32 text-amber-400 animate-float" viewBox="0 0 100 100" fill="currentColor">
+      <circle cx="50" cy="50" r="40" />
+      <circle cx="20" cy="70" r="15" />
+      <circle cx="80" cy="30" r="12" />
+    </svg>
+    <svg class="absolute bottom-10 right-20 w-24 h-24 text-cyan-400 animate-float-delayed" viewBox="0 0 100 100" fill="currentColor">
+      <circle cx="50" cy="50" r="35" />
+      <circle cx="75" cy="70" r="18" />
+    </svg>
+    <svg class="absolute top-1/2 right-10 w-16 h-16 text-rose-400 animate-float" viewBox="0 0 100 100" fill="currentColor">
+      <circle cx="50" cy="50" r="30" />
+    </svg>
+  </div>
+
+  <div class="relative max-w-4xl mx-auto px-4 py-12 md:py-16 text-center">
+    <!-- Badge -->
+    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-6 animate-fade-in">
+      <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+      <span class="text-sm font-medium">Free • No signup required</span>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 animate-fade-in-up">
+      Calculate Your Paint
+      <span class="block mt-2 bg-gradient-to-r from-amber-400 via-rose-400 to-cyan-400 bg-clip-text text-transparent">
+        Like a Pro
+      </span>
+    </h1>
+
+    <!-- Subheadline -->
+    <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-8 animate-fade-in-up-delayed">
+      Get accurate paint estimates in seconds. Account for doors, windows, texture, and coats—no guesswork.
+    </p>
+
+    <!-- CTA Button -->
+    <a
+      href="#calculator"
+      class="group inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-900 font-bold px-8 py-4 rounded-xl shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transition-all duration-300 hover:-translate-y-0.5 animate-fade-in-up-delayed-2"
+    >
+      Start Calculating
+      <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </a>
+
+    <!-- Trust indicators -->
+    <div class="flex flex-wrap justify-center gap-6 mt-10 text-sm text-slate-400 animate-fade-in-up-delayed-3">
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>Professional accuracy</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>Texture adjustments</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>Primer estimates</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wave divider -->
+  <div class="absolute bottom-0 left-0 right-0">
+    <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+      <path d="M0 60V20C240 50 480 0 720 20C960 40 1200 10 1440 30V60H0Z" fill="#F8F7F4"/>
+    </svg>
+  </div>
+</section>
+
+<style>
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 6s ease-in-out infinite;
+    animation-delay: 2s;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in-up-delayed {
+    animation: fade-in-up 0.6s ease-out 0.15s forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in-up-delayed-2 {
+    animation: fade-in-up 0.6s ease-out 0.3s forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in-up-delayed-3 {
+    animation: fade-in-up 0.6s ease-out 0.45s forwards;
+    opacity: 0;
+  }
+</style>

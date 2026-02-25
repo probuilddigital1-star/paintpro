@@ -1,3 +1,5 @@
+import type { AffiliateProduct } from './calculator-pages';
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -10,6 +12,7 @@ export interface BlogPost {
   faqs: { question: string; answer: string }[];
   relatedSlugs: string[];
   calculatorCta: { text: string; href: string };
+  affiliateProducts?: AffiliateProduct[];
 }
 
 export const blogPosts: BlogPost[] = [
@@ -23,6 +26,11 @@ export const blogPosts: BlogPost[] = [
     readingTime: 8,
     calculatorCta: { text: 'Calculate Your Paint Needs', href: '/#calculator' },
     relatedSlugs: ['when-to-hire-a-painter-vs-diy', 'how-many-coats-of-paint', 'sherwin-williams-vs-behr-vs-benjamin-moore'],
+    affiliateProducts: [
+      { title: 'Paint Roller Kit', description: 'Complete roller set with tray, covers, and extension pole for walls and ceilings.', icon: 'roller', link: 'https://www.amazon.com/s?k=paint+roller+kit&tag=paintpro02-20', cta: 'Shop Roller Kits' },
+      { title: 'Painter\'s Tape', description: 'FrogTape multi-surface painter\'s tape for clean, sharp lines every time.', icon: 'tape', link: 'https://www.amazon.com/s?k=FrogTape+painters+tape&tag=paintpro02-20', cta: 'Shop Tape' },
+      { title: 'Drop Cloths', description: 'Canvas drop cloths to protect your floors and furniture from paint drips.', icon: 'brush', link: 'https://www.amazon.com/s?k=canvas+drop+cloth+painting&tag=paintpro02-20', cta: 'Shop Drop Cloths' },
+    ],
     faqs: [
       {
         question: 'How much does it cost to paint a 12x12 room?',
@@ -74,11 +82,11 @@ export const blogPosts: BlogPost[] = [
 <p>If this is your first painting project, you will need to buy supplies. Even if you have some of these items already, here is the full list with approximate prices:</p>
 
 <ul>
-<li>Roller frame and covers (3-pack): $12 to $18</li>
-<li>Paint tray and liners: $5 to $10</li>
-<li>2-inch angled brush (for cutting in): $8 to $15</li>
-<li>Painter's tape (2 rolls): $8 to $14</li>
-<li>Drop cloths: $5 to $15</li>
+<li><a href="https://www.amazon.com/s?k=paint+roller+frame+covers&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Roller frame and covers</a> (3-pack): $12 to $18</li>
+<li><a href="https://www.amazon.com/s?k=paint+tray+liners&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Paint tray and liners</a>: $5 to $10</li>
+<li><a href="https://www.amazon.com/s?k=angled+paint+brush+2+inch&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">2-inch angled brush</a> (for cutting in): $8 to $15</li>
+<li><a href="https://www.amazon.com/s?k=FrogTape+painters+tape&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Painter's tape</a> (2 rolls): $8 to $14</li>
+<li><a href="https://www.amazon.com/s?k=canvas+drop+cloth+painting&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Drop cloths</a>: $5 to $15</li>
 <li>Stir sticks and paint can opener: Free at most stores</li>
 <li>Sandpaper (if prepping): $3 to $8</li>
 </ul>
@@ -204,6 +212,11 @@ export const blogPosts: BlogPost[] = [
     readingTime: 7,
     calculatorCta: { text: 'Calculate Bathroom Paint Needs', href: '/paint-calculator/bathroom-paint-calculator' },
     relatedSlugs: ['how-many-coats-of-paint', 'sherwin-williams-vs-behr-vs-benjamin-moore', 'how-much-does-it-cost-to-paint-a-room'],
+    affiliateProducts: [
+      { title: 'Mildew-Resistant Paint', description: 'Bathroom-rated paints with built-in mold and mildew resistance.', icon: 'paint', link: 'https://www.amazon.com/s?k=mildew+resistant+bathroom+paint&tag=paintpro02-20', cta: 'Shop Bathroom Paint' },
+      { title: 'Bathroom Exhaust Fan', description: 'Upgrade your ventilation to protect your paint job from humidity damage.', icon: 'brush', link: 'https://www.amazon.com/s?k=bathroom+exhaust+fan+quiet&tag=paintpro02-20', cta: 'Shop Exhaust Fans' },
+      { title: 'Mildew-Resistant Primer', description: 'KILZ and Zinsser primers designed for high-moisture bathroom environments.', icon: 'primer', link: 'https://www.amazon.com/s?k=mildew+resistant+primer+bathroom&tag=paintpro02-20', cta: 'Shop Primers' },
+    ],
     faqs: [
       {
         question: 'What sheen is best for bathroom walls?',
@@ -285,7 +298,7 @@ export const blogPosts: BlogPost[] = [
 
 <p>PPG Diamond also includes mildew-resistant properties and dries to a hard, smooth finish. It is available at PPG Paints stores and some independent retailers. The mid-range price point makes it a solid choice for homeowners who want better performance than budget paint without paying premium prices.</p>
 
-<h3>5. Zinsser Perma-White (Best for Problem Bathrooms)</h3>
+<h3>5. <a href="https://www.amazon.com/s?k=Zinsser+Perma-White&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Zinsser Perma-White</a> (Best for Problem Bathrooms)</h3>
 
 <p><strong>Price:</strong> $28 to $35 per gallon</p>
 <p><strong>Coverage:</strong> 300 to 400 sq ft per gallon</p>
@@ -314,7 +327,7 @@ export const blogPosts: BlogPost[] = [
 <li><strong>Check for mildew first.</strong> Existing mildew must be killed and removed before painting. Use a bleach solution (1 part bleach to 3 parts water) and scrub thoroughly. Let the surface dry completely.</li>
 <li><strong>Sand glossy surfaces.</strong> If your bathroom currently has semi-gloss or high-gloss paint, lightly sand the walls with 120-grit sandpaper. This gives the new paint something to grip.</li>
 <li><strong>Repair damage.</strong> Fill any holes, cracks, or peeling areas with spackle. Sand smooth when dry.</li>
-<li><strong>Prime if needed.</strong> Use a mildew-resistant primer if you are painting over bare drywall, stains, or surfaces that have had mold issues. Zinsser 1-2-3 or KILZ Kitchen & Bath primer are solid choices.</li>
+<li><strong>Prime if needed.</strong> Use a mildew-resistant primer if you are painting over bare drywall, stains, or surfaces that have had mold issues. <a href="https://www.amazon.com/s?k=Zinsser+123+primer&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Zinsser 1-2-3</a> or <a href="https://www.amazon.com/s?k=KILZ+kitchen+bath+primer&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">KILZ Kitchen & Bath primer</a> are solid choices.</li>
 <li><strong>Ventilate during painting.</strong> Open a window and run the exhaust fan while you paint and for 24 hours after. This helps the paint cure properly and prevents moisture from ruining your fresh paint job.</li>
 </ol>
 
@@ -355,6 +368,11 @@ export const blogPosts: BlogPost[] = [
     readingTime: 7,
     calculatorCta: { text: 'Calculate Paint for Multiple Coats', href: '/#calculator' },
     relatedSlugs: ['how-much-does-it-cost-to-paint-a-room', 'best-paint-for-bathrooms', 'complete-room-painting-checklist'],
+    affiliateProducts: [
+      { title: 'Premium Paint', description: 'High-hide, one-coat coverage paints that save you time and money.', icon: 'paint', link: 'https://www.amazon.com/s?k=premium+interior+paint+one+coat&tag=paintpro02-20', cta: 'Shop Premium Paint' },
+      { title: 'Tinted Primer', description: 'Gray and tinted primers that block dark colors and reduce coat count.', icon: 'primer', link: 'https://www.amazon.com/s?k=tinted+gray+primer+interior&tag=paintpro02-20', cta: 'Shop Tinted Primer' },
+      { title: 'Quality Roller Covers', description: 'Thick-nap roller covers for better paint pickup and even coverage.', icon: 'roller', link: 'https://www.amazon.com/s?k=paint+roller+cover+3%2F8+nap&tag=paintpro02-20', cta: 'Shop Roller Covers' },
+    ],
     faqs: [
       {
         question: 'Can you get away with one coat of paint?',
@@ -510,6 +528,11 @@ export const blogPosts: BlogPost[] = [
     readingTime: 9,
     calculatorCta: { text: 'Calculate Paint Needed by Brand', href: '/paint-calculator' },
     relatedSlugs: ['how-much-does-it-cost-to-paint-a-room', 'best-paint-for-bathrooms', 'how-many-coats-of-paint'],
+    affiliateProducts: [
+      { title: 'Interior Wall Paint', description: 'Top-rated interior paints from all major brands at competitive prices.', icon: 'paint', link: 'https://www.amazon.com/s?k=interior+wall+paint+gallon&tag=paintpro02-20', cta: 'Browse Paint' },
+      { title: 'Paint Supplies Kit', description: 'Everything you need in one kit: rollers, brushes, tape, tray, and drop cloths.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+supplies+kit+complete&tag=paintpro02-20', cta: 'Shop Supply Kits' },
+      { title: 'Paint Sprayer', description: 'Save time on large projects with an electric paint sprayer.', icon: 'sprayer', link: 'https://www.amazon.com/s?k=electric+paint+sprayer+interior&tag=paintpro02-20', cta: 'Shop Sprayers' },
+    ],
     faqs: [
       {
         question: 'Which paint brand has the best coverage?',
@@ -715,6 +738,11 @@ export const blogPosts: BlogPost[] = [
     readingTime: 8,
     calculatorCta: { text: 'Calculate Your Paint Needs First', href: '/#calculator' },
     relatedSlugs: ['how-many-coats-of-paint', 'how-much-does-it-cost-to-paint-a-room', 'when-to-hire-a-painter-vs-diy'],
+    affiliateProducts: [
+      { title: 'Complete Paint Kit', description: 'All-in-one painting kit with rollers, brushes, tray, tape, and drop cloths.', icon: 'brush', link: 'https://www.amazon.com/s?k=complete+paint+kit+room&tag=paintpro02-20', cta: 'Shop Paint Kits' },
+      { title: 'Angled Paint Brush', description: 'Professional-quality angled brushes for cutting in clean lines.', icon: 'brush', link: 'https://www.amazon.com/s?k=angled+paint+brush+purdy&tag=paintpro02-20', cta: 'Shop Brushes' },
+      { title: 'Sanding Sponge', description: 'Flexible sanding sponges for smooth wall prep between coats.', icon: 'tape', link: 'https://www.amazon.com/s?k=sanding+sponge+drywall&tag=paintpro02-20', cta: 'Shop Sanding' },
+    ],
     faqs: [
       {
         question: 'How long does it take to paint a room?',
@@ -759,16 +787,16 @@ export const blogPosts: BlogPost[] = [
 
 <p><strong>Application tools:</strong></p>
 <ul>
-<li>Roller frame (9-inch for walls, 4-inch mini roller for tight spots)</li>
-<li>Roller covers: 3/8-inch nap for smooth walls, 1/2-inch for light texture, 3/4-inch for heavy texture</li>
-<li>2-inch angled brush for cutting in corners and edges</li>
-<li>Paint tray and disposable liners</li>
-<li>Extension pole for reaching high areas without a ladder</li>
+<li><a href="https://www.amazon.com/s?k=paint+roller+frame+9+inch&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Roller frame</a> (9-inch for walls, 4-inch mini roller for tight spots)</li>
+<li><a href="https://www.amazon.com/s?k=paint+roller+covers+variety+pack&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Roller covers</a>: 3/8-inch nap for smooth walls, 1/2-inch for light texture, 3/4-inch for heavy texture</li>
+<li><a href="https://www.amazon.com/s?k=angled+paint+brush+2+inch+purdy&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">2-inch angled brush</a> for cutting in corners and edges</li>
+<li><a href="https://www.amazon.com/s?k=paint+tray+disposable+liners&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Paint tray and disposable liners</a></li>
+<li><a href="https://www.amazon.com/s?k=paint+roller+extension+pole&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Extension pole</a> for reaching high areas without a ladder</li>
 </ul>
 
 <p><strong>Prep supplies:</strong></p>
 <ul>
-<li>Painter's tape (FrogTape or 3M ScotchBlue are reliable choices)</li>
+<li>Painter's tape (<a href="https://www.amazon.com/s?k=FrogTape+painters+tape&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">FrogTape</a> or <a href="https://www.amazon.com/s?k=3M+ScotchBlue+painters+tape&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">3M ScotchBlue</a> are reliable choices)</li>
 <li>Drop cloths (canvas for floors, plastic for furniture)</li>
 <li>Spackle or lightweight filler for holes and cracks</li>
 <li>Putty knife (flexible 2-inch or 3-inch)</li>
@@ -944,6 +972,11 @@ export const blogPosts: BlogPost[] = [
     readingTime: 8,
     calculatorCta: { text: 'Calculate Paint Costs for DIY', href: '/#calculator' },
     relatedSlugs: ['how-much-does-it-cost-to-paint-a-room', 'complete-room-painting-checklist', 'sherwin-williams-vs-behr-vs-benjamin-moore'],
+    affiliateProducts: [
+      { title: 'DIY Paint Kit', description: 'Complete starter kit with everything a first-time painter needs.', icon: 'brush', link: 'https://www.amazon.com/s?k=diy+paint+kit+starter&tag=paintpro02-20', cta: 'Shop Starter Kits' },
+      { title: 'Premium Paint', description: 'Top-rated interior paints that deliver professional results for DIYers.', icon: 'paint', link: 'https://www.amazon.com/s?k=best+interior+paint+premium&tag=paintpro02-20', cta: 'Browse Paint' },
+      { title: 'Step Ladder', description: 'Lightweight, sturdy step ladders for safe painting at any height.', icon: 'brush', link: 'https://www.amazon.com/s?k=step+ladder+4+foot+painting&tag=paintpro02-20', cta: 'Shop Ladders' },
+    ],
     faqs: [
       {
         question: 'Is it worth hiring a painter for one room?',
@@ -980,11 +1013,11 @@ export const blogPosts: BlogPost[] = [
 
 <ul>
 <li>Paint (2 gallons at $40 each): $80</li>
-<li>Roller frame, covers, and tray: $15 to $25</li>
-<li>Angled brush for cutting in: $10 to $15</li>
-<li>Painter's tape (2 rolls): $10 to $14</li>
-<li>Drop cloths: $8 to $15</li>
-<li>Spackle, sandpaper, and putty knife: $8 to $15</li>
+<li><a href="https://www.amazon.com/s?k=paint+roller+kit+with+tray&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Roller frame, covers, and tray</a>: $15 to $25</li>
+<li><a href="https://www.amazon.com/s?k=angled+paint+brush+cutting+in&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Angled brush</a> for cutting in: $10 to $15</li>
+<li><a href="https://www.amazon.com/s?k=painters+tape+FrogTape&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Painter's tape</a> (2 rolls): $10 to $14</li>
+<li><a href="https://www.amazon.com/s?k=canvas+drop+cloth&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Drop cloths</a>: $8 to $15</li>
+<li><a href="https://www.amazon.com/s?k=spackle+sandpaper+putty+knife+kit&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Spackle, sandpaper, and putty knife</a>: $8 to $15</li>
 </ul>
 
 <p><strong>Total materials: $130 to $165</strong></p>

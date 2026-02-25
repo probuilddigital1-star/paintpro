@@ -4,6 +4,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import AdSlot from '../../components/AdSlot.astro';
+import AffiliateCards from '../../components/AffiliateCards.astro';
 import { blogPosts, type BlogPost } from '../../data/blog-posts';
 
 export function getStaticPaths() {
@@ -161,7 +162,12 @@ const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
     </div>
 
     <div class="max-w-3xl mx-auto"><AdSlot format="horizontal" /></div>
+  </article>
 
+  <!-- Affiliate Cards -->
+  <AffiliateCards products={post.affiliateProducts} pageSource={`blog-${post.slug}`} />
+
+  <article class="max-w-3xl mx-auto px-4">
     <!-- FAQ Section -->
     {post.faqs.length > 0 && (
       <section class="mt-12 mb-8">

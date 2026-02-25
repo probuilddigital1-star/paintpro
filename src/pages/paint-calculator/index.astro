@@ -1,0 +1,110 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { calculatorPages } from '../../data/calculator-pages';
+
+const roomTypePages = calculatorPages.filter(p => p.pageType === 'room-type');
+const roomSizePages = calculatorPages.filter(p => p.pageType === 'room-size');
+
+const siteUrl = 'https://paintprocalculator.com';
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": siteUrl,
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Paint Calculator",
+      "item": `${siteUrl}/paint-calculator`,
+    },
+  ],
+};
+---
+
+<Layout
+  title="Paint Calculator for Every Room Size – Free Estimates"
+  description="Free paint calculators for every room type and size. Get accurate gallon estimates for bedrooms, bathrooms, kitchens, garages, and rooms from 8x8 to 20x20."
+>
+  <Header />
+
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/' },
+    { name: 'Paint Calculator' },
+  ]} />
+
+  <section class="max-w-4xl mx-auto px-4 pt-6 pb-10">
+    <h1 class="text-3xl md:text-4xl font-bold text-heading mb-4">Paint Calculator for Every Room</h1>
+    <p class="text-body text-lg leading-relaxed max-w-3xl mb-10">
+      Choose your room type or size below to get a pre-calculated paint estimate instantly. Each calculator includes detailed breakdowns, pro tips, and recommendations specific to your room.
+    </p>
+
+    <!-- Room Type Calculators -->
+    <h2 class="text-2xl font-bold text-heading mb-5 flex items-center gap-2">
+      <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>
+      By Room Type
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+      {roomTypePages.map(page => (
+        <a
+          href={`/paint-calculator/${page.slug}`}
+          class="group block bg-white rounded-xl border border-border p-5 shadow-sm hover:shadow-md hover:border-primary/30 transition-all"
+        >
+          <h3 class="font-semibold text-heading group-hover:text-primary transition-colors mb-1">{page.h1}</h3>
+          <p class="text-sm text-body line-clamp-2">{page.metaDescription.slice(0, 90)}...</p>
+        </a>
+      ))}
+    </div>
+
+    <!-- Room Size Calculators -->
+    <h2 class="text-2xl font-bold text-heading mb-5 flex items-center gap-2">
+      <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+      </svg>
+      By Room Size
+    </h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-10">
+      {roomSizePages.map(page => {
+        const sizeMatch = page.slug.match(/^(\d+x\d+)/);
+        const sizeLabel = sizeMatch ? sizeMatch[1] : page.slug;
+        const dims = sizeLabel.split('x').map(Number);
+        const area = dims[0] * dims[1];
+        return (
+          <a
+            href={`/paint-calculator/${page.slug}`}
+            class="group block bg-white rounded-xl border border-border p-4 shadow-sm hover:shadow-md hover:border-primary/30 transition-all text-center"
+          >
+            <p class="text-2xl font-bold text-heading group-hover:text-primary transition-colors">{sizeLabel}</p>
+            <p class="text-xs text-body mt-1">{area} sq ft</p>
+          </a>
+        );
+      })}
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-light-gray rounded-2xl p-8 text-center">
+      <h2 class="text-xl font-bold text-heading mb-2">Need a Custom Calculation?</h2>
+      <p class="text-body mb-4">Our interactive calculator lets you adjust every detail — dimensions, texture, primer, paint quality, and more.</p>
+      <a
+        href="/#calculator"
+        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold py-3 px-8 rounded-lg transition-all shadow-md hover:shadow-lg text-lg"
+      >
+        Use Interactive Calculator
+      </a>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>

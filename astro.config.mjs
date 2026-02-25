@@ -11,7 +11,18 @@ export default defineConfig({
     sitemap({
       changefreq: 'weekly',
       priority: 0.7,
-      lastmod: new Date()
+      lastmod: new Date(),
+      serialize(item) {
+        const path = new URL(item.url).pathname;
+        if (path === '/' || path === '') {
+          item.priority = 1.0;
+          item.changefreq = 'daily';
+        } else if (path.startsWith('/paint-calculator')) {
+          item.priority = 0.8;
+          item.changefreq = 'monthly';
+        }
+        return item;
+      },
     })
   ],
   vite: {

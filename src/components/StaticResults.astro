@@ -1,0 +1,118 @@
+---
+import type { CalculationResults, CalculationInputs } from '../utils/paint-calculator';
+import { roomRecommendations } from '../utils/paint-calculator';
+
+interface Props {
+  results: CalculationResults;
+  inputs: CalculationInputs;
+}
+
+const { results, inputs } = Astro.props;
+
+const totalArea = Math.round(results.paintableArea + results.ceilingPaintableArea);
+const recommendation = roomRecommendations[inputs.roomType];
+---
+
+<section class="max-w-2xl mx-auto px-4 py-8">
+  <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 border-t-4 border-accent">
+    <h2 class="text-xl font-bold text-heading mb-4 flex items-center gap-2">
+      <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      Pre-Calculated Paint Estimate
+    </h2>
+
+    <!-- Main Result -->
+    <div class={`grid grid-cols-1 ${results.primerGallons > 0 ? 'sm:grid-cols-2' : ''} gap-4 mb-6`}>
+      <div class="text-center py-6 bg-light-gray rounded-xl">
+        <p class="text-sm text-body mb-1">Paint Needed</p>
+        <p class="text-4xl md:text-5xl font-bold text-primary">{results.gallonsNeeded}</p>
+        <p class="text-lg font-medium text-heading">gallons</p>
+      </div>
+      {results.primerGallons > 0 && (
+        <div class="text-center py-6 bg-amber-50 rounded-xl">
+          <p class="text-sm text-body mb-1">Primer Needed</p>
+          <p class="text-4xl md:text-5xl font-bold text-amber-600">{results.primerGallons}</p>
+          <p class="text-lg font-medium text-heading">gallons</p>
+        </div>
+      )}
+    </div>
+
+    <!-- Result Summary -->
+    <p class="text-body text-center mb-6">
+      This covers {totalArea} square feet with {inputs.numCoats} coats of standard paint.
+    </p>
+
+    <!-- Room recommendation -->
+    {recommendation && (
+      <div class="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+        <p class="text-sm text-blue-800 flex items-start gap-2">
+          <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>{recommendation}</span>
+        </p>
+      </div>
+    )}
+
+    <!-- Breakdown -->
+    <details class="border border-border rounded-lg">
+      <summary class="px-4 py-3 cursor-pointer font-medium text-heading hover:bg-gray-50 transition-colors">
+        View Detailed Breakdown
+      </summary>
+      <div class="px-4 py-4 border-t border-border space-y-2 text-sm">
+        <div class="flex justify-between">
+          <span class="text-body">Wall Area:</span>
+          <span class="font-medium">{Math.round(results.wallArea)} sq ft</span>
+        </div>
+        {results.includesCeiling && (
+          <div class="flex justify-between">
+            <span class="text-body">Ceiling Area:</span>
+            <span class="font-medium">{Math.round(results.ceilingArea)} sq ft</span>
+          </div>
+        )}
+        <div class="flex justify-between text-red-600">
+          <span>Deductions:</span>
+          <span class="font-medium">-{Math.round(results.totalDeduction)} sq ft</span>
+        </div>
+        <hr class="my-2" />
+        <div class="flex justify-between font-semibold">
+          <span class="text-heading">Net Paintable Area:</span>
+          <span>{totalArea} sq ft</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-body">Base Coverage Rate:</span>
+          <span class="font-medium">{results.baseCoverage} sq ft/gal</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-body">Adjusted Coverage:</span>
+          <span class="font-medium">{Math.round(results.adjustedWallCoverage)} sq ft/gal</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-body">With {inputs.numCoats} Coats:</span>
+          <span class="font-medium">{Math.round(results.wallCoverageNeeded + results.ceilingCoverageNeeded)} sq ft needed</span>
+        </div>
+        {inputs.includeWaste && (
+          <div class="flex justify-between">
+            <span class="text-body">+ 15% Waste Buffer:</span>
+            <span class="font-medium">+{results.wasteAmount.toFixed(2)} gal</span>
+          </div>
+        )}
+        {results.primerGallons > 0 && (
+          <>
+            <hr class="my-2" />
+            <div class="flex justify-between">
+              <span class="text-body">Primer ({inputs.primerCoats ?? 1} coat):</span>
+              <span class="font-medium">{results.primerGallons} gal</span>
+            </div>
+          </>
+        )}
+      </div>
+    </details>
+
+    <!-- Assumptions Note -->
+    <p class="text-xs text-gray-500 mt-4 text-center">
+      Based on a {inputs.length}x{inputs.width} ft room with {inputs.height}-ft ceilings, {inputs.doors + inputs.closetDoors + inputs.frenchDoors} door(s), and {inputs.windows + inputs.largeWindows + inputs.smallWindows} window(s). Standard paint at 400 sq ft/gallon with 15% waste buffer.
+    </p>
+  </div>
+</section>

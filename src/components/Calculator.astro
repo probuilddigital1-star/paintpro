@@ -581,6 +581,18 @@
 </section>
 
 <script>
+  import {
+    baseCoverageRates,
+    textureMultipliers,
+    ceilingTextureMultipliers,
+    surfaceConditionMultipliers,
+    primerCoverageRates,
+    deductionValues,
+    roomRecommendations,
+    calculatePaint,
+    type CalculationInputs,
+  } from '../utils/paint-calculator';
+
   // Professional Paint Calculator Logic
   const form = document.getElementById('paint-calculator-form') as HTMLFormElement;
   const resultsSection = document.getElementById('results') as HTMLElement;
@@ -596,64 +608,6 @@
   const surfaceConditionSelect = document.getElementById('surface-condition') as HTMLSelectElement;
   const surfaceTypeSelect = document.getElementById('surface-type') as HTMLSelectElement;
   const trimHeightContainer = document.getElementById('trim-height-container') as HTMLElement;
-
-  // Base coverage rates (sq ft per gallon) - smooth surfaces
-  const baseCoverageRates: Record<string, number> = {
-    budget: 350,
-    standard: 400,
-    premium: 450
-  };
-
-  // Texture multipliers (reduce coverage)
-  const textureMultipliers: Record<string, number> = {
-    smooth: 1.0,
-    light: 0.85,    // 15% reduction
-    medium: 0.75,   // 25% reduction
-    heavy: 0.65     // 35% reduction
-  };
-
-  // Ceiling texture multipliers
-  const ceilingTextureMultipliers: Record<string, number> = {
-    smooth: 0.9,    // Ceilings generally absorb more
-    light: 0.75,
-    popcorn: 0.50   // Popcorn absorbs significantly more
-  };
-
-  // Surface condition adjustments
-  const surfaceConditionMultipliers: Record<string, number> = {
-    'good': 1.0,
-    'fair': 0.9,
-    'new-drywall': 0.7,  // New drywall absorbs 30% more
-    'stained': 0.85,
-    'glossy': 0.9
-  };
-
-  // Primer coverage rates
-  const primerCoverageRates: Record<string, number> = {
-    'standard': 300,
-    'high-hide': 250,
-    'pva': 300
-  };
-
-  // Room type recommendations
-  const roomRecommendations: Record<string, string> = {
-    'bedroom': 'Flat or eggshell finish recommended for bedrooms. Low-VOC paint is ideal for better air quality.',
-    'kitchen': 'Semi-gloss or satin finish recommended for kitchens. These finishes are easier to clean and resist moisture.',
-    'bathroom': 'Use moisture-resistant, mildew-resistant paint. Semi-gloss finish recommended for humidity protection.',
-    'hallway': 'Satin or semi-gloss finish recommended for high-traffic areas. Consider scuff-resistant paint.',
-    'basement': 'Use moisture-blocking primer first. Consider waterproofing paint for below-grade walls. Add 30% extra for concrete block.',
-    'garage': 'Epoxy-based or garage floor paint recommended for durability. Standard latex works for walls.'
-  };
-
-  // Deduction values (sq ft)
-  const deductionValues = {
-    doors: 21,
-    frenchDoors: 18,
-    closetDoors: 25,
-    windows: 15,
-    largeWindows: 50,
-    smallWindows: 8
-  };
 
   // INP-optimized button feedback functions
   function showLoadingState() {
@@ -718,12 +672,8 @@
     }
   });
 
-  // Calculate paint needed
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    showLoadingState();
-
-    // Get input values
+  // Gather form inputs into CalculationInputs
+  function gatherInputs(): CalculationInputs {
     const length = parseFloat((document.getElementById('length') as HTMLInputElement).value);
     const width = parseFloat((document.getElementById('width') as HTMLInputElement).value);
 
@@ -734,217 +684,148 @@
       height = parseFloat(heightSelect.value);
     }
 
-    // Get all opening counts
-    const numDoors = parseInt((document.getElementById('doors') as HTMLInputElement).value) || 0;
-    const numFrenchDoors = parseInt((document.getElementById('french-doors') as HTMLInputElement).value) || 0;
-    const numClosetDoors = parseInt((document.getElementById('closet-doors') as HTMLInputElement).value) || 0;
-    const numWindows = parseInt((document.getElementById('windows') as HTMLInputElement).value) || 0;
-    const numLargeWindows = parseInt((document.getElementById('large-windows') as HTMLInputElement).value) || 0;
-    const numSmallWindows = parseInt((document.getElementById('small-windows') as HTMLInputElement).value) || 0;
+    return {
+      length,
+      width,
+      height,
+      doors: parseInt((document.getElementById('doors') as HTMLInputElement).value) || 0,
+      frenchDoors: parseInt((document.getElementById('french-doors') as HTMLInputElement).value) || 0,
+      closetDoors: parseInt((document.getElementById('closet-doors') as HTMLInputElement).value) || 0,
+      windows: parseInt((document.getElementById('windows') as HTMLInputElement).value) || 0,
+      largeWindows: parseInt((document.getElementById('large-windows') as HTMLInputElement).value) || 0,
+      smallWindows: parseInt((document.getElementById('small-windows') as HTMLInputElement).value) || 0,
+      surfaceType: surfaceTypeSelect.value as CalculationInputs['surfaceType'],
+      numCoats: parseInt((document.getElementById('coats') as HTMLSelectElement).value),
+      paintQuality: (document.getElementById('paint-quality') as HTMLSelectElement).value as CalculationInputs['paintQuality'],
+      includeWaste: (document.getElementById('waste-buffer') as HTMLInputElement).checked,
+      wallTexture: (document.getElementById('wall-texture') as HTMLSelectElement).value as CalculationInputs['wallTexture'],
+      ceilingTexture: (document.getElementById('ceiling-texture') as HTMLSelectElement).value as CalculationInputs['ceilingTexture'],
+      surfaceCondition: surfaceConditionSelect.value as CalculationInputs['surfaceCondition'],
+      roomType: (document.getElementById('room-type') as HTMLSelectElement).value,
+      needsPrimer: needsPrimerCheckbox.checked,
+      primerType: (document.getElementById('primer-type') as HTMLSelectElement).value as CalculationInputs['primerType'],
+      primerCoats: parseInt((document.getElementById('primer-coats') as HTMLSelectElement).value),
+      trimHeight: parseInt((document.getElementById('trim-height') as HTMLSelectElement).value),
+    };
+  }
 
-    const surfaceType = surfaceTypeSelect.value;
-    const numCoats = parseInt((document.getElementById('coats') as HTMLSelectElement).value);
-    const paintQuality = (document.getElementById('paint-quality') as HTMLSelectElement).value;
-    const includeWaste = (document.getElementById('waste-buffer') as HTMLInputElement).checked;
-    const wallTexture = (document.getElementById('wall-texture') as HTMLSelectElement).value;
-    const ceilingTexture = (document.getElementById('ceiling-texture') as HTMLSelectElement).value;
-    const surfaceCondition = surfaceConditionSelect.value;
-    const roomType = (document.getElementById('room-type') as HTMLSelectElement).value;
-    const needsPrimer = needsPrimerCheckbox.checked;
+  // Calculate paint needed — INP-optimized with two-phase RAF
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-    // Calculate areas
-    const wallArea = 2 * (length + width) * height;
-    const ceilingArea = length * width;
+    // Phase 1: Immediate visual feedback (yields to browser for paint)
+    showLoadingState();
 
-    // Calculate deductions
-    const totalDeduction =
-      (numDoors * deductionValues.doors) +
-      (numFrenchDoors * deductionValues.frenchDoors) +
-      (numClosetDoors * deductionValues.closetDoors) +
-      (numWindows * deductionValues.windows) +
-      (numLargeWindows * deductionValues.largeWindows) +
-      (numSmallWindows * deductionValues.smallWindows);
-
-    // Calculate paintable area based on surface type
-    let paintableArea = 0;
-    let ceilingPaintableArea = 0;
-    let includesCeiling = false;
-
-    if (surfaceType === 'walls' || surfaceType === 'walls-ceiling') {
-      paintableArea += wallArea - totalDeduction;
-    }
-    if (surfaceType === 'ceiling' || surfaceType === 'walls-ceiling') {
-      ceilingPaintableArea = ceilingArea;
-      includesCeiling = true;
-    }
-    if (surfaceType === 'trim') {
-      // Improved trim calculation using actual trim height
-      const trimHeightInches = parseInt((document.getElementById('trim-height') as HTMLSelectElement).value);
-      const trimHeightFeet = trimHeightInches / 12;
-      const perimeter = 2 * (length + width);
-      paintableArea = perimeter * trimHeightFeet;
-    }
-
-    // Ensure paintable area is not negative
-    paintableArea = Math.max(0, paintableArea);
-
-    // Get base coverage rate
-    const baseCoverage = baseCoverageRates[paintQuality];
-
-    // Apply texture multiplier for walls
-    const wallTextureMultiplier = textureMultipliers[wallTexture];
-    const adjustedWallCoverage = baseCoverage * wallTextureMultiplier * surfaceConditionMultipliers[surfaceCondition];
-
-    // Apply texture multiplier for ceiling
-    const ceilingTextureMultiplier = ceilingTextureMultipliers[ceilingTexture];
-    const adjustedCeilingCoverage = baseCoverage * ceilingTextureMultiplier * surfaceConditionMultipliers[surfaceCondition];
-
-    // Calculate gallons needed for walls
-    const wallCoverageNeeded = paintableArea * numCoats;
-    const wallGallons = wallCoverageNeeded / adjustedWallCoverage;
-
-    // Calculate gallons needed for ceiling
-    const ceilingCoverageNeeded = ceilingPaintableArea * numCoats;
-    const ceilingGallons = ceilingCoverageNeeded / adjustedCeilingCoverage;
-
-    // Total base gallons
-    const baseGallons = wallGallons + ceilingGallons;
-
-    // Apply waste buffer (15%)
-    const wasteMultiplier = includeWaste ? 0.15 : 0;
-    const wasteAmount = baseGallons * wasteMultiplier;
-    const gallonsNeeded = Math.ceil(baseGallons + wasteAmount);
-
-    // Calculate primer if needed
-    let primerGallons = 0;
-    if (needsPrimer) {
-      const primerType = (document.getElementById('primer-type') as HTMLSelectElement).value;
-      const primerCoats = parseInt((document.getElementById('primer-coats') as HTMLSelectElement).value);
-      const primerCoverage = primerCoverageRates[primerType];
-      const totalPrimerArea = (paintableArea + ceilingPaintableArea) * primerCoats;
-      primerGallons = Math.ceil((totalPrimerArea / primerCoverage) * (1 + wasteMultiplier));
-    }
-
-    // Update results display
-    (document.getElementById('gallons-result') as HTMLElement).textContent = gallonsNeeded.toString();
-    (document.getElementById('total-area') as HTMLElement).textContent = Math.round(paintableArea + ceilingPaintableArea).toString();
-    (document.getElementById('num-coats') as HTMLElement).textContent = numCoats.toString();
-
-    // Update primer display
-    const primerResultBox = document.getElementById('primer-result-box') as HTMLElement;
-    const primerBreakdownRow = document.getElementById('primer-breakdown-row') as HTMLElement;
-    const primerBreakdownHr = document.getElementById('primer-breakdown-hr') as HTMLElement;
-
-    if (needsPrimer && primerGallons > 0) {
-      primerResultBox.classList.remove('hidden');
-      primerBreakdownRow.classList.remove('hidden');
-      primerBreakdownHr.classList.remove('hidden');
-      (document.getElementById('primer-gallons-result') as HTMLElement).textContent = primerGallons.toString();
-      (document.getElementById('primer-coats-display') as HTMLElement).textContent = (document.getElementById('primer-coats') as HTMLSelectElement).value;
-      (document.getElementById('primer-breakdown') as HTMLElement).textContent = `${primerGallons} gal`;
-    } else {
-      primerResultBox.classList.add('hidden');
-      primerBreakdownRow.classList.add('hidden');
-      primerBreakdownHr.classList.add('hidden');
-    }
-
-    // Update breakdown
-    (document.getElementById('wall-area') as HTMLElement).textContent = `${Math.round(wallArea)} sq ft`;
-    (document.getElementById('ceiling-area') as HTMLElement).textContent = `${Math.round(ceilingArea)} sq ft`;
-    (document.getElementById('deductions') as HTMLElement).textContent = `-${Math.round(totalDeduction)} sq ft`;
-    (document.getElementById('net-area') as HTMLElement).textContent = `${Math.round(paintableArea + ceilingPaintableArea)} sq ft`;
-    (document.getElementById('coverage-rate') as HTMLElement).textContent = `${baseCoverage} sq ft/gal`;
-
-    // Texture adjustment display
-    const textureAdjustmentRow = document.getElementById('texture-adjustment-row') as HTMLElement;
-    if (wallTextureMultiplier < 1 || surfaceConditionMultipliers[surfaceCondition] < 1) {
-      textureAdjustmentRow.classList.remove('hidden');
-      const totalReduction = Math.round((1 - (wallTextureMultiplier * surfaceConditionMultipliers[surfaceCondition])) * 100);
-      (document.getElementById('texture-adjustment') as HTMLElement).textContent = `-${totalReduction}% (texture/surface)`;
-    } else {
-      textureAdjustmentRow.classList.add('hidden');
-    }
-
-    (document.getElementById('adjusted-coverage') as HTMLElement).textContent = `${Math.round(adjustedWallCoverage)} sq ft/gal`;
-    (document.getElementById('coats-display') as HTMLElement).textContent = numCoats.toString();
-    (document.getElementById('total-coverage') as HTMLElement).textContent = `${Math.round(wallCoverageNeeded + ceilingCoverageNeeded)} sq ft needed`;
-
-    // Show/hide ceiling row based on surface type
-    const ceilingRow = document.getElementById('ceiling-row') as HTMLElement;
-    if (includesCeiling) {
-      ceilingRow.classList.remove('hidden');
-    } else {
-      ceilingRow.classList.add('hidden');
-    }
-
-    // Show/hide waste row and update label
-    const wasteRow = document.getElementById('waste-row') as HTMLElement;
-    if (includeWaste) {
-      wasteRow.classList.remove('hidden');
-      (document.getElementById('waste-amount') as HTMLElement).textContent = `+${wasteAmount.toFixed(2)} gal`;
-    } else {
-      wasteRow.classList.add('hidden');
-    }
-
-    // Show room-specific recommendation
-    const roomRecommendationDiv = document.getElementById('room-recommendation') as HTMLElement;
-    const roomRecommendationText = document.getElementById('room-recommendation-text') as HTMLElement;
-    if (roomRecommendations[roomType]) {
-      roomRecommendationDiv.classList.remove('hidden');
-      roomRecommendationText.textContent = roomRecommendations[roomType];
-    } else {
-      roomRecommendationDiv.classList.add('hidden');
-    }
-
-    // Generate contextual tips
-    const tipsList = document.getElementById('tips-list') as HTMLElement;
-    const tips: string[] = [];
-
-    tips.push('• Buy all paint at once from the same batch number for consistent color.');
-
-    if (numCoats < 2) {
-      tips.push('• Consider 2 coats for better coverage and durability.');
-    }
-
-    if (wallTexture !== 'smooth') {
-      tips.push('• Textured walls absorb more paint. We\'ve adjusted your estimate accordingly.');
-    }
-
-    if (surfaceCondition === 'new-drywall' && !needsPrimer) {
-      tips.push('• New drywall strongly benefits from primer—consider adding it to your order.');
-    }
-
-    if (roomType === 'bathroom' || roomType === 'kitchen') {
-      tips.push('• Use moisture-resistant paint and ensure proper ventilation while painting.');
-    }
-
-    if (roomType === 'basement') {
-      tips.push('• Check for moisture issues before painting. Use waterproofing primer on concrete.');
-    }
-
-    if (gallonsNeeded >= 5) {
-      tips.push('• For 5+ gallons, consider buying a 5-gallon bucket for better value and color consistency.');
-    }
-
-    if (surfaceType === 'walls-ceiling') {
-      tips.push('• Paint the ceiling first, then walls to avoid drips on finished surfaces.');
-    }
-
-    if (needsPrimer) {
-      tips.push('• Allow primer to fully dry (typically 1-2 hours) before applying paint.');
-    }
-
-    tipsList.innerHTML = tips.map(tip => `<li>${tip}</li>`).join('');
-
-    // Show results section
-    resultsSection.classList.remove('hidden');
-
-    // Smooth scroll to results
-    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-    // Hide loading state
+    // Phase 2: Defer computation + DOM update so loading state paints first
     requestAnimationFrame(() => {
-      hideLoadingState();
+      requestAnimationFrame(() => {
+        // Pure computation (no DOM reads/writes)
+        const inputs = gatherInputs();
+        const results = calculatePaint(inputs);
+
+        // Generate contextual tips
+        const tips: string[] = [];
+        tips.push('• Buy all paint at once from the same batch number for consistent color.');
+        if (inputs.numCoats < 2) tips.push('• Consider 2 coats for better coverage and durability.');
+        if (inputs.wallTexture !== 'smooth') tips.push('• Textured walls absorb more paint. We\'ve adjusted your estimate accordingly.');
+        if (inputs.surfaceCondition === 'new-drywall' && !inputs.needsPrimer) tips.push('• New drywall strongly benefits from primer—consider adding it to your order.');
+        if (inputs.roomType === 'bathroom' || inputs.roomType === 'kitchen') tips.push('• Use moisture-resistant paint and ensure proper ventilation while painting.');
+        if (inputs.roomType === 'basement') tips.push('• Check for moisture issues before painting. Use waterproofing primer on concrete.');
+        if (results.gallonsNeeded >= 5) tips.push('• For 5+ gallons, consider buying a 5-gallon bucket for better value and color consistency.');
+        if (inputs.surfaceType === 'walls-ceiling') tips.push('• Paint the ceiling first, then walls to avoid drips on finished surfaces.');
+        if (inputs.needsPrimer) tips.push('• Allow primer to fully dry (typically 1-2 hours) before applying paint.');
+
+        // Batch all DOM writes together
+        (document.getElementById('gallons-result') as HTMLElement).textContent = results.gallonsNeeded.toString();
+        (document.getElementById('total-area') as HTMLElement).textContent = Math.round(results.paintableArea + results.ceilingPaintableArea).toString();
+        (document.getElementById('num-coats') as HTMLElement).textContent = inputs.numCoats.toString();
+
+        // Primer display
+        const primerResultBox = document.getElementById('primer-result-box') as HTMLElement;
+        const primerBreakdownRow = document.getElementById('primer-breakdown-row') as HTMLElement;
+        const primerBreakdownHr = document.getElementById('primer-breakdown-hr') as HTMLElement;
+
+        if (inputs.needsPrimer && results.primerGallons > 0) {
+          primerResultBox.classList.remove('hidden');
+          primerBreakdownRow.classList.remove('hidden');
+          primerBreakdownHr.classList.remove('hidden');
+          (document.getElementById('primer-gallons-result') as HTMLElement).textContent = results.primerGallons.toString();
+          (document.getElementById('primer-coats-display') as HTMLElement).textContent = (inputs.primerCoats ?? 1).toString();
+          (document.getElementById('primer-breakdown') as HTMLElement).textContent = `${results.primerGallons} gal`;
+        } else {
+          primerResultBox.classList.add('hidden');
+          primerBreakdownRow.classList.add('hidden');
+          primerBreakdownHr.classList.add('hidden');
+        }
+
+        // Breakdown
+        (document.getElementById('wall-area') as HTMLElement).textContent = `${Math.round(results.wallArea)} sq ft`;
+        (document.getElementById('ceiling-area') as HTMLElement).textContent = `${Math.round(results.ceilingArea)} sq ft`;
+        (document.getElementById('deductions') as HTMLElement).textContent = `-${Math.round(results.totalDeduction)} sq ft`;
+        (document.getElementById('net-area') as HTMLElement).textContent = `${Math.round(results.paintableArea + results.ceilingPaintableArea)} sq ft`;
+        (document.getElementById('coverage-rate') as HTMLElement).textContent = `${results.baseCoverage} sq ft/gal`;
+
+        // Texture adjustment display
+        const textureAdjustmentRow = document.getElementById('texture-adjustment-row') as HTMLElement;
+        if (results.wallTextureMultiplier < 1 || surfaceConditionMultipliers[inputs.surfaceCondition] < 1) {
+          textureAdjustmentRow.classList.remove('hidden');
+          const totalReduction = Math.round((1 - (results.wallTextureMultiplier * surfaceConditionMultipliers[inputs.surfaceCondition])) * 100);
+          (document.getElementById('texture-adjustment') as HTMLElement).textContent = `-${totalReduction}% (texture/surface)`;
+        } else {
+          textureAdjustmentRow.classList.add('hidden');
+        }
+
+        (document.getElementById('adjusted-coverage') as HTMLElement).textContent = `${Math.round(results.adjustedWallCoverage)} sq ft/gal`;
+        (document.getElementById('coats-display') as HTMLElement).textContent = inputs.numCoats.toString();
+        (document.getElementById('total-coverage') as HTMLElement).textContent = `${Math.round(results.wallCoverageNeeded + results.ceilingCoverageNeeded)} sq ft needed`;
+
+        // Ceiling row visibility
+        const ceilingRow = document.getElementById('ceiling-row') as HTMLElement;
+        if (results.includesCeiling) {
+          ceilingRow.classList.remove('hidden');
+        } else {
+          ceilingRow.classList.add('hidden');
+        }
+
+        // Waste row
+        const wasteRow = document.getElementById('waste-row') as HTMLElement;
+        if (inputs.includeWaste) {
+          wasteRow.classList.remove('hidden');
+          (document.getElementById('waste-amount') as HTMLElement).textContent = `+${results.wasteAmount.toFixed(2)} gal`;
+        } else {
+          wasteRow.classList.add('hidden');
+        }
+
+        // Room recommendation
+        const roomRecommendationDiv = document.getElementById('room-recommendation') as HTMLElement;
+        const roomRecommendationText = document.getElementById('room-recommendation-text') as HTMLElement;
+        if (roomRecommendations[inputs.roomType]) {
+          roomRecommendationDiv.classList.remove('hidden');
+          roomRecommendationText.textContent = roomRecommendations[inputs.roomType];
+        } else {
+          roomRecommendationDiv.classList.add('hidden');
+        }
+
+        // Tips — use replaceChildren instead of innerHTML for better INP
+        const tipsList = document.getElementById('tips-list') as HTMLElement;
+        const tipElements = tips.map(tip => {
+          const li = document.createElement('li');
+          li.textContent = tip;
+          return li;
+        });
+        tipsList.replaceChildren(...tipElements);
+
+        // Show results section
+        resultsSection.classList.remove('hidden');
+
+        // Hide loading state
+        hideLoadingState();
+
+        // Defer scroll to avoid blocking paint
+        setTimeout(() => {
+          resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 0);
+      });
     });
   });
 

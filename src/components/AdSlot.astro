@@ -1,0 +1,52 @@
+---
+interface Props {
+  format?: 'auto' | 'horizontal' | 'rectangle';
+  slot?: string;
+}
+
+const { format = 'auto', slot = '' } = Astro.props;
+const minHeight = format === 'rectangle' ? '250px' : '90px';
+---
+
+<div class="ad-slot w-full text-center my-6" style={`min-height: ${minHeight}`}>
+  <p class="text-xs text-gray-400 mb-1">Advertisement</p>
+  <ins
+    class="adsbygoogle"
+    style="display:block"
+    data-ad-client="ca-pub-7820884299125377"
+    data-ad-slot={slot}
+    data-ad-format={format}
+    data-full-width-responsive="true"
+  ></ins>
+</div>
+
+<script is:inline>
+  (function() {
+    // Only push ads if adsbygoogle is available (loaded after consent)
+    function pushAd() {
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch(e) {}
+    }
+
+    // If adsbygoogle script is already loaded, push immediately
+    if (window.adsbygoogle) {
+      pushAd();
+    } else {
+      // Otherwise wait for it to load (consent-gated)
+      var observer = new MutationObserver(function(mutations) {
+        for (var i = 0; i < mutations.length; i++) {
+          for (var j = 0; j < mutations[i].addedNodes.length; j++) {
+            var node = mutations[i].addedNodes[j];
+            if (node.tagName === 'SCRIPT' && node.src && node.src.indexOf('adsbygoogle') > -1) {
+              node.addEventListener('load', pushAd);
+              observer.disconnect();
+              return;
+            }
+          }
+        }
+      });
+      observer.observe(document.head, { childList: true });
+    }
+  })();
+</script>

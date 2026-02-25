@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AdSlot from '../../components/AdSlot.astro';
 import { calculatorPages } from '../../data/calculator-pages';
 
 const roomTypePages = calculatorPages.filter(p => p.pageType === 'room-type');
@@ -141,6 +142,8 @@ const colorChangeVisuals: Record<string, { from: string; to: string; fromLabel: 
         })}
       </div>
     </section>
+
+    <AdSlot format="horizontal" />
 
     <!-- Brand Calculators -->
     <section class="py-10">

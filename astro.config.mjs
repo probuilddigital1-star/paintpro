@@ -20,6 +20,12 @@ export default defineConfig({
         } else if (path.startsWith('/paint-calculator')) {
           item.priority = 0.8;
           item.changefreq = 'monthly';
+        } else if (path === '/blog') {
+          item.priority = 0.8;
+          item.changefreq = 'weekly';
+        } else if (path.startsWith('/blog/')) {
+          item.priority = 0.7;
+          item.changefreq = 'monthly';
         }
         return item;
       },

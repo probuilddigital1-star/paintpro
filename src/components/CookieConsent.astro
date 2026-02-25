@@ -113,6 +113,15 @@
         gtag('js', new Date());
         gtag('config', 'G-C766XS9QKY');
       };
+
+      // Load AdSense script alongside GA4
+      if (!document.querySelector('script[src*="adsbygoogle"]')) {
+        var adsScript = document.createElement('script');
+        adsScript.async = true;
+        adsScript.crossOrigin = 'anonymous';
+        adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7820884299125377';
+        document.head.appendChild(adsScript);
+      }
     }
 
     // Expose function to reopen banner (for footer link)

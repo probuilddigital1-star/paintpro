@@ -1,0 +1,26 @@
+---
+import EmbedLayout from '../layouts/EmbedLayout.astro';
+import Calculator from '../components/Calculator.astro';
+---
+
+<EmbedLayout title="PaintPro Calculator - Embeddable Widget">
+  <main class="max-w-4xl mx-auto px-4 py-4">
+    <Calculator />
+
+    <div class="text-center mt-6 pb-4">
+      <a
+        href="https://paintprocalculator.com"
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-primary transition-colors"
+      >
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+          <path d="M7 17h10c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1zm1-4h8v2H8v-2z"/>
+          <path d="M17 7H7v2h10V7z"/>
+        </svg>
+        Powered by PaintPro Calculator
+      </a>
+    </div>
+  </main>
+</EmbedLayout>

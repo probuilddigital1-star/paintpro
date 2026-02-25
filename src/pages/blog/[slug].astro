@@ -1,0 +1,273 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import { blogPosts, type BlogPost } from '../../data/blog-posts';
+
+export function getStaticPaths() {
+  return blogPosts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: BlogPost;
+}
+
+const { post } = Astro.props;
+
+const siteUrl = 'https://paintprocalculator.com';
+const pageUrl = `${siteUrl}/blog/${post.slug}`;
+const currentDate = new Date().toISOString().split('T')[0];
+
+const relatedPosts = post.relatedSlugs
+  .map(slug => blogPosts.find(p => p.slug === slug))
+  .filter((p): p is BlogPost => p !== undefined);
+
+// Breadcrumb schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": siteUrl,
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": `${siteUrl}/blog`,
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": post.title,
+      "item": pageUrl,
+    },
+  ],
+};
+
+// BlogPosting schema
+const blogPostingSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post.title,
+  "description": post.metaDescription,
+  "url": pageUrl,
+  "datePublished": post.publishedDate,
+  "dateModified": post.updatedDate,
+  "author": {
+    "@type": "Organization",
+    "name": "ProBuild Digital LLC",
+    "url": "https://probuilddigital.com",
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ProBuild Digital LLC",
+    "url": "https://probuilddigital.com",
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": pageUrl,
+  },
+  "inLanguage": "en-US",
+  "wordCount": post.content.split(/\s+/).length,
+};
+
+// FAQ schema
+const faqSchema = post.faqs.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": post.faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer,
+      "author": {
+        "@type": "Organization",
+        "name": "ProBuild Digital LLC",
+      },
+      "dateModified": currentDate,
+    },
+  })),
+  "lastReviewed": currentDate,
+  "reviewedBy": {
+    "@type": "Organization",
+    "name": "ProBuild Digital LLC",
+  },
+} : null;
+
+// Category badge colors
+const categoryColors: Record<string, string> = {
+  'Cost Guide': 'bg-green-100 text-green-800',
+  'Paint Guide': 'bg-blue-100 text-blue-800',
+  'Painting Tips': 'bg-amber-100 text-amber-800',
+  'Brand Comparison': 'bg-purple-100 text-purple-800',
+  'How-To Guide': 'bg-rose-100 text-rose-800',
+};
+
+const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
+---
+
+<Layout title={post.title} description={post.metaDescription}>
+  <Header />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
+  {faqSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  )}
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/' },
+    { name: 'Blog', href: '/blog' },
+    { name: post.title },
+  ]} />
+
+  <article class="max-w-3xl mx-auto px-4 py-8">
+    <!-- Article Header -->
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-4">
+        <span class={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${badgeColor}`}>{post.category}</span>
+        <time class="text-sm text-gray-500" datetime={post.publishedDate}>
+          {new Date(post.publishedDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+        </time>
+        <span class="text-sm text-gray-400">{post.readingTime} min read</span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold text-heading leading-tight">{post.title}</h1>
+    </header>
+
+    <!-- Article Content -->
+    <div class="blog-prose" set:html={post.content} />
+
+    <!-- Mid-article CTA -->
+    <div class="my-10 bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-xl p-6 text-center">
+      <p class="font-semibold text-heading mb-2">{post.calculatorCta.text}</p>
+      <p class="text-sm text-body mb-4">Our free calculator gives you an exact gallon estimate in 60 seconds.</p>
+      <a
+        href={post.calculatorCta.href}
+        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold py-2.5 px-6 rounded-lg transition-all shadow-md hover:shadow-lg"
+      >
+        Try the Calculator
+      </a>
+    </div>
+
+    <div class="max-w-3xl mx-auto"><AdSlot format="horizontal" /></div>
+
+    <!-- FAQ Section -->
+    {post.faqs.length > 0 && (
+      <section class="mt-12 mb-8">
+        <h2 class="text-2xl font-bold text-heading mb-6">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+          {post.faqs.map(faq => (
+            <details class="group bg-white border border-border rounded-lg shadow-sm">
+              <summary class="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-heading hover:text-primary transition-colors">
+                {faq.question}
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <div class="px-5 pb-4 text-body text-sm leading-relaxed">
+                {faq.answer}
+              </div>
+            </details>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Related Posts -->
+    {relatedPosts.length > 0 && (
+      <section class="mt-12 mb-8">
+        <h2 class="text-2xl font-bold text-heading mb-6">Related Articles</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {relatedPosts.map(related => {
+            const relBadgeColor = categoryColors[related.category] || 'bg-gray-100 text-gray-800';
+            return (
+              <a
+                href={`/blog/${related.slug}`}
+                class="group block bg-white rounded-xl border border-border p-4 shadow-sm hover:shadow-md hover:border-primary/30 transition-all"
+              >
+                <span class={`text-xs font-semibold px-2 py-0.5 rounded-full ${relBadgeColor}`}>{related.category}</span>
+                <h3 class="font-semibold text-heading group-hover:text-primary transition-colors mt-2 mb-1 line-clamp-2 text-sm">{related.title}</h3>
+                <span class="text-xs text-gray-400">{related.readingTime} min read</span>
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    )}
+
+    <!-- Bottom CTA -->
+    <div class="mt-10 bg-light-gray rounded-xl p-6 text-center">
+      <p class="font-semibold text-heading mb-2">Ready to Start Your Project?</p>
+      <p class="text-sm text-body mb-4">Use our free calculator to figure out exactly how much paint you need.</p>
+      <a
+        href="/#calculator"
+        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold py-2.5 px-6 rounded-lg transition-all shadow-md hover:shadow-lg"
+      >
+        Calculate Paint Needed
+      </a>
+    </div>
+  </article>
+
+  <Footer />
+</Layout>
+
+<style>
+  .blog-prose :global(h2) {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-heading);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .blog-prose :global(h3) {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-heading);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .blog-prose :global(p) {
+    color: var(--color-body);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+  .blog-prose :global(ul),
+  .blog-prose :global(ol) {
+    color: var(--color-body);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
+  .blog-prose :global(ul) {
+    list-style-type: disc;
+  }
+  .blog-prose :global(ol) {
+    list-style-type: decimal;
+  }
+  .blog-prose :global(li) {
+    margin-bottom: 0.375rem;
+  }
+  .blog-prose :global(strong) {
+    color: var(--color-heading);
+    font-weight: 600;
+  }
+  .blog-prose :global(a) {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .blog-prose :global(a:hover) {
+    color: var(--color-primary-dark);
+  }
+</style>

@@ -7,6 +7,7 @@ import StaticResults from '../../components/StaticResults.astro';
 import AffiliateCards from '../../components/AffiliateCards.astro';
 import PageFAQ from '../../components/PageFAQ.astro';
 import RelatedPages from '../../components/RelatedPages.astro';
+import AdSlot from '../../components/AdSlot.astro';
 import { calculatorPages, type CalculatorPageData } from '../../data/calculator-pages';
 import { calculatePaint } from '../../utils/paint-calculator';
 
@@ -120,6 +121,8 @@ const faqSchema = page.faqs.length > 0 ? {
     <p class="text-body text-lg leading-relaxed max-w-3xl">{page.introText}</p>
   </section>
 
+  <div class="max-w-4xl mx-auto px-4"><AdSlot format="horizontal" /></div>
+
   <!-- Brand Disclaimer -->
   {page.brandDisclaimer && (
     <div class="max-w-4xl mx-auto px-4 pt-2 pb-2">
@@ -229,6 +232,8 @@ const faqSchema = page.faqs.length > 0 ? {
 
   <!-- FAQ -->
   <PageFAQ faqs={page.faqs} />
+
+  <div class="max-w-4xl mx-auto px-4"><AdSlot format="rectangle" /></div>
 
   <!-- Related Pages -->
   <RelatedPages slugs={page.relatedPages} />

@@ -1,6 +1,6 @@
 ---
-// Cookie Consent Banner - GDPR Compliance
-// Modern, polished design with smooth animations
+// Cookie Opt-Out Banner - CCPA compliant (opt-out model)
+// GA4 and AdSense load by default; users can opt out via footer link
 ---
 
 <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-50 p-4 hidden">
@@ -18,9 +18,9 @@
         </div>
 
         <div class="flex-1">
-          <h3 class="font-semibold text-white mb-1">We value your privacy</h3>
+          <h3 class="font-semibold text-white mb-1">Cookie Settings</h3>
           <p class="text-sm text-slate-300 leading-relaxed">
-            We use analytics cookies to improve your experience.
+            We use cookies for analytics and advertising to improve your experience.
             <a href="/privacy" class="text-amber-400 hover:text-amber-300 underline underline-offset-2">Learn more</a>
           </p>
         </div>
@@ -28,16 +28,16 @@
 
       <div class="flex gap-3 mt-4 ml-14">
         <button
-          id="cookie-reject"
+          id="cookie-optout"
           class="px-5 py-2.5 text-sm font-medium text-slate-300 hover:text-white border border-slate-600 hover:border-slate-500 rounded-xl transition-colors"
         >
-          Decline
+          Opt out
         </button>
         <button
-          id="cookie-accept"
+          id="cookie-close"
           class="px-5 py-2.5 text-sm font-medium bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-900 rounded-xl transition-all shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40"
         >
-          Accept cookies
+          Got it
         </button>
       </div>
     </div>
@@ -65,35 +65,31 @@
   (function() {
     const CONSENT_KEY = 'cookie_consent';
     const banner = document.getElementById('cookie-banner');
-    const acceptBtn = document.getElementById('cookie-accept');
-    const rejectBtn = document.getElementById('cookie-reject');
+    const closeBtn = document.getElementById('cookie-close');
+    const optoutBtn = document.getElementById('cookie-optout');
 
-    // Check if user has already made a choice
-    const consent = localStorage.getItem(CONSENT_KEY);
+    var consent = localStorage.getItem(CONSENT_KEY);
 
-    if (consent === null) {
-      // No choice made yet - show banner after short delay
-      setTimeout(() => {
-        banner.classList.remove('hidden');
-      }, 1000);
-    } else if (consent === 'accepted') {
-      // User accepted - load GA4
-      loadGA4();
+    if (consent === 'opted_out') {
+      // User opted out - do not load tracking
+      return;
     }
-    // If rejected, do nothing (GA4 won't load)
 
-    acceptBtn.addEventListener('click', function() {
+    // Load GA4 and AdSense by default for all users
+    loadTracking();
+
+    closeBtn.addEventListener('click', function() {
       localStorage.setItem(CONSENT_KEY, 'accepted');
       banner.classList.add('hidden');
-      loadGA4();
     });
 
-    rejectBtn.addEventListener('click', function() {
-      localStorage.setItem(CONSENT_KEY, 'rejected');
+    optoutBtn.addEventListener('click', function() {
+      localStorage.setItem(CONSENT_KEY, 'opted_out');
       banner.classList.add('hidden');
+      disableTracking();
     });
 
-    function loadGA4() {
+    function loadTracking() {
       // Only load in production
       if (window.location.hostname === 'localhost') return;
 
@@ -101,7 +97,7 @@
       if (window.gtag) return;
 
       // Load GA4 script
-      const script = document.createElement('script');
+      var script = document.createElement('script');
       script.async = true;
       script.src = 'https://www.googletagmanager.com/gtag/js?id=G-C766XS9QKY';
       document.head.appendChild(script);
@@ -114,7 +110,7 @@
         gtag('config', 'G-C766XS9QKY');
       };
 
-      // Load AdSense script alongside GA4
+      // Load AdSense script
       if (!document.querySelector('script[src*="adsbygoogle"]')) {
         var adsScript = document.createElement('script');
         adsScript.async = true;
@@ -124,7 +120,21 @@
       }
     }
 
-    // Expose function to reopen banner (for footer link)
+    function disableTracking() {
+      // Disable GA4
+      window['ga-disable-G-C766XS9QKY'] = true;
+
+      // Remove tracking cookies
+      document.cookie.split(';').forEach(function(c) {
+        var name = c.trim().split('=')[0];
+        if (name.startsWith('_ga') || name.startsWith('_gid')) {
+          document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=' + window.location.hostname;
+          document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+        }
+      });
+    }
+
+    // Expose function to open settings (for footer link)
     window.openCookieSettings = function() {
       banner.classList.remove('hidden');
     };

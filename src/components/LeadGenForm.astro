@@ -159,6 +159,7 @@ const webhookUrl = import.meta.env.PUBLIC_N8N_WEBHOOK_URL || '';
       // Success
       form.classList.add('hidden');
       successEl.classList.remove('hidden');
+      document.dispatchEvent(new CustomEvent('email-signup-success'));
 
     } catch (error) {
       console.error('Signup error:', error);
@@ -174,5 +175,13 @@ const webhookUrl = import.meta.env.PUBLIC_N8N_WEBHOOK_URL || '';
   tryAgainBtn.addEventListener('click', () => {
     errorEl.classList.add('hidden');
     form.classList.remove('hidden');
+  });
+</script>
+
+<script>
+  import { trackEmailSignup } from '../utils/analytics';
+
+  document.addEventListener('email-signup-success', () => {
+    trackEmailSignup();
   });
 </script>

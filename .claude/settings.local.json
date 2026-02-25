@@ -13,7 +13,32 @@
       "Bash(node scripts/convert-images.mjs:*)",
       "Bash(ping:*)",
       "Bash(curl:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(gh auth status:*)",
+      "Bash(dir:*)",
+      "Bash(ls:*)",
+      "Bash(git reset:*)",
+      "Bash(git restore:*)",
+      "Skill(frontend-design)",
+      "Bash(npm run dev:*)",
+      "Bash(git fetch:*)",
+      "Bash(taskkill:*)",
+      "Bash(git -C \"C:\\\\Users\\\\zckpe\\\\Documents\\\\claude-projects\\\\paintprocalc\" diff --stat)",
+      "Bash(git -C \"C:\\\\Users\\\\zckpe\\\\Documents\\\\claude-projects\\\\paintprocalc\" diff src/components/Header.astro src/components/Hero.astro)",
+      "Bash(tasklist:*)",
+      "Bash(powershell:*)",
+      "Bash(git -C \"C:\\\\Users\\\\zckpe\\\\Documents\\\\claude-projects\\\\paintprocalc\" add src/components/Header.astro src/components/Hero.astro)",
+      "Bash(git -C \"C:\\\\Users\\\\zckpe\\\\Documents\\\\claude-projects\\\\paintprocalc\" commit -m \"$\\(cat <<''EOF''\nFix hero text visibility and remove header decorative dot\n\n- Add explicit text-white class to \"Calculate Your Paint\" headline\n- Remove green decorative dot from header logo\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C \"C:\\\\Users\\\\zckpe\\\\Documents\\\\claude-projects\\\\paintprocalc\" push)",
+      "WebSearch",
+      "WebFetch(domain:www.marketermilk.com)",
+      "WebFetch(domain:www.wpbeaverbuilder.com)",
+      "WebFetch(domain:zumeirah.com)",
+      "Bash(git:*)",
+      "Bash(cd /c/Users/zckpe/Documents/claude-projects/paintprocalc && rm -rf node_modules/.astro 2>&1)"
     ]
   }
 }

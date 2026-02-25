@@ -80,6 +80,7 @@ export interface CalculationInputs {
   primerType?: 'standard' | 'high-hide' | 'pva';
   primerCoats?: number;
   trimHeight?: number;
+  customCoverageRate?: number;
 }
 
 export interface CalculationResults {
@@ -155,7 +156,7 @@ export function calculatePaint(inputs: CalculationInputs): CalculationResults {
 
   paintableArea = Math.max(0, paintableArea);
 
-  const baseCoverage = baseCoverageRates[paintQuality];
+  const baseCoverage = inputs.customCoverageRate ?? baseCoverageRates[paintQuality];
   const wallTextureMultiplier = textureMultipliers[wallTexture];
   const adjustedWallCoverage =
     baseCoverage * wallTextureMultiplier * surfaceConditionMultipliers[surfaceCondition];

@@ -592,6 +592,7 @@
     calculatePaint,
     type CalculationInputs,
   } from '../utils/paint-calculator';
+  import { trackCalculatorUsed } from '../utils/analytics';
 
   // Professional Paint Calculator Logic
   const form = document.getElementById('paint-calculator-form') as HTMLFormElement;
@@ -820,6 +821,13 @@
 
         // Hide loading state
         hideLoadingState();
+
+        // Track calculator usage
+        trackCalculatorUsed({
+          page: window.location.pathname,
+          gallons: results.gallonsNeeded,
+          primer: results.primerGallons,
+        });
 
         // Defer scroll to avoid blocking paint
         setTimeout(() => {

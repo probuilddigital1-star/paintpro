@@ -120,6 +120,28 @@ const faqSchema = page.faqs.length > 0 ? {
     <p class="text-body text-lg leading-relaxed max-w-3xl">{page.introText}</p>
   </section>
 
+  <!-- Brand Disclaimer -->
+  {page.brandDisclaimer && (
+    <div class="max-w-4xl mx-auto px-4 pt-2 pb-2">
+      <p class="text-xs text-gray-500 italic">{page.brandDisclaimer}</p>
+    </div>
+  )}
+
+  <!-- Color Change Scenario Explanation -->
+  {page.scenarioExplanation && (
+    <section class="max-w-2xl mx-auto px-4 py-4">
+      <div class="bg-amber-50 border border-amber-200 rounded-lg p-5">
+        <h2 class="font-semibold text-amber-800 mb-2 flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Why This Matters
+        </h2>
+        <p class="text-sm text-amber-900">{page.scenarioExplanation}</p>
+      </div>
+    </section>
+  )}
+
   <!-- Pre-calculated Results -->
   <StaticResults results={results} inputs={page.defaults} />
 
@@ -127,7 +149,9 @@ const faqSchema = page.faqs.length > 0 ? {
   <div class="max-w-2xl mx-auto px-4 pb-8">
     <a
       href="/#calculator"
-      class="block w-full text-center bg-accent hover:bg-accent-dark text-white font-semibold py-4 px-6 rounded-lg transition-all shadow-md hover:shadow-lg text-lg"
+      class="cta-link block w-full text-center bg-accent hover:bg-accent-dark text-white font-semibold py-4 px-6 rounded-lg transition-all shadow-md hover:shadow-lg text-lg"
+      data-cta-text="Customize This Calculation"
+      data-page-source={page.slug}
     >
       Customize This Calculation
       <span class="block text-sm font-normal mt-1 opacity-90">Adjust dimensions, texture, primer, and more</span>
@@ -158,8 +182,50 @@ const faqSchema = page.faqs.length > 0 ? {
     </section>
   )}
 
+  <!-- Brand Comparison Table -->
+  {page.brandComparisonTable && (
+    <section class="max-w-4xl mx-auto px-4 py-8">
+      <h2 class="text-2xl font-bold text-heading mb-4 flex items-center gap-2">
+        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+        Paint Brand Coverage Comparison
+      </h2>
+      <div class="overflow-x-auto">
+        <table class="w-full bg-white rounded-lg border border-border text-sm">
+          <thead>
+            <tr class="bg-light-gray">
+              <th class="text-left px-4 py-3 font-semibold text-heading">Brand</th>
+              <th class="text-center px-4 py-3 font-semibold text-heading">Coverage (sq ft/gal)</th>
+              <th class="text-center px-4 py-3 font-semibold text-heading">Price Tier</th>
+              <th class="text-center px-4 py-3 font-semibold text-heading">Calculator</th>
+            </tr>
+          </thead>
+          <tbody>
+            {page.brandComparisonTable.map((entry) => (
+              <tr class={`border-t border-border ${entry.slug === page.slug ? 'bg-primary/5 font-semibold' : ''}`}>
+                <td class="px-4 py-3 text-heading">{entry.brand}</td>
+                <td class="px-4 py-3 text-center">{entry.coverageRate}</td>
+                <td class="px-4 py-3 text-center">{entry.priceTier}</td>
+                <td class="px-4 py-3 text-center">
+                  {entry.slug === page.slug ? (
+                    <span class="text-primary text-xs">You are here</span>
+                  ) : (
+                    <a href={`/paint-calculator/${entry.slug}`} class="text-primary hover:underline text-xs">
+                      Calculate
+                    </a>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  )}
+
   <!-- Affiliate Cards -->
-  <AffiliateCards />
+  <AffiliateCards products={page.affiliates} pageSource={page.slug} />
 
   <!-- FAQ -->
   <PageFAQ faqs={page.faqs} />
@@ -169,3 +235,16 @@ const faqSchema = page.faqs.length > 0 ? {
 
   <Footer />
 </Layout>
+
+<script>
+  import { trackCtaClick } from '../../utils/analytics';
+
+  document.querySelectorAll<HTMLAnchorElement>('.cta-link').forEach((link) => {
+    link.addEventListener('click', () => {
+      trackCtaClick({
+        ctaText: link.dataset.ctaText,
+        pageSource: link.dataset.pageSource,
+      });
+    });
+  });
+</script>

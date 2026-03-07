@@ -1,2 +1,5 @@
 # Redirect pages.dev to custom domain
 https://paintpro-9rn.pages.dev/* https://paintprocalculator.com/:splat 301
+
+# Redirect www to non-www
+https://www.paintprocalculator.com/* https://paintprocalculator.com/:splat 301

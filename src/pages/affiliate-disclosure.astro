@@ -31,18 +31,19 @@ const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "Affiliate Disclosure - PaintPro Calculator",
-  "description": "Affiliate disclosure for PaintPro Calculator. Transparency about how we earn commissions through paint supplies and product recommendations.",
+  "description": "Affiliate disclosure for PaintPro Calculator. Transparency about how we earn commissions and how that does not affect editorial recommendations.",
   "url": `${siteUrl}/affiliate-disclosure`,
   "datePublished": "2025-12-26",
   "dateModified": currentDate,
   "author": {
-    "@type": "Organization",
-    "name": "ProBuild Digital LLC",
-    "url": "https://probuilddigital.com"
+    "@type": "Person",
+    "name": "Zack Pearson",
+    "url": `${siteUrl}/about`
   },
   "publisher": {
     "@type": "Organization",
-    "name": "ProBuild Digital LLC"
+    "name": "ProBuild Digital LLC",
+    "url": "https://probuilddigital.com"
   },
   "inLanguage": "en-US"
 };
@@ -50,90 +51,110 @@ const articleSchema = {
 
 <Layout
   title="Affiliate Disclosure - Paint Calculator | PaintPro Calculator"
-  description="Affiliate disclosure for PaintPro Calculator. Transparency about how we earn commissions through paint supplies and product recommendations."
+  description="Affiliate disclosure for PaintPro Calculator. Transparency about how we earn commissions and how that does not affect editorial recommendations."
 >
   <Header />
 
-  <!-- Breadcrumb Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-
-  <!-- Article Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 
   <main class="max-w-3xl mx-auto px-4 py-12">
     <article class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
       <h1 class="text-3xl md:text-4xl font-bold text-heading mb-6">Affiliate Disclosure</h1>
 
+      <p class="text-sm text-gray-500 mb-8">
+        By <a href="/about" class="text-primary hover:underline font-medium">Zack Pearson</a>
+        <span class="mx-2">·</span>
+        Last updated {new Date(currentDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+      </p>
+
       <div class="prose prose-slate max-w-none space-y-6">
         <section>
           <p class="text-lg text-body">
-            PaintPro Calculator is a free tool, and we want to keep it that way. To help cover the costs of running this site, we participate in affiliate marketing programs.
+            PaintPro Calculator is free to use and runs without paywalls or required signups. To pay for hosting, the time that goes into research and updates, and the rest of the small bills that come with running a site, I use affiliate links on some posts. This page explains exactly how that works.
           </p>
         </section>
 
         <section>
-          <h2 class="text-xl font-bold text-heading mt-8 mb-4">What This Means</h2>
+          <h2 class="text-xl font-bold text-heading mt-8 mb-4">What an affiliate link is</h2>
           <p class="text-body">
-            Some of the links on our site are affiliate links. When you click on these links and make a purchase, we may earn a small commission at no additional cost to you.
+            An affiliate link is a tracked URL. When you click one and then make a purchase on the destination site (most often Amazon), I receive a small commission from the retailer. The price you pay is identical to what you would pay going directly. Nothing is added to your cart or your bill.
           </p>
         </section>
 
         <section>
-          <h2 class="text-xl font-bold text-heading mt-8 mb-4">Product Links</h2>
+          <h2 class="text-xl font-bold text-heading mt-8 mb-4">Programs I participate in</h2>
           <p class="text-body">
-            We link to products on Amazon.com that we believe are useful for painting projects. We may participate in affiliate programs in the future to help support this free tool.
+            PaintPro Calculator is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com. As an Amazon Associate, I earn from qualifying purchases.
+          </p>
+          <p class="text-body mt-3">
+            From time to time the site may also participate in lead-generation partnerships with painting contractors and home-services networks. Those relationships are disclosed within the relevant page or form.
           </p>
         </section>
 
         <section>
-          <h2 class="text-xl font-bold text-heading mt-8 mb-4">Our Commitment</h2>
+          <h2 class="text-xl font-bold text-heading mt-8 mb-4">How affiliate links affect what I recommend</h2>
+          <p class="text-body">
+            They don't. If the best paint roller for the job is sold by a brand with no affiliate program, I link to the manufacturer page anyway. If a higher-commission alternative is worse on quality or price, the lower-commission product still wins. The full editorial process is on the <a href="/editorial-standards" class="text-primary hover:underline">editorial standards page</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-8 mb-4">My commitments</h2>
           <div class="bg-light-gray rounded-xl p-6">
             <ul class="space-y-3 text-body">
               <li class="flex items-start gap-3">
                 <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
-                <span>We only recommend products we believe are genuinely useful for painting projects.</span>
+                <span>I only recommend products I would buy or have already bought myself.</span>
               </li>
               <li class="flex items-start gap-3">
                 <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
-                <span>Affiliate relationships never influence our calculator's accuracy or recommendations.</span>
+                <span>Affiliate relationships never change which products I recommend.</span>
               </li>
               <li class="flex items-start gap-3">
                 <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
-                <span>You never pay more by using our links—in fact, the prices are the same as going directly.</span>
+                <span>You never pay more by clicking through one of my links.</span>
               </li>
               <li class="flex items-start gap-3">
                 <svg class="w-5 h-5 text-accent mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
-                <span>Your support through these links helps us keep this tool free for everyone.</span>
+                <span>The calculator itself contains no affiliate links and is not influenced by any product partnership.</span>
               </li>
             </ul>
           </div>
         </section>
 
         <section>
-          <h2 class="text-xl font-bold text-heading mt-8 mb-4">Lead Generation Partners</h2>
+          <h2 class="text-xl font-bold text-heading mt-8 mb-4">FTC compliance</h2>
           <p class="text-body">
-            When you request quotes from local painters through our site, we may receive compensation from our lead generation partners. This service is free to you, and you're under no obligation to hire any contractor who contacts you.
+            This disclosure follows guidance from the U.S. Federal Trade Commission's <a href="https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers" target="_blank" rel="noopener" class="text-primary hover:underline">Endorsement Guides</a>. Articles that contain affiliate links also include an inline disclosure near the top so it's clear before you click.
           </p>
         </section>
 
         <section>
-          <h2 class="text-xl font-bold text-heading mt-8 mb-4">Questions?</h2>
+          <h2 class="text-xl font-bold text-heading mt-8 mb-4">Lead generation partners</h2>
           <p class="text-body">
-            If you have any questions about our affiliate relationships, please contact us at <a href="mailto:contact@probuilddigital.com" class="text-primary hover:underline">contact@probuilddigital.com</a>.
+            When you request quotes from local painters through forms on this site, the request is sent to a lead-generation partner that matches you with contractors. PaintPro Calculator may receive a referral fee. The service is free to you, you're under no obligation to hire any contractor who responds, and your contact details are handled per the lead-gen partner's privacy policy and our own <a href="/privacy" class="text-primary hover:underline">privacy policy</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-8 mb-4">Questions</h2>
+          <p class="text-body">
+            If anything on this page is unclear or if you think a specific article isn't disclosing affiliate links properly, email <a href="mailto:zack.pearson@probuilddigital.com" class="text-primary hover:underline">zack.pearson@probuilddigital.com</a> and I'll fix it.
           </p>
         </section>
 
         <section>
           <p class="text-sm text-gray-500 mt-8">
-            Thank you for using PaintPro Calculator and for supporting our work!
+            Thank you for using the calculator and for supporting the site through these links.
           </p>
         </section>
       </div>

@@ -26,86 +26,112 @@ const breadcrumbSchema = {
   ]
 };
 
-// Article Schema
-const articleSchema = {
+// AboutPage + Person schema
+const aboutSchema = {
   "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "About PaintPro Calculator",
-  "description": "Learn about PaintPro Calculator, a free paint coverage calculator that helps homeowners and DIYers calculate exactly how much paint they need.",
+  "@type": "AboutPage",
   "url": `${siteUrl}/about`,
+  "name": "About PaintPro Calculator",
+  "description": "About Zack Pearson and PaintPro Calculator. The story behind the free paint calculator and how it's maintained.",
   "datePublished": "2025-12-26",
   "dateModified": currentDate,
-  "author": {
-    "@type": "Organization",
-    "name": "ProBuild Digital LLC",
-    "url": "https://probuilddigital.com"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "ProBuild Digital LLC"
-  },
-  "inLanguage": "en-US"
+  "inLanguage": "en-US",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Zack Pearson",
+    "jobTitle": "Founder, PaintPro Calculator",
+    "url": `${siteUrl}/about`,
+    "email": "zack.pearson@probuilddigital.com",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "ProBuild Digital LLC",
+      "url": "https://probuilddigital.com"
+    },
+    "knowsAbout": [
+      "Interior painting",
+      "Paint coverage calculation",
+      "Home construction",
+      "DIY home improvement"
+    ]
+  }
 };
 ---
 
 <Layout
-  title="About Us - Free Paint Calculator by ProBuild Digital | PaintPro Calculator"
-  description="Learn about PaintPro Calculator, a free paint coverage calculator that helps homeowners and DIYers calculate exactly how much paint they need. Built by ProBuild Digital LLC."
+  title="About Zack Pearson - Founder of PaintPro Calculator"
+  description="The story behind PaintPro Calculator. Built by Zack Pearson, who self-contracted his own home build and turned a paint-buying spreadsheet into a free public tool."
 >
   <Header />
 
-  <!-- Breadcrumb Schema -->
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-
-  <!-- Article Schema -->
-  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />
 
   <main class="max-w-3xl mx-auto px-4 py-12">
     <article class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
       <h1 class="text-3xl md:text-4xl font-bold text-heading mb-6">About PaintPro Calculator</h1>
 
+      <p class="text-sm text-gray-500 mb-8">
+        By <a href="/about" class="text-primary hover:underline font-medium">Zack Pearson</a>
+        <span class="mx-2">·</span>
+        Last updated {new Date(currentDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+      </p>
+
       <div class="prose prose-slate max-w-none">
         <p class="text-lg text-body mb-6">
-          PaintPro Calculator was created to solve a common problem: figuring out exactly how much paint you need for your project without buying too much or making multiple trips to the store.
+          PaintPro Calculator started as a spreadsheet, and the painting part is personal.
         </p>
 
-        <h2 class="text-xl font-bold text-heading mt-8 mb-4">Our Mission</h2>
         <p class="text-body mb-6">
-          We believe that accurate paint calculations shouldn't require a math degree. Whether you're painting a single room or tackling your entire home, our free calculator gives you reliable estimates in seconds.
+          In 2024, my wife and I built our own house. We self-contracted the whole project, which meant hiring and managing every trade ourselves: foundation, framing, electrical, plumbing, drywall, the works. By the time the painters were ready to walk through, I had spent enough time on the job site to know what I cared about getting right.
         </p>
 
-        <h2 class="text-xl font-bold text-heading mt-8 mb-4">How It Works</h2>
-        <p class="text-body mb-4">
-          Our calculator uses industry-standard coverage rates and accounts for:
-        </p>
-        <ul class="list-disc list-inside text-body space-y-2 mb-6">
-          <li>Room dimensions (length, width, and ceiling height)</li>
-          <li>Doors and windows that don't need paint</li>
-          <li>Number of coats you plan to apply</li>
-          <li>Paint quality and coverage differences</li>
-          <li>A recommended waste buffer for touch-ups</li>
-        </ul>
-
-        <h2 class="text-xl font-bold text-heading mt-8 mb-4">Who We Are</h2>
         <p class="text-body mb-6">
-          PaintPro Calculator is a project by ProBuild Digital LLC. We create practical digital tools for homeowners, DIY enthusiasts, and professionals in the home improvement space.
+          What I cared about was not paying for paint twice. On the first bedroom we bought too much, on the second we bought too little, ran out mid-coat, and ended up with a streaky wall that I had to sand back and redo. After that I started keeping a simple spreadsheet. Square footage, coverage rates, deductions for doors and windows, plus a small buffer for touch-ups. It worked.
         </p>
 
-        <h2 class="text-xl font-bold text-heading mt-8 mb-4">Embed Our Calculator on Your Website</h2>
+        <p class="text-body mb-6">
+          A while after we moved in, after watching a couple of friends hit the same problem on their own projects, I rebuilt that spreadsheet into a real calculator and put it online. That's where this site came from. No team of experts. One person who has actually painted a house, who has a stake in getting the math right, and who keeps this tool free because the math should be free.
+        </p>
+
+        <h2 class="text-xl font-bold text-heading mt-10 mb-4">About me</h2>
+        <p class="text-body mb-6">
+          I'm Zack Pearson. I live in Ohio. I run a small digital studio called ProBuild Digital LLC that builds practical web tools, and PaintPro Calculator is one of them. I'm not a licensed contractor and I don't pretend to be. The advice on this site comes from doing the work in my own house, reading manufacturer technical data sheets, and double-checking the numbers against published spec sheets before anything goes live. The painters who finished our drywall taught me plenty too.
+        </p>
+
+        <p class="text-body mb-6">
+          If something on the site is wrong, email me at <a href="mailto:zack.pearson@probuilddigital.com" class="text-primary hover:underline">zack.pearson@probuilddigital.com</a> and I'll fix it.
+        </p>
+
+        <h2 class="text-xl font-bold text-heading mt-10 mb-4">What this site does</h2>
+        <p class="text-body mb-6">
+          The calculator tells you how much paint to buy. The blog covers the rest: cost ranges by room and city, brand comparisons, prep work, what to skip, what's worth spending more on. It's written for homeowners doing the painting themselves or hiring out and wanting to sanity-check a quote.
+        </p>
+
+        <h2 class="text-xl font-bold text-heading mt-10 mb-4">How I keep it accurate</h2>
+        <p class="text-body mb-6">
+          Cost figures are dated. Coverage rates come from manufacturer technical data sheets, not from other blogs. When prices move (which happens often), I update the post and note the change. The full review and update process is on the <a href="/editorial-standards" class="text-primary hover:underline">editorial standards page</a>.
+        </p>
+
+        <h2 class="text-xl font-bold text-heading mt-10 mb-4">Affiliate links</h2>
+        <p class="text-body mb-6">
+          Some posts link to products on Amazon. Those are affiliate links and they help cover hosting plus the time that goes into updates. They don't change which products I recommend. The full breakdown is on the <a href="/affiliate-disclosure" class="text-primary hover:underline">affiliate disclosure page</a>.
+        </p>
+
+        <h2 class="text-xl font-bold text-heading mt-10 mb-4">Embed the calculator</h2>
         <p class="text-body mb-4">
-          Want to add our paint calculator to your blog, real estate listing, or home improvement site? Copy and paste this code:
+          Want to put the paint calculator on your own site? Copy and paste this:
         </p>
         <div class="bg-slate-50 border border-border rounded-lg p-4 mb-6">
           <code class="text-sm text-slate-700 block whitespace-pre-wrap break-all">&lt;iframe src="https://paintprocalculator.com/embed" width="100%" height="800" frameborder="0"&gt;&lt;/iframe&gt;</code>
         </div>
-        <p class="text-sm text-body mb-6">The widget is responsive and works in any container width. No API key required.</p>
+        <p class="text-sm text-body mb-6">It's responsive, has no API key, and is free to use.</p>
 
-        <h2 class="text-xl font-bold text-heading mt-8 mb-4">Contact Us</h2>
+        <h2 class="text-xl font-bold text-heading mt-10 mb-4">Contact</h2>
         <p class="text-body mb-6">
-          Have questions, suggestions, or feedback? We'd love to hear from you.
+          Email: <a href="mailto:zack.pearson@probuilddigital.com" class="text-primary hover:underline">zack.pearson@probuilddigital.com</a>
         </p>
-        <p class="text-body">
-          Email: <a href="mailto:contact@probuilddigital.com" class="text-primary hover:underline">contact@probuilddigital.com</a>
+        <p class="text-sm text-gray-500">
+          Mailing address available on request for legal or business correspondence.
         </p>
       </div>
 

@@ -1,0 +1,177 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const currentDate = new Date().toISOString().split('T')[0];
+const siteUrl = "https://paintprocalculator.com";
+
+// Breadcrumb Schema
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": siteUrl
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Editorial Standards",
+      "item": `${siteUrl}/editorial-standards`
+    }
+  ]
+};
+
+// Article Schema
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Editorial Standards - PaintPro Calculator",
+  "description": "How PaintPro Calculator researches, fact-checks, and updates its content. Source policy, correction process, editorial independence, and review cycle.",
+  "url": `${siteUrl}/editorial-standards`,
+  "datePublished": "2025-12-26",
+  "dateModified": currentDate,
+  "author": {
+    "@type": "Person",
+    "name": "Zack Pearson",
+    "url": `${siteUrl}/about`
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ProBuild Digital LLC",
+    "url": "https://probuilddigital.com"
+  },
+  "inLanguage": "en-US"
+};
+---
+
+<Layout
+  title="Editorial Standards - How We Research, Fact-Check, and Update Content | PaintPro Calculator"
+  description="How PaintPro Calculator researches, fact-checks, and updates its content. Source policy, correction process, editorial independence, and review cycle."
+>
+  <Header />
+
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
+  <main class="max-w-3xl mx-auto px-4 py-12">
+    <article class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-heading mb-6">Editorial Standards</h1>
+
+      <p class="text-sm text-gray-500 mb-8">
+        By <a href="/about" class="text-primary hover:underline font-medium">Zack Pearson</a>
+        <span class="mx-2">·</span>
+        Last updated {new Date(currentDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+      </p>
+
+      <div class="prose prose-slate max-w-none space-y-6">
+        <p class="text-lg text-body">
+          This page describes how content on PaintPro Calculator is researched, written, reviewed, and updated. If you find something on the site that doesn't match what's described here, please email me.
+        </p>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-8 mb-3">Who writes this site</h2>
+          <p class="text-body">
+            Every article and calculator on PaintPro Calculator is written and reviewed by <a href="/about" class="text-primary hover:underline">Zack Pearson</a>, the founder of the site. There is no rotating staff of freelancers and no anonymous contributors. One byline, one inbox.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-8 mb-3">Sources I use</h2>
+          <ul class="list-disc list-outside ml-6 text-body space-y-2">
+            <li>Manufacturer technical data sheets (Sherwin-Williams, Behr, Benjamin Moore, PPG, Valspar, and others) for coverage rates, dry times, and application specs.</li>
+            <li>EPA and state-level regulations for VOC limits, lead-paint disclosures, and disposal rules.</li>
+            <li>Published cost data from RSMeans, HomeAdvisor, Angi, and direct retail pricing checked at Home Depot, Lowe's, and independent paint stores.</li>
+            <li>Industry references including the Painting Contractors Association (PCA) and the Master Painters Institute (MPI).</li>
+            <li>Original measurements taken on real projects, including my own home build.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-8 mb-3">What I don't do</h2>
+          <ul class="list-disc list-outside ml-6 text-body space-y-2">
+            <li>Republish or paraphrase content from other blogs without independent verification.</li>
+            <li>Cite "industry experts" without naming them and linking to their work.</li>
+            <li>Run sponsored posts or paid product placement disguised as recommendations.</li>
+            <li>Take payment in exchange for ranking or inclusion in a "best of" list.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-8 mb-3">How I fact-check before publishing</h2>
+          <p class="text-body mb-3">
+            Every article goes through the same checklist before it goes live:
+          </p>
+          <ul class="list-disc list-outside ml-6 text-body space-y-2">
+            <li>Numerical claims (coverage rates, prices, dry times, application temperatures, gallon counts) are verified against a named primary source.</li>
+            <li>Every product recommendation is verified to be currently available, not discontinued.</li>
+            <li>Outbound links are clicked and tested at publish time.</li>
+            <li>The article is read aloud once to catch awkward sentences and unclear instructions.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-8 mb-3">Update cycle</h2>
+          <ul class="list-disc list-outside ml-6 text-body space-y-2">
+            <li><strong>Cost figures:</strong> reviewed quarterly. The "Last updated" date at the top of each article reflects the most recent review.</li>
+            <li><strong>Product recommendations:</strong> reviewed whenever a product is discontinued, reformulated, or replaced.</li>
+            <li><strong>Coverage rates and technical specs:</strong> reviewed when a manufacturer publishes a new data sheet.</li>
+            <li><strong>Regulatory information:</strong> reviewed annually or when EPA / state guidance changes.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-8 mb-3">Corrections</h2>
+          <p class="text-body">
+            If I get something wrong, the correction is added at the top of the article in italics with the date of the change. The original error is acknowledged, not silently overwritten. To report an issue, email <a href="mailto:zack.pearson@probuilddigital.com" class="text-primary hover:underline">zack.pearson@probuilddigital.com</a> and include the URL and the specific claim you're flagging.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-8 mb-3">Editorial independence</h2>
+          <p class="text-body">
+            Affiliate links never determine what I recommend. If a higher-paying alternative is worse, the lower-paying one wins. If the best option has no affiliate program at all, I still link to it. Recommendations follow the work, not the commission.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-8 mb-3">What I'm qualified to say</h2>
+          <p class="text-body">
+            I'm a homeowner who self-contracted his own house build, has painted many rooms, and reads paint manufacturer documentation for fun. I am not a licensed painter or a certified building inspector. The advice on this site is written for DIY homeowners and for people sanity-checking a contractor quote. For commercial work, fire-rated coatings, lead abatement, or anything that requires sign-off from a code inspector, hire a licensed professional.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-bold text-heading mt-8 mb-3">Contact</h2>
+          <p class="text-body">
+            Questions about a specific article or a specific source? Email <a href="mailto:zack.pearson@probuilddigital.com" class="text-primary hover:underline">zack.pearson@probuilddigital.com</a>.
+          </p>
+        </section>
+
+        <section>
+          <p class="text-sm text-gray-500 mt-8">
+            Last updated: {new Date(currentDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}.
+          </p>
+        </section>
+      </div>
+
+      <div class="mt-10 pt-6 border-t border-border">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 text-primary font-medium hover:underline"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to Calculator
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

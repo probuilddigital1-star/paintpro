@@ -34,7 +34,7 @@ const currentDate = new Date().toISOString().split('T')[0];
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="author" content="ProBuild Digital LLC" />
+    <meta name="author" content="Zack Pearson" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <meta name="keywords" content="paint calculator, how much paint do I need, paint coverage calculator, gallons of paint, wall paint calculator, room paint estimator, free paint calculator, interior paint calculator" />
 
@@ -96,14 +96,21 @@ const currentDate = new Date().toISOString().split('T')[0];
         "availability": "https://schema.org/InStock"
       },
       "creator": {
-        "@type": "Organization",
-        "name": "ProBuild Digital LLC",
-        "url": "https://probuilddigital.com",
-        "email": "contact@probuilddigital.com"
+        "@type": "Person",
+        "name": "Zack Pearson",
+        "url": `${siteUrl}/about`,
+        "email": "zack.pearson@probuilddigital.com",
+        "jobTitle": "Founder, PaintPro Calculator",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "ProBuild Digital LLC",
+          "url": "https://probuilddigital.com"
+        }
       },
       "publisher": {
         "@type": "Organization",
-        "name": "ProBuild Digital LLC"
+        "name": "ProBuild Digital LLC",
+        "url": "https://probuilddigital.com"
       },
       "featureList": [
         "Room dimension calculator",
@@ -126,10 +133,36 @@ const currentDate = new Date().toISOString().split('T')[0];
       "name": "ProBuild Digital LLC",
       "url": "https://probuilddigital.com",
       "logo": ogImage,
+      "founder": {
+        "@type": "Person",
+        "name": "Zack Pearson",
+        "url": `${siteUrl}/about`
+      },
       "contactPoint": {
         "@type": "ContactPoint",
-        "email": "contact@probuilddigital.com",
+        "email": "zack.pearson@probuilddigital.com",
         "contactType": "customer service"
+      }
+    })} />
+
+    <!-- Person Schema (Author / Founder) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Zack Pearson",
+      "url": `${siteUrl}/about`,
+      "email": "zack.pearson@probuilddigital.com",
+      "jobTitle": "Founder, PaintPro Calculator",
+      "knowsAbout": [
+        "Interior painting",
+        "Paint coverage calculation",
+        "Home construction",
+        "DIY home improvement"
+      ],
+      "worksFor": {
+        "@type": "Organization",
+        "name": "ProBuild Digital LLC",
+        "url": "https://probuilddigital.com"
       }
     })} />
 
@@ -140,7 +173,7 @@ const currentDate = new Date().toISOString().split('T')[0];
       "name": "PaintPro Calculator",
       "description": "Free paint calculator serving Ohio and Midwest homeowners with accurate paint coverage estimates",
       "url": siteUrl,
-      "email": "contact@probuilddigital.com",
+      "email": "zack.pearson@probuilddigital.com",
       "areaServed": [
         {
           "@type": "State",

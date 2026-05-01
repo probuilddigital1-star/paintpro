@@ -64,9 +64,15 @@ const blogPostingSchema = {
   "datePublished": post.publishedDate,
   "dateModified": post.updatedDate,
   "author": {
-    "@type": "Organization",
-    "name": "ProBuild Digital LLC",
-    "url": "https://probuilddigital.com",
+    "@type": "Person",
+    "name": "Zack Pearson",
+    "url": `${siteUrl}/about`,
+    "jobTitle": "Founder, PaintPro Calculator",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "ProBuild Digital LLC",
+      "url": "https://probuilddigital.com",
+    },
   },
   "publisher": {
     "@type": "Organization",
@@ -92,16 +98,18 @@ const faqSchema = post.faqs.length > 0 ? {
       "@type": "Answer",
       "text": faq.answer,
       "author": {
-        "@type": "Organization",
-        "name": "ProBuild Digital LLC",
+        "@type": "Person",
+        "name": "Zack Pearson",
+        "url": `${siteUrl}/about`,
       },
       "dateModified": currentDate,
     },
   })),
   "lastReviewed": currentDate,
   "reviewedBy": {
-    "@type": "Organization",
-    "name": "ProBuild Digital LLC",
+    "@type": "Person",
+    "name": "Zack Pearson",
+    "url": `${siteUrl}/about`,
   },
 } : null;
 
@@ -143,7 +151,24 @@ const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
         </time>
         <span class="text-sm text-gray-400">{post.readingTime} min read</span>
       </div>
-      <h1 class="text-3xl md:text-4xl font-bold text-heading leading-tight">{post.title}</h1>
+      <h1 class="text-3xl md:text-4xl font-bold text-heading leading-tight mb-5">{post.title}</h1>
+
+      <!-- Byline -->
+      <div class="flex items-center gap-3 pt-4 border-t border-border">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-white font-bold text-sm shadow-sm flex-shrink-0">
+          ZP
+        </div>
+        <div class="text-sm">
+          <div class="text-heading">
+            By <a href="/about" class="font-semibold hover:text-primary transition-colors">Zack Pearson</a>
+          </div>
+          <div class="text-gray-500 text-xs">
+            Founder, PaintPro Calculator
+            <span class="mx-1.5">·</span>
+            Last updated <time datetime={post.updatedDate}>{new Date(post.updatedDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</time>
+          </div>
+        </div>
+      </div>
     </header>
 
     <!-- Article Content -->
@@ -189,6 +214,26 @@ const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
         </div>
       </section>
     )}
+
+    <!-- Author Bio -->
+    <section class="mt-12 mb-8 bg-light-gray rounded-2xl p-6 md:p-8">
+      <div class="flex items-start gap-4">
+        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-white font-bold text-xl shadow-md flex-shrink-0">
+          ZP
+        </div>
+        <div class="flex-1 min-w-0">
+          <h3 class="font-bold text-heading mb-1">About the author</h3>
+          <p class="text-sm font-semibold text-heading mb-2">
+            <a href="/about" class="hover:text-primary transition-colors">Zack Pearson</a>
+            <span class="text-gray-400 font-normal ml-1">· Founder, PaintPro Calculator</span>
+          </p>
+          <p class="text-sm text-body leading-relaxed">
+            Zack self-contracted his own home build in Ohio and started keeping a paint-buying spreadsheet after running out of paint mid-coat on a bedroom wall. That spreadsheet became this site. He writes every article here and verifies coverage rates and prices against manufacturer data sheets before publishing.
+            <a href="/about" class="text-primary hover:underline whitespace-nowrap ml-1">Read more</a>
+          </p>
+        </div>
+      </div>
+    </section>
 
     <!-- Related Posts -->
     {relatedPosts.length > 0 && (

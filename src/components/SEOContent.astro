@@ -2,7 +2,7 @@
 // SEO Content Sections - Help with search rankings and provide value
 // Includes Ohio-specific "Information Gain" content for 2026 SEO requirements
 
-const currentDate = new Date().toISOString().split('T')[0];
+const updatedDate = '2026-07-11';
 
 // HowTo Schema for paint calculation (high-impact SEO for featured snippets)
 const howToSchema = {
@@ -68,7 +68,7 @@ const howToSchema = {
     "name": "ProBuild Digital LLC"
   },
   "datePublished": "2025-12-26",
-  "dateModified": currentDate
+  "dateModified": updatedDate
 };
 ---
 
@@ -82,7 +82,7 @@ const howToSchema = {
       </h2>
       <div class="bg-white rounded-xl p-6 shadow-sm border border-border">
         <p class="text-body mb-4">
-          Calculating paint coverage is straightforward once you know the formula. First, measure your room's dimensions—length, width, and ceiling height in feet. Then calculate the wall area using this formula:
+          Calculating paint coverage is straightforward once you know the formula. First, measure your room's dimensions - length, width, and ceiling height in feet. Then calculate the wall area using this formula:
         </p>
         <div class="bg-light-gray rounded-lg p-4 font-mono text-sm mb-4">
           Wall Area = 2 × (Length + Width) × Height
@@ -99,7 +99,7 @@ const howToSchema = {
           Standard paint covers about 400 square feet per gallon. With two coats, you'd need approximately <strong>2 gallons</strong> for this room.
         </p>
         <p class="text-body text-sm">
-          Ready to buy supplies? Check out our <a href="#affiliate-section" class="text-primary hover:underline font-medium">recommended paint supplies</a> or <a href="#lead-section" class="text-primary hover:underline font-medium">get free quotes from local painters</a>.
+          Treat the result as a buying estimate. Check the coverage range on the paint you choose before placing the order.
         </p>
       </div>
     </article>
@@ -187,91 +187,32 @@ const howToSchema = {
           </div>
         </div>
         <p class="text-body mt-4 text-sm">
-          <strong>Pro tip:</strong> Many premium paints now include primer. Check the label—you might be able to skip this step. Not sure which to buy? Browse our <a href="#affiliate-section" class="text-primary hover:underline">recommended paint products</a>.
+          <strong>One caution:</strong> A paint-and-primer product does not replace a dedicated primer on every surface. Check the label for the surface you are coating.
         </p>
       </div>
     </article>
 
-    <!-- PaintPro Insights: Ohio & Midwest Regional Tips (Information Gain Section) -->
-    <article id="regional-insights" class="relative">
-      <div class="absolute -top-2 left-4 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">
-        PaintPro Insights
-      </div>
-      <h2 class="text-2xl font-bold text-heading mb-4 flex items-center gap-2 pt-4">
+    <article id="regional-insights">
+      <h2 class="text-2xl font-bold text-heading mb-4 flex items-center gap-2">
         <span class="w-8 h-8 bg-accent/10 rounded-full flex items-center justify-center text-accent font-bold text-sm">4</span>
-        Ohio & Midwest Climate Painting Tips
+        What I learned painting my Ohio home
       </h2>
-      <div class="bg-gradient-to-br from-accent/5 to-primary/5 rounded-xl p-6 shadow-sm border border-accent/20">
-        <p class="text-body mb-4">
-          <strong>Based on our regional data:</strong> Painting conditions in Ohio and the Midwest require special considerations due to humidity fluctuations and seasonal temperature swings. Here's what the generic paint calculators won't tell you:
+      <div class="bg-gradient-to-br from-accent/5 to-primary/5 rounded-xl p-6 shadow-sm border border-accent/20 space-y-4">
+        <p class="text-body">
+          The calculator handles geometry. It cannot see a damp basement wall, a rough block surface, or a room that is slow to dry on a muggy afternoon. Those conditions mattered more than the arithmetic when I was buying paint for my own house.
         </p>
-
-        <div class="space-y-4">
-          <!-- Humidity Impact -->
-          <div class="bg-white rounded-lg p-4 border border-border">
-            <h3 class="font-semibold text-heading mb-2 flex items-center gap-2">
-              <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-              </svg>
-              Summer Humidity Factor
-            </h3>
-            <p class="text-body text-sm mb-2">
-              Ohio summers average <strong>70-80% relative humidity</strong>. During July and August, interior paint requires <strong>25-40% longer drying time</strong> between coats compared to manufacturer specifications.
-            </p>
-            <div class="bg-light-gray rounded p-3 text-sm">
-              <strong>PaintPro Recommendation:</strong> Wait 4-6 hours between coats (vs. standard 2-4 hours) when humidity exceeds 65%. Use a dehumidifier to maintain 40-50% indoor humidity for optimal results.
-            </div>
-          </div>
-
-          <!-- Temperature Swings -->
-          <div class="bg-white rounded-lg p-4 border border-border">
-            <h3 class="font-semibold text-heading mb-2 flex items-center gap-2">
-              <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707" />
-              </svg>
-              Spring/Fall Temperature Swings
-            </h3>
-            <p class="text-body text-sm mb-2">
-              Midwest spring and fall can see <strong>30°F+ temperature swings</strong> within 24 hours. Paint applied when temperatures drop below 50°F overnight may not cure properly, leading to adhesion failure.
-            </p>
-            <div class="bg-light-gray rounded p-3 text-sm">
-              <strong>PaintPro Recommendation:</strong> Check the 48-hour forecast before painting. Ensure temperatures stay above 50°F (10°C) for at least 24 hours after application. Best months: May-June and September.
-            </div>
-          </div>
-
-          <!-- Basement Considerations -->
-          <div class="bg-white rounded-lg p-4 border border-border">
-            <h3 class="font-semibold text-heading mb-2 flex items-center gap-2">
-              <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-              </svg>
-              Ohio Basement Paint Calculations
-            </h3>
-            <p class="text-body text-sm mb-2">
-              Ohio homes frequently have <strong>high water tables</strong> causing basement moisture issues. Standard paint calculations don't account for the <strong>30% increased paint consumption</strong> on porous concrete block walls.
-            </p>
-            <div class="bg-light-gray rounded p-3 text-sm">
-              <strong>PaintPro Recommendation:</strong> For basement walls, add 30% to your calculated amount and always use moisture-blocking primer. Consider waterproofing paint for areas below grade.
-            </div>
-          </div>
-
-          <!-- Local Paint Store Insight -->
-          <div class="bg-white rounded-lg p-4 border border-border">
-            <h3 class="font-semibold text-heading mb-2 flex items-center gap-2">
-              <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-              </svg>
-              Regional Product Availability
-            </h3>
-            <p class="text-body text-sm">
-              Northeast Ohio Sherwin-Williams stores report that <strong>low-VOC interior latex</strong> performs best for the region's humidity. Ask for products specifically formulated for high-humidity environments—they typically cost 10-15% more but provide better coverage and durability.
-            </p>
-          </div>
+        <div class="bg-white rounded-lg p-4 border border-border">
+          <h3 class="font-semibold text-heading mb-2">Let the product instructions set the schedule</h3>
+          <p class="text-body text-sm">On humid days, I give a coat more time instead of treating the shortest recoat time as a deadline. If the wall still feels cool or tacky, it is not ready. A fan or dehumidifier can help, but the label on the can remains the starting point.</p>
         </div>
-
-        <p class="text-body mt-6 text-sm text-center">
-          Need professional help? <a href="#lead-section" class="text-accent hover:underline font-semibold">Get free quotes from local Ohio painters</a> who understand these regional factors.
-        </p>
+        <div class="bg-white rounded-lg p-4 border border-border">
+          <h3 class="font-semibold text-heading mb-2">Check the forecast for exterior work</h3>
+          <p class="text-body text-sm">Ohio weather can move quickly in spring and fall. I check the application temperature on the product, then look beyond the afternoon high to the overnight low and the chance of rain.</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 border border-border">
+          <h3 class="font-semibold text-heading mb-2">Treat bare block as its own project</h3>
+          <p class="text-body text-sm">Concrete block used more coating than smooth drywall in my basement. Moisture also has to be solved before paint goes on. For masonry, use the product's stated coverage range and expect the rough surface to land near the low end.</p>
+        </div>
       </div>
     </article>
   </div>

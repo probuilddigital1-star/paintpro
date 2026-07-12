@@ -1,0 +1,1161 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import {
+  createPaintProject,
+  createPaintRoom,
+  decodePaintProject,
+  encodePaintProject,
+  normalizePaintProject,
+  summarizePaintProject,
+  type PaintProject,
+} from '../models/paint-project';
+
+const projectQuery = Astro.url.searchParams.get('project');
+const decodedProject = projectQuery ? decodePaintProject(projectQuery) : null;
+const isSharedProject = Boolean(projectQuery && decodedProject);
+
+function seedProject(project: PaintProject): PaintProject {
+  const normalized = normalizePaintProject(project);
+  if (normalized.rooms.length > 0) {
+    return normalized;
+  }
+
+  return {
+    ...normalized,
+    rooms: [createPaintRoom('Room 1')],
+  };
+}
+
+const initialProject = seedProject(decodedProject ?? createPaintProject('Whole-home paint plan'));
+const initialSummary = summarizePaintProject(initialProject);
+const initialShareToken = encodePaintProject(initialProject);
+const plannerSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Paint Project Planner",
+  "description": "Plan multiple rooms, save a project locally, and share a printable paint shopping list.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web Browser",
+  "browserRequirements": "Requires JavaScript",
+  "isAccessibleForFree": true,
+};
+---
+
+<Layout
+  title="Paint Project Planner | Multi-Room Paint Estimate"
+  description="Plan multiple rooms, save the project locally, share a link, and print a practical shopping sheet for your paint job."
+>
+  <Header />
+
+  <script type="application/ld+json" set:html={JSON.stringify(plannerSchema)} />
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/' },
+    { name: 'Paint Project Planner' },
+  ]} />
+
+  <main class="pb-12">
+    <section class="max-w-6xl mx-auto px-4 pt-8">
+      <div class="rounded-3xl border border-border bg-white shadow-sm overflow-hidden">
+        <div class="planner-no-print bg-gradient-to-r from-slate-50 via-white to-emerald-50 px-6 py-8 md:px-8">
+          <div class="max-w-3xl">
+            <span class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">Multi-room planner</span>
+            <h1 class="mt-4 text-3xl md:text-5xl font-bold text-heading">Plan the whole project in one place.</h1>
+            <p class="mt-4 text-body text-lg leading-relaxed">
+              Add every room, keep primer separate, save the plan on this device, and create a shareable shopping sheet when you are ready to buy.
+            </p>
+          </div>
+        </div>
+
+        <div id="planner-grid" class="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] p-6 md:p-8">
+          <div class="planner-print-only">
+            <h1 id="print-project-title" class="text-3xl font-bold text-heading"></h1>
+            <p class="mt-1 text-sm text-body">Paint shopping plan</p>
+          </div>
+          <div class="space-y-6">
+            <section class="planner-no-print rounded-2xl border border-border bg-slate-50 p-5 md:p-6">
+              <div class="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+                <label class="block">
+                  <span class="text-sm font-semibold uppercase tracking-wide text-primary">Project name</span>
+                  <input id="project-name" type="text" class="mt-2 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading shadow-sm" />
+                </label>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <button id="copy-link-btn" type="button" class="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-heading border border-border shadow-sm hover:bg-slate-50">Copy plan link</button>
+                  <button id="download-json-btn" type="button" class="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-heading border border-border shadow-sm hover:bg-slate-50">Save a copy</button>
+                  <button id="open-copy-btn" type="button" class="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-heading border border-border shadow-sm hover:bg-slate-50">Open a copy</button>
+                  <button id="print-btn" type="button" class="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-heading border border-border shadow-sm hover:bg-slate-50">Print sheet</button>
+                  <button id="new-plan-btn" type="button" class="col-span-2 rounded-xl px-4 py-2 text-sm font-semibold text-body hover:bg-white">Start a new plan</button>
+                </div>
+              </div>
+              <input id="open-copy-input" type="file" accept="application/json,.json" class="sr-only" />
+              <p id="save-status" class="mt-3 text-sm text-body" aria-live="polite">Your changes are saved in this browser.</p>
+            </section>
+
+            <section id="room-list-section" class="planner-no-print scroll-mt-24 rounded-2xl border border-border bg-white p-5 md:p-6">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-sm font-semibold uppercase tracking-wide text-primary">Step 1</p>
+                  <h2 class="mt-1 text-xl font-bold text-heading">Choose a room</h2>
+                </div>
+                <div class="flex items-center gap-3">
+                  <p id="room-count" class="hidden text-sm text-body sm:block"></p>
+                  <button id="add-room-btn" type="button" class="rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-accent-dark">Add room</button>
+                </div>
+              </div>
+              <div id="room-list" class="mt-4 space-y-3"></div>
+            </section>
+
+            <section id="room-editor-section" class="planner-no-print scroll-mt-24 rounded-2xl border border-border bg-white p-5 md:p-6">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-sm font-semibold uppercase tracking-wide text-primary">Step 2</p>
+                  <h2 class="mt-1 text-xl font-bold text-heading">Enter room details</h2>
+                </div>
+                <div class="text-right">
+                  <p id="selected-room-hint" class="text-sm text-body"></p>
+                  <a href="#room-list-section" class="mt-1 inline-block text-xs font-semibold text-primary lg:hidden">Back to rooms</a>
+                </div>
+              </div>
+              <div id="selected-room-result" class="mt-4 rounded-xl bg-primary/10 px-4 py-3 text-sm font-medium text-heading" aria-live="polite"></div>
+              <a id="mobile-project-summary" href="#shopping-list-section" class="mt-3 flex items-center justify-between gap-3 rounded-xl border border-border bg-white px-4 py-3 text-sm lg:hidden">
+                <span id="mobile-project-total" class="font-medium text-heading"></span>
+                <span class="shrink-0 font-semibold text-primary">View shopping list</span>
+              </a>
+
+              <form id="room-editor" class="mt-5 grid gap-4 md:grid-cols-2">
+                <label class="block">
+                  <span class="text-sm font-medium text-body">Room name</span>
+                  <input id="room-name" type="text" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
+                </label>
+
+                <label class="block">
+                  <span class="text-sm font-medium text-body">Room type</span>
+                  <select id="room-type" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                    <option value="living-room">Living room</option>
+                    <option value="bedroom">Bedroom</option>
+                    <option value="kitchen">Kitchen</option>
+                    <option value="bathroom">Bathroom</option>
+                    <option value="hallway">Hallway</option>
+                    <option value="basement">Basement</option>
+                    <option value="garage">Garage</option>
+                    <option value="office">Office</option>
+                    <option value="dining-room">Dining room</option>
+                  </select>
+                </label>
+
+                <div class="md:col-span-2 rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4">
+                  <div class="grid gap-4 md:grid-cols-2">
+                    <label class="block">
+                      <span class="text-sm font-medium text-heading">Paint name or color</span>
+                      <input id="paint-name" type="text" placeholder="Example: Soft white walls" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
+                    </label>
+                    <label class="block">
+                      <span class="text-sm font-medium text-heading">Sheen</span>
+                      <select id="paint-sheen" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                        <option value="flat">Flat</option>
+                        <option value="matte">Matte</option>
+                        <option value="eggshell">Eggshell</option>
+                        <option value="satin">Satin</option>
+                        <option value="semi-gloss">Semi-gloss</option>
+                        <option value="gloss">Gloss</option>
+                      </select>
+                    </label>
+                  </div>
+                  <p class="mt-2 text-xs text-body">Rooms with the same paint name, sheen, and quality are combined on the shopping list.</p>
+                  <div id="ceiling-paint-panel" class="mt-4 hidden border-t border-emerald-200 pt-4">
+                    <p class="mb-3 text-sm font-semibold text-heading">Ceiling paint</p>
+                    <div class="grid gap-4 md:grid-cols-2">
+                      <label class="block">
+                        <span class="text-sm font-medium text-heading">Paint name or color</span>
+                        <input id="ceiling-paint-name" type="text" placeholder="Example: Flat ceiling white" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
+                      </label>
+                      <label class="block">
+                        <span class="text-sm font-medium text-heading">Sheen</span>
+                        <select id="ceiling-paint-sheen" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                          <option value="flat">Flat</option>
+                          <option value="matte">Matte</option>
+                          <option value="eggshell">Eggshell</option>
+                          <option value="satin">Satin</option>
+                        </select>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <label class="block">
+                  <span class="text-sm font-medium text-body">Length</span>
+                  <div class="relative mt-1">
+                    <input id="length" type="number" min="1" step="0.5" class="w-full rounded-xl border border-border bg-white py-3 pl-4 pr-12 text-heading" />
+                    <span class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-body">ft</span>
+                  </div>
+                </label>
+
+                <label class="block">
+                  <span class="text-sm font-medium text-body">Width</span>
+                  <div class="relative mt-1">
+                    <input id="width" type="number" min="1" step="0.5" class="w-full rounded-xl border border-border bg-white py-3 pl-4 pr-12 text-heading" />
+                    <span class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-body">ft</span>
+                  </div>
+                </label>
+
+                <label class="block">
+                  <span class="text-sm font-medium text-body">Ceiling height</span>
+                  <div class="relative mt-1">
+                    <input id="height" type="number" min="6" step="0.5" class="w-full rounded-xl border border-border bg-white py-3 pl-4 pr-12 text-heading" />
+                    <span class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-body">ft</span>
+                  </div>
+                </label>
+
+                <label class="block">
+                  <span class="text-sm font-medium text-body">What are you painting?</span>
+                  <select id="surface-type" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                    <option value="walls">Walls only</option>
+                    <option value="walls-ceiling">Walls + ceiling</option>
+                    <option value="ceiling">Ceiling only</option>
+                    <option value="trim">Trim only</option>
+                  </select>
+                </label>
+
+                <details id="fine-tune-details" class="min-w-0 overflow-visible md:col-span-2 rounded-2xl border border-border bg-slate-50 p-4">
+                  <summary class="cursor-pointer font-semibold text-heading">Fine-tune the estimate</summary>
+                  <p class="mt-2 text-sm text-body">Adjust texture, openings, primer, and the waste allowance when those details matter for your room.</p>
+                  <div class="mt-4 grid min-w-0 gap-4">
+                <div class="grid min-w-0 gap-4 sm:grid-cols-2">
+                  <label class="block min-w-0">
+                    <span class="text-sm font-medium text-body">Paint quality</span>
+                    <select id="paint-quality" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                      <option value="budget">Budget</option>
+                      <option value="standard">Standard</option>
+                      <option value="premium">Premium</option>
+                    </select>
+                  </label>
+                  <label class="block min-w-0">
+                    <span class="text-sm font-medium text-body">Label coverage rate</span>
+                    <div class="relative mt-1">
+                    <input id="custom-coverage-rate" type="number" min="1" step="1" placeholder="Optional" class="w-full rounded-xl border border-border bg-white py-3 pl-4 pr-20 text-heading" />
+                      <span class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-xs text-body">sq ft/gal</span>
+                    </div>
+                  </label>
+                  <label class="block min-w-0">
+                    <span class="text-sm font-medium text-body">Coats</span>
+                    <select id="num-coats" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                    </select>
+                  </label>
+                </div>
+
+                <div class="grid min-w-0 gap-4 sm:grid-cols-2">
+                  <label class="block min-w-0">
+                    <span class="text-sm font-medium text-body">Wall texture</span>
+                    <select id="wall-texture" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                      <option value="smooth">Smooth</option>
+                      <option value="light">Light texture</option>
+                      <option value="medium">Medium texture</option>
+                      <option value="heavy">Heavy texture</option>
+                    </select>
+                  </label>
+                  <label class="block min-w-0">
+                    <span class="text-sm font-medium text-body">Ceiling texture</span>
+                    <select id="ceiling-texture" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                      <option value="smooth">Smooth</option>
+                      <option value="light">Light texture</option>
+                      <option value="popcorn">Popcorn</option>
+                    </select>
+                  </label>
+                  <label class="block min-w-0 sm:col-span-2">
+                    <span class="text-sm font-medium text-body">Surface condition</span>
+                    <select id="surface-condition" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                      <option value="good">Previously painted</option>
+                      <option value="fair">Fair or patched</option>
+                      <option value="new-drywall">New drywall</option>
+                      <option value="stained">Stained</option>
+                      <option value="glossy">Glossy</option>
+                    </select>
+                  </label>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-white p-4">
+                  <p class="text-sm font-semibold text-heading">Openings to deduct</p>
+                  <div class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                    <label class="block">
+                      <span class="text-xs font-medium uppercase tracking-wide text-body">Doors</span>
+                      <input id="doors" type="number" min="0" step="1" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
+                    </label>
+                    <label class="block">
+                      <span class="text-xs font-medium uppercase tracking-wide text-body">French doors</span>
+                      <input id="french-doors" type="number" min="0" step="1" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
+                    </label>
+                    <label class="block">
+                      <span class="text-xs font-medium uppercase tracking-wide text-body">Closet doors</span>
+                      <input id="closet-doors" type="number" min="0" step="1" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
+                    </label>
+                    <label class="block">
+                      <span class="text-xs font-medium uppercase tracking-wide text-body">Windows</span>
+                      <input id="windows" type="number" min="0" step="1" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
+                    </label>
+                    <label class="block">
+                      <span class="text-xs font-medium uppercase tracking-wide text-body">Large windows</span>
+                      <input id="large-windows" type="number" min="0" step="1" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
+                    </label>
+                    <label class="block">
+                      <span class="text-xs font-medium uppercase tracking-wide text-body">Small windows</span>
+                      <input id="small-windows" type="number" min="0" step="1" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
+                    </label>
+                  </div>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-white p-4">
+                  <div class="flex flex-wrap items-center justify-between gap-4">
+                    <label class="inline-flex items-center gap-3 text-sm font-medium text-body">
+                      <input id="include-waste" type="checkbox" class="h-5 w-5 rounded border-border text-primary" />
+                      Include waste buffer
+                    </label>
+                    <label class="inline-flex items-center gap-3 text-sm font-medium text-body">
+                      <input id="needs-primer" type="checkbox" class="h-5 w-5 rounded border-border text-primary" />
+                      Include primer
+                    </label>
+                  </div>
+
+                  <div id="primer-panel" class="mt-4 grid gap-4 md:grid-cols-2">
+                    <label class="block">
+                      <span class="text-xs font-medium uppercase tracking-wide text-body">Primer type</span>
+                      <select id="primer-type" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                        <option value="standard">Standard</option>
+                        <option value="high-hide">High hide</option>
+                        <option value="pva">PVA drywall</option>
+                      </select>
+                    </label>
+                    <label class="block">
+                      <span class="text-xs font-medium uppercase tracking-wide text-body">Primer coats</span>
+                      <select id="primer-coats" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div id="trim-panel" class="mt-4 hidden">
+                    <label class="block max-w-xs">
+                      <span class="text-xs font-medium uppercase tracking-wide text-body">Trim height</span>
+                      <select id="trim-height" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                        <option value="4">4 in</option>
+                        <option value="6">6 in</option>
+                        <option value="8">8 in</option>
+                        <option value="10">10 in</option>
+                        <option value="12">12 in</option>
+                      </select>
+                    </label>
+                  </div>
+                </div>
+                  </div>
+                </details>
+                <p id="form-error" class="hidden md:col-span-2 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700" role="alert"></p>
+              </form>
+            </section>
+          </div>
+
+          <aside class="space-y-6 lg:sticky lg:top-24 lg:self-start">
+            <section id="shopping-list-section" class="scroll-mt-24 rounded-2xl border border-border bg-white p-5 md:p-6">
+              <p class="text-sm font-semibold uppercase tracking-wide text-primary">Step 3</p>
+              <h2 class="mt-1 text-xl font-bold text-heading">Shopping list</h2>
+              <div id="summary-cards" class="mt-4 grid grid-cols-2 gap-3"></div>
+              <div id="container-plan" class="mt-4 space-y-3"></div>
+            </section>
+
+            <section class="rounded-2xl border border-border bg-white p-5 md:p-6">
+              <p class="text-sm font-semibold uppercase tracking-wide text-primary">Room notes</p>
+              <h2 class="mt-1 text-xl font-bold text-heading">Per-room plan</h2>
+              <div id="room-summary-list" class="mt-4 space-y-3"></div>
+            </section>
+
+            <section class="planner-no-print rounded-2xl border border-border bg-slate-50 p-5 md:p-6">
+              <p class="text-sm font-semibold uppercase tracking-wide text-primary">Why it helps</p>
+              <ul class="mt-3 space-y-2 text-sm text-body">
+                <li>Combine rooms before you buy so the total is not guesswork.</li>
+                <li>Keep primer separate when the surface needs it.</li>
+                <li>Share the plan with a contractor, partner, or store associate.</li>
+                <li>Print a single sheet instead of juggling notes on the phone.</li>
+              </ul>
+            </section>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <div id="undo-room-bar" class="planner-no-print fixed inset-x-4 bottom-4 z-50 mx-auto hidden max-w-lg flex-col items-start justify-between gap-3 rounded-2xl bg-heading px-5 py-4 text-white shadow-xl sm:flex-row sm:items-center" role="status" aria-live="polite">
+      <span id="undo-room-message" class="text-sm font-medium"></span>
+      <div class="flex shrink-0 items-center gap-2">
+        <button id="confirm-room-removal-btn" type="button" class="rounded-lg border border-white/40 px-3 py-2 text-sm font-semibold text-white hover:bg-white/10">Keep removed</button>
+        <button id="undo-room-btn" type="button" class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-heading">Undo</button>
+      </div>
+    </div>
+
+    <script type="application/json" id="planner-seed" set:html={JSON.stringify({
+      project: initialProject,
+      isSharedProject,
+      shareToken: initialShareToken,
+      summary: initialSummary,
+    })} />
+
+    <script>
+      import {
+        calculatePaint,
+        roomRecommendations,
+        type CalculationInputs,
+      } from '../utils/paint-calculator';
+      import {
+        createPaintRoom,
+        createPaintProject,
+        decodePaintProject,
+        encodePaintProject,
+        isPaintProject,
+        normalizePaintProject,
+        summarizePaintProject,
+        type PaintProject,
+      } from '../models/paint-project';
+
+      const STORAGE_KEY = 'paintprocalc.paint-planner.project.v1';
+      const seed = JSON.parse((document.getElementById('planner-seed') as HTMLScriptElement).textContent || '{}') as {
+        project: PaintProject;
+        isSharedProject: boolean;
+        shareToken: string;
+        summary: unknown;
+      };
+
+      const projectNameInput = document.getElementById('project-name') as HTMLInputElement;
+      const printProjectTitle = document.getElementById('print-project-title') as HTMLElement;
+      const roomList = document.getElementById('room-list') as HTMLElement;
+      const roomSummaryList = document.getElementById('room-summary-list') as HTMLElement;
+      const summaryCards = document.getElementById('summary-cards') as HTMLElement;
+      const containerPlan = document.getElementById('container-plan') as HTMLElement;
+      const roomCount = document.getElementById('room-count') as HTMLElement;
+      const selectedRoomHint = document.getElementById('selected-room-hint') as HTMLElement;
+      const selectedRoomResult = document.getElementById('selected-room-result') as HTMLElement;
+      const mobileProjectTotal = document.getElementById('mobile-project-total') as HTMLElement;
+      const saveStatus = document.getElementById('save-status') as HTMLElement;
+      const addRoomBtn = document.getElementById('add-room-btn') as HTMLButtonElement;
+      const copyLinkBtn = document.getElementById('copy-link-btn') as HTMLButtonElement;
+      const downloadJsonBtn = document.getElementById('download-json-btn') as HTMLButtonElement;
+      const openCopyBtn = document.getElementById('open-copy-btn') as HTMLButtonElement;
+      const openCopyInput = document.getElementById('open-copy-input') as HTMLInputElement;
+      const printBtn = document.getElementById('print-btn') as HTMLButtonElement;
+      const newPlanBtn = document.getElementById('new-plan-btn') as HTMLButtonElement;
+      const formError = document.getElementById('form-error') as HTMLElement;
+      const roomEditorSection = document.getElementById('room-editor-section') as HTMLElement;
+      const fineTuneDetails = document.getElementById('fine-tune-details') as HTMLDetailsElement;
+      const undoRoomBar = document.getElementById('undo-room-bar') as HTMLElement;
+      const undoRoomMessage = document.getElementById('undo-room-message') as HTMLElement;
+      const undoRoomBtn = document.getElementById('undo-room-btn') as HTMLButtonElement;
+      const confirmRoomRemovalBtn = document.getElementById('confirm-room-removal-btn') as HTMLButtonElement;
+      const trimPanel = document.getElementById('trim-panel') as HTMLElement;
+      const primerPanel = document.getElementById('primer-panel') as HTMLElement;
+      const ceilingPaintPanel = document.getElementById('ceiling-paint-panel') as HTMLElement;
+
+      const formFields = {
+        name: document.getElementById('room-name') as HTMLInputElement,
+        roomType: document.getElementById('room-type') as HTMLSelectElement,
+        length: document.getElementById('length') as HTMLInputElement,
+        width: document.getElementById('width') as HTMLInputElement,
+        height: document.getElementById('height') as HTMLInputElement,
+        surfaceType: document.getElementById('surface-type') as HTMLSelectElement,
+        paintQuality: document.getElementById('paint-quality') as HTMLSelectElement,
+        customCoverageRate: document.getElementById('custom-coverage-rate') as HTMLInputElement,
+        numCoats: document.getElementById('num-coats') as HTMLSelectElement,
+        wallTexture: document.getElementById('wall-texture') as HTMLSelectElement,
+        ceilingTexture: document.getElementById('ceiling-texture') as HTMLSelectElement,
+        surfaceCondition: document.getElementById('surface-condition') as HTMLSelectElement,
+        doors: document.getElementById('doors') as HTMLInputElement,
+        frenchDoors: document.getElementById('french-doors') as HTMLInputElement,
+        closetDoors: document.getElementById('closet-doors') as HTMLInputElement,
+        windows: document.getElementById('windows') as HTMLInputElement,
+        largeWindows: document.getElementById('large-windows') as HTMLInputElement,
+        smallWindows: document.getElementById('small-windows') as HTMLInputElement,
+        includeWaste: document.getElementById('include-waste') as HTMLInputElement,
+        needsPrimer: document.getElementById('needs-primer') as HTMLInputElement,
+        primerType: document.getElementById('primer-type') as HTMLSelectElement,
+        primerCoats: document.getElementById('primer-coats') as HTMLSelectElement,
+        trimHeight: document.getElementById('trim-height') as HTMLSelectElement,
+      };
+      const paintFields = {
+        name: document.getElementById('paint-name') as HTMLInputElement,
+        sheen: document.getElementById('paint-sheen') as HTMLSelectElement,
+        ceilingName: document.getElementById('ceiling-paint-name') as HTMLInputElement,
+        ceilingSheen: document.getElementById('ceiling-paint-sheen') as HTMLSelectElement,
+      };
+
+      const sharedToken = new URL(window.location.href).searchParams.get('project');
+      const sharedProject = sharedToken ? decodePaintProject(sharedToken) : null;
+      const openedFromShare = Boolean(sharedProject);
+      const startingProject = sharedProject ?? seed.project;
+      const defaultProject = startingProject.rooms.length
+        ? startingProject
+        : {
+            ...startingProject,
+            rooms: [createPaintRoom('Room 1')],
+          };
+
+      let state: { project: PaintProject; selectedRoomId: string } = {
+        project: defaultProject,
+        selectedRoomId: defaultProject.rooms[0]?.id || '',
+      };
+      let lastRemoval: { room: PaintProject['rooms'][number]; index: number } | null = null;
+      let undoTimer: number | undefined;
+
+      function round(value: number, digits = 1) {
+        const factor = 10 ** digits;
+        return Math.round(value * factor) / factor;
+      }
+
+      function getSelectedRoomIndex() {
+        return state.project.rooms.findIndex((room) => room.id === state.selectedRoomId);
+      }
+
+      function getSelectedRoom() {
+        return state.project.rooms[getSelectedRoomIndex()] || state.project.rooms[0];
+      }
+
+      function setProject(nextProject: PaintProject, selectedRoomId = state.selectedRoomId) {
+        state = {
+          project: nextProject,
+          selectedRoomId: nextProject.rooms.some((room) => room.id === selectedRoomId)
+            ? selectedRoomId
+            : nextProject.rooms[0]?.id || '',
+        };
+        persistState();
+        render();
+      }
+
+      function persistState() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state.project));
+        const url = new URL(window.location.href);
+        if (url.searchParams.has('project')) {
+          url.searchParams.delete('project');
+          window.history.replaceState({}, '', url);
+        }
+        saveStatus.textContent = 'Saved just now in this browser.';
+      }
+
+      function hideUndo() {
+        undoRoomBar.classList.add('hidden');
+        undoRoomBar.classList.remove('flex');
+        if (undoTimer) window.clearTimeout(undoTimer);
+        undoTimer = undefined;
+      }
+
+      function showUndo(roomName: string) {
+        undoRoomMessage.textContent = `${roomName} was removed.`;
+        undoRoomBar.classList.remove('hidden');
+        undoRoomBar.classList.add('flex');
+        if (undoTimer) window.clearTimeout(undoTimer);
+        undoTimer = window.setTimeout(() => {
+          lastRemoval = null;
+          hideUndo();
+        }, 8000);
+      }
+
+      function updateTimestamp() {
+        state.project.updatedAt = new Date().toISOString();
+      }
+
+      function buildInputsFromRoom(roomInputs: CalculationInputs): CalculationInputs {
+        const customCoverageRate = formFields.customCoverageRate.value.trim()
+          ? Number(formFields.customCoverageRate.value)
+          : undefined;
+
+        return {
+          ...roomInputs,
+          length: Number(formFields.length.value) || 0,
+          width: Number(formFields.width.value) || 0,
+          height: Number(formFields.height.value) || 0,
+          surfaceType: formFields.surfaceType.value as CalculationInputs['surfaceType'],
+          roomType: formFields.roomType.value,
+          paintQuality: formFields.paintQuality.value as CalculationInputs['paintQuality'],
+          customCoverageRate: Number.isFinite(customCoverageRate as number) ? customCoverageRate : undefined,
+          numCoats: Number(formFields.numCoats.value) || 1,
+          wallTexture: formFields.wallTexture.value as CalculationInputs['wallTexture'],
+          ceilingTexture: formFields.ceilingTexture.value as CalculationInputs['ceilingTexture'],
+          surfaceCondition: formFields.surfaceCondition.value as CalculationInputs['surfaceCondition'],
+          doors: Number(formFields.doors.value) || 0,
+          frenchDoors: Number(formFields.frenchDoors.value) || 0,
+          closetDoors: Number(formFields.closetDoors.value) || 0,
+          windows: Number(formFields.windows.value) || 0,
+          largeWindows: Number(formFields.largeWindows.value) || 0,
+          smallWindows: Number(formFields.smallWindows.value) || 0,
+          includeWaste: formFields.includeWaste.checked,
+          needsPrimer: formFields.needsPrimer.checked,
+          primerType: formFields.primerType.value as CalculationInputs['primerType'],
+          primerCoats: Number(formFields.primerCoats.value) || 1,
+          trimHeight: Number(formFields.trimHeight.value) || 6,
+        };
+      }
+
+      function validateEditor() {
+        const rules: Array<[HTMLInputElement, number, string]> = [
+          [formFields.length, 1, 'Length must be at least 1 foot.'],
+          [formFields.width, 1, 'Width must be at least 1 foot.'],
+          [formFields.height, 6, 'Ceiling height must be at least 6 feet.'],
+        ];
+        for (const [field, minimum, message] of rules) {
+          if (!field.value.trim() || !Number.isFinite(Number(field.value)) || Number(field.value) < minimum) {
+            formError.textContent = message;
+            formError.classList.remove('hidden');
+            return false;
+          }
+        }
+        const countFields: Array<[HTMLInputElement, string]> = [
+          [formFields.doors, 'Doors'],
+          [formFields.frenchDoors, 'French doors'],
+          [formFields.closetDoors, 'Closet doors'],
+          [formFields.windows, 'Windows'],
+          [formFields.largeWindows, 'Large windows'],
+          [formFields.smallWindows, 'Small windows'],
+        ];
+        for (const [field, label] of countFields) {
+          const value = Number(field.value);
+          if (!Number.isInteger(value) || value < 0) {
+            formError.textContent = `${label} must be a whole number of zero or more.`;
+            formError.classList.remove('hidden');
+            return false;
+          }
+        }
+        const coverage = formFields.customCoverageRate.value.trim();
+        if (coverage && (!Number.isFinite(Number(coverage)) || Number(coverage) <= 0)) {
+          formError.textContent = 'Coverage must be greater than zero.';
+          formError.classList.remove('hidden');
+          return false;
+        }
+        formError.textContent = '';
+        formError.classList.add('hidden');
+        return true;
+      }
+
+      function escapeHtml(value: string) {
+        return value.replace(/[&<>'"]/g, (character) => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          "'": '&#39;',
+          '"': '&quot;',
+        })[character] || character);
+      }
+
+      function syncSelectedRoomResult(room = getSelectedRoom()) {
+        if (!room) return;
+        const estimate = calculatePaint(room.inputs);
+        const totalPaintableArea = estimate.paintableArea + estimate.ceilingPaintableArea;
+        selectedRoomResult.classList.toggle('bg-primary/10', totalPaintableArea > 0);
+        selectedRoomResult.classList.toggle('text-heading', totalPaintableArea > 0);
+        selectedRoomResult.classList.toggle('bg-red-50', totalPaintableArea === 0);
+        selectedRoomResult.classList.toggle('text-red-700', totalPaintableArea === 0);
+        if (totalPaintableArea === 0) {
+          selectedRoomResult.textContent = `${room.name}: no paintable area remains after deductions. Check the room dimensions and opening counts.`;
+          return;
+        }
+        const primerNote = estimate.primerGallonsExact > 0
+          ? ` Primer adds about ${estimate.primerGallonsExact.toFixed(1)} gallons.`
+          : '';
+        if (room.inputs.surfaceType === 'walls-ceiling') {
+          const walls = calculatePaint({ ...room.inputs, surfaceType: 'walls' }).estimateRange.likely.gallonsWithWaste;
+          const ceiling = calculatePaint({ ...room.inputs, surfaceType: 'ceiling' }).estimateRange.likely.gallonsWithWaste;
+          selectedRoomResult.textContent = `${room.name}: about ${walls.toFixed(1)} gallons for walls and ${ceiling.toFixed(1)} gallons for the ceiling.${primerNote}`;
+          return;
+        }
+        selectedRoomResult.textContent = `${room.name}: about ${estimate.estimateRange.likely.gallonsWithWaste.toFixed(1)} gallons of finish paint before rounding to can sizes.${primerNote}`;
+      }
+
+      function scrollToRoomEditor() {
+        if (!window.matchMedia('(max-width: 1023px)').matches) return;
+        const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+        requestAnimationFrame(() => roomEditorSection.scrollIntoView({ behavior, block: 'start' }));
+      }
+
+      function syncEditor(room = getSelectedRoom()) {
+        if (!room) {
+          return;
+        }
+
+        const inputs = room.inputs;
+        projectNameInput.value = state.project.name;
+        printProjectTitle.textContent = state.project.name;
+        formFields.name.value = room.name;
+        paintFields.name.value = room.paint.name;
+        paintFields.sheen.value = room.paint.sheen;
+        paintFields.ceilingName.value = room.ceilingPaint.name;
+        paintFields.ceilingSheen.value = room.ceilingPaint.sheen;
+        formFields.roomType.value = inputs.roomType;
+        formFields.length.value = String(inputs.length);
+        formFields.width.value = String(inputs.width);
+        formFields.height.value = String(inputs.height);
+        formFields.surfaceType.value = inputs.surfaceType;
+        formFields.paintQuality.value = inputs.paintQuality;
+        formFields.customCoverageRate.value = inputs.customCoverageRate ? String(inputs.customCoverageRate) : '';
+        formFields.numCoats.value = String(inputs.numCoats);
+        formFields.wallTexture.value = inputs.wallTexture;
+        formFields.ceilingTexture.value = inputs.ceilingTexture;
+        formFields.surfaceCondition.value = inputs.surfaceCondition;
+        formFields.doors.value = String(inputs.doors);
+        formFields.frenchDoors.value = String(inputs.frenchDoors);
+        formFields.closetDoors.value = String(inputs.closetDoors);
+        formFields.windows.value = String(inputs.windows);
+        formFields.largeWindows.value = String(inputs.largeWindows);
+        formFields.smallWindows.value = String(inputs.smallWindows);
+        formFields.includeWaste.checked = inputs.includeWaste;
+        formFields.needsPrimer.checked = inputs.needsPrimer;
+        formFields.primerType.value = inputs.primerType || 'standard';
+        formFields.primerCoats.value = String(inputs.primerCoats || 1);
+        formFields.trimHeight.value = String(inputs.trimHeight || 6);
+        primerPanel.classList.toggle('hidden', !inputs.needsPrimer);
+        trimPanel.classList.toggle('hidden', inputs.surfaceType !== 'trim');
+        ceilingPaintPanel.classList.toggle('hidden', inputs.surfaceType !== 'walls-ceiling');
+        fineTuneDetails.open = Boolean(
+          inputs.needsPrimer
+          || inputs.customCoverageRate
+          || inputs.paintQuality !== 'standard'
+          || inputs.numCoats !== 2
+          || inputs.wallTexture !== 'smooth'
+          || inputs.ceilingTexture !== 'smooth'
+          || inputs.surfaceCondition !== 'good'
+          || inputs.surfaceType === 'trim'
+        );
+        selectedRoomHint.textContent = `${inputs.surfaceType.replace('-', ' ')} - ${inputs.paintQuality} paint`;
+        syncSelectedRoomResult(room);
+      }
+
+      function updateRoomFromEditor() {
+        const index = getSelectedRoomIndex();
+        if (index === -1) return;
+        if (!validateEditor()) return;
+
+        const room = state.project.rooms[index];
+        const updatedRoom = {
+          ...room,
+          name: formFields.name.value.trim() || room.name,
+          inputs: buildInputsFromRoom(room.inputs),
+          paint: {
+            name: paintFields.name.value.trim() || `${formFields.name.value.trim() || room.name} finish paint`,
+            sheen: paintFields.sheen.value,
+          },
+          ceilingPaint: {
+            name: paintFields.ceilingName.value.trim() || `${formFields.name.value.trim() || room.name} ceiling paint`,
+            sheen: paintFields.ceilingSheen.value,
+          },
+          estimate: undefined,
+        };
+
+        const rooms = state.project.rooms.slice();
+        rooms[index] = updatedRoom;
+        updateTimestamp();
+        state.project = { ...state.project, name: projectNameInput.value.trim() || state.project.name, rooms };
+        persistState();
+        syncSelectedRoomResult(updatedRoom);
+        render(false);
+      }
+
+      function addRoom() {
+        const nextRoomNumber = state.project.rooms.length + 1;
+        const nextRoom = createPaintRoom(`Room ${nextRoomNumber}`);
+        const project = {
+          ...state.project,
+          rooms: [...state.project.rooms, nextRoom],
+          updatedAt: new Date().toISOString(),
+        };
+        state.project = project;
+        state.selectedRoomId = nextRoom.id;
+        persistState();
+        render();
+        scrollToRoomEditor();
+      }
+
+      function startNewPlan() {
+        if (!window.confirm('Start a new plan? This replaces the plan currently saved in this browser.')) return;
+        const project = createPaintProject('Whole-home paint plan');
+        const room = createPaintRoom('Room 1');
+        project.rooms.push(room);
+        lastRemoval = null;
+        hideUndo();
+        setProject(project, room.id);
+        saveStatus.textContent = 'New plan started and saved in this browser.';
+        projectNameInput.focus();
+        projectNameInput.select();
+      }
+
+      function duplicateRoom(roomId: string) {
+        const source = state.project.rooms.find((room) => room.id === roomId);
+        if (!source) return;
+        const duplicate = {
+          ...source,
+          id: crypto.randomUUID(),
+          name: `${source.name} copy`,
+        };
+        const project = {
+          ...state.project,
+          rooms: [...state.project.rooms, duplicate],
+          updatedAt: new Date().toISOString(),
+        };
+        state.project = project;
+        state.selectedRoomId = duplicate.id;
+        persistState();
+        render();
+        scrollToRoomEditor();
+      }
+
+      function removeRoom(roomId: string) {
+        if (state.project.rooms.length === 1) return;
+        const removedIndex = state.project.rooms.findIndex((room) => room.id === roomId);
+        const removedRoom = state.project.rooms[removedIndex];
+        if (!removedRoom) return;
+        lastRemoval = { room: removedRoom, index: removedIndex };
+        const rooms = state.project.rooms.filter((room) => room.id !== roomId);
+        const project = { ...state.project, rooms, updatedAt: new Date().toISOString() };
+        state.project = project;
+        state.selectedRoomId = state.selectedRoomId === roomId
+          ? rooms[Math.min(removedIndex, rooms.length - 1)]?.id || ''
+          : state.selectedRoomId;
+        persistState();
+        render();
+        showUndo(removedRoom.name);
+      }
+
+      function undoRoomRemoval() {
+        if (!lastRemoval) return;
+        const rooms = state.project.rooms.slice();
+        rooms.splice(Math.min(lastRemoval.index, rooms.length), 0, lastRemoval.room);
+        state.project = { ...state.project, rooms, updatedAt: new Date().toISOString() };
+        state.selectedRoomId = lastRemoval.room.id;
+        lastRemoval = null;
+        persistState();
+        render();
+        hideUndo();
+        scrollToRoomEditor();
+      }
+
+      function confirmRoomRemoval() {
+        lastRemoval = null;
+        hideUndo();
+        saveStatus.textContent = 'Room removed. Your plan is saved in this browser.';
+      }
+
+      function setSelectedRoom(roomId: string) {
+        state.selectedRoomId = roomId;
+        syncEditor(getSelectedRoom());
+        renderRoomList();
+        renderRoomSummary();
+        scrollToRoomEditor();
+      }
+
+      function planContainers(needed: number) {
+        const target = Math.max(0, needed);
+        if (target === 0) {
+          return { fiveGallon: 0, oneGallon: 0, total: 0, excess: 0 };
+        }
+
+        let best = { fiveGallon: 0, oneGallon: Math.ceil(target), total: Math.ceil(target), excess: Math.ceil(target) - target };
+
+        for (let five = 0; five <= Math.ceil(target / 5) + 1; five += 1) {
+          for (let one = 0; one <= 4; one += 1) {
+            const total = five * 5 + one;
+            if (total < target) continue;
+            const excess = round(total - target, 2);
+            const containers = five + one;
+            const bestContainers = best.fiveGallon + best.oneGallon;
+            if (excess < best.excess || (excess === best.excess && containers < bestContainers)) {
+              best = { fiveGallon: five, oneGallon: one, total, excess };
+            }
+          }
+        }
+
+        return best;
+      }
+
+      function roomFinishPurchaseGallons(room: PaintProject['rooms'][number]) {
+        if (room.inputs.surfaceType !== 'walls-ceiling') {
+          return calculatePaint(room.inputs).estimateRange.likely.purchaseGallons;
+        }
+        const walls = calculatePaint({ ...room.inputs, surfaceType: 'walls' }).estimateRange.likely.purchaseGallons;
+        const ceiling = calculatePaint({ ...room.inputs, surfaceType: 'ceiling' }).estimateRange.likely.purchaseGallons;
+        return walls + ceiling;
+      }
+
+      function renderRoomList() {
+        roomCount.textContent = `${state.project.rooms.length} room${state.project.rooms.length === 1 ? '' : 's'}`;
+        roomList.replaceChildren(...state.project.rooms.map((room) => {
+          const selected = room.id === state.selectedRoomId;
+          const article = document.createElement('article');
+          article.className = `cursor-pointer rounded-2xl border p-4 transition-colors ${selected ? 'border-primary bg-blue-50 ring-1 ring-primary/20' : 'border-border bg-white hover:bg-slate-50'}`;
+          article.dataset.roomId = room.id;
+          article.setAttribute('aria-current', selected ? 'true' : 'false');
+          const safeRoomName = escapeHtml(room.name);
+          const safeRoomType = escapeHtml(room.inputs.roomType.replace('-', ' '));
+          const safePaintName = escapeHtml(room.paint.name);
+          article.innerHTML = `
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <h3 class="font-semibold text-heading">${safeRoomName}</h3>
+                <p class="text-sm capitalize text-body">${safeRoomType} · ${room.inputs.length} × ${room.inputs.width} ft</p>
+                <p class="mt-1 text-xs text-body">${safePaintName} · ${escapeHtml(room.paint.sheen)}</p>
+              </div>
+              <span class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-heading border border-border">${roomFinishPurchaseGallons(room)} gal</span>
+            </div>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <button type="button" data-action="select" data-room-id="${room.id}" class="rounded-full bg-white px-3 py-2 text-xs font-semibold text-heading border border-border">${selected ? 'Editing' : 'Edit'}</button>
+              <button type="button" data-action="duplicate" data-room-id="${room.id}" class="rounded-full bg-white px-3 py-2 text-xs font-semibold text-heading border border-border">Duplicate</button>
+              <button type="button" data-action="remove" data-room-id="${room.id}" ${state.project.rooms.length === 1 ? 'disabled aria-disabled="true"' : ''} class="rounded-full bg-white px-3 py-2 text-xs font-semibold text-heading border border-border disabled:cursor-not-allowed disabled:opacity-50">Remove</button>
+            </div>
+          `;
+          return article;
+        }));
+      }
+
+      function renderSummary() {
+        const summary = summarizePaintProject(state.project);
+        const finishPurchaseTotal = summary.finishGroups.reduce((total, group) => total + group.purchaseGallons, 0);
+        const primerPurchaseTotal = summary.primerGroups.reduce((total, group) => total + group.purchaseGallons, 0);
+        mobileProjectTotal.textContent = primerPurchaseTotal > 0
+          ? `Project: ${finishPurchaseTotal} gal finish, ${primerPurchaseTotal} gal primer`
+          : `Project: ${finishPurchaseTotal} gal finish paint`;
+        summaryCards.replaceChildren(...[
+          card('Rooms', String(summary.roomCount)),
+          card('Area', `${summary.totalPaintableArea} sq ft`),
+          card('Finish paint', `${finishPurchaseTotal} gal`),
+          card('Primer', `${primerPurchaseTotal} gal`),
+        ]);
+
+        const rows = [
+          ...summary.finishGroups.map((group) => planRow(
+            `${group.name} · ${group.sheen} · ${group.quality}`,
+            group,
+            `${group.surfaces.join(' and ')} for ${formatRoomNames(group.roomNames)}`,
+          )),
+          ...summary.primerGroups.map((group) => planRow(
+            group.name,
+            group,
+            `Primer for ${formatRoomNames(group.roomNames)}`,
+          )),
+        ];
+        containerPlan.replaceChildren(...rows);
+      }
+
+      function formatRoomNames(names: string[]) {
+        const counts = new Map<string, number>();
+        names.forEach((name) => counts.set(name, (counts.get(name) || 0) + 1));
+        return Array.from(counts.entries())
+          .map(([name, count]) => count > 1 ? `${name} (${count})` : name)
+          .join(', ');
+      }
+
+      function renderRoomSummary() {
+        const summary = summarizePaintProject(state.project);
+        roomSummaryList.replaceChildren(...summary.rooms.map((room) => {
+          const note = roomRecommendations[room.inputs.roomType] || 'No room-specific note available.';
+          const estimate = room.estimate.estimateRange.likely;
+          const roomPurchaseGallons = roomFinishPurchaseGallons(room);
+          const item = document.createElement('article');
+          item.className = 'rounded-2xl border border-border bg-slate-50 p-4';
+          const safeRoomName = escapeHtml(room.name);
+          const safeSurface = escapeHtml(room.inputs.surfaceType.replace('-', ' '));
+          const safeNote = escapeHtml(note);
+          item.innerHTML = `
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <h3 class="font-semibold text-heading">${safeRoomName}</h3>
+                <p class="text-sm capitalize text-body">${safeSurface} · ${room.inputs.numCoats} coat${room.inputs.numCoats === 1 ? '' : 's'}</p>
+              </div>
+              <span class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-heading border border-border">${roomPurchaseGallons} gal total</span>
+            </div>
+            <p class="mt-3 text-sm text-body">${safeNote}</p>
+            <p class="mt-3 text-sm text-heading">Estimated use: ${estimate.gallonsWithWaste.toFixed(1)} gal. Practical range: ${room.estimate.estimateRange.low.gallonsWithWaste.toFixed(1)} to ${room.estimate.estimateRange.high.gallonsWithWaste.toFixed(1)} gal.</p>
+          `;
+          return item;
+        }));
+      }
+
+      function card(label: string, value: string) {
+        const element = document.createElement('div');
+        element.className = 'rounded-2xl border border-border bg-slate-50 p-4';
+        element.innerHTML = `
+          <p class="text-xs font-semibold uppercase tracking-wide text-body">${label}</p>
+          <p class="mt-2 text-2xl font-bold text-heading">${value}</p>
+        `;
+        return element;
+      }
+
+      function planRow(label: string, summary: { lowGallons: number; likelyGallons: number; highGallons: number; purchaseGallons: number }, note: string) {
+        const item = document.createElement('div');
+        const plan = planContainers(summary.likelyGallons);
+        const safeLabel = escapeHtml(label);
+        const safeNote = escapeHtml(note);
+        const buyText = plan.total > 0
+          ? `Buy ${plan.fiveGallon ? `${plan.fiveGallon} five-gallon bucket${plan.fiveGallon === 1 ? '' : 's'}` : ''}${plan.fiveGallon && plan.oneGallon ? ' and ' : ''}${plan.oneGallon ? `${plan.oneGallon} one-gallon can${plan.oneGallon === 1 ? '' : 's'}` : ''}`
+          : 'No paint to buy. Check room measurements and openings.';
+        item.className = 'rounded-2xl border border-border bg-white p-4';
+        item.innerHTML = `
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="font-semibold capitalize text-heading">${safeLabel}</p>
+              <p class="text-sm text-body">${safeNote}</p>
+            </div>
+            <span class="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">${summary.purchaseGallons} gal</span>
+          </div>
+          <div class="mt-3 text-sm text-body">Estimated use: ${summary.likelyGallons.toFixed(1)} gal</div>
+          <div class="mt-2 font-medium text-heading">${buyText}</div>
+        `;
+        return item;
+      }
+
+      function render(syncForm = true) {
+        renderRoomList();
+        renderSummary();
+        renderRoomSummary();
+        if (syncForm) syncEditor(getSelectedRoom());
+      }
+
+      async function copyShareLink() {
+        const token = encodePaintProject(state.project);
+        const url = new URL(window.location.href);
+        url.searchParams.set('project', token);
+        if (url.toString().length > 7000) {
+          saveStatus.textContent = 'This plan is too large for a dependable link. Use Save a copy instead.';
+          return false;
+        }
+        await navigator.clipboard.writeText(url.toString());
+        return true;
+      }
+
+      projectNameInput.value = state.project.name;
+      syncEditor(getSelectedRoom());
+      render();
+
+      addRoomBtn.addEventListener('click', addRoom);
+      copyLinkBtn.addEventListener('click', async () => {
+        try {
+          const copied = await copyShareLink();
+          if (copied) saveStatus.textContent = 'Plan link copied to your clipboard.';
+        } catch {
+          const token = encodePaintProject(state.project);
+          const url = new URL(window.location.href);
+          url.searchParams.set('project', token);
+          window.prompt('Copy this share link', url.toString());
+        }
+      });
+
+      downloadJsonBtn.addEventListener('click', () => {
+        const blob = new Blob([JSON.stringify(state.project, null, 2)], { type: 'application/json' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        const safeName = state.project.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'paint-plan';
+        link.download = `${safeName}.json`;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+        saveStatus.textContent = 'A copy of this plan was saved to your device.';
+      });
+
+      openCopyBtn.addEventListener('click', () => openCopyInput.click());
+      openCopyInput.addEventListener('change', async () => {
+        const file = openCopyInput.files?.[0];
+        if (!file) return;
+        try {
+          const raw = JSON.parse(await file.text()) as unknown;
+          if (!isPaintProject(raw)) throw new Error('Invalid paint plan');
+          const project = normalizePaintProject(raw);
+          if (!project.rooms.length) project.rooms = [createPaintRoom('Room 1')];
+          setProject(project, project.rooms[0].id);
+          saveStatus.textContent = `${file.name} is open and saved in this browser.`;
+        } catch {
+          saveStatus.textContent = 'That file is not a valid Paint Pro Calculator plan.';
+        } finally {
+          openCopyInput.value = '';
+        }
+      });
+
+      printBtn.addEventListener('click', () => window.print());
+      newPlanBtn.addEventListener('click', startNewPlan);
+      undoRoomBtn.addEventListener('click', undoRoomRemoval);
+      confirmRoomRemovalBtn.addEventListener('click', confirmRoomRemoval);
+
+      projectNameInput.addEventListener('input', () => {
+        state.project.name = projectNameInput.value.trim() || 'Whole-home paint plan';
+        printProjectTitle.textContent = state.project.name;
+        updateTimestamp();
+        persistState();
+      });
+
+      roomList.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement;
+        const button = target.closest('button[data-action]') as HTMLButtonElement | null;
+        const roomCard = target.closest('article[data-room-id]') as HTMLElement | null;
+        const roomId = button?.dataset.roomId || roomCard?.dataset.roomId;
+        if (!roomId) return;
+
+        if (!button) {
+          setSelectedRoom(roomId);
+          return;
+        }
+
+        if (button.dataset.action === 'select') {
+          setSelectedRoom(roomId);
+        }
+        if (button.dataset.action === 'duplicate') {
+          duplicateRoom(roomId);
+        }
+        if (button.dataset.action === 'remove') {
+          removeRoom(roomId);
+        }
+      });
+
+      Object.values(formFields).forEach((field) => {
+        const eventName = field instanceof HTMLInputElement && field.type === 'text' ? 'input' : 'change';
+        field.addEventListener(eventName, () => {
+          updateRoomFromEditor();
+          trimPanel.classList.toggle('hidden', formFields.surfaceType.value !== 'trim');
+          primerPanel.classList.toggle('hidden', !formFields.needsPrimer.checked);
+          ceilingPaintPanel.classList.toggle('hidden', formFields.surfaceType.value !== 'walls-ceiling');
+        });
+      });
+
+      Object.values(paintFields).forEach((field) => {
+        const eventName = field instanceof HTMLInputElement ? 'input' : 'change';
+        field.addEventListener(eventName, updateRoomFromEditor);
+      });
+
+      window.addEventListener('storage', (event) => {
+        if (event.key !== STORAGE_KEY || !event.newValue) return;
+        try {
+          const parsed = normalizePaintProject(JSON.parse(event.newValue) as PaintProject);
+          state.project = parsed.rooms.length ? parsed : { ...parsed, rooms: [createPaintRoom('Room 1')] };
+          state.selectedRoomId = state.project.rooms[0]?.id || '';
+          render();
+        } catch {
+          // Ignore malformed storage updates.
+        }
+      });
+
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (!openedFromShare && stored) {
+        try {
+          const parsed = normalizePaintProject(JSON.parse(stored) as PaintProject);
+          state.project = parsed.rooms.length ? parsed : { ...parsed, rooms: [createPaintRoom('Room 1')] };
+          state.selectedRoomId = state.project.rooms[0]?.id || '';
+          render();
+        } catch {
+          // Fall back to the seeded project.
+          saveStatus.textContent = 'The saved browser copy could not be opened. A fresh plan is shown instead.';
+        }
+      } else if (openedFromShare) {
+        saveStatus.textContent = 'Shared plan opened. Any changes you make will be saved in this browser.';
+      } else {
+        persistState();
+      }
+
+      if (sharedToken && !sharedProject) {
+        saveStatus.textContent = 'That plan link could not be opened. Your saved browser plan is shown instead.';
+      }
+    </script>
+  </main>
+
+  <Footer />
+</Layout>

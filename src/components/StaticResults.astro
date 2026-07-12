@@ -23,12 +23,24 @@ const recommendation = roomRecommendations[inputs.roomType];
     </h2>
 
     <!-- Main Result -->
-    <div class={`grid grid-cols-1 ${results.primerGallons > 0 ? 'sm:grid-cols-2' : ''} gap-4 mb-6`}>
-      <div class="text-center py-6 bg-light-gray rounded-xl">
-        <p class="text-sm text-body mb-1">Paint Needed</p>
-        <p class="text-4xl md:text-5xl font-bold text-primary">{results.gallonsNeeded}</p>
-        <p class="text-lg font-medium text-heading">gallons</p>
+    <div class="grid grid-cols-3 gap-2 mb-4">
+      <div class="text-center py-4 bg-light-gray rounded-xl">
+        <p class="text-xs text-body mb-1">Low</p>
+        <p class="text-3xl font-bold text-heading">{results.estimateRange.low.gallonsWithWaste.toFixed(1)}</p>
+        <p class="text-sm font-medium text-heading">gal</p>
       </div>
+      <div class="text-center py-4 bg-blue-50 border-2 border-primary rounded-xl">
+        <p class="text-xs text-primary font-semibold mb-1">Likely</p>
+        <p class="text-3xl font-bold text-primary">{results.estimateRange.likely.gallonsWithWaste.toFixed(1)}</p>
+        <p class="text-sm font-medium text-heading">gal</p>
+      </div>
+      <div class="text-center py-4 bg-light-gray rounded-xl">
+        <p class="text-xs text-body mb-1">High</p>
+        <p class="text-3xl font-bold text-heading">{results.estimateRange.high.gallonsWithWaste.toFixed(1)}</p>
+        <p class="text-sm font-medium text-heading">gal</p>
+      </div>
+    </div>
+    <div class="mb-6">
       {results.primerGallons > 0 && (
         <div class="text-center py-6 bg-amber-50 rounded-xl">
           <p class="text-sm text-body mb-1">Primer Needed</p>
@@ -40,7 +52,7 @@ const recommendation = roomRecommendations[inputs.roomType];
 
     <!-- Result Summary -->
     <p class="text-body text-center mb-6">
-      This covers {totalArea} square feet with {inputs.numCoats} coats of standard paint.
+      This range covers {totalArea} square feet with {inputs.numCoats} coats. The likely estimate is {results.estimateRange.likely.rawGallons.toFixed(2)} gallons before the selected buffer. If you are buying whole gallons, plan on {results.estimateRange.likely.purchaseGallons}.
     </p>
 
     <!-- Room recommendation -->
@@ -112,7 +124,10 @@ const recommendation = roomRecommendations[inputs.roomType];
 
     <!-- Assumptions Note -->
     <p class="text-xs text-gray-500 mt-4 text-center">
-      Based on a {inputs.length}x{inputs.width} ft room with {inputs.height}-ft ceilings, {inputs.doors + inputs.closetDoors + inputs.frenchDoors} door(s), and {inputs.windows + inputs.largeWindows + inputs.smallWindows} window(s). Paint at {results.baseCoverage} sq ft/gallon with 15% waste buffer.
+      Based on a {inputs.length}x{inputs.width} ft room with {inputs.height}-ft ceilings, {inputs.doors + inputs.closetDoors + inputs.frenchDoors} door(s), and {inputs.windows + inputs.largeWindows + inputs.smallWindows} window(s). Paint at {results.baseCoverage} sq ft/gallon{inputs.includeWaste ? ' with a 15% buffer' : ' without a waste buffer'}.
+    </p>
+    <p class="text-center mt-3">
+      <a href="/calculator-methodology" class="text-sm text-primary font-medium hover:underline">See the formula and assumptions</a>
     </p>
   </div>
 </section>

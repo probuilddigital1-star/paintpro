@@ -21,7 +21,7 @@ export const blogPosts: BlogPost[] = [
     title: 'How Much Does It Cost to Paint a Room in 2026? (DIY & Pro Prices)',
     metaDescription: 'Find out the real cost to paint a room in 2026. Covers DIY paint costs per gallon, professional painter rates, and a full breakdown by room size.',
     publishedDate: '2026-01-15',
-    updatedDate: '2026-01-15',
+    updatedDate: '2026-07-11',
     category: 'Cost Guide',
     readingTime: 8,
     calculatorCta: { text: 'Calculate Your Paint Needs', href: '/#calculator' },
@@ -149,7 +149,7 @@ export const blogPosts: BlogPost[] = [
 <p>Yes, and it matters more than most people think. Here is why spending an extra $15 to $20 per gallon on better paint usually saves money in the long run:</p>
 
 <ul>
-<li><strong>Coverage:</strong> Premium paints like Benjamin Moore Regal Select or <a href="/paint-calculator/sherwin-williams-paint-calculator">Sherwin-Williams Emerald</a> often cover in one thick coat where budget paint needs two or three.</li>
+<li><strong>Coverage:</strong> Premium paints may provide better hide, but one-coat results depend on the approved color combination, surface, and application rate. Check the product label before budgeting around a one-coat claim.</li>
 <li><strong>Durability:</strong> Higher-quality paint resists scuffs, stains, and fading, which means you will not need to repaint as soon.</li>
 <li><strong>Finish quality:</strong> Better paints self-level more effectively, hiding roller marks and brush strokes.</li>
 <li><strong>Washability:</strong> Premium paints can be wiped clean without removing the finish, which is especially important in kitchens and <a href="/paint-calculator/bathroom-paint-calculator">bathrooms</a>.</li>
@@ -179,7 +179,7 @@ export const blogPosts: BlogPost[] = [
 <li><strong>Do your own prep.</strong> Even if you hire a painter, you can save $100 to $300 by moving furniture, removing switch plates, and taping off trim yourself.</li>
 <li><strong>Get three quotes.</strong> Painter prices vary wildly. Always get at least three written estimates before hiring anyone.</li>
 <li><strong>Buy in 5-gallon buckets.</strong> If you are painting multiple rooms the same color, a 5-gallon bucket is typically 10% to 15% cheaper per gallon than buying individual cans.</li>
-<li><strong>Consider paint-and-primer-in-one.</strong> Products like <a href="/paint-calculator/behr-paint-calculator">Behr Ultra</a> or Sherwin-Williams Duration can eliminate the need for a separate primer coat, saving both time and money.</li>
+<li><strong>Check whether a separate primer is needed.</strong> A self-priming topcoat may work on a sound, previously painted surface, but stains, bare drywall, glossy coatings, and problem substrates can still require a dedicated primer.</li>
 </ol>
 
 <h2>Room-by-Room Cost Estimates (2026)</h2>
@@ -363,7 +363,7 @@ export const blogPosts: BlogPost[] = [
     title: 'How Many Coats of Paint Do You Really Need? (Complete Guide)',
     metaDescription: 'Find out how many coats of paint you actually need for walls, ceilings, and trim. Covers when one coat works, when you need three, and how to save time and money.',
     publishedDate: '2026-02-01',
-    updatedDate: '2026-02-01',
+    updatedDate: '2026-07-11',
     category: 'Painting Tips',
     readingTime: 7,
     calculatorCta: { text: 'Calculate Paint for Multiple Coats', href: '/#calculator' },
@@ -397,7 +397,7 @@ export const blogPosts: BlogPost[] = [
 
 <h2>The General Rule (and When to Break It)</h2>
 
-<p>Two coats is the standard recommendation for most interior painting projects, and it holds true roughly 70% of the time. Two coats gives you complete color coverage, a uniform appearance, and maximum durability. Most paint manufacturers formulate their coverage rates assuming two coats.</p>
+<p>Two coats is a practical starting point for most interior walls, but the product instructions still control. Benjamin Moore, for example, recommends at least two topcoats for hide and color development in its <a href="https://www.benjaminmoore.com/en-us/interior-exterior-paints-stains/how-to-advice/interiors/paint-rooms">room-painting guidance</a>. A test section is more useful than a universal rule when the old and new colors are similar.</p>
 
 <p>But "two coats always" is an oversimplification. Here is when you can break the rule.</p>
 
@@ -432,7 +432,7 @@ export const blogPosts: BlogPost[] = [
 
 <h3>Drastic Color Changes</h3>
 
-<p>Going from <a href="/paint-calculator/dark-to-light-paint-calculator">dark to light</a> is the most common reason for three coats. If your walls are currently deep red, forest green, navy blue, or any other saturated dark color, getting to white or a pale pastel will require at least three coats, even with premium paint.</p>
+<p>Going from <a href="/#calculator">dark to light</a> is a common reason to plan for primer or an additional coat. Deep red, green, and blue can be difficult to cover with a pale finish, but the actual coat count depends on the primer, topcoat, application rate, and approved color combination.</p>
 
 <p>This is where a tinted primer can save you money and time. Instead of three coats of $60/gallon paint, use one coat of tinted primer ($25/gallon) plus two coats of your finish color. The primer blocks the old color from bleeding through, and you get better results with less expensive paint in the final layers.</p>
 
@@ -501,7 +501,7 @@ export const blogPosts: BlogPost[] = [
 
 <h2>How Coats Affect Your Paint Budget</h2>
 
-<p>Each additional coat adds roughly 85% to 100% more paint to your total. Here is a quick reference for a <a href="/paint-calculator/12x12-room-paint-calculator">12x12 room with 8-foot ceilings</a> (walls only):</p>
+<p>Each additional coat adds close to another full pass over the same paintable area. Here is a quick reference for a <a href="/paint-calculator/bedroom-paint-calculator">12x12 bedroom with 8-foot ceilings</a> (walls only):</p>
 
 <ul>
 <li><strong>1 coat:</strong> ~0.9 gallons</li>
@@ -674,7 +674,7 @@ export const blogPosts: BlogPost[] = [
 
 <ul>
 <li><strong>Behr:</strong> Exclusively at Home Depot. This is actually a major convenience advantage for most homeowners, since Home Depot has over 2,300 locations in the US and offers same-day delivery in many areas.</li>
-<li><strong>Sherwin-Williams:</strong> At over 4,900 Sherwin-Williams stores nationwide, plus select lines available at Lowe's. The dedicated stores offer expert color advice and professional-grade tools.</li>
+<li><strong>Sherwin-Williams:</strong> Sold through the company's paint stores, with select lines at Lowe's. A dedicated paint store can be useful when you need product-specific preparation or application guidance.</li>
 <li><strong>Benjamin Moore:</strong> Only at independent paint stores and BM-authorized retailers. This means fewer locations and sometimes longer drives, but you get more personalized service and expert recommendations from dedicated paint specialists.</li>
 </ul>
 
@@ -733,7 +733,7 @@ export const blogPosts: BlogPost[] = [
     title: 'Complete Room Painting Checklist: Step by Step (2026)',
     metaDescription: 'Follow this complete room painting checklist from prep to cleanup. Step-by-step guide covering supplies, taping, priming, painting technique, and drying times.',
     publishedDate: '2026-02-17',
-    updatedDate: '2026-02-17',
+    updatedDate: '2026-07-11',
     category: 'How-To Guide',
     readingTime: 8,
     calculatorCta: { text: 'Calculate Your Paint Needs First', href: '/#calculator' },
@@ -868,7 +868,7 @@ export const blogPosts: BlogPost[] = [
 <ul>
 <li>Painting new or bare drywall</li>
 <li>Covering stains (water damage, smoke, marker)</li>
-<li>Making a <a href="/paint-calculator/dark-to-light-paint-calculator">drastic color change</a> (dark to light or light to very dark)</li>
+<li>Making a <a href="/#calculator">drastic color change</a> (dark to light or light to very dark)</li>
 <li>Painting over a glossy surface that you could not fully sand</li>
 <li>Painting over wallpaper residue</li>
 </ul>
@@ -967,7 +967,7 @@ export const blogPosts: BlogPost[] = [
     title: 'When to Hire a Painter vs DIY: Complete Cost Breakdown (2026)',
     metaDescription: 'Should you paint it yourself or hire a pro? Compare real costs, time investment, and quality outcomes for DIY painting versus hiring a professional painter in 2026.',
     publishedDate: '2026-02-24',
-    updatedDate: '2026-02-24',
+    updatedDate: '2026-07-11',
     category: 'Cost Guide',
     readingTime: 8,
     calculatorCta: { text: 'Calculate Paint Costs for DIY', href: '/#calculator' },
@@ -1195,7 +1195,7 @@ export const blogPosts: BlogPost[] = [
     title: 'How to Paint a Ceiling Without Streaks (Pro Technique)',
     metaDescription: 'Learn the professional technique for painting ceilings without streaks or roller marks. Covers tools, paint selection, and step-by-step application tips.',
     publishedDate: '2026-02-28',
-    updatedDate: '2026-02-28',
+    updatedDate: '2026-07-11',
     category: 'How-To Guide',
     readingTime: 7,
     calculatorCta: { text: 'Calculate Ceiling Paint Needed', href: '/#calculator' },
@@ -1329,7 +1329,7 @@ export const blogPosts: BlogPost[] = [
 
 <h2>How Much Paint Do You Need?</h2>
 
-<p>A standard <a href="/paint-calculator/12x12-room-paint-calculator">12x12 room</a> has 144 square feet of ceiling. With two coats, you need about 0.75 to 1 gallon of ceiling paint. A <a href="/paint-calculator/16x16-room-paint-calculator">16x16 room</a> has 256 square feet and needs about 1.5 gallons for two coats.</p>
+<p>A <a href="/paint-calculator/bedroom-paint-calculator">12x12 room</a> has 144 square feet of ceiling. With two coats, the raw area is 288 square feet before texture and waste adjustments. A 16x16 room has 256 square feet of ceiling and 512 square feet across two coats. Use the coverage rate on the ceiling-paint label to turn that area into gallons.</p>
 
 <p>For an exact calculation based on your room size, use our <a href="/#calculator">free paint calculator</a>.</p>
 
@@ -1343,7 +1343,7 @@ export const blogPosts: BlogPost[] = [
     title: 'Eggshell vs Satin vs Semi-Gloss: Which Paint Finish to Use Where',
     metaDescription: 'Compare eggshell, satin, and semi-gloss paint finishes. Learn which sheen to use in every room of your home for the best look and durability.',
     publishedDate: '2026-03-01',
-    updatedDate: '2026-03-01',
+    updatedDate: '2026-07-11',
     category: 'Paint Guide',
     readingTime: 8,
     calculatorCta: { text: 'Calculate Your Paint Needs', href: '/#calculator' },
@@ -1414,7 +1414,7 @@ export const blogPosts: BlogPost[] = [
 <ul>
 <li><a href="/paint-calculator/living-room-paint-calculator">Living rooms</a></li>
 <li><a href="/paint-calculator/bedroom-paint-calculator">Bedrooms</a></li>
-<li><a href="/paint-calculator/dining-room-paint-calculator">Dining rooms</a></li>
+<li>Dining rooms</li>
 <li>Home offices</li>
 <li>Guest rooms</li>
 </ul>
@@ -1446,7 +1446,7 @@ export const blogPosts: BlogPost[] = [
 <ul>
 <li><a href="/paint-calculator/kitchen-paint-calculator">Kitchens</a></li>
 <li><a href="/paint-calculator/bathroom-paint-calculator">Bathrooms</a></li>
-<li><a href="/paint-calculator/hallway-paint-calculator">Hallways</a></li>
+<li>Hallways</li>
 <li>Kids' bedrooms and playrooms</li>
 <li>Laundry rooms</li>
 <li>Mudrooms and entryways</li>
@@ -2290,7 +2290,7 @@ export const blogPosts: BlogPost[] = [
     faqs: [
       {
         question: 'How long does garage floor epoxy last?',
-        answer: 'Quality two-part epoxy coatings last 5 to 10 years in a residential garage with normal use. Professional-grade epoxy (100% solids) can last 15 to 20 years. The lifespan depends on the quality of surface preparation, the type of epoxy used, and the amount of traffic and chemical exposure the floor receives.'
+        answer: 'A two-part epoxy can outlast one-part floor paint, but a useful lifespan cannot be promised without knowing the slab preparation, moisture level, coating thickness, traffic, and chemical exposure. Preparation is usually more important than the marketing tier on the package.'
       },
       {
         question: 'How long does garage floor paint last?',
@@ -2338,7 +2338,7 @@ export const blogPosts: BlogPost[] = [
 <ul>
 <li><strong>Paint:</strong> $50 to $100 for paint, $20 to $30 for supplies (roller, tray, etcher). Total: $70 to $130.</li>
 <li><strong>Epoxy kit:</strong> $150 to $400 for the kit (usually includes etcher and decorative chips), $20 to $40 for additional supplies. Total: $170 to $440.</li>
-<li><strong>Professional epoxy installation:</strong> $1,500 to $3,500. This includes full surface prep, moisture testing, crack repair, and professional-grade 100% solids epoxy.</li>
+<li><strong>Installed epoxy system:</strong> A contractor quote may include grinding, moisture testing, crack repair, a multi-part coating, and a clear topcoat. Ask for those items separately instead of comparing only the total price.</li>
 </ul>
 
 <p><strong>Winner:</strong> Paint for upfront cost. But if you factor in recoating paint every 2 to 3 years, epoxy is cheaper over a 10-year period.</p>
@@ -2427,7 +2427,7 @@ export const blogPosts: BlogPost[] = [
     title: 'How to Paint Trim and Baseboards Like a Pro',
     metaDescription: 'Step-by-step guide to painting trim, baseboards, and molding with clean lines and a smooth finish. Covers prep, brushes, paint types, and taping techniques.',
     publishedDate: '2026-03-08',
-    updatedDate: '2026-03-08',
+    updatedDate: '2026-07-11',
     category: 'How-To Guide',
     readingTime: 8,
     calculatorCta: { text: 'Calculate How Much Trim Paint You Need', href: '/#calculator' },
@@ -2907,7 +2907,7 @@ export const blogPosts: BlogPost[] = [
     title: 'How to Prep Walls Before Painting (The Step Most People Skip)',
     metaDescription: 'Learn how to properly prep walls before painting for a professional result. Covers cleaning, patching, sanding, priming, and the prep steps most DIYers skip.',
     publishedDate: '2026-03-11',
-    updatedDate: '2026-03-11',
+    updatedDate: '2026-07-11',
     category: 'Painting Tips',
     readingTime: 8,
     calculatorCta: { text: 'Calculate Your Paint Needs', href: '/#calculator' },
@@ -3274,7 +3274,7 @@ export const blogPosts: BlogPost[] = [
     title: 'How to Touch Up Paint Without It Looking Obvious',
     metaDescription: 'Learn how to touch up wall paint so the repair blends invisibly. Covers matching paint, application technique, and common touch-up mistakes to avoid.',
     publishedDate: '2026-03-13',
-    updatedDate: '2026-03-13',
+    updatedDate: '2026-07-11',
     category: 'Painting Tips',
     readingTime: 6,
     calculatorCta: { text: 'Need More Than a Touch-Up? Calculate Paint', href: '/#calculator' },
@@ -3418,7 +3418,7 @@ export const blogPosts: BlogPost[] = [
     title: 'Paint Color Trends for 2026: What Designers Are Using Now',
     metaDescription: 'Discover the top paint color trends for 2026 including colors of the year, trending palettes, and what professional designers recommend for every room.',
     publishedDate: '2026-03-14',
-    updatedDate: '2026-03-14',
+    updatedDate: '2026-07-11',
     category: 'Paint Guide',
     readingTime: 7,
     calculatorCta: { text: 'Calculate Paint for Your New Color', href: '/#calculator' },
@@ -3431,7 +3431,7 @@ export const blogPosts: BlogPost[] = [
     faqs: [
       {
         question: 'What is the most popular paint color for 2026?',
-        answer: 'The 2026 Colors of the Year lean toward warm, earthy tones. Sherwin-Williams selected Chrysanthemum (a warm amber-gold), Benjamin Moore chose Cinnamon Slate (a rich warm brown), and Behr picked Rumors (a muted mauve-brown). The overall trend is a move away from cool grays toward warmer neutrals and nature-inspired colors.'
+        answer: 'The major 2026 selections do not point in a single direction. Sherwin-Williams chose Universal Khaki SW 6150, Benjamin Moore chose the espresso-charcoal Silhouette AF-655, and Behr chose the smoky jade Hidden Gem N430-6A. Together they favor grounded colors, but they range from neutral to deep green.'
       },
       {
         question: 'Is gray paint still popular in 2026?',
@@ -3452,17 +3452,17 @@ export const blogPosts: BlogPost[] = [
 
 <h2>2026 Colors of the Year</h2>
 
-<h3>Sherwin-Williams: Chrysanthemum (SW 6347)</h3>
+<h3>Sherwin-Williams: Universal Khaki (SW 6150)</h3>
 
-<p>Sherwin-Williams went bold with an amber-gold tone called Chrysanthemum. It is warm, optimistic, and has a vintage 1970s feel without looking dated. This works best as an accent color (one wall, a front door, or a powder room) rather than a whole-room color. Pair it with warm whites and natural wood tones for a sophisticated look.</p>
+<p><a href="https://www.sherwin-williams.com/en-us/color/color-of-the-year/2026" target="_blank" rel="noopener noreferrer">Sherwin-Williams selected Universal Khaki SW 6150</a>, a mid-tone warm neutral with a slight yellow undertone. It is quiet enough for a full room and works well with natural wood, black accents, and crisp white trim.</p>
 
-<h3>Benjamin Moore: Cinnamon Slate (2113-40)</h3>
+<h3>Benjamin Moore: Silhouette (AF-655)</h3>
 
-<p>Benjamin Moore selected Cinnamon Slate, a rich warm brown with gray undertones. It is part of the broader trend toward earthy, grounding colors. This is surprisingly versatile as a full-room color in living rooms, bedrooms, and dining rooms. It looks particularly good with cream trim, leather furniture, and warm metals like brass.</p>
+<p><a href="https://www.benjaminmoore.com/en-us/press/benjamin-moore-announces-color-of-the-year-2026" target="_blank" rel="noopener noreferrer">Benjamin Moore selected Silhouette AF-655</a>, a deep espresso brown with charcoal notes. It suits a study, dining room, cabinetry, or a smaller accent area where a dark color will not overwhelm the space.</p>
 
-<h3>Behr: Rumors (N150-3)</h3>
+<h3>Behr: Hidden Gem (N430-6A)</h3>
 
-<p>Behr chose Rumors, a muted mauve-brown that sits in the space between pink and taupe. It is soft enough for bedrooms and living rooms, interesting enough to feel intentional, and neutral enough to work with a wide range of furniture styles. Available at Home Depot.</p>
+<p><a href="https://corporate.behr.com/news/behr-paint-company-announces-2026-color-of-the-year-hidden-gem-a-smoky-jade-that-embodies-understated-elegance-and-timeless-sophistication" target="_blank" rel="noopener noreferrer">Behr selected Hidden Gem N430-6A</a>, a smoky blue-green. It is a stronger color than the two neutrals above, so sampling it on more than one wall is especially important.</p>
 
 <h3>PPG: Cracked Pepper (PPG1001-7)</h3>
 
@@ -3759,7 +3759,7 @@ export const blogPosts: BlogPost[] = [
     title: 'How Long Does Paint Take to Dry? (Dry Time vs Cure Time)',
     metaDescription: 'A clear guide to paint dry times, recoat windows, and full cure times. Covers latex, oil, and specialty paints plus how humidity and temperature change everything.',
     publishedDate: '2026-03-16',
-    updatedDate: '2026-03-16',
+    updatedDate: '2026-07-11',
     category: 'Painting Tips',
     readingTime: 7,
     calculatorCta: { text: 'Plan Your Project: Calculate Paint Needs', href: '/#calculator' },
@@ -3801,7 +3801,7 @@ export const blogPosts: BlogPost[] = [
 
 <h3>2. Recoat Ready</h3>
 
-<p>This is when you can safely apply a second coat without disturbing the first. Latex paint is typically recoat ready in 2 to 4 hours. Premium fast-dry formulas shorten this to 1 hour. Oil-based paints need 16 to 24 hours between coats. Applying a second coat before the first is recoat ready causes the new paint to drag and lift the underlying layer.</p>
+<p>This is when you can safely apply a second coat without disturbing the first. Water-based wall paints often list a recoat window measured in hours, while some specialty and oil-based coatings require much longer. Applying another coat too soon can drag or lift the underlying layer. Check the can or technical data sheet because the formula, temperature, humidity, and film thickness all matter.</p>
 
 <h3>3. Fully Cured</h3>
 
@@ -3858,11 +3858,11 @@ export const blogPosts: BlogPost[] = [
 
 <h3>High Humidity</h3>
 
-<p>Humidity is the biggest drying killer for latex paint. Above 70 percent relative humidity, paint takes twice as long to dry. Above 85 percent, it may not cure properly at all. If you live somewhere humid, run a dehumidifier or air conditioner while you paint and during the drying period.</p>
+<p>High humidity slows evaporation from water-based paint, but there is no dependable rule that every product takes twice as long at one humidity reading. If the room is humid, improve air movement, use a dehumidifier when appropriate, and extend the label's recoat time rather than guessing.</p>
 
 <h3>Low Temperature</h3>
 
-<p>Paint needs warmth to cure. Below 50 degrees Fahrenheit, most latex paints will not cure properly. The resin cannot coalesce, and you end up with a soft, chalky finish that never hardens. This is the biggest risk for exterior painting in spring and fall. Check the nighttime low for the next 48 hours, not just the daytime high.</p>
+<p>Every coating has an application-temperature range. Cold surfaces and falling overnight temperatures can slow film formation or cause failure, especially outdoors. Check both the air and surface limits on the product label, then compare them with the overnight forecast instead of relying on a single universal cutoff.</p>
 
 <h3>Thick Coats</h3>
 
@@ -4760,7 +4760,7 @@ export const blogPosts: BlogPost[] = [
     title: 'How to Fix Peeling Paint (Diagnose the Cause First)',
     metaDescription: 'Peeling paint guide that starts with finding the cause. Covers moisture, adhesion failure, and incompatible coatings plus step-by-step repair.',
     publishedDate: '2026-03-23',
-    updatedDate: '2026-03-23',
+    updatedDate: '2026-07-11',
     category: 'Painting Tips',
     readingTime: 7,
     calculatorCta: { text: 'Calculate Paint for Your Repair', href: '/#calculator' },
@@ -4781,7 +4781,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         question: 'How do I find hidden moisture causing paint to peel?',
-        answer: 'Use a pin-type moisture meter on the wall near the peeling area. Normal drywall reads under 15 percent moisture content. Readings above 17 percent indicate active moisture. Bathrooms, kitchens, exterior walls, and areas below leaky plumbing or roofs are common spots for hidden moisture.'
+        answer: 'Compare the suspect area with a known dry section of the same material and follow the meter manufacturer’s scale. Handheld meter readings vary by material and tool, so one percentage is not a universal pass or fail line. Bathrooms, exterior walls, and areas below plumbing or roof leaks deserve closer inspection.'
       },
       {
         question: 'Should I prime before repainting peeled areas?',
@@ -4809,7 +4809,7 @@ export const blogPosts: BlogPost[] = [
 <li>Bathroom or laundry room walls without proper ventilation</li>
 </ul>
 
-<p>Use a pin-type moisture meter to confirm. Normal dry drywall reads below 15 percent moisture content. Anything above 17 percent means active moisture. You must find and fix the water source before repainting.</p>
+<p>A moisture meter can help compare the suspect area with a known dry part of the same wall, but its scale depends on the material and meter. Do not treat one percentage as a universal pass or fail line. Trace and correct the water source before repainting.</p>
 
 <h3>Cause 2: Poor Surface Prep</h3>
 
@@ -4852,6 +4852,8 @@ export const blogPosts: BlogPost[] = [
 <h2>Remove the Peeling Paint</h2>
 
 <p>Every bit of loose paint has to come off. Do not try to paint over it or save time by leaving edges.</p>
+
+<p><strong>Older-home safety:</strong> If the surface may contain lead-based paint, scraping and sanding can create hazardous dust. Before disturbing paint in a pre-1978 home, review the EPA's <a href="https://www.epa.gov/lead/lead-safe-renovations-diyers">lead-safe guidance for DIY renovation</a> or hire a lead-safe certified contractor.</p>
 
 <h3>Step 1: Scrape</h3>
 

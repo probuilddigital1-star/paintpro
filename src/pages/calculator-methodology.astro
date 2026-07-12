@@ -1,0 +1,95 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Paint Calculator Methodology and Assumptions | PaintPro Calculator"
+  description="See the formulas, coverage ranges, deductions, texture adjustments, rounding rules, and limits used by the PaintPro Calculator."
+>
+  <Header />
+  <main class="max-w-3xl mx-auto px-4 py-12">
+    <article class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-heading mb-4">How the paint calculator works</h1>
+      <p class="text-lg text-body mb-8">
+        A room measurement can support a useful buying estimate, but it cannot predict exactly how paint will behave on your wall. The calculator shows a low, likely, and high amount so that uncertainty stays visible.
+      </p>
+
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold text-heading mb-4">1. Measure the surfaces</h2>
+        <div class="grid md:grid-cols-2 gap-6 items-center">
+          <div class="text-body space-y-3">
+            <p><strong>Wall area:</strong> 2 × (length + width) × height</p>
+            <p><strong>Ceiling area:</strong> length × width</p>
+            <p>Door and window allowances are subtracted from wall area. The result never drops below zero.</p>
+          </div>
+          <svg viewBox="0 0 420 250" role="img" aria-labelledby="room-diagram-title room-diagram-desc" class="w-full bg-slate-50 rounded-xl border border-slate-200 p-3">
+            <title id="room-diagram-title">Room measurement diagram</title>
+            <desc id="room-diagram-desc">A rectangular room labeled with length, width, and wall height.</desc>
+            <path d="M70 175 L280 175 L360 120 L150 120 Z" fill="#dbeafe" stroke="#334155" stroke-width="3" />
+            <path d="M70 175 L70 65 L280 65 L280 175" fill="#eff6ff" stroke="#334155" stroke-width="3" />
+            <path d="M280 175 L360 120 L360 25 L280 65" fill="#bfdbfe" stroke="#334155" stroke-width="3" />
+            <path d="M90 195 L270 195" stroke="#2563eb" stroke-width="3" />
+            <path d="M90 189 L90 201 M270 189 L270 201" stroke="#2563eb" stroke-width="3" />
+            <text x="180" y="220" text-anchor="middle" fill="#1e3a8a" font-size="18">length</text>
+            <path d="M295 190 L365 142" stroke="#2563eb" stroke-width="3" />
+            <text x="345" y="180" text-anchor="middle" fill="#1e3a8a" font-size="18">width</text>
+            <path d="M45 70 L45 170" stroke="#2563eb" stroke-width="3" />
+            <path d="M39 70 L51 70 M39 170 L51 170" stroke="#2563eb" stroke-width="3" />
+            <text x="23" y="125" text-anchor="middle" fill="#1e3a8a" font-size="18" transform="rotate(-90 23 125)">height</text>
+          </svg>
+        </div>
+      </section>
+
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold text-heading mb-4">2. Apply coats and coverage</h2>
+        <p class="text-body mb-4">Paintable area is multiplied by the number of coats, then divided by an adjusted coverage rate. Until a label rate is supplied, the calculator uses these planning ranges:</p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead><tr class="bg-slate-100"><th class="p-3 border border-slate-200">Selection</th><th class="p-3 border border-slate-200">High coverage</th><th class="p-3 border border-slate-200">Likely</th><th class="p-3 border border-slate-200">Low coverage</th></tr></thead>
+            <tbody>
+              <tr><td class="p-3 border border-slate-200">Budget</td><td class="p-3 border border-slate-200">400</td><td class="p-3 border border-slate-200">350</td><td class="p-3 border border-slate-200">300</td></tr>
+              <tr><td class="p-3 border border-slate-200">Standard</td><td class="p-3 border border-slate-200">450</td><td class="p-3 border border-slate-200">400</td><td class="p-3 border border-slate-200">350</td></tr>
+              <tr><td class="p-3 border border-slate-200">Premium</td><td class="p-3 border border-slate-200">500</td><td class="p-3 border border-slate-200">450</td><td class="p-3 border border-slate-200">400</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-sm text-gray-600 mt-3">Rates are square feet per gallon. These are planning assumptions, not promises about a product. Use the exact label or technical data sheet when available.</p>
+      </section>
+
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold text-heading mb-4">3. Adjust for the surface</h2>
+        <p class="text-body mb-3">The selected texture and condition reduce the working coverage rate. Smooth, previously painted walls use the base rate. Heavy texture, new drywall, stains, and glossy surfaces widen the practical uncertainty.</p>
+        <p class="text-body">These adjustments are intentionally visible in the detailed breakdown. They are approximations. A small test area is the best way to learn how a specific coating and surface work together.</p>
+      </section>
+
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold text-heading mb-4">4. Add a buffer and round for purchase</h2>
+        <p class="text-body">When selected, the calculator adds 15 percent after estimating the raw gallons. It then rounds each point in the range up to a whole gallon because that is the common purchase unit. The unrounded likely amount remains visible, so you can see when a rounded result is close to the next can.</p>
+      </section>
+
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold text-heading mb-4">Worked example</h2>
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 text-body space-y-2">
+          <p>A 20 × 20 foot room with 8 foot walls has 640 square feet of wall area.</p>
+          <p>Two coats require 1,280 square feet of coverage.</p>
+          <p>At the likely standard rate of 400 square feet per gallon, that is 3.20 gallons before the buffer.</p>
+          <p>With a 15 percent buffer, it becomes 3.68 gallons, which rounds to a four-gallon purchase. The conservative end rounds to five gallons.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-heading mb-4">What this calculator does not know</h2>
+        <ul class="list-disc ml-6 text-body space-y-2">
+          <li>The exact coating, color change, tint base, roller nap, spray loss, or painter technique unless you account for it.</li>
+          <li>Whether a wall needs repair, sealing, or a separate primer system.</li>
+          <li>Whether two surfaces in the same estimate will use different products.</li>
+          <li>Package sizes, return rules, or current prices at your store.</li>
+        </ul>
+        <p class="text-sm text-gray-500 mt-6">Calculation version 1. Last reviewed July 11, 2026.</p>
+      </section>
+    </article>
+  </main>
+  <Footer />
+</Layout>

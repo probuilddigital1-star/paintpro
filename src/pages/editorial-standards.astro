@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
-const currentDate = new Date().toISOString().split('T')[0];
+const updatedDate = '2026-07-11';
 const siteUrl = "https://paintprocalculator.com";
 
 // Breadcrumb Schema
@@ -34,7 +34,7 @@ const articleSchema = {
   "description": "How PaintPro Calculator researches, fact-checks, and updates its content. Source policy, correction process, editorial independence, and review cycle.",
   "url": `${siteUrl}/editorial-standards`,
   "datePublished": "2025-12-26",
-  "dateModified": currentDate,
+  "dateModified": updatedDate,
   "author": {
     "@type": "Person",
     "name": "Zack Pearson",
@@ -65,7 +65,7 @@ const articleSchema = {
       <p class="text-sm text-gray-500 mb-8">
         By <a href="/about" class="text-primary hover:underline font-medium">Zack Pearson</a>
         <span class="mx-2">·</span>
-        Last updated {new Date(currentDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+        Last updated July 11, 2026
       </p>
 
       <div class="prose prose-slate max-w-none space-y-6">
@@ -76,7 +76,7 @@ const articleSchema = {
         <section>
           <h2 class="text-xl font-bold text-heading mt-8 mb-3">Who writes this site</h2>
           <p class="text-body">
-            Every article and calculator on PaintPro Calculator is written and reviewed by <a href="/about" class="text-primary hover:underline">Zack Pearson</a>, the founder of the site. There is no rotating staff of freelancers and no anonymous contributors. One byline, one inbox.
+            I am the only writer and maintainer of PaintPro Calculator. There is no editorial team and no anonymous contributor pool. Questions and corrections come to the same inbox I use to maintain the calculator.
           </p>
         </section>
 
@@ -104,14 +104,17 @@ const articleSchema = {
         <section>
           <h2 class="text-xl font-bold text-heading mt-8 mb-3">How I fact-check before publishing</h2>
           <p class="text-body mb-3">
-            Every article goes through the same checklist before it goes live:
+            This is the checklist I use for new work and for the older guides I am reviewing:
           </p>
           <ul class="list-disc list-outside ml-6 text-body space-y-2">
-            <li>Numerical claims (coverage rates, prices, dry times, application temperatures, gallon counts) are verified against a named primary source.</li>
-            <li>Every product recommendation is verified to be currently available, not discontinued.</li>
-            <li>Outbound links are clicked and tested at publish time.</li>
-            <li>The article is read aloud once to catch awkward sentences and unclear instructions.</li>
+            <li>Coverage rates, dry times, and application limits are checked against the current product label or technical data sheet.</li>
+            <li>Products are checked for current availability. If I have not personally used one, I say so instead of implying a hands-on test.</li>
+            <li>Useful primary sources are linked near the claim or in a source note.</li>
+            <li>The draft gets a plain-language edit to remove filler and unsupported certainty.</li>
           </ul>
+          <p class="text-body mt-3">
+            Some older posts did not meet that standard. On July 11, 2026, I reduced the set submitted to search engines while I review the rest. Those older pages remain available, but they are not presented as finished reference material.
+          </p>
         </section>
 
         <section>
@@ -154,7 +157,7 @@ const articleSchema = {
 
         <section>
           <p class="text-sm text-gray-500 mt-8">
-            Last updated: {new Date(currentDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}.
+            Last updated: July 11, 2026.
           </p>
         </section>
       </div>

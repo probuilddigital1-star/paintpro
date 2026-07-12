@@ -1,5 +1,6 @@
 ---
 import { calculatorPages } from '../data/calculator-pages';
+import { indexableCalculatorSlugs } from '../config/indexing';
 
 interface Props {
   slugs: string[];
@@ -8,7 +9,7 @@ interface Props {
 const { slugs } = Astro.props;
 const pages = slugs
   .map(slug => calculatorPages.find(p => p.slug === slug))
-  .filter((p): p is NonNullable<typeof p> => p !== undefined);
+  .filter((p): p is NonNullable<typeof p> => p !== undefined && indexableCalculatorSlugs.has(p.slug));
 ---
 
 {pages.length > 0 && (

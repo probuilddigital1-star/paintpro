@@ -106,7 +106,13 @@ input[type="text"],
 input[type="email"],
 select {
   min-height: 44px;
+  min-width: 0;
+  max-width: 100%;
   font-size: 16px; /* Prevents iOS zoom */
+}
+
+#room-editor select {
+  padding-right: 2.75rem;
 }
 
 /* Remove number input spinners */
@@ -119,4 +125,56 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
+}
+
+.planner-print-only {
+  display: none;
+}
+
+@media print {
+  body {
+    background: #fff;
+    color: #111827;
+  }
+
+  body::before {
+    display: none;
+  }
+
+  header,
+  footer,
+  button,
+  nav,
+  script,
+  input,
+  select,
+  textarea {
+    display: none !important;
+  }
+
+  .planner-no-print {
+    display: none !important;
+  }
+
+  .planner-print-only {
+    display: block !important;
+    grid-column: 1 / -1;
+  }
+
+  #planner-grid {
+    display: block !important;
+    padding: 0 !important;
+  }
+
+  a[href]::after {
+    content: "";
+  }
+
+  section,
+  article,
+  aside,
+  .rounded-2xl,
+  .rounded-3xl {
+    box-shadow: none !important;
+  }
 }

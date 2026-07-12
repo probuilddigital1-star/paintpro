@@ -57,8 +57,8 @@ const colorChangeVisuals: Record<string, { from: string; to: string; fromLabel: 
 ---
 
 <Layout
-  title="Paint Calculator for Every Room, Brand & Scenario – Free Estimates"
-  description="Free paint calculators for every room type, size, paint brand, and color change scenario. Get accurate gallon estimates for Behr, Sherwin-Williams, Benjamin Moore, and more."
+  title="Paint Calculators by Room | PaintPro Calculator"
+  description="Room-specific paint estimates with practical notes about openings, surface condition, primer, and finish."
 >
   <Header />
 
@@ -73,12 +73,12 @@ const colorChangeVisuals: Record<string, { from: string; to: string; fromLabel: 
   <div class="bg-gradient-to-b from-slate-50 to-secondary">
     <div class="h-1 bg-gradient-to-r from-amber-400 via-rose-400 to-cyan-400"></div>
     <div class="max-w-4xl mx-auto px-4 py-10 text-center">
-      <span class="inline-block bg-primary/10 text-primary text-sm font-semibold px-4 py-1 rounded-full mb-4">40 Free Calculators</span>
+      <span class="inline-block bg-primary/10 text-primary text-sm font-semibold px-4 py-1 rounded-full mb-4">10 room guides</span>
       <h1 class="text-3xl md:text-4xl font-bold mb-4">
         <span class="text-gradient">Paint Calculator</span> for Every Room
       </h1>
       <p class="text-body text-lg leading-relaxed max-w-2xl mx-auto">
-        Choose your room type, size, paint brand, or color change scenario below to get a pre-calculated paint estimate instantly.
+        Start with the room that is closest to your project, then enter your own measurements in the main calculator.
       </p>
     </div>
   </div>
@@ -115,8 +115,8 @@ const colorChangeVisuals: Record<string, { from: string; to: string; fromLabel: 
       </div>
     </section>
 
-    <!-- Room Size Calculators -->
-    <section class="py-10 -mx-4 px-4 bg-white/50 rounded-2xl">
+    <!-- Preset pages remain available by direct URL but are not promoted while under review. -->
+    {false && <section class="py-10 -mx-4 px-4 bg-white/50 rounded-2xl">
       <h2 class="text-2xl font-bold text-heading mb-2 flex items-center gap-2">
         <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
@@ -141,12 +141,12 @@ const colorChangeVisuals: Record<string, { from: string; to: string; fromLabel: 
           );
         })}
       </div>
-    </section>
+    </section>}
 
     <AdSlot format="horizontal" />
 
-    <!-- Brand Calculators -->
-    <section class="py-10">
+    <!-- Brand presets are retained for later editorial review. -->
+    {false && <section class="py-10">
       <h2 class="text-2xl font-bold text-heading mb-2 flex items-center gap-2">
         <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -169,10 +169,10 @@ const colorChangeVisuals: Record<string, { from: string; to: string; fromLabel: 
           );
         })}
       </div>
-    </section>
+    </section>}
 
-    <!-- Color Change Calculators -->
-    <section class="py-10 -mx-4 px-4 bg-white/50 rounded-2xl">
+    <!-- Color-change presets are retained for later editorial review. -->
+    {false && <section class="py-10 -mx-4 px-4 bg-white/50 rounded-2xl">
       <h2 class="text-2xl font-bold text-heading mb-2 flex items-center gap-2">
         <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
@@ -212,12 +212,12 @@ const colorChangeVisuals: Record<string, { from: string; to: string; fromLabel: 
           );
         })}
       </div>
-    </section>
+    </section>}
 
     <!-- CTA -->
     <div class="bg-light-gray rounded-2xl p-8 text-center mt-10">
       <h2 class="text-xl font-bold text-heading mb-2">Need a Custom Calculation?</h2>
-      <p class="text-body mb-4">Our interactive calculator lets you adjust every detail — dimensions, texture, primer, paint quality, and more.</p>
+      <p class="text-body mb-4">Adjust the dimensions, texture, primer, coverage rate, and number of coats for your project.</p>
       <a
         href="/#calculator"
         class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold py-3 px-8 rounded-lg transition-all shadow-md hover:shadow-lg text-lg"

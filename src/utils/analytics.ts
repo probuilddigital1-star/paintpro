@@ -1,5 +1,5 @@
 // Consent-aware GA4 event tracking utility
-// Safe for SSG — guards on typeof window
+// Safe for SSG  -  guards on typeof window
 
 declare global {
   interface Window {

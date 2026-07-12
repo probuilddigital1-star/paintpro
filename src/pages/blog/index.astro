@@ -4,8 +4,10 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { blogPosts } from '../../data/blog-posts';
+import { indexableBlogSlugs } from '../../config/indexing';
 
 const siteUrl = 'https://paintprocalculator.com';
+const reviewedPosts = blogPosts.filter((post) => indexableBlogSlugs.has(post.slug));
 
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -38,7 +40,7 @@ const categoryColors: Record<string, string> = {
 
 <Layout
   title="Paint Calculator Blog - Tips, Costs & Guides | PaintPro Calculator"
-  description="Expert painting guides, cost breakdowns, brand comparisons, and how-to tips. Learn everything about interior painting from the PaintPro Calculator team."
+  description="Plain-language painting guides, cost breakdowns, and lessons from maintaining the PaintPro Calculator."
 >
   <Header />
 
@@ -53,12 +55,12 @@ const categoryColors: Record<string, string> = {
   <div class="bg-gradient-to-b from-slate-50 to-secondary">
     <div class="h-1 bg-gradient-to-r from-amber-400 via-rose-400 to-cyan-400"></div>
     <div class="max-w-4xl mx-auto px-4 py-10 text-center">
-      <span class="inline-block bg-primary/10 text-primary text-sm font-semibold px-4 py-1 rounded-full mb-4">Painting Knowledge</span>
+      <span class="inline-block bg-primary/10 text-primary text-sm font-semibold px-4 py-1 rounded-full mb-4">Reviewed guides</span>
       <h1 class="text-3xl md:text-4xl font-bold mb-4">
         <span class="text-gradient">Paint Calculator</span> Blog
       </h1>
       <p class="text-body text-lg leading-relaxed max-w-2xl mx-auto">
-        Expert guides on paint costs, brand comparisons, painting techniques, and everything you need for your next project.
+        Practical notes on estimating, preparation, application, and the mistakes that cost time or paint.
       </p>
     </div>
   </div>
@@ -66,7 +68,7 @@ const categoryColors: Record<string, string> = {
   <!-- Blog Grid -->
   <div class="max-w-4xl mx-auto px-4 py-10">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {blogPosts.map(post => {
+      {reviewedPosts.map(post => {
         const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
         return (
           <a
@@ -102,7 +104,7 @@ const categoryColors: Record<string, string> = {
   <div class="max-w-4xl mx-auto px-4 pb-10">
     <div class="bg-light-gray rounded-2xl p-8 text-center">
       <h2 class="text-xl font-bold text-heading mb-2">Ready to Start Your Project?</h2>
-      <p class="text-body mb-4">Use our free calculator to figure out exactly how much paint you need before you buy.</p>
+      <p class="text-body mb-4">Use the calculator to make a sensible buying estimate before you head to the store.</p>
       <a
         href="/#calculator"
         class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold py-3 px-8 rounded-lg transition-all shadow-md hover:shadow-lg text-lg"

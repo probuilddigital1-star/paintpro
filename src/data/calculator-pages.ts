@@ -28,6 +28,7 @@ export interface CalculatorPageData {
   h1: string;
   defaults: CalculationInputs;
   introText: string;
+  measurementGuide?: string[];
   tips: string[];
   faqs: FAQ[];
   relatedPages: string[];
@@ -79,6 +80,11 @@ const bedroom: CalculatorPageData = {
   },
   introText:
     'Planning to paint your bedroom? Use our pre-calculated estimates below based on a standard bedroom with one door, one closet, and two windows. Bedrooms typically use flat or eggshell finishes for a smooth, relaxing look. For the most accurate results, customize the calculation using our interactive calculator.',
+  measurementGuide: [
+    'Measure inside the room at floor level instead of relying on a listing or floor plan.',
+    'Count the closet door separately. This preset deducts one entry door, one closet door, and two standard windows.',
+    'Treat the ceiling as a separate paint selection if you plan to paint it.',
+  ],
   tips: [
     'Flat or matte finish hides wall imperfections and creates a cozy atmosphere.',
     'Low-VOC or zero-VOC paints are recommended for bedrooms to maintain air quality while you sleep.',
@@ -103,11 +109,9 @@ const bedroom: CalculatorPageData = {
     },
   ],
   relatedPages: [
-    'nursery-paint-calculator',
-    'office-paint-calculator',
-    '12x12-room-paint-calculator',
-    '10x12-room-paint-calculator',
-    '14x14-room-paint-calculator',
+    'living-room-paint-calculator',
+    'bathroom-paint-calculator',
+    'kitchen-paint-calculator',
   ],
 };
 
@@ -130,8 +134,13 @@ const bathroom: CalculatorPageData = {
   },
   introText:
     'Bathrooms require moisture-resistant paint that can handle humidity and temperature changes. Our estimates below are based on a standard bathroom layout. Semi-gloss and satin finishes are recommended for their durability and mildew resistance.',
+  measurementGuide: [
+    'Measure only the wall sections that will receive paint. Full-height tile and shower surrounds are not deducted by this preset.',
+    'This example deducts one door and one standard window. Add any large mirror or tiled wall as a manual deduction.',
+    'Fix active moisture and ventilation problems before choosing a coating.',
+  ],
   tips: [
-    'Semi-gloss finish is the gold standard for bathrooms—it resists moisture and is easy to wipe clean.',
+    'Semi-gloss finish is the gold standard for bathrooms - it resists moisture and is easy to wipe clean.',
     'Use mildew-resistant paint formulated for high-humidity environments.',
     'Run the exhaust fan for 30 minutes after painting to reduce moisture buildup.',
     'Consider a moisture-blocking primer, especially for bathrooms without ventilation fans.',
@@ -140,7 +149,7 @@ const bathroom: CalculatorPageData = {
     {
       question: 'How much paint do I need for a bathroom?',
       answer:
-        'A standard 8x6 bathroom with 8-foot ceilings needs about 1 gallon of paint for two coats on the walls. Smaller powder rooms may need less. Always buy a little extra for touch-ups in high-moisture areas.',
+        'This 8x6 preset uses about 1.1 gallons for two wall coats after the selected buffer. One gallon is too close for comfort, so add a quart if the product is sold in quarts or buy a second gallon for future touch-ups.',
     },
     {
       question: 'What type of paint is best for bathrooms?',
@@ -184,8 +193,13 @@ const kitchen: CalculatorPageData = {
   },
   introText:
     'Kitchens are one of the trickiest rooms to estimate paint for because of cabinets, backsplashes, and appliances that reduce paintable wall space. Our estimates below are for a standard kitchen layout. Satin or semi-gloss finishes work best in kitchens for easy cleaning.',
+  measurementGuide: [
+    'Measure exposed wall sections instead of subtracting an assumed cabinet percentage. Kitchen layouts vary too much for a dependable shortcut.',
+    'Do not include cabinet doors, cabinet boxes, or the backsplash in this wall-paint estimate.',
+    'Record each wall section separately, then add the widths before entering a simplified room size.',
+  ],
   tips: [
-    'Satin or semi-gloss finish is ideal for kitchens—both resist grease and are easy to clean.',
+    'Satin or semi-gloss finish is ideal for kitchens - both resist grease and are easy to clean.',
     'Subtract cabinet areas and backsplash from your wall calculations for a more accurate estimate.',
     'Use a scrub-resistant formula near cooking areas where grease splatter is common.',
     'Consider a lighter color to brighten the kitchen, or a bold accent wall behind open shelving.',
@@ -209,9 +223,8 @@ const kitchen: CalculatorPageData = {
   ],
   relatedPages: [
     'bathroom-paint-calculator',
-    'dining-room-paint-calculator',
-    '12x12-room-paint-calculator',
-    '10x12-room-paint-calculator',
+    'living-room-paint-calculator',
+    'bedroom-paint-calculator',
   ],
   affiliates: [
     { title: 'Scrub-Resistant Paint', description: 'Kitchen-grade paint that resists grease and cleans easily near cooking areas.', icon: 'paint', link: 'https://www.amazon.com/s?k=scrub+resistant+kitchen+paint&tag=paintpro02-20', cta: 'Shop Kitchen Paint' },
@@ -235,21 +248,26 @@ const livingRoom: CalculatorPageData = {
     doors: 2,
     windows: 3,
     largeWindows: 1,
-    roomType: 'bedroom',
+    roomType: 'living-room',
   },
   introText:
     'Living rooms are often the largest rooms in a home and usually have multiple windows and openings. Our estimates below account for a standard living room with two doorways, three windows, and one large picture window. Eggshell or satin finishes are popular choices for living room walls.',
+  measurementGuide: [
+    'Count open archways and wide passages instead of treating every opening as a standard door.',
+    'This preset deducts two doors, three standard windows, and one large picture window.',
+    'Measure vaulted or sloped walls by dividing them into rectangles and triangles. The rectangular room preset will otherwise understate their area.',
+  ],
   tips: [
-    'Eggshell finish is the most popular choice for living rooms—it has a subtle sheen and hides minor imperfections.',
+    'Eggshell finish is the most popular choice for living rooms - it has a subtle sheen and hides minor imperfections.',
     'For large living rooms, buy all paint at once from the same batch for consistent color.',
-    'Consider a 5-gallon bucket for rooms needing 4+ gallons—better value and color consistency.',
-    'Test paint colors with large samples on multiple walls before committing—lighting varies throughout the day.',
+    'Consider a 5-gallon bucket for rooms needing 4+ gallons - better value and color consistency.',
+    'Test paint colors with large samples on multiple walls before committing - lighting varies throughout the day.',
   ],
   faqs: [
     {
       question: 'How much paint do I need for a living room?',
       answer:
-        'A standard 16x14 living room with 8-foot ceilings needs about 3 gallons of paint for two coats, after deducting for doors and windows. Larger living rooms or those with vaulted ceilings will need more.',
+        'This 16x14 preset uses about 2 gallons for two coats after its door and window deductions. Rooms with vaulted ceilings, fewer openings, heavy texture, or a separate color may need more.',
     },
     {
       question: 'What paint finish is best for a living room?',
@@ -264,10 +282,8 @@ const livingRoom: CalculatorPageData = {
   ],
   relatedPages: [
     'bedroom-paint-calculator',
-    'dining-room-paint-calculator',
-    '16x16-room-paint-calculator',
-    '14x16-room-paint-calculator',
-    '16x20-room-paint-calculator',
+    'kitchen-paint-calculator',
+    'bathroom-paint-calculator',
   ],
 };
 
@@ -288,20 +304,27 @@ const garage: CalculatorPageData = {
     largeWindows: 0,
     roomType: 'garage',
     surfaceCondition: 'new-drywall',
+    needsPrimer: true,
+    primerType: 'pva',
   },
   introText:
     'Garage walls benefit from durable, scuff-resistant paint that can handle everyday wear and tear. Our estimates below are for a standard two-car garage. Garages often have bare drywall or concrete block, so primer is strongly recommended for best coverage.',
+  measurementGuide: [
+    'Measure the large overhead door as a custom opening. This preset does not automatically subtract a garage door.',
+    'Confirm whether the walls are finished drywall, bare block, or previously painted masonry before using the preset coverage rate.',
+    'Estimate the ceiling separately because many garages have a larger or sloped ceiling area.',
+  ],
   tips: [
-    'Use a durable satin or semi-gloss finish for garage walls—flat paint scuffs too easily.',
+    'Use a durable satin or semi-gloss finish for garage walls - flat paint scuffs too easily.',
     'Prime new drywall or bare concrete block before painting for proper adhesion and coverage.',
     'Light colors (white, light gray) brighten garages and make finding tools easier.',
-    'Consider epoxy-based floor paint separately for the garage floor—regular wall paint will not hold up.',
+    'Consider epoxy-based floor paint separately for the garage floor - regular wall paint will not hold up.',
   ],
   faqs: [
     {
       question: 'How much paint do I need for a 2-car garage?',
       answer:
-        'A standard 20x20 two-car garage with 9-foot ceilings needs about 4-5 gallons for two coats on the walls. Add primer if the drywall is unpainted. Consider a 5-gallon bucket for the best value.',
+        'This 20x20 preset uses about 5.6 gallons for two coats on new drywall, so plan on 6 gallons of finish paint. It also includes about 3 gallons of PVA primer. A large overhead door should be deducted separately.',
     },
     {
       question: 'What kind of paint should I use in a garage?',
@@ -320,7 +343,7 @@ const garage: CalculatorPageData = {
     '16x20-room-paint-calculator',
   ],
   affiliates: [
-    { title: 'Epoxy Floor Paint', description: 'Professional-grade epoxy coating for garage floors that resists chemicals and tire marks.', icon: 'paint', link: 'https://www.amazon.com/s?k=epoxy+garage+floor+paint&tag=paintpro02-20', cta: 'Shop Floor Paint' },
+    { title: 'Epoxy Floor Paint', description: 'Garage-floor epoxy coating designed to resist common chemicals and tire marks.', icon: 'paint', link: 'https://www.amazon.com/s?k=epoxy+garage+floor+paint&tag=paintpro02-20', cta: 'Shop Floor Paint' },
     { title: 'Drywall Primer', description: 'PVA primer for new drywall in garages. Seals the surface for even paint coverage.', icon: 'primer', link: 'https://www.amazon.com/s?k=pva+drywall+primer&tag=paintpro02-20', cta: 'Shop Primer' },
     { title: 'Paint Supplies', description: 'Heavy-duty rollers, brushes, and trays for large garage painting projects.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+roller+kit+large&tag=paintpro02-20', cta: 'Shop Supplies' },
   ],
@@ -345,7 +368,7 @@ const hallway: CalculatorPageData = {
   introText:
     'Hallways take more abuse than almost any other room in your home. They are high-traffic areas that get bumped, scuffed, and brushed against daily. Our estimates below are for a standard hallway. Satin or semi-gloss finishes are recommended for durability and easy cleaning.',
   tips: [
-    'Satin or semi-gloss finishes are ideal for hallways—they resist scuffs and clean easily.',
+    'Satin or semi-gloss finishes are ideal for hallways - they resist scuffs and clean easily.',
     'Consider scuff-resistant paint formulas specifically designed for high-traffic areas.',
     'Use a mini roller for narrow hallways where a full-size roller does not fit easily.',
     'Lighter colors help narrow hallways feel wider and brighter.',
@@ -396,7 +419,7 @@ const nursery: CalculatorPageData = {
   tips: [
     'Always use zero-VOC or low-VOC paint in nurseries for your baby\'s safety.',
     'Paint the nursery at least 2-3 weeks before the baby arrives to let fumes dissipate completely.',
-    'Eggshell finish is ideal for nurseries—it is easy to wipe clean and hides minor imperfections.',
+    'Eggshell finish is ideal for nurseries - it is easy to wipe clean and hides minor imperfections.',
     'Consider washable paint formulas for easy cleanup of inevitable wall marks and stains.',
   ],
   faqs: [
@@ -444,7 +467,7 @@ const office: CalculatorPageData = {
     'Your home office paint color can significantly impact your productivity and focus. Our estimates below are for a standard home office. Consider calming blues or greens for focus, or warm neutrals for a professional video call backdrop.',
   tips: [
     'Blue and green tones are proven to enhance focus and productivity in work spaces.',
-    'Eggshell finish works well for home offices—professional look with easy cleaning.',
+    'Eggshell finish works well for home offices - professional look with easy cleaning.',
     'If you do video calls, choose colors that look good on camera (avoid stark white, which can glare).',
     'Consider painting one wall a darker accent color behind your desk for a polished video call background.',
   ],
@@ -492,7 +515,7 @@ const diningRoom: CalculatorPageData = {
   introText:
     'Dining rooms set the tone for entertaining and family meals. Our estimates below are for a standard dining room with two openings and two windows. Satin or eggshell finishes are popular for dining rooms, offering an elegant look that is easy to maintain.',
   tips: [
-    'Satin finish is the top choice for dining rooms—it adds a subtle elegance and cleans easily.',
+    'Satin finish is the top choice for dining rooms - it adds a subtle elegance and cleans easily.',
     'Darker, richer colors like navy, forest green, or burgundy create a cozy, intimate dining atmosphere.',
     'If using a dark color over a light wall, plan for 3 coats or use a tinted primer to save on paint.',
     'Paint the ceiling a lighter shade than the walls to make the room feel taller.',
@@ -543,9 +566,14 @@ const basement: CalculatorPageData = {
     primerType: 'pva',
   },
   introText:
-    'Basements present unique challenges: moisture, concrete block walls, and below-grade conditions all affect paint performance. Our estimates below include primer for proper sealing. Moisture-blocking primer is critical for basement painting success.',
+    'This basement preset assumes finished new drywall in a dry basement and includes PVA primer. Bare concrete or block is a different surface with product-specific preparation and coverage, so use the coating label and enter its coverage rate instead of relying on this drywall preset.',
+  measurementGuide: [
+    'Identify the substrate first. Finished drywall, painted masonry, and bare block should not share one coverage assumption.',
+    'Check for active leaks, efflorescence, or damp areas before measuring for paint. A coating is not a repair for water entry.',
+    'Measure small foundation windows and utility-room openings separately. This preset includes two standard and two small windows.',
+  ],
   tips: [
-    'Always address moisture issues before painting—check for leaks, condensation, and water stains.',
+    'Always address moisture issues before painting - check for leaks, condensation, and water stains.',
     'Use moisture-blocking primer on concrete block walls before applying topcoat paint.',
     'Mold-resistant paint formulas are recommended for basements, especially in humid climates.',
     'Allow extra drying time between coats in basements due to higher humidity levels.',
@@ -554,17 +582,17 @@ const basement: CalculatorPageData = {
     {
       question: 'How much paint do I need for a basement?',
       answer:
-        'A standard 20x15 basement with 8-foot ceilings needs about 4-5 gallons for two coats, plus 3-4 gallons of primer. Concrete block walls absorb significantly more paint than drywall—add 30% extra for block walls.',
+        'This 20x15 finished-drywall preset uses about 4.1 gallons for two coats, so it rounds to 5 gallons of finish paint, plus 2 gallons of PVA primer. For concrete block, use the coverage rate and preparation instructions printed on the masonry coating you select.',
     },
     {
       question: 'Do I need special paint for basement walls?',
       answer:
-        'Yes. Use moisture-resistant, mold-resistant paint for basements. For bare concrete or block walls, apply waterproofing primer first. Regular interior paint will peel and fail in damp basement conditions.',
+        'Use a coating approved for the actual substrate and conditions. Finished drywall in a dry basement can use a suitable interior wall paint. Bare or previously coated masonry needs a compatible masonry system, and active water entry must be corrected before painting.',
     },
     {
       question: 'Can I paint basement walls without primer?',
       answer:
-        'Primer is essential for basements. Bare concrete, block, and new drywall all require primer for proper adhesion and moisture blocking. Skipping primer in a basement almost always leads to peeling and paint failure.',
+        'New drywall needs an appropriate drywall primer. Bare masonry and previously coated masonry require the preparation and primer specified by the coating manufacturer. A sound, clean, previously painted drywall surface may not always need a separate primer.',
     },
   ],
   relatedPages: [
@@ -644,7 +672,7 @@ function roomSizePage(
     introText: `Need to know how much paint to buy for a ${sizeLabel}-foot room? At ${area} square feet of floor area, this is a ${sizeDesc}-sized room. Our pre-calculated estimates below show exactly how many gallons you need for two coats of standard paint, with deductions for ${doors === 1 ? 'one door' : 'two doors'} and ${windows === 1 ? 'one window' : `${windows} windows`}.`,
     tips: [
       `A ${sizeLabel} room (${area} sq ft) ${isLarge ? 'benefits from buying a 5-gallon bucket for consistent color and better value' : 'is efficiently covered with standard 1-gallon cans'}.`,
-      'Always buy slightly more paint than calculated—extra paint is useful for future touch-ups.',
+      'Always buy slightly more paint than calculated - extra paint is useful for future touch-ups.',
       'Two coats are recommended for even color coverage and better durability.',
       isSmall
         ? 'Lighter colors make small rooms feel more spacious and open.'
@@ -819,7 +847,7 @@ const behr = brandPage(
   [
     'Behr Premium Plus covers up to 400 sq ft per gallon on smooth surfaces.',
     'Behr Marquee offers one-coat coverage on many colors, reducing total paint needed.',
-    'Available exclusively at Home Depot — check online for color-matching tools.',
+    'Available exclusively at Home Depot  -  check online for color-matching tools.',
     'Behr paints are Greenguard Gold certified for low emissions.',
   ],
   [
@@ -832,7 +860,7 @@ const behr = brandPage(
 const sherwinWilliams = brandPage(
   'Sherwin-Williams', 'sherwin-williams-coverage', 400, '$$$',
   'https://www.amazon.com/s?k=sherwin+williams+paint&tag=paintpro02-20',
-  'Sherwin-Williams is a professional-grade paint brand trusted by contractors and homeowners alike. Their interior lines cover approximately 400 square feet per gallon. Known for superior durability and color accuracy, Sherwin-Williams paints deliver consistent, high-quality results.',
+  'Sherwin-Williams sells several interior paint lines with different coverage, hide, and durability ratings. This preset uses 400 square feet per gallon as a planning value. Check the technical data sheet for the product and sheen you choose before buying.',
   [
     'Sherwin-Williams Duration covers up to 400 sq ft per gallon with excellent hide.',
     'Their SuperPaint line is a favorite among professional painters for its balance of quality and value.',
@@ -852,7 +880,7 @@ const benjaminMoore = brandPage(
   'Benjamin Moore is a premium paint brand renowned for its color quality and coverage. Their interior paints cover approximately 400 square feet per gallon. With their proprietary Gennex color system, Benjamin Moore offers unmatched color accuracy and depth.',
   [
     'Benjamin Moore Regal Select covers up to 400 sq ft per gallon on smooth surfaces.',
-    'Their Aura line offers premium coverage and color richness — often requires fewer coats.',
+    'Their Aura line offers premium coverage and color richness  -  often requires fewer coats.',
     'Benjamin Moore paints are only available at independent paint retailers.',
     'Use their Color Portfolio app to preview colors in your space before buying.',
   ],
@@ -870,7 +898,7 @@ const valspar = brandPage(
   [
     'Valspar Signature covers up to 400 sq ft per gallon with built-in primer.',
     'Their Reserve line offers scrub-resistant coverage ideal for high-traffic areas.',
-    'Available exclusively at Lowe\'s — look for seasonal sales and promotions.',
+    'Available exclusively at Lowe\'s  -  look for seasonal sales and promotions.',
     'Valspar offers a color-matching guarantee at Lowe\'s paint counters.',
   ],
   [
@@ -885,7 +913,7 @@ const ppg = brandPage(
   'https://www.amazon.com/s?k=ppg+paint+interior&tag=paintpro02-20',
   'PPG paints cover approximately 350 square feet per gallon. PPG manufactures paints under several brand names and offers professional-quality coatings for every budget. Their Diamond and Timeless lines are popular at Home Depot.',
   [
-    'PPG Diamond covers about 350 sq ft per gallon — plan for slightly more paint than premium brands.',
+    'PPG Diamond covers about 350 sq ft per gallon  -  plan for slightly more paint than premium brands.',
     'Their Timeless line with paint-and-primer combination reduces prep work.',
     'PPG paints are available at Home Depot, PPG Paints stores, and independent dealers.',
     'PPG offers both professional and consumer-grade lines for different budgets.',
@@ -902,7 +930,7 @@ const glidden = brandPage(
   'https://www.amazon.com/s?k=glidden+paint+interior&tag=paintpro02-20',
   'Glidden is a budget-friendly paint brand covering approximately 350 square feet per gallon. Owned by PPG, Glidden delivers reliable results for cost-conscious painters. It is a popular choice for rental properties and multi-room projects.',
   [
-    'Glidden covers about 350 sq ft per gallon — budget for extra paint compared to premium brands.',
+    'Glidden covers about 350 sq ft per gallon  -  budget for extra paint compared to premium brands.',
     'Glidden Premium offers paint-and-primer in one for easier single-product jobs.',
     'Best value for painting multiple rooms or rental properties.',
     'Available at Home Depot, Walmart, and other home improvement retailers.',
@@ -925,7 +953,7 @@ const rustOleum = brandPage(
     'Available at most hardware stores, Home Depot, Lowe\'s, and Amazon.',
   ],
   [
-    { question: 'How much does Rust-Oleum paint cover per gallon?', answer: 'Rust-Oleum interior paints cover approximately 300-350 square feet per gallon. Specialty products like chalk paint and epoxy coatings have varying coverage rates — always check the product label.' },
+    { question: 'How much does Rust-Oleum paint cover per gallon?', answer: 'Rust-Oleum interior paints cover approximately 300-350 square feet per gallon. Specialty products like chalk paint and epoxy coatings have varying coverage rates  -  always check the product label.' },
     { question: 'Is Rust-Oleum good for interior walls?', answer: 'Rust-Oleum is better known for specialty coatings (cabinets, furniture, garage floors) than full-room wall painting. For walls, their interior line works well but brands like Behr or Valspar may offer more color options.' },
     { question: 'What is Rust-Oleum best known for?', answer: 'Rust-Oleum is most famous for their rust-preventive coatings, spray paints, and specialty products like Cabinet Transformations, garage floor epoxy, chalk paint, and countertop coatings.' },
   ],
@@ -936,8 +964,8 @@ const farrowAndBall = brandPage(
   'https://www.amazon.com/s?k=farrow+and+ball+paint&tag=paintpro02-20',
   'Farrow & Ball is a luxury paint brand covering approximately 450 square feet per gallon thanks to its high pigment concentration. Handcrafted in Dorset, England, Farrow & Ball paints are renowned for their exceptional depth of color and rich, complex finishes.',
   [
-    'Farrow & Ball covers up to 450 sq ft per gallon — high pigment concentration means better coverage.',
-    'Colors change dramatically in different lighting — test samples on your walls first.',
+    'Farrow & Ball covers up to 450 sq ft per gallon  -  high pigment concentration means better coverage.',
+    'Colors change dramatically in different lighting  -  test samples on your walls first.',
     'Their Estate Emulsion finish gives walls a chalky, sophisticated look.',
     'Available at Farrow & Ball showrooms, select retailers, and online.',
   ],
@@ -1003,7 +1031,7 @@ const darkToLight = colorChangePage(
   'Painting Dark to Light – How Many Coats? Paint Calculator',
   'Painting over dark walls with light paint? Calculate how many gallons you need with primer and 3 coats for full coverage.',
   'Dark to Light Paint Calculator',
-  'Painting over dark walls with a lighter color is one of the most common — and trickiest — color change scenarios. Dark pigments bleed through light paint, requiring primer and extra coats for full coverage. Our calculator below pre-sets 3 coats plus high-hide primer to ensure accurate results.',
+  'Painting over dark walls with a lighter color is one of the most common  -  and trickiest  -  color change scenarios. Dark pigments bleed through light paint, requiring primer and extra coats for full coverage. Our calculator below pre-sets 3 coats plus high-hide primer to ensure accurate results.',
   'When painting dark walls light, the dark color will bleed through standard paint even after two coats. A high-hide primer creates a neutral base, and 3 coats of your new light color ensures even, streak-free coverage. This approach uses more paint but prevents frustrating bleed-through and uneven color.',
   [
     'Always use a high-hide or stain-blocking primer when going from dark to light colors.',
@@ -1029,7 +1057,7 @@ const lightToDark = colorChangePage(
     'Two coats are usually sufficient for light-to-dark color changes.',
     'For very deep colors (navy, black, dark green), ask your paint store to tint a primer to a similar dark shade.',
     'Use a high-quality paint with good hide for the best results in fewer coats.',
-    'Dark colors show wall imperfections more — repair any dents or patches before painting.',
+    'Dark colors show wall imperfections more  -  repair any dents or patches before painting.',
   ],
   [
     { question: 'How many coats to go from light to dark paint?', answer: 'Most light-to-dark color changes need 2 coats of paint. This is the standard recommendation and usually provides full, even coverage. Very deep colors like black or navy may benefit from a tinted primer for richer results.' },
@@ -1043,12 +1071,12 @@ const similarColors = colorChangePage(
   'Painting Similar Colors – How Many Coats? Paint Calculator',
   'Repainting with a similar color? Calculate paint needed. Similar color changes typically need just 2 coats, no primer.',
   'Similar Colors Paint Calculator',
-  'Repainting with a similar color — like swapping one shade of gray for another — is the simplest painting scenario. Two coats provide full coverage without primer. Our calculator reflects this straightforward approach.',
+  'Repainting with a similar color  -  like swapping one shade of gray for another  -  is the simplest painting scenario. Two coats provide full coverage without primer. Our calculator reflects this straightforward approach.',
   'When the old and new colors are in the same family (similar hue and value), 2 coats of quality paint provide complete coverage. No primer is needed unless the walls have damage or stains. This is the most paint-efficient scenario and the easiest for DIYers.',
   [
-    'Two coats are all you need for similar color changes — no primer required.',
-    'This is the most cost-effective painting scenario — you will use the least amount of paint.',
-    'Ensure the new color is truly similar — within 2-3 shades on the same color strip.',
+    'Two coats are all you need for similar color changes  -  no primer required.',
+    'This is the most cost-effective painting scenario  -  you will use the least amount of paint.',
+    'Ensure the new color is truly similar  -  within 2-3 shades on the same color strip.',
     'Even with similar colors, use quality paint for the best long-term results.',
   ],
   [
@@ -1066,10 +1094,10 @@ const redToWhite = colorChangePage(
   'Red is one of the hardest paint colors to cover. Red pigments are notoriously persistent and bleed through standard paint and primer. Painting red walls white requires a specialized approach: high-hide primer and 3 coats of paint for clean, complete coverage.',
   'Red pigments are among the most difficult to cover because they are highly concentrated and tend to bleed through regular paint and even standard primers. A shellac-based or high-hide primer is essential to block the red from showing through. After priming, 3 coats of white paint ensures a clean, even finish with no pink bleed-through.',
   [
-    'Use shellac-based or high-hide primer — standard primer will not fully block red pigments.',
+    'Use shellac-based or high-hide primer  -  standard primer will not fully block red pigments.',
     'Apply 2 coats of primer if the red is particularly vibrant or saturated.',
     'Plan for 3 coats of white paint after primer for a clean, bleed-free finish.',
-    'Do not rush between coats — let each coat dry fully to assess coverage before adding the next.',
+    'Do not rush between coats  -  let each coat dry fully to assess coverage before adding the next.',
   ],
   [
     { question: 'How many coats to cover red paint with white?', answer: 'Covering red walls with white requires 1-2 coats of high-hide primer plus 3 coats of white paint. Red is one of the hardest colors to cover. Shellac-based primer works best for blocking red pigments from bleeding through.' },
@@ -1088,7 +1116,7 @@ const whiteToDark = colorChangePage(
   [
     'Use a primer tinted to gray or a shade close to your dark paint color for best results.',
     'Two coats of dark paint over tinted primer gives the richest, most even results.',
-    'Dark colors show roller marks and lap lines more — maintain a wet edge while painting.',
+    'Dark colors show roller marks and lap lines more  -  maintain a wet edge while painting.',
     'Use a high-quality roller cover (3/8" nap for smooth walls) to minimize texture marks.',
   ],
   [

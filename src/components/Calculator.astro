@@ -1,13 +1,13 @@
 ---
-// Paint Coverage Calculator - Professional Grade
+// Paint coverage calculator
 // Mobile-first design with large touch targets (44px min)
-// Enhanced with pro painter recommendations: texture, primer, surface condition
+// Accounts for texture, primer, and surface condition
 ---
 
 <section id="calculator" class="max-w-2xl mx-auto px-4 py-8">
   <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
     <h1 class="text-2xl md:text-3xl font-bold text-heading mb-2">Paint Calculator</h1>
-    <p class="text-body mb-6">Professional-grade estimates for your painting project</p>
+    <p class="text-body mb-6">A practical buying estimate based on your room and the paint label.</p>
 
     <form id="paint-calculator-form" class="space-y-6">
       <!-- Room Dimensions -->
@@ -476,24 +476,47 @@
       Your Paint Estimate
     </h2>
 
+    <p class="text-sm text-body mb-3">
+      Paint labels give a coverage range because texture, color changes, and application method affect the result. Here is a realistic buying range.
+    </p>
+
     <!-- Main Result -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-      <div class="text-center py-6 bg-light-gray rounded-xl">
-        <p class="text-sm text-body mb-1">Paint Needed</p>
-        <p class="text-4xl md:text-5xl font-bold text-primary" id="gallons-result">0</p>
-        <p class="text-lg font-medium text-heading">gallons</p>
+    <div class="grid grid-cols-3 gap-2 sm:gap-4 mb-4" aria-label="Estimated paint range">
+      <div class="text-center py-4 px-2 bg-light-gray rounded-xl">
+        <p class="text-xs sm:text-sm text-body mb-1">Low</p>
+        <p class="text-3xl md:text-4xl font-bold text-heading" id="gallons-low-result">0</p>
+        <p class="text-sm font-medium text-heading">gal</p>
       </div>
-      <div id="primer-result-box" class="text-center py-6 bg-amber-50 rounded-xl hidden">
-        <p class="text-sm text-body mb-1">Primer Needed</p>
-        <p class="text-4xl md:text-5xl font-bold text-amber-600" id="primer-gallons-result">0</p>
-        <p class="text-lg font-medium text-heading">gallons</p>
+      <div class="text-center py-4 px-2 bg-blue-50 border-2 border-primary rounded-xl">
+        <p class="text-xs sm:text-sm text-primary font-semibold mb-1">Likely</p>
+        <p class="text-3xl md:text-4xl font-bold text-primary" id="gallons-result">0</p>
+        <p class="text-sm font-medium text-heading">gal</p>
       </div>
+      <div class="text-center py-4 px-2 bg-light-gray rounded-xl">
+        <p class="text-xs sm:text-sm text-body mb-1">High</p>
+        <p class="text-3xl md:text-4xl font-bold text-heading" id="gallons-high-result">0</p>
+        <p class="text-sm font-medium text-heading">gal</p>
+      </div>
+    </div>
+
+    <div id="primer-result-box" class="text-center py-4 bg-amber-50 rounded-xl mb-4 hidden">
+      <p class="text-sm text-body mb-1">Primer Needed</p>
+      <p class="text-3xl font-bold text-amber-600"><span id="primer-gallons-result">0</span> gallons</p>
     </div>
 
     <!-- Result Summary -->
     <p class="text-body text-center mb-6" id="result-summary">
-      This covers <span id="total-area">0</span> square feet with <span id="num-coats">2</span> coats.
+      The likely calculation uses <span id="raw-gallons">0</span> gallons before the selected buffer. If you are buying whole gallons, plan on <strong><span id="purchase-gallons">0</span> gallons</strong>. This covers <span id="total-area">0</span> square feet with <span id="num-coats">2</span> coats.
     </p>
+
+    <div class="mb-6 p-4 bg-slate-50 rounded-lg border border-slate-200">
+      <div class="flex items-center justify-between gap-3 mb-2">
+        <h3 class="font-semibold text-heading">Estimate confidence</h3>
+        <span id="confidence-badge" class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-semibold uppercase">Medium</span>
+      </div>
+      <ul id="confidence-reasons" class="text-sm text-body space-y-1"></ul>
+      <a href="/calculator-methodology" class="inline-block mt-3 text-sm text-primary font-medium hover:underline">See the formula and assumptions</a>
+    </div>
 
     <!-- Room-specific recommendation -->
     <div id="room-recommendation" class="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-100 hidden">
@@ -556,16 +579,16 @@
       </div>
     </details>
 
-    <!-- Pro Tips -->
+    <!-- Practical checks -->
     <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
       <h3 class="font-semibold text-primary mb-2 flex items-center gap-2">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
-        Pro Tips
+        Before you buy
       </h3>
       <ul class="text-sm text-body space-y-1" id="tips-list">
-        <li>• Buy slightly more than calculated—extra paint is useful for touch-ups.</li>
+        <li>Check the coverage range on the exact paint label before buying.</li>
       </ul>
     </div>
 
@@ -710,7 +733,7 @@
     };
   }
 
-  // Calculate paint needed — INP-optimized with two-phase RAF
+  // Calculate paint needed  -  INP-optimized with two-phase RAF
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -726,20 +749,41 @@
 
         // Generate contextual tips
         const tips: string[] = [];
-        tips.push('• Buy all paint at once from the same batch number for consistent color.');
-        if (inputs.numCoats < 2) tips.push('• Consider 2 coats for better coverage and durability.');
-        if (inputs.wallTexture !== 'smooth') tips.push('• Textured walls absorb more paint. We\'ve adjusted your estimate accordingly.');
-        if (inputs.surfaceCondition === 'new-drywall' && !inputs.needsPrimer) tips.push('• New drywall strongly benefits from primer—consider adding it to your order.');
-        if (inputs.roomType === 'bathroom' || inputs.roomType === 'kitchen') tips.push('• Use moisture-resistant paint and ensure proper ventilation while painting.');
-        if (inputs.roomType === 'basement') tips.push('• Check for moisture issues before painting. Use waterproofing primer on concrete.');
-        if (results.gallonsNeeded >= 5) tips.push('• For 5+ gallons, consider buying a 5-gallon bucket for better value and color consistency.');
-        if (inputs.surfaceType === 'walls-ceiling') tips.push('• Paint the ceiling first, then walls to avoid drips on finished surfaces.');
-        if (inputs.needsPrimer) tips.push('• Allow primer to fully dry (typically 1-2 hours) before applying paint.');
+        tips.push('Buy tinted paint at the same time and ask the store to box it together for a more consistent color.');
+        if (inputs.numCoats < 2) tips.push('One coat may work for a close color match, but a strong color change often needs a second coat.');
+        if (inputs.wallTexture !== 'smooth') tips.push('Texture is already included in the range. A test section will tell you more than the estimate can.');
+        if (inputs.surfaceCondition === 'new-drywall' && !inputs.needsPrimer) tips.push('New drywall is porous. Check the finish paint instructions and consider a suitable drywall primer.');
+        if (inputs.roomType === 'bathroom' || inputs.roomType === 'kitchen') tips.push('Check the product label for moisture resistance and the required ventilation and drying time.');
+        if (inputs.roomType === 'basement') tips.push('Fix active moisture problems before coating basement walls.');
+        if (results.gallonsNeeded >= 5) tips.push('Compare one-gallon cans with a five-gallon bucket, but keep unopened returns in mind.');
+        if (inputs.surfaceType === 'walls-ceiling') tips.push('Ceiling and wall paint are counted together here. Separate the quantities if you are using different products.');
+        if (inputs.needsPrimer) tips.push('Use the primer label for coverage and recoat time. Those values vary by product and surface.');
+        if (results.gallonsNeeded > 1) tips.push('If this is part of a bigger project, move the room list into the project planner and total everything together before you buy.');
 
         // Batch all DOM writes together
-        (document.getElementById('gallons-result') as HTMLElement).textContent = results.gallonsNeeded.toString();
+        (document.getElementById('gallons-low-result') as HTMLElement).textContent = results.estimateRange.low.gallonsWithWaste.toFixed(1);
+        (document.getElementById('gallons-result') as HTMLElement).textContent = results.estimateRange.likely.gallonsWithWaste.toFixed(1);
+        (document.getElementById('gallons-high-result') as HTMLElement).textContent = results.estimateRange.high.gallonsWithWaste.toFixed(1);
+        (document.getElementById('raw-gallons') as HTMLElement).textContent = results.estimateRange.likely.rawGallons.toFixed(2);
+        (document.getElementById('purchase-gallons') as HTMLElement).textContent = results.estimateRange.likely.purchaseGallons.toString();
         (document.getElementById('total-area') as HTMLElement).textContent = Math.round(results.paintableArea + results.ceilingPaintableArea).toString();
         (document.getElementById('num-coats') as HTMLElement).textContent = inputs.numCoats.toString();
+
+        const confidenceBadge = document.getElementById('confidence-badge') as HTMLElement;
+        confidenceBadge.textContent = results.estimateRange.confidence;
+        confidenceBadge.className = `px-2.5 py-1 rounded-full text-xs font-semibold uppercase ${
+          results.estimateRange.confidence === 'high'
+            ? 'bg-green-100 text-green-800'
+            : results.estimateRange.confidence === 'low'
+              ? 'bg-red-100 text-red-800'
+              : 'bg-amber-100 text-amber-800'
+        }`;
+        const confidenceReasons = document.getElementById('confidence-reasons') as HTMLElement;
+        confidenceReasons.replaceChildren(...results.estimateRange.confidenceReasons.map(reason => {
+          const item = document.createElement('li');
+          item.textContent = reason;
+          return item;
+        }));
 
         // Primer display
         const primerResultBox = document.getElementById('primer-result-box') as HTMLElement;
@@ -807,7 +851,7 @@
           roomRecommendationDiv.classList.add('hidden');
         }
 
-        // Tips — use replaceChildren instead of innerHTML for better INP
+        // Tips  -  use replaceChildren instead of innerHTML for better INP
         const tipsList = document.getElementById('tips-list') as HTMLElement;
         const tipElements = tips.map(tip => {
           const li = document.createElement('li');

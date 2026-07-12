@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
+import { indexableBlogSlugs, indexableCalculatorSlugs } from './src/config/indexing.ts';
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,7 +15,17 @@ export default defineConfig({
     sitemap({
       changefreq: 'weekly',
       priority: 0.7,
-      lastmod: new Date(),
+      filter(page) {
+        const path = new URL(page).pathname;
+        if (path === '/embed') return false;
+        if (path.startsWith('/paint-calculator/')) {
+          return indexableCalculatorSlugs.has(path.split('/').pop());
+        }
+        if (path.startsWith('/blog/')) {
+          return indexableBlogSlugs.has(path.split('/').pop());
+        }
+        return true;
+      },
       serialize(item) {
         const path = new URL(item.url).pathname;
         if (path === '/' || path === '') {

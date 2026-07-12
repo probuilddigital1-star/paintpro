@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
-const currentDate = new Date().toISOString().split('T')[0];
+const updatedDate = '2026-07-11';
 const siteUrl = "https://paintprocalculator.com";
 
 // Breadcrumb Schema
@@ -34,7 +34,7 @@ const articleSchema = {
   "description": "Affiliate disclosure for PaintPro Calculator. Transparency about how we earn commissions and how that does not affect editorial recommendations.",
   "url": `${siteUrl}/affiliate-disclosure`,
   "datePublished": "2025-12-26",
-  "dateModified": currentDate,
+  "dateModified": updatedDate,
   "author": {
     "@type": "Person",
     "name": "Zack Pearson",
@@ -65,13 +65,13 @@ const articleSchema = {
       <p class="text-sm text-gray-500 mb-8">
         By <a href="/about" class="text-primary hover:underline font-medium">Zack Pearson</a>
         <span class="mx-2">·</span>
-        Last updated {new Date(currentDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+        Last updated July 11, 2026
       </p>
 
       <div class="prose prose-slate max-w-none space-y-6">
         <section>
           <p class="text-lg text-body">
-            PaintPro Calculator is free to use and runs without paywalls or required signups. To pay for hosting, the time that goes into research and updates, and the rest of the small bills that come with running a site, I use affiliate links on some posts. This page explains exactly how that works.
+            PaintPro Calculator is free to use and runs without a paywall. The repository contains Amazon affiliate links that may help cover hosting and maintenance later. Those links are currently disabled while the site is being reviewed for advertising.
           </p>
         </section>
 

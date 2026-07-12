@@ -44,6 +44,8 @@ export const deductionValues = {
 } as const;
 
 export const roomRecommendations: Record<string, string> = {
+  'living-room':
+    'Eggshell is a practical choice for most living rooms. It has a softer look than satin but still wipes clean.',
   bedroom:
     'Flat or eggshell finish recommended for bedrooms. Low-VOC paint is ideal for better air quality.',
   kitchen:
@@ -56,6 +58,10 @@ export const roomRecommendations: Record<string, string> = {
     'Use moisture-blocking primer first. Consider waterproofing paint for below-grade walls. Add 30% extra for concrete block.',
   garage:
     'Epoxy-based or garage floor paint recommended for durability. Standard latex works for walls.',
+  office:
+    'Eggshell or matte paint keeps glare down while still handling occasional cleaning.',
+  'dining-room':
+    'Eggshell works well for everyday dining rooms. Satin is easier to clean in homes with young children.',
 };
 
 export interface CalculationInputs {
@@ -86,6 +92,8 @@ export interface CalculationInputs {
 export interface CalculationResults {
   gallonsNeeded: number;
   primerGallons: number;
+  primerGallonsExact: number;
+  primerBaseGallons: number;
   wallArea: number;
   ceilingArea: number;
   totalDeduction: number;
@@ -100,6 +108,77 @@ export interface CalculationResults {
   ceilingCoverageNeeded: number;
   baseGallons: number;
   wasteAmount: number;
+  estimateRange: PaintEstimateRange;
+}
+
+export interface EstimatePoint {
+  coverageRate: number;
+  rawGallons: number;
+  gallonsWithWaste: number;
+  purchaseGallons: number;
+}
+
+export interface PaintEstimateRange {
+  low: EstimatePoint;
+  likely: EstimatePoint;
+  high: EstimatePoint;
+  confidence: 'high' | 'medium' | 'low';
+  confidenceReasons: string[];
+}
+
+const coverageRanges: Record<CalculationInputs['paintQuality'], [number, number, number]> = {
+  budget: [400, 350, 300],
+  standard: [450, 400, 350],
+  premium: [500, 450, 400],
+};
+
+function round(value: number, places = 2): number {
+  const factor = 10 ** places;
+  return Math.round(value * factor) / factor;
+}
+
+function createEstimatePoint(
+  wallArea: number,
+  ceilingArea: number,
+  wallCoverage: number,
+  ceilingCoverage: number,
+  wasteMultiplier: number,
+): EstimatePoint {
+  const rawGallons = wallArea / wallCoverage + ceilingArea / ceilingCoverage;
+  const gallonsWithWaste = rawGallons * (1 + wasteMultiplier);
+
+  return {
+    coverageRate: Math.round(wallCoverage),
+    rawGallons: round(rawGallons),
+    gallonsWithWaste: round(gallonsWithWaste),
+    purchaseGallons: Math.ceil(gallonsWithWaste),
+  };
+}
+
+function determineConfidence(inputs: CalculationInputs): Pick<PaintEstimateRange, 'confidence' | 'confidenceReasons'> {
+  const reasons: string[] = [];
+
+  if (inputs.customCoverageRate) reasons.push('You supplied the coverage rate from the paint label.');
+  else reasons.push('Coverage is based on a typical range, not a specific paint label.');
+
+  if (inputs.wallTexture === 'medium' || inputs.wallTexture === 'heavy' || inputs.ceilingTexture === 'popcorn') {
+    reasons.push('Pronounced texture makes paint use less predictable.');
+  }
+  if (inputs.surfaceCondition !== 'good') {
+    reasons.push('Surface condition can change absorption and practical coverage.');
+  }
+  if (inputs.surfaceType !== 'trim' && inputs.doors + inputs.frenchDoors + inputs.closetDoors + inputs.windows + inputs.largeWindows + inputs.smallWindows === 0) {
+    reasons.push('No openings were entered, so the paintable area may be overstated.');
+  }
+
+  const uncertaintyCount = reasons.length - (inputs.customCoverageRate ? 1 : 0);
+  const confidence = inputs.customCoverageRate && uncertaintyCount <= 1
+    ? 'high'
+    : uncertaintyCount >= 3
+      ? 'low'
+      : 'medium';
+
+  return { confidence, confidenceReasons: reasons };
 }
 
 export function calculatePaint(inputs: CalculationInputs): CalculationResults {
@@ -175,15 +254,50 @@ export function calculatePaint(inputs: CalculationInputs): CalculationResults {
   const gallonsNeeded = Math.ceil(baseGallons + wasteAmount);
 
   let primerGallons = 0;
+  let primerBaseGallons = 0;
+  let primerGallonsExact = 0;
   if (needsPrimer) {
     const primerCoverage = primerCoverageRates[primerType];
     const totalPrimerArea = (paintableArea + ceilingPaintableArea) * primerCoats;
-    primerGallons = Math.ceil((totalPrimerArea / primerCoverage) * (1 + wasteMultiplier));
+    primerBaseGallons = totalPrimerArea / primerCoverage;
+    primerGallonsExact = primerBaseGallons * (1 + wasteMultiplier);
+    primerGallons = Math.ceil(primerGallonsExact);
   }
+
+  const [optimisticCoverage, likelyCoverage, conservativeCoverage] = inputs.customCoverageRate
+    ? [inputs.customCoverageRate * 1.1, inputs.customCoverageRate, inputs.customCoverageRate * 0.9]
+    : coverageRanges[paintQuality];
+  const wallAdjustment = wallTextureMultiplier * surfaceConditionMultipliers[surfaceCondition];
+  const ceilingAdjustment = ceilingTextureMultiplier * surfaceConditionMultipliers[surfaceCondition];
+  const estimateRange: PaintEstimateRange = {
+    low: createEstimatePoint(
+      wallCoverageNeeded,
+      ceilingCoverageNeeded,
+      optimisticCoverage * wallAdjustment,
+      optimisticCoverage * ceilingAdjustment,
+      wasteMultiplier,
+    ),
+    likely: createEstimatePoint(
+      wallCoverageNeeded,
+      ceilingCoverageNeeded,
+      likelyCoverage * wallAdjustment,
+      likelyCoverage * ceilingAdjustment,
+      wasteMultiplier,
+    ),
+    high: createEstimatePoint(
+      wallCoverageNeeded,
+      ceilingCoverageNeeded,
+      conservativeCoverage * wallAdjustment,
+      conservativeCoverage * ceilingAdjustment,
+      wasteMultiplier,
+    ),
+    ...determineConfidence(inputs),
+  };
 
   return {
     gallonsNeeded,
     primerGallons,
+    primerGallonsExact,
     wallArea,
     ceilingArea,
     totalDeduction,
@@ -198,5 +312,7 @@ export function calculatePaint(inputs: CalculationInputs): CalculationResults {
     ceilingCoverageNeeded,
     baseGallons,
     wasteAmount,
+    primerBaseGallons,
+    estimateRange,
   };
 }

@@ -6,6 +6,9 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import AdSlot from '../../components/AdSlot.astro';
 import AffiliateCards from '../../components/AffiliateCards.astro';
 import { blogPosts, type BlogPost } from '../../data/blog-posts';
+import { prepareArticleHtml } from '../../config/site';
+import { indexableBlogSlugs } from '../../config/indexing';
+import { editorialSources } from '../../data/editorial-sources';
 
 export function getStaticPaths() {
   return blogPosts.map(post => ({
@@ -22,11 +25,13 @@ const { post } = Astro.props;
 
 const siteUrl = 'https://paintprocalculator.com';
 const pageUrl = `${siteUrl}/blog/${post.slug}`;
-const currentDate = new Date().toISOString().split('T')[0];
+const articleContent = prepareArticleHtml(post.content);
+const indexable = indexableBlogSlugs.has(post.slug);
+const sources = editorialSources[post.slug] ?? [];
 
 const relatedPosts = post.relatedSlugs
   .map(slug => blogPosts.find(p => p.slug === slug))
-  .filter((p): p is BlogPost => p !== undefined);
+  .filter((p): p is BlogPost => p !== undefined && indexableBlogSlugs.has(p.slug));
 
 // Breadcrumb schema
 const breadcrumbSchema = {
@@ -85,6 +90,7 @@ const blogPostingSchema = {
   },
   "inLanguage": "en-US",
   "wordCount": post.content.split(/\s+/).length,
+  "citation": sources.map(source => source.url),
 };
 
 // FAQ schema
@@ -102,10 +108,10 @@ const faqSchema = post.faqs.length > 0 ? {
         "name": "Zack Pearson",
         "url": `${siteUrl}/about`,
       },
-      "dateModified": currentDate,
+      "dateModified": post.updatedDate,
     },
   })),
-  "lastReviewed": currentDate,
+  "lastReviewed": post.updatedDate,
   "reviewedBy": {
     "@type": "Person",
     "name": "Zack Pearson",
@@ -125,7 +131,7 @@ const categoryColors: Record<string, string> = {
 const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
 ---
 
-<Layout title={post.title} description={post.metaDescription}>
+<Layout title={post.title} description={post.metaDescription} indexable={indexable}>
   <Header />
 
   <!-- Structured Data -->
@@ -172,12 +178,36 @@ const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
     </header>
 
     <!-- Article Content -->
-    <div class="blog-prose" set:html={post.content} />
+    <div class="blog-prose" set:html={articleContent} />
+
+    <aside class="mt-8 rounded-lg border border-border bg-slate-50 p-4 text-sm text-body">
+      Product instructions change. For coverage, drying time, temperature limits, and surface preparation, use the current label or technical data sheet for the product in your hand. <a href="/editorial-standards" class="text-primary hover:underline">Read how these guides are checked</a>.
+    </aside>
+
+    {sources.length > 0 && (
+      <section class="mt-8 rounded-2xl border border-border bg-white p-5 md:p-6" aria-labelledby="sources-heading">
+        <h2 id="sources-heading" class="text-xl font-bold text-heading">Sources checked</h2>
+        <p class="mt-2 text-sm leading-relaxed text-body">
+          These primary references are used to check technical and safety guidance. The label and technical data sheet for the paint you buy should decide product-specific timing and application limits.
+        </p>
+        <ul class="mt-4 space-y-4">
+          {sources.map(source => (
+            <li>
+              <a href={source.url} target="_blank" rel="noopener noreferrer" class="font-semibold text-primary hover:underline">
+                {source.title}
+              </a>
+              <p class="mt-1 text-xs font-medium uppercase tracking-wide text-gray-500">{source.publisher}</p>
+              <p class="mt-1 text-sm text-body">{source.note}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
     <!-- Mid-article CTA -->
     <div class="my-10 bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-xl p-6 text-center">
       <p class="font-semibold text-heading mb-2">{post.calculatorCta.text}</p>
-      <p class="text-sm text-body mb-4">Our free calculator gives you an exact gallon estimate in 60 seconds.</p>
+      <p class="text-sm text-body mb-4">Enter your room measurements to get a practical starting estimate.</p>
       <a
         href={post.calculatorCta.href}
         class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold py-2.5 px-6 rounded-lg transition-all shadow-md hover:shadow-lg"
@@ -260,7 +290,7 @@ const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
     <!-- Bottom CTA -->
     <div class="mt-10 bg-light-gray rounded-xl p-6 text-center">
       <p class="font-semibold text-heading mb-2">Ready to Start Your Project?</p>
-      <p class="text-sm text-body mb-4">Use our free calculator to figure out exactly how much paint you need.</p>
+      <p class="text-sm text-body mb-4">Use the calculator to estimate your paint before you shop.</p>
       <a
         href="/#calculator"
         class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold py-2.5 px-6 rounded-lg transition-all shadow-md hover:shadow-lg"

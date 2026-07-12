@@ -5,18 +5,20 @@ import CookieConsent from '../components/CookieConsent.astro';
 interface Props {
   title: string;
   description?: string;
+  indexable?: boolean;
 }
 
 const {
   title,
-  description = "Calculate exactly how much paint you need for your project. Free paint coverage calculator for walls, ceilings, and trim."
+  description = "Estimate how much paint to buy for walls, ceilings, and trim.",
+  indexable = true,
 } = Astro.props;
 
 const siteUrl = "https://paintprocalculator.com";
 const currentPath = Astro.url.pathname;
 const canonicalURL = currentPath === '/' ? siteUrl : `${siteUrl}${currentPath.replace(/\/$/, '')}`;
 const ogImage = `${siteUrl}/og-image.png`;
-const currentDate = new Date().toISOString().split('T')[0];
+const appUpdatedDate = '2026-07-11';
 ---
 
 <!DOCTYPE html>
@@ -35,7 +37,7 @@ const currentDate = new Date().toISOString().split('T')[0];
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="author" content="Zack Pearson" />
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="robots" content={indexable ? "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" : "noindex, follow"} />
     <meta name="keywords" content="paint calculator, how much paint do I need, paint coverage calculator, gallons of paint, wall paint calculator, room paint estimator, free paint calculator, interior paint calculator" />
 
     <!-- Open Graph / Facebook -->
@@ -77,14 +79,14 @@ const currentDate = new Date().toISOString().split('T')[0];
       "@type": "WebApplication",
       "name": "Paint Pro Calculator",
       "alternateName": "PaintPro Calculator",
-      "description": "Calculate exactly how much paint you need for your project. Free paint coverage calculator for walls, ceilings, and trim.",
+      "description": "Estimate how much paint to buy for walls, ceilings, and trim.",
       "url": siteUrl,
       "applicationCategory": "UtilitiesApplication",
       "operatingSystem": "Web Browser",
       "browserRequirements": "Requires JavaScript",
       "softwareVersion": "1.0",
       "datePublished": "2025-12-26",
-      "dateModified": currentDate,
+      "dateModified": appUpdatedDate,
       "inLanguage": "en-US",
       "isAccessibleForFree": true,
       "image": ogImage,
@@ -166,35 +168,13 @@ const currentDate = new Date().toISOString().split('T')[0];
       }
     })} />
 
-    <!-- LocalBusiness Schema for Ohio SEO -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "PaintPro Calculator",
-      "description": "Free paint calculator serving Ohio and Midwest homeowners with accurate paint coverage estimates",
-      "url": siteUrl,
-      "email": "zack.pearson@probuilddigital.com",
-      "areaServed": [
-        {
-          "@type": "State",
-          "name": "Ohio",
-          "sameAs": "https://en.wikipedia.org/wiki/Ohio"
-        },
-        {
-          "@type": "AdministrativeArea",
-          "name": "Midwest United States"
-        }
-      ],
-      "serviceType": "Paint Coverage Calculator",
-      "priceRange": "Free"
-    })} />
   </head>
   <body class="min-h-screen flex flex-col">
     <!-- Skip Navigation Link for Accessibility -->
-    <a href="#calculator" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-medium">
-      Skip to Calculator
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-medium">
+      Skip to main content
     </a>
-    <slot />
+    <div id="main-content" class="contents"><slot /></div>
 
     <!-- Web Vitals INP Monitoring -->
     <script>
@@ -217,10 +197,9 @@ const currentDate = new Date().toISOString().split('T')[0];
         }
       }
 
-      // Monitor Core Web Vitals (2026 ranking factors)
-      onINP(sendToAnalytics);  // Interaction to Next Paint - critical for 2026
-      onCLS(sendToAnalytics);  // Cumulative Layout Shift
-      onLCP(sendToAnalytics);  // Largest Contentful Paint
+      onINP(sendToAnalytics);
+      onCLS(sendToAnalytics);
+      onLCP(sendToAnalytics);
     </script>
 
     <!-- Cookie Consent Banner (GDPR) -->

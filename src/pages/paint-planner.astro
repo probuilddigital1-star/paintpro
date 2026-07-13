@@ -85,14 +85,30 @@ const plannerSchema = {
 
                 <div class="grid grid-cols-2 gap-2">
                   <button id="copy-link-btn" type="button" class="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-heading border border-border shadow-sm hover:bg-slate-50">Copy plan link</button>
-                  <button id="download-json-btn" type="button" class="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-heading border border-border shadow-sm hover:bg-slate-50">Save a copy</button>
-                  <button id="open-copy-btn" type="button" class="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-heading border border-border shadow-sm hover:bg-slate-50">Open a copy</button>
-                  <button id="print-btn" type="button" class="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-heading border border-border shadow-sm hover:bg-slate-50">Print sheet</button>
+                  <button id="download-json-btn" type="button" title="Download a backup you can restore in this planner" class="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-heading border border-border shadow-sm hover:bg-slate-50">Download backup</button>
+                  <button id="open-copy-btn" type="button" title="Restore a backup you previously downloaded" class="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-heading border border-border shadow-sm hover:bg-slate-50">Restore backup</button>
+                  <button id="print-btn" type="button" title="Print the shopping sheet or save it as a PDF" class="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-heading border border-border shadow-sm hover:bg-slate-50">Print or save PDF</button>
                   <button id="new-plan-btn" type="button" class="col-span-2 rounded-xl px-4 py-2 text-sm font-semibold text-body hover:bg-white">Start a new plan</button>
                 </div>
               </div>
               <input id="open-copy-input" type="file" accept="application/json,.json" class="sr-only" />
-              <p id="save-status" class="mt-3 text-sm text-body" aria-live="polite">Your changes are saved in this browser.</p>
+              <p id="save-status" class="mt-4 rounded-xl border border-border bg-white px-4 py-3 text-sm text-body" role="status" aria-live="polite" tabindex="-1">Your changes are saved automatically in this browser.</p>
+
+              <details class="mt-3 rounded-xl border border-border bg-white px-4 py-3 text-sm text-body">
+                <summary class="cursor-pointer font-semibold text-heading">How saving and backups work</summary>
+                <div class="mt-3 space-y-3 border-t border-border pt-3 leading-relaxed">
+                  <p><strong class="text-heading">Staying on this device:</strong> Your plan saves automatically as you make changes. You can close this page and return later in the same browser.</p>
+                  <div>
+                    <p class="font-semibold text-heading">Moving or protecting your plan:</p>
+                    <ol class="mt-2 list-decimal space-y-1 pl-5">
+                      <li>Select <strong>Download backup</strong> and keep the downloaded file.</li>
+                      <li>When you need it, return to this planner and select <strong>Restore backup</strong>.</li>
+                      <li>Choose the backup file from your Downloads folder or wherever you saved it.</li>
+                    </ol>
+                  </div>
+                  <p class="rounded-lg bg-amber-50 px-3 py-2 text-amber-900"><strong>Important:</strong> Do not open the downloaded file by itself. Restore it from this planner. Restoring a backup replaces the plan currently saved in this browser.</p>
+                </div>
+              </details>
             </section>
 
             <section id="room-list-section" class="planner-no-print scroll-mt-24 rounded-2xl border border-border bg-white p-5 md:p-6">
@@ -506,6 +522,19 @@ const plannerSchema = {
       let lastRemoval: { room: PaintProject['rooms'][number]; index: number } | null = null;
       let undoTimer: number | undefined;
 
+      type SaveStatusTone = 'neutral' | 'success' | 'warning' | 'error';
+
+      function showSaveStatus(message: string, tone: SaveStatusTone = 'neutral') {
+        const toneClasses: Record<SaveStatusTone, string> = {
+          neutral: 'border-border bg-white text-body',
+          success: 'border-green-200 bg-green-50 text-green-900',
+          warning: 'border-amber-200 bg-amber-50 text-amber-900',
+          error: 'border-red-200 bg-red-50 text-red-900',
+        };
+        saveStatus.className = `mt-4 rounded-xl border px-4 py-3 text-sm font-medium ${toneClasses[tone]}`;
+        saveStatus.textContent = message;
+      }
+
       function round(value: number, digits = 1) {
         const factor = 10 ** digits;
         return Math.round(value * factor) / factor;
@@ -537,7 +566,7 @@ const plannerSchema = {
           url.searchParams.delete('project');
           window.history.replaceState({}, '', url);
         }
-        saveStatus.textContent = 'Saved just now in this browser.';
+        showSaveStatus('Saved just now in this browser.');
       }
 
       function hideUndo() {
@@ -779,7 +808,7 @@ const plannerSchema = {
         lastRemoval = null;
         hideUndo();
         setProject(project, room.id);
-        saveStatus.textContent = 'New plan started and saved in this browser.';
+        showSaveStatus('New plan started and saved in this browser.');
         projectNameInput.focus();
         projectNameInput.select();
       }
@@ -837,7 +866,7 @@ const plannerSchema = {
       function confirmRoomRemoval() {
         lastRemoval = null;
         hideUndo();
-        saveStatus.textContent = 'Room removed. Your plan is saved in this browser.';
+        showSaveStatus('Room removed. Your plan is saved in this browser.');
       }
 
       function setSelectedRoom(roomId: string) {
@@ -1019,7 +1048,7 @@ const plannerSchema = {
         const url = new URL(window.location.href);
         url.searchParams.set('project', token);
         if (url.toString().length > 7000) {
-          saveStatus.textContent = 'This plan is too large for a dependable link. Use Save a copy instead.';
+          showSaveStatus('This plan is too large for a dependable link. Download a backup instead.', 'warning');
           return false;
         }
         await navigator.clipboard.writeText(url.toString());
@@ -1034,7 +1063,7 @@ const plannerSchema = {
       copyLinkBtn.addEventListener('click', async () => {
         try {
           const copied = await copyShareLink();
-          if (copied) saveStatus.textContent = 'Plan link copied to your clipboard.';
+          if (copied) showSaveStatus('Plan link copied to your clipboard.', 'success');
         } catch {
           const token = encodePaintProject(state.project);
           const url = new URL(window.location.href);
@@ -1048,13 +1077,16 @@ const plannerSchema = {
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         const safeName = state.project.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'paint-plan';
-        link.download = `${safeName}.json`;
+        link.download = `${safeName}.paint-plan.json`;
         link.click();
         setTimeout(() => URL.revokeObjectURL(link.href), 1000);
-        saveStatus.textContent = 'A copy of this plan was saved to your device.';
+        showSaveStatus('Backup downloaded. Keep the file so you can restore this plan later.', 'success');
       });
 
-      openCopyBtn.addEventListener('click', () => openCopyInput.click());
+      openCopyBtn.addEventListener('click', () => {
+        showSaveStatus('Choose a paint plan backup from your device. Your current plan will not change until you confirm.');
+        openCopyInput.click();
+      });
       openCopyInput.addEventListener('change', async () => {
         const file = openCopyInput.files?.[0];
         if (!file) return;
@@ -1063,10 +1095,18 @@ const plannerSchema = {
           if (!isPaintProject(raw)) throw new Error('Invalid paint plan');
           const project = normalizePaintProject(raw);
           if (!project.rooms.length) project.rooms = [createPaintRoom('Room 1')];
+          const roomLabel = `${project.rooms.length} ${project.rooms.length === 1 ? 'room' : 'rooms'}`;
+          const shouldRestore = window.confirm(`Restore "${project.name}" with ${roomLabel}? This will replace the plan currently saved in this browser.`);
+          if (!shouldRestore) {
+            showSaveStatus('Restore canceled. Your current plan was not changed.');
+            return;
+          }
           setProject(project, project.rooms[0].id);
-          saveStatus.textContent = `${file.name} is open and saved in this browser.`;
+          showSaveStatus(`Backup restored: "${project.name}" with ${roomLabel}. It is now saved in this browser.`, 'success');
+          saveStatus.focus();
         } catch {
-          saveStatus.textContent = 'That file is not a valid Paint Pro Calculator plan.';
+          showSaveStatus('That file could not be restored. Choose a backup downloaded from this paint planner.', 'error');
+          saveStatus.focus();
         } finally {
           openCopyInput.value = '';
         }
@@ -1143,16 +1183,16 @@ const plannerSchema = {
           render();
         } catch {
           // Fall back to the seeded project.
-          saveStatus.textContent = 'The saved browser copy could not be opened. A fresh plan is shown instead.';
+          showSaveStatus('The saved browser plan could not be opened. A fresh plan is shown instead.', 'warning');
         }
       } else if (openedFromShare) {
-        saveStatus.textContent = 'Shared plan opened. Any changes you make will be saved in this browser.';
+        showSaveStatus('Shared plan opened. Any changes you make will be saved in this browser.', 'success');
       } else {
         persistState();
       }
 
       if (sharedToken && !sharedProject) {
-        saveStatus.textContent = 'That plan link could not be opened. Your saved browser plan is shown instead.';
+        showSaveStatus('That plan link could not be opened. Your saved browser plan is shown instead.', 'warning');
       }
     </script>
   </main>

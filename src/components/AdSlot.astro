@@ -1,5 +1,5 @@
 ---
-import { monetizationEnabled } from '../config/site';
+import { adsEnabled } from '../config/site';
 
 interface Props {
   format?: 'auto' | 'horizontal' | 'rectangle';
@@ -10,7 +10,7 @@ const { format = 'auto', slot = '' } = Astro.props;
 const minHeight = format === 'rectangle' ? '250px' : '90px';
 ---
 
-{monetizationEnabled && <div class="ad-slot w-full text-center my-6" style={`min-height: ${minHeight}`}>
+{adsEnabled && <div class="ad-slot w-full text-center my-6" style={`min-height: ${minHeight}`}>
   <p class="text-xs text-gray-400 mb-1">Advertisement</p>
   <ins
     class="adsbygoogle"
@@ -22,7 +22,7 @@ const minHeight = format === 'rectangle' ? '250px' : '90px';
   ></ins>
 </div>}
 
-{monetizationEnabled && <script is:inline>
+{adsEnabled && <script is:inline>
   (function() {
     // Only push ads if adsbygoogle is available (loaded after consent)
     function pushAd() {

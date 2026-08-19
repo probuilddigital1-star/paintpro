@@ -1,7 +1,7 @@
 ---
 // Affiliate product cards - Amazon Associates tag: paintpro02-20
 import type { AffiliateProduct } from '../data/calculator-pages';
-import { monetizationEnabled } from '../config/site';
+import { affiliateEnabled } from '../config/site';
 
 interface Props {
   products?: AffiliateProduct[];
@@ -37,7 +37,7 @@ const defaultProducts: AffiliateProduct[] = [
 const affiliates = products ?? defaultProducts;
 ---
 
-{monetizationEnabled && <section id="affiliate-section" class="max-w-4xl mx-auto px-4 py-12">
+{affiliateEnabled && <section id="affiliate-section" class="max-w-4xl mx-auto px-4 py-12">
   <div class="text-center mb-8">
     <h2 class="text-2xl md:text-3xl font-bold text-heading mb-2">Ready to Start Your Project?</h2>
     <p class="text-body">Everything you need to get professional results.</p>
@@ -109,7 +109,7 @@ const affiliates = products ?? defaultProducts;
   </p>
 </section>}
 
-{monetizationEnabled && <script>
+{affiliateEnabled && <script>
   import { trackAffiliateClick } from '../utils/analytics';
 
   document.querySelectorAll<HTMLAnchorElement>('[data-affiliate-product]').forEach((link) => {

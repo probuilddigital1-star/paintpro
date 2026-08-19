@@ -11,17 +11,21 @@ npm run dev
 
 Run `npm run build` for a production build in `dist`.
 
-## Monetization switch
+## Monetization switches
 
-Affiliate links, product cards, and ad slots are preserved but hidden by default while the site is under review.
-
-Copy `.env.example` to `.env` if the variable is not already defined:
+Amazon affiliate links and product cards are live by default. To hide them, set:
 
 ```text
-PUBLIC_MONETIZATION_ENABLED=false
+PUBLIC_AFFILIATE_ENABLED=false
 ```
 
-After approval, set the value to `true` and rebuild. This restores the existing Amazon links, affiliate cards, and ad slots without changing the article data.
+AdSense ad slots and the AdSense script are off by default and only render when:
+
+```text
+PUBLIC_ADS_ENABLED=true
+```
+
+Both flags are read at build time, so rebuild after changing them. The article data keeps its Amazon links either way; the affiliate flag only controls whether they render as links.
 
 ## Indexing
 

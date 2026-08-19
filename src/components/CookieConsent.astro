@@ -1,6 +1,8 @@
 ---
 // Cookie Opt-Out Banner - CCPA compliant (opt-out model)
-// GA4 and AdSense load by default; users can opt out via footer link
+// GA4 loads by default; users can opt out via footer link.
+// AdSense only loads when ads are enabled.
+import { adsEnabled } from '../config/site';
 ---
 
 <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-50 p-4 hidden">
@@ -61,7 +63,7 @@
   }
 </style>
 
-<script is:inline>
+<script is:inline define:vars={{ adsEnabled }}>
   (function() {
     const CONSENT_KEY = 'cookie_consent';
     const banner = document.getElementById('cookie-banner');
@@ -110,8 +112,8 @@
         gtag('config', 'G-C766XS9QKY');
       };
 
-      // Load AdSense script
-      if (!document.querySelector('script[src*="adsbygoogle"]')) {
+      // Load AdSense script only when ads are enabled
+      if (adsEnabled && !document.querySelector('script[src*="adsbygoogle"]')) {
         var adsScript = document.createElement('script');
         adsScript.async = true;
         adsScript.crossOrigin = 'anonymous';

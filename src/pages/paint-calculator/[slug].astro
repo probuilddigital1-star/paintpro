@@ -213,6 +213,34 @@ const faqSchema = page.faqs.length > 0 ? {
   )}
 
   <!-- Brand Comparison Table -->
+  {page.dataTable && (
+    <section class="max-w-4xl mx-auto px-4 py-8">
+      <h2 class="text-2xl font-bold text-heading mb-3">{page.dataTable.title}</h2>
+      {page.dataTable.intro && <p class="text-body mb-4 max-w-3xl">{page.dataTable.intro}</p>}
+      <div class="overflow-x-auto">
+        <table class="w-full bg-white rounded-lg border border-border text-sm">
+          <thead>
+            <tr class="bg-light-gray">
+              {page.dataTable.columns.map((col, i) => (
+                <th class={`px-4 py-3 font-semibold text-heading ${i === 0 ? 'text-left' : 'text-center'}`}>{col}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {page.dataTable.rows.map((row) => (
+              <tr class="border-t border-border">
+                {row.map((cell, i) => (
+                  <td class={`px-4 py-3 ${i === 0 ? 'text-heading font-medium' : 'text-center text-body'}`}>{cell}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {page.dataTable.footnote && <p class="text-xs text-gray-500 mt-3">{page.dataTable.footnote}</p>}
+    </section>
+  )}
+
   {page.brandComparisonTable && (
     <section class="max-w-4xl mx-auto px-4 py-8">
       <h2 class="text-2xl font-bold text-heading mb-4 flex items-center gap-2">

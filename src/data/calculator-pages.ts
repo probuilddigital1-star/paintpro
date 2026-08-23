@@ -20,6 +20,15 @@ export interface BrandCoverageEntry {
   priceTier: string;
 }
 
+/** A simple reference table rendered under the calculator (coverage by product line, gallons by size). */
+export interface DataTable {
+  title: string;
+  intro?: string;
+  columns: string[];
+  rows: string[][];
+  footnote?: string;
+}
+
 export interface CalculatorPageData {
   slug: string;
   pageType: 'room-type' | 'room-size' | 'brand' | 'color-change';
@@ -38,6 +47,7 @@ export interface CalculatorPageData {
   brandDisclaimer?: string;
   brandComparisonTable?: BrandCoverageEntry[];
   scenarioExplanation?: string;
+  dataTable?: DataTable;
 }
 
 const defaultInputs: CalculationInputs = {
@@ -292,10 +302,10 @@ const livingRoom: CalculatorPageData = {
 const garage: CalculatorPageData = {
   slug: 'garage-paint-calculator',
   pageType: 'room-type',
-  title: 'Garage Paint Calculator – How Much Paint for a Garage?',
+  title: 'How Much Paint for a 2-Car Garage? Garage Paint Calculator',
   metaDescription:
-    'Calculate paint needed for your garage walls. Accurate estimates for 1-car, 2-car, and 3-car garages with durable finish recommendations.',
-  h1: 'Garage Paint Calculator',
+    'A 20x20 two-car garage takes about 6 gallons for the walls, plus primer on bare drywall. Get exact numbers for 1, 2 and 3-car garages, walls or floor.',
+  h1: 'How Much Paint for a Garage?',
   defaults: {
     ...defaultInputs,
     length: 20,
@@ -310,7 +320,7 @@ const garage: CalculatorPageData = {
     primerType: 'pva',
   },
   introText:
-    'Garage walls benefit from durable, scuff-resistant paint that can handle everyday wear and tear. Our estimates below are for a standard two-car garage. Garages often have bare drywall or concrete block, so primer is strongly recommended for best coverage.',
+    'A standard 20x20 two-car garage has about 684 square feet of wall once the door and a window are taken out, so two coats runs about 6 gallons, plus 3 gallons of primer if the drywall is bare. A 12x20 one-car garage is closer to 5 gallons and a 30x22 three-car is closer to 8. The floor is a separate job priced by square foot, not by gallon. Enter your own dimensions below for a number based on your actual walls.',
   measurementGuide: [
     'Measure the large overhead door as a custom opening. This preset does not automatically subtract a garage door.',
     'Confirm whether the walls are finished drywall, bare block, or previously painted masonry before using the preset coverage rate.',
@@ -322,7 +332,26 @@ const garage: CalculatorPageData = {
     'Light colors (white, light gray) brighten garages and make finding tools easier.',
     'Consider epoxy-based floor paint separately for the garage floor - regular wall paint will not hold up.',
   ],
+  dataTable: {
+    title: 'Paint needed by garage size',
+    intro:
+      'Wall figures come from this calculator using 9 ft walls, one entry door, one window, and two coats with a 15 percent buffer. Floor area is listed separately because floor coatings are sold by coverage area, not by wall gallons.',
+    columns: ['Garage size', 'Wall area', 'Paint, 2 coats', 'Primer if bare drywall', 'Floor area'],
+    rows: [
+      ['1-car (12x20 ft)', '540 sq ft', '5 gallons', '3 gallons', '240 sq ft'],
+      ['2-car (20x20 ft)', '684 sq ft', '6 gallons', '3 gallons', '400 sq ft'],
+      ['2-car large (24x24 ft)', '828 sq ft', '7 gallons', '4 gallons', '576 sq ft'],
+      ['3-car (30x22 ft)', '900 sq ft', '8 gallons', '4 gallons', '660 sq ft'],
+    ],
+    footnote:
+      'Garage doors are not deducted automatically. If your overhead door takes up a full wall section, subtract it as a custom opening in the calculator and your gallon count will drop.',
+  },
   faqs: [
+    {
+      question: 'How many gallons of paint for a 2-car garage floor?',
+      answer:
+        'Floor coatings are not measured in wall gallons. A 20x20 two-car garage has about 400 square feet of floor, and a typical two-part epoxy kit covers 250 to 500 square feet depending on how thick you lay it and how porous the concrete is. One large kit usually does a two-car garage in one coat. Buy by the kit coverage printed on the box, not by the wall estimate above.',
+    },
     {
       question: 'How much paint do I need for a 2-car garage?',
       answer:
@@ -860,6 +889,56 @@ const behr = brandPage(
   ],
 );
 
+// Behr-specific overrides. This page draws 11,108 Search impressions across 87
+// distinct Behr queries at an average position of 8, but converts at 0.08%, so
+// the title, snippet, and opening line all answer "how much Behr paint do I
+// need" directly rather than describing the tool.
+const behrPage: CalculatorPageData = {
+  ...behr,
+  title: 'How Much Behr Paint Do I Need? Calculator + Coverage Chart',
+  metaDescription:
+    'Behr covers 250-400 sq ft per gallon. Enter your room size for an exact gallon count, plus a coverage chart for Marquee, Dynasty, Ultra and Premium Plus.',
+  h1: 'How Much Behr Paint Do I Need?',
+  introText:
+    'A gallon of Behr paint covers 250 to 400 square feet in one coat. Most interior repaints land near 350. Deep colors, bare drywall, and texture push you toward the low end, which is why a 12x12 room in two coats usually takes two gallons rather than one. Enter your room below to get a number based on your actual walls instead of the label estimate.',
+  dataTable: {
+    title: 'Behr coverage by product line',
+    intro:
+      'Behr publishes the same 250 to 400 sq ft per gallon range across its interior lines. The lines differ in how well they hide the old color and how much scrubbing they take, not in how far a gallon goes. Pick the line for durability and one-coat hide, then use the calculator for quantity.',
+    columns: ['Behr line', 'Coverage per gallon', 'What it is for'],
+    rows: [
+      ['MARQUEE Interior', '250-400 sq ft', 'One-coat hide on a strong color change'],
+      ['Dynasty Interior', '250-400 sq ft', 'Highest stain and scuff resistance'],
+      ['Ultra (Premium Plus Ultra)', '250-400 sq ft', 'Paint and primer in one on sound walls'],
+      ['Premium Plus Interior', '250-400 sq ft', 'Budget repaints where the color barely changes'],
+      ['MARQUEE Exterior', '250-400 sq ft', 'Siding, trim, and doors'],
+    ],
+    footnote:
+      'Ranges are Behr published figures. Deep and saturated colors sit at the bottom of the range, and unprimed or textured surfaces cut coverage by roughly 15 to 35 percent. Always check the label on the can you buy.',
+  },
+  faqs: [
+    {
+      question: 'How many square feet does a gallon of Behr paint cover?',
+      answer:
+        'Behr publishes 250 to 400 square feet per gallon for one coat. Plan on about 350 for a smooth, previously painted wall in a similar color. Drop toward 250 for bare drywall, textured walls, or a deep color over a light one.',
+    },
+    {
+      question: 'Does Behr Marquee cover more than Premium Plus?',
+      answer:
+        'Not in square feet. Both publish the same 250 to 400 range. Marquee is rated for one-coat hide on many colors, so it can cut the number of coats rather than the gallons per coat. If Marquee genuinely covers in one coat where Premium Plus needs two, you buy roughly half the paint.',
+    },
+    {
+      question: 'How much Behr exterior paint do I need?',
+      answer:
+        'Behr exterior lines publish the same 250 to 400 sq ft per gallon. Exterior siding usually lands lower because the surface is rougher and more porous, so budget nearer 250 to 300 on wood, fiber cement, or stucco.',
+    },
+    // The legacy "How much does Behr paint cover" entry is dropped: it said 350-400,
+    // which contradicts Behr's published 250-400 range used above.
+    ...behr.faqs.filter((f) => !f.question.startsWith('How much does Behr paint cover')),
+  ],
+};
+
+
 const sherwinWilliams = brandPage(
   'Sherwin-Williams', 'sherwin-williams-coverage', 400, '$$$',
   'https://www.amazon.com/s?k=sherwin+williams+paint&i=tools&tag=paintpro02-20',
@@ -1155,7 +1234,7 @@ export const calculatorPages: CalculatorPageData[] = [
   size16x20,
   size20x20,
   // Brand pages
-  behr,
+  behrPage,
   sherwinWilliams,
   benjaminMoore,
   valspar,

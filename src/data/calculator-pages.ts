@@ -23,6 +23,8 @@ export interface BrandCoverageEntry {
 export interface CalculatorPageData {
   slug: string;
   pageType: 'room-type' | 'room-size' | 'brand' | 'color-change';
+  /** Display name for brand pages, e.g. "Behr". Drives the brand paint recommendation. */
+  brand?: string;
   title: string;
   metaDescription: string;
   h1: string;
@@ -819,6 +821,7 @@ function brandPage(
   return {
     slug,
     pageType: 'brand',
+    brand,
     title: `${brand} Paint Coverage Calculator – How Much ${brand} Paint Per Gallon?`,
     metaDescription: `Calculate how much ${brand} paint you need. ${brand} covers ${coverageRate} sq ft per gallon. Get accurate gallon estimates for your project.`,
     h1: `${brand} Paint Coverage Calculator`,

@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Calculator from '../components/Calculator.astro';
+import PainterQuoteCta from '../components/PainterQuoteCta.astro';
 import AffiliateCards from '../components/AffiliateCards.astro';
 import LeadGenForm from '../components/LeadGenForm.astro';
 import SEOContent from '../components/SEOContent.astro';
@@ -21,6 +22,7 @@ import AdSlot from '../components/AdSlot.astro';
     <Hero />
     <div class="max-w-4xl mx-auto px-4"><AdSlot format="horizontal" /></div>
     <Calculator />
+    <PainterQuoteCta pageSource="home" fallbackHref="#lead-section" />
     <section class="max-w-4xl mx-auto px-4 pb-8">
       <div class="rounded-3xl border border-border bg-white p-6 md:p-8 shadow-sm flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
         <div class="max-w-2xl">

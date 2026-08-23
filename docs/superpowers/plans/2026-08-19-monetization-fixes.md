@@ -24,6 +24,21 @@
   Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
   ```
 
+## Amendments (2026-08-23, after the Search Console export)
+
+Search Console for the last 3 months showed 130 clicks on 32,292 impressions, with two pages carrying 78% of all impressions: `/paint-calculator/garage-paint-calculator` (14,285 impressions, position 7.0) and `/paint-calculator/behr-coverage` (11,108 impressions, position 8.2, CTR 0.08%). Tracing this plan's engine against those two pages' real defaults exposed two defects, fixed below.
+
+1. **Garage pages lost their wall paint.** The garage page's defaults are `roomType: 'garage'`, `surfaceType: 'walls'`, `primerType: 'pva'`, and they compute to 6 gallons. The original paint branch returned `garage-floor-epoxy` *instead of* a wall paint, and the four-item cap then dropped everything else, so a visitor calculating 6 gallons of wall paint saw no wall paint. Fix: a new `garage-wall-paint` catalog entry takes the paint slot, and the floor epoxy becomes a secondary pick placed ahead of the tools. Traced result: PVA primer, garage wall paint, floor epoxy, sprayer.
+2. **Brand pages were brand-blind.** All eight brand pages inherit `defaultInputs` (`roomType: 'bedroom'`, no primer, 2 gallons), so every one of them would have returned the same generic four: interior paint, roller kit, tape, drop cloth. On the site's second-biggest page that means a generic paint link where the query is "how much behr paint do i need". Fix: `recommendProducts` takes an optional `brand`, and a `brandProducts` map supplies that brand's paint as the paint pick. Because `CalculatorPageData` has no `brand` field today, Task 5 adds one.
+3. **Retailer reality is now encoded.** Behr and Glidden are Home Depot lines, Valspar is Lowe's. Amazon barely carries them, which is why `Product` gains `soldAt` (shown to the reader) and `preferredRetailer` (the one-line swap target once those affiliate programs are approved). Links stay on Amazon until then, so there is no regression.
+4. **The painter CTA reaches cost-intent traffic.** `/blog/how-much-does-it-cost-to-paint-a-room` has 1,009 impressions at position 8.3 and `/blog/when-to-hire-a-painter-vs-diy` also ranks. Those are hire-or-DIY queries, so Task 6 places the CTA on an allowlist of blog posts as well as the calculator pages.
+
+**Execution order:** 1, 2, 5, 4, 3, 6, 7. Tasks 2 and 5 are the highest-value pair because Task 5 lands on the garage and Behr pages. Tasks 3 and 4 serve the homepage, which sits at position 40 with 5 clicks per quarter.
+
+**Deliberately not changed:** brand pages keep their existing `AffiliateCards` block. It repeats one product (the brand's paint) that the new in-result block also shows, but the two sit at different points in the page and serve different moments, so the repetition is acceptable and removing it would cut total affiliate surface for no measured gain.
+
+**Already shipped separately (commit `0693e91`):** `Layout.astro` built canonicals from `Astro.url.pathname`, which ends in `.html` under `build.format: 'file'`, so every canonical pointed at a URL that 308-redirects. That is fixed and is not part of this plan.
+
 ---
 
 ### Task 1: Fire analytics events unless the visitor opted out

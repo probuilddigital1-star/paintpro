@@ -1,40 +1,25 @@
 ---
-// Affiliate product cards - Amazon Associates tag: paintpro02-20
+// Affiliate product cards. Defaults come from the central catalog in src/data/products.ts.
 import type { AffiliateProduct } from '../data/calculator-pages';
 import { affiliateEnabled } from '../config/site';
+import { products } from '../data/products';
 
 interface Props {
   products?: AffiliateProduct[];
   pageSource?: string;
 }
 
-const { products, pageSource } = Astro.props;
+const { products: overrides, pageSource } = Astro.props;
 
-const defaultProducts: AffiliateProduct[] = [
-  {
-    title: "Paint Supplies",
-    description: "Quality rollers, brushes, tape, and drop cloths for a professional finish.",
-    icon: "brush",
-    link: "https://www.amazon.com/s?k=paint+supplies+kit&tag=paintpro02-20",
-    cta: "Shop Supplies"
-  },
-  {
-    title: "Premium Paint",
-    description: "Top-rated interior and exterior paints for lasting, beautiful results.",
-    icon: "paint",
-    link: "https://www.amazon.com/s?k=interior+wall+paint&tag=paintpro02-20",
-    cta: "Browse Paint"
-  },
-  {
-    title: "Paint Sprayers",
-    description: "Save time on big projects with an electric or airless paint sprayer.",
-    icon: "sprayer",
-    link: "https://www.amazon.com/s?k=paint+sprayer&tag=paintpro02-20",
-    cta: "View Sprayers"
-  }
-];
+const defaultProducts: AffiliateProduct[] = (['supplies-kit', 'interior-paint', 'sprayer'] as const).map((id) => ({
+  title: products[id].title,
+  description: products[id].description,
+  icon: products[id].icon,
+  link: products[id].url,
+  cta: products[id].cta,
+}));
 
-const affiliates = products ?? defaultProducts;
+const affiliates = overrides ?? defaultProducts;
 ---
 
 {affiliateEnabled && <section id="affiliate-section" class="max-w-4xl mx-auto px-4 py-12">
@@ -53,6 +38,7 @@ const affiliates = products ?? defaultProducts;
         data-affiliate-product={item.title}
         data-affiliate-link={item.link}
         data-page-source={pageSource ?? 'default'}
+        data-affiliate-card
       >
         <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
           {item.icon === "brush" && (
@@ -112,7 +98,10 @@ const affiliates = products ?? defaultProducts;
 {affiliateEnabled && <script>
   import { trackAffiliateClick } from '../utils/analytics';
 
-  document.querySelectorAll<HTMLAnchorElement>('[data-affiliate-product]').forEach((link) => {
+  // Scoped to this component's own cards. The calculator result blocks carry
+  // data-affiliate-product too and bind their own handlers, so a broad selector
+  // here would double-count those clicks in GA4.
+  document.querySelectorAll<HTMLAnchorElement>('[data-affiliate-card]').forEach((link) => {
     link.addEventListener('click', () => {
       trackAffiliateClick({
         product: link.dataset.affiliateProduct,

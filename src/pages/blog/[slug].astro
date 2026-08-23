@@ -5,6 +5,7 @@ import Footer from '../../components/Footer.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import AdSlot from '../../components/AdSlot.astro';
 import AffiliateCards from '../../components/AffiliateCards.astro';
+import PainterQuoteCta from '../../components/PainterQuoteCta.astro';
 import { blogPosts, type BlogPost } from '../../data/blog-posts';
 import { prepareArticleHtml } from '../../config/site';
 import { indexableBlogSlugs } from '../../config/indexing';
@@ -26,6 +27,14 @@ const { post } = Astro.props;
 const siteUrl = 'https://paintprocalculator.com';
 const pageUrl = `${siteUrl}/blog/${post.slug}`;
 const articleContent = prepareArticleHtml(post.content);
+
+// Hire-or-DIY and cost queries are lead-gen intent, so these posts get the painter CTA.
+// /blog/how-much-does-it-cost-to-paint-a-room ranks at position 8 on ~1,000 impressions.
+const painterCtaSlugs = new Set([
+  'how-much-does-it-cost-to-paint-a-room',
+  'when-to-hire-a-painter-vs-diy',
+]);
+const showPainterCta = painterCtaSlugs.has(post.slug);
 const indexable = indexableBlogSlugs.has(post.slug);
 const sources = editorialSources[post.slug] ?? [];
 
@@ -220,6 +229,8 @@ const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
   </article>
 
   <!-- Affiliate Cards -->
+  {showPainterCta && <PainterQuoteCta pageSource={`blog-${post.slug}`} />}
+
   <AffiliateCards products={post.affiliateProducts} pageSource={`blog-${post.slug}`} />
 
   <article class="max-w-3xl mx-auto px-4">

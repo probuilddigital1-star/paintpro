@@ -1,0 +1,49 @@
+---
+// Without this page, Cloudflare Pages answers every missing URL with the
+// homepage and a 200 status. Google treats that as a soft 404 and can index
+// junk URLs. Astro builds this to 404.html, which Pages serves with a real
+// 404 status.
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const popular = [
+  { href: '/', label: 'Paint calculator', note: 'Estimate gallons for any room' },
+  { href: '/paint-calculator/garage-paint-calculator', label: 'Garage paint calculator', note: 'Walls, ceiling, and floor' },
+  { href: '/paint-calculator/behr-coverage', label: 'How much Behr paint do I need?', note: 'Coverage by product line' },
+  { href: '/paint-planner', label: 'Project planner', note: 'Total a whole house, room by room' },
+  { href: '/blog', label: 'Painting guides', note: 'Prep, coats, finishes, and cost' },
+];
+---
+
+<Layout
+  title="Page Not Found | PaintPro Calculator"
+  description="That page does not exist. Use the paint calculator or browse the painting guides."
+  indexable={false}
+>
+  <Header />
+
+  <main class="max-w-2xl mx-auto px-4 py-16">
+    <p class="text-sm font-semibold text-primary mb-2">Error 404</p>
+    <h1 class="text-3xl md:text-4xl font-bold text-heading mb-3">That page does not exist</h1>
+    <p class="text-body mb-8">
+      The link may be out of date or slightly mistyped. Here is where most people are headed.
+    </p>
+
+    <ul class="space-y-3">
+      {popular.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class="block p-4 rounded-lg border border-border bg-white hover:border-primary/40 hover:shadow-sm transition"
+          >
+            <span class="block font-medium text-heading">{item.label}</span>
+            <span class="block text-sm text-body mt-1">{item.note}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </main>
+
+  <Footer />
+</Layout>

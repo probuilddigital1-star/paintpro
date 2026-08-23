@@ -15,8 +15,10 @@ const {
 } = Astro.props;
 
 const siteUrl = "https://paintprocalculator.com";
-const currentPath = Astro.url.pathname;
-const canonicalURL = currentPath === '/' ? siteUrl : `${siteUrl}${currentPath.replace(/\/$/, '')}`;
+// build.format is 'file', so Astro.url.pathname carries a .html suffix (and /index.html at the
+// root). Strip both so the canonical matches the clean URLs Cloudflare serves and the sitemap lists.
+const currentPath = Astro.url.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '').replace(/\/$/, '');
+const canonicalURL = currentPath === '' ? siteUrl : `${siteUrl}${currentPath}`;
 const ogImage = `${siteUrl}/og-image.png`;
 const appUpdatedDate = '2026-07-11';
 ---

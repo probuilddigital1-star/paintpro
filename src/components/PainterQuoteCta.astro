@@ -1,0 +1,48 @@
+---
+// "Get painter quotes" CTA shown after a calculator result or on hire-vs-DIY articles.
+// Destination: PUBLIC_PAINTER_LEAD_URL (pay-per-lead tracking link) when set,
+// otherwise the email signup form, which already collects a zip code.
+interface Props {
+  pageSource?: string;
+  /**
+   * Where to send visitors when PUBLIC_PAINTER_LEAD_URL is not set.
+   * Defaults to the homepage signup form, because #lead-section only exists
+   * on the homepage; pass "#lead-section" there for an in-page jump.
+   */
+  fallbackHref?: string;
+}
+
+const { pageSource = 'default', fallbackHref = '/#lead-section' } = Astro.props;
+const leadUrl = (import.meta.env.PUBLIC_PAINTER_LEAD_URL as string | undefined)?.trim();
+const href = leadUrl && leadUrl.length > 0 ? leadUrl : fallbackHref;
+const external = href.startsWith('http');
+---
+
+<section class="max-w-2xl mx-auto px-4 pb-8">
+  <div class="rounded-xl border border-amber-200 bg-amber-50 p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+    <div class="flex-1">
+      <h3 class="font-semibold text-heading">Rather not do it yourself?</h3>
+      <p class="text-sm text-body">Compare quotes from local painters. Bring your gallon estimate so the bids line up.</p>
+    </div>
+    <a
+      href={href}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noopener noreferrer sponsored' : undefined}
+      class="inline-flex justify-center items-center px-5 py-2.5 rounded-lg bg-primary text-white font-medium hover:opacity-90 transition-opacity whitespace-nowrap"
+      data-painter-cta
+      data-page-source={pageSource}
+    >
+      Get painter quotes
+    </a>
+  </div>
+</section>
+
+<script>
+  import { trackCtaClick } from '../utils/analytics';
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-painter-cta]').forEach((link) => {
+    link.addEventListener('click', () => {
+      trackCtaClick({ ctaText: 'Get painter quotes', pageSource: link.dataset.pageSource });
+    });
+  });
+</script>

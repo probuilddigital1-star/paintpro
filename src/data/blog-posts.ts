@@ -18,8 +18,8 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     slug: 'how-much-does-it-cost-to-paint-a-room',
-    title: 'How Much Does It Cost to Paint a Room in 2026? (DIY & Pro Prices)',
-    metaDescription: 'Find out the real cost to paint a room in 2026. Covers DIY paint costs per gallon, professional painter rates, and a full breakdown by room size.',
+    title: 'How Much Does It Cost to Paint a Room? DIY vs Pro Prices',
+    metaDescription: 'A 12x12 room runs $100 to $200 in paint and supplies as a DIY, or $400 to $800 hiring a painter. Full breakdown by room size, paint grade, and hourly rate.',
     publishedDate: '2026-01-15',
     updatedDate: '2026-07-11',
     category: 'Cost Guide',

@@ -1,22 +1,27 @@
-export const indexableCalculatorSlugs = new Set([
-  'bedroom-paint-calculator',
-  'bathroom-paint-calculator',
-  'kitchen-paint-calculator',
-  'living-room-paint-calculator',
-  'garage-paint-calculator',
-  'basement-paint-calculator',
-]);
+import { blogPosts } from '../data/blog-posts';
+import { calculatorPages } from '../data/calculator-pages';
 
-export const indexableBlogSlugs = new Set([
-  'how-much-does-it-cost-to-paint-a-room',
-  'how-many-coats-of-paint',
-  'complete-room-painting-checklist',
-  'how-to-prep-walls-before-painting',
-  'how-to-paint-a-ceiling-without-streaks',
-  'eggshell-vs-satin-vs-semi-gloss',
-  'how-to-paint-trim-and-baseboards',
-  'how-to-touch-up-paint',
-  'how-to-fix-peeling-paint',
-  'how-long-does-paint-take-to-dry',
-  'when-to-hire-a-painter-vs-diy',
-]);
+/**
+ * Everything ships indexable.
+ *
+ * These lists were an allowlist during the AdSense reviews, when the goal was to
+ * show a small reviewed subset. That left 40% of search impressions on pages
+ * serving `noindex` (the Behr coverage page alone drew 11,108 impressions at
+ * position 8 while telling Google not to index it), kept 19 blog posts off the
+ * blog index, and excluded them from internal linking.
+ *
+ * AdSense is no longer being pursued, so the restriction only cost traffic.
+ * To pull a specific page from Google, add its slug to the matching exclude set
+ * below. Deriving the lists from the page data means they cannot go stale when
+ * new pages are added.
+ */
+const excludedCalculatorSlugs = new Set<string>([]);
+const excludedBlogSlugs = new Set<string>([]);
+
+export const indexableCalculatorSlugs = new Set(
+  calculatorPages.map((page) => page.slug).filter((slug) => !excludedCalculatorSlugs.has(slug)),
+);
+
+export const indexableBlogSlugs = new Set(
+  blogPosts.map((post) => post.slug).filter((slug) => !excludedBlogSlugs.has(slug)),
+);

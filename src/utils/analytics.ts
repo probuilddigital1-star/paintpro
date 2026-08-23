@@ -7,13 +7,15 @@ declare global {
   }
 }
 
+// Opt-out model: CookieConsent.astro loads GA4 for everyone who has not opted out,
+// so events fire unless the visitor explicitly chose "Opt out".
 function isTrackingReady(): boolean {
   if (typeof window === 'undefined') return false;
   if (!window.gtag) return false;
   try {
-    return localStorage.getItem('cookie_consent') === 'accepted';
+    return localStorage.getItem('cookie_consent') !== 'opted_out';
   } catch {
-    return false;
+    return true;
   }
 }
 

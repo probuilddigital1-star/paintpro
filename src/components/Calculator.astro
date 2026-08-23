@@ -592,6 +592,16 @@
       </ul>
     </div>
 
+    <!-- Recommended products (affiliate, hidden until a result exists) -->
+    <div id="recommended-products" class="mt-6 hidden">
+      <h3 class="font-semibold text-heading mb-1">Supplies for this room</h3>
+      <p class="text-xs text-gray-500 mb-3">
+        Picked from your inputs. Links go to Amazon and we may earn a commission at no extra cost to you.
+        <a href="/affiliate-disclosure" class="underline hover:text-primary">Details</a>
+      </p>
+      <ul id="recommended-products-list" class="grid sm:grid-cols-2 gap-3"></ul>
+    </div>
+
     <!-- Reset Button -->
     <button
       type="button"
@@ -615,7 +625,9 @@
     calculatePaint,
     type CalculationInputs,
   } from '../utils/paint-calculator';
-  import { trackCalculatorUsed } from '../utils/analytics';
+  import { trackCalculatorUsed, trackAffiliateClick } from '../utils/analytics';
+  import { recommendProducts } from '../utils/product-recommendations';
+  import { affiliateEnabled } from '../config/site';
 
   // Professional Paint Calculator Logic
   const form = document.getElementById('paint-calculator-form') as HTMLFormElement;
@@ -859,7 +871,45 @@
           return li;
         });
         tipsList.replaceChildren(...tipElements);
+        // Recommended products, matched to the inputs (affiliate)
+        const recBox = document.getElementById('recommended-products') as HTMLElement;
+        const recList = document.getElementById('recommended-products-list') as HTMLElement;
+        if (affiliateEnabled) {
+          const recs = recommendProducts(inputs, results);
+          recList.replaceChildren(...recs.map(({ product, reason }) => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = product.url;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer sponsored';
+            a.className = 'block h-full p-3 rounded-lg border border-border bg-white hover:border-primary/40 hover:shadow-sm transition';
+            a.dataset.affiliateProduct = product.id;
+            a.dataset.affiliateLink = product.url;
+            a.dataset.pageSource = 'calculator-result';
 
+            const title = document.createElement('span');
+            title.className = 'block font-medium text-heading text-sm';
+            title.textContent = product.title;
+
+            const why = document.createElement('span');
+            why.className = 'block text-xs text-body mt-1';
+            why.textContent = reason;
+
+            const cta = document.createElement('span');
+            cta.className = 'block text-xs text-primary font-medium mt-2';
+            cta.textContent = `${product.cta} ›`;
+
+            a.append(title, why, cta);
+            a.addEventListener('click', () => {
+              trackAffiliateClick({ product: product.id, link: product.url, pageSource: 'calculator-result' });
+            });
+            li.appendChild(a);
+            return li;
+          }));
+          recBox.classList.toggle('hidden', recs.length === 0);
+        } else {
+          recBox.classList.add('hidden');
+        }
         // Show results section
         resultsSection.classList.remove('hidden');
 

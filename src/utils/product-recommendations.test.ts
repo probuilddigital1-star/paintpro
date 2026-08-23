@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { calculatePaint, type CalculationInputs } from './paint-calculator';
 import { MAX_RECOMMENDATIONS, recommendProducts } from './product-recommendations';
-import { AMAZON_TAG } from '../data/products';
+import { AMAZON_TAG, brandProducts, products } from '../data/products';
 import { calculatorPages } from '../data/calculator-pages';
 
 const baseInputs: CalculationInputs = {
@@ -93,6 +93,17 @@ describe('recommendProducts', () => {
   it('suggests a thick nap roller for textured walls or ceilings', () => {
     expect(ids({ wallTexture: 'heavy' })).toContain('thick-nap-roller');
     expect(ids({ surfaceType: 'ceiling' })).toContain('thick-nap-roller');
+  });
+
+  it('scopes every catalog link to the Tools department, not Arts and Crafts', () => {
+    // Without &i=tools, "paint supplies kit" returns artist watercolor sets.
+    for (const product of Object.values(products)) {
+      expect(product.url).toContain('&i=tools&');
+      expect(product.url).toContain(`tag=${AMAZON_TAG}`);
+    }
+    for (const product of Object.values(brandProducts)) {
+      expect(product.url).toContain('&i=tools&');
+    }
   });
 
   it('every recommendation carries the Associates tag and a reason', () => {

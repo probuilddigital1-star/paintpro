@@ -27,9 +27,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Your Paint Needs', href: '/#calculator' },
     relatedSlugs: ['when-to-hire-a-painter-vs-diy', 'how-many-coats-of-paint', 'sherwin-williams-vs-behr-vs-benjamin-moore'],
     affiliateProducts: [
-      { title: 'Paint Roller Kit', description: 'Complete roller set with tray, covers, and extension pole for walls and ceilings.', icon: 'roller', link: 'https://www.amazon.com/s?k=paint+roller+kit&tag=paintpro02-20', cta: 'Shop Roller Kits' },
-      { title: 'Painter\'s Tape', description: 'FrogTape multi-surface painter\'s tape for clean, sharp lines every time.', icon: 'tape', link: 'https://www.amazon.com/s?k=FrogTape+painters+tape&tag=paintpro02-20', cta: 'Shop Tape' },
-      { title: 'Drop Cloths', description: 'Canvas drop cloths to protect your floors and furniture from paint drips.', icon: 'brush', link: 'https://www.amazon.com/s?k=canvas+drop+cloth+painting&tag=paintpro02-20', cta: 'Shop Drop Cloths' },
+      { title: 'Paint Roller Kit', description: 'Complete roller set with tray, covers, and extension pole for walls and ceilings.', icon: 'roller', link: 'https://www.amazon.com/s?k=paint+roller+kit&i=tools&tag=paintpro02-20', cta: 'Shop Roller Kits' },
+      { title: 'Painter\'s Tape', description: 'FrogTape multi-surface painter\'s tape for clean, sharp lines every time.', icon: 'tape', link: 'https://www.amazon.com/s?k=FrogTape+painters+tape&i=tools&tag=paintpro02-20', cta: 'Shop Tape' },
+      { title: 'Drop Cloths', description: 'Canvas drop cloths to protect your floors and furniture from paint drips.', icon: 'brush', link: 'https://www.amazon.com/s?k=canvas+drop+cloth+painting&i=tools&tag=paintpro02-20', cta: 'Shop Drop Cloths' },
     ],
     faqs: [
       {
@@ -82,11 +82,11 @@ export const blogPosts: BlogPost[] = [
 <p>If this is your first painting project, you will need to buy supplies. Even if you have some of these items already, here is the full list with approximate prices:</p>
 
 <ul>
-<li><a href="https://www.amazon.com/s?k=paint+roller+frame+covers&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Roller frame and covers</a> (3-pack): $12 to $18</li>
-<li><a href="https://www.amazon.com/s?k=paint+tray+liners&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Paint tray and liners</a>: $5 to $10</li>
-<li><a href="https://www.amazon.com/s?k=angled+paint+brush+2+inch&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">2-inch angled brush</a> (for cutting in): $8 to $15</li>
-<li><a href="https://www.amazon.com/s?k=FrogTape+painters+tape&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Painter's tape</a> (2 rolls): $8 to $14</li>
-<li><a href="https://www.amazon.com/s?k=canvas+drop+cloth+painting&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Drop cloths</a>: $5 to $15</li>
+<li><a href="https://www.amazon.com/s?k=paint+roller+frame+covers&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Roller frame and covers</a> (3-pack): $12 to $18</li>
+<li><a href="https://www.amazon.com/s?k=paint+tray+liners&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Paint tray and liners</a>: $5 to $10</li>
+<li><a href="https://www.amazon.com/s?k=angled+paint+brush+2+inch&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">2-inch angled brush</a> (for cutting in): $8 to $15</li>
+<li><a href="https://www.amazon.com/s?k=FrogTape+painters+tape&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Painter's tape</a> (2 rolls): $8 to $14</li>
+<li><a href="https://www.amazon.com/s?k=canvas+drop+cloth+painting&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Drop cloths</a>: $5 to $15</li>
 <li>Stir sticks and paint can opener: Free at most stores</li>
 <li>Sandpaper (if prepping): $3 to $8</li>
 </ul>
@@ -213,9 +213,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Bathroom Paint Needs', href: '/paint-calculator/bathroom-paint-calculator' },
     relatedSlugs: ['how-many-coats-of-paint', 'sherwin-williams-vs-behr-vs-benjamin-moore', 'how-much-does-it-cost-to-paint-a-room'],
     affiliateProducts: [
-      { title: 'Mildew-Resistant Paint', description: 'Bathroom-rated paints with built-in mold and mildew resistance.', icon: 'paint', link: 'https://www.amazon.com/s?k=mildew+resistant+bathroom+paint&tag=paintpro02-20', cta: 'Shop Bathroom Paint' },
-      { title: 'Bathroom Exhaust Fan', description: 'Upgrade your ventilation to protect your paint job from humidity damage.', icon: 'brush', link: 'https://www.amazon.com/s?k=bathroom+exhaust+fan+quiet&tag=paintpro02-20', cta: 'Shop Exhaust Fans' },
-      { title: 'Mildew-Resistant Primer', description: 'KILZ and Zinsser primers designed for high-moisture bathroom environments.', icon: 'primer', link: 'https://www.amazon.com/s?k=mildew+resistant+primer+bathroom&tag=paintpro02-20', cta: 'Shop Primers' },
+      { title: 'Mildew-Resistant Paint', description: 'Bathroom-rated paints with built-in mold and mildew resistance.', icon: 'paint', link: 'https://www.amazon.com/s?k=mildew+resistant+bathroom+paint&i=tools&tag=paintpro02-20', cta: 'Shop Bathroom Paint' },
+      { title: 'Bathroom Exhaust Fan', description: 'Upgrade your ventilation to protect your paint job from humidity damage.', icon: 'brush', link: 'https://www.amazon.com/s?k=bathroom+exhaust+fan+quiet&i=tools&tag=paintpro02-20', cta: 'Shop Exhaust Fans' },
+      { title: 'Mildew-Resistant Primer', description: 'KILZ and Zinsser primers designed for high-moisture bathroom environments.', icon: 'primer', link: 'https://www.amazon.com/s?k=mildew+resistant+primer+bathroom&i=tools&tag=paintpro02-20', cta: 'Shop Primers' },
     ],
     faqs: [
       {
@@ -298,7 +298,7 @@ export const blogPosts: BlogPost[] = [
 
 <p>PPG Diamond also includes mildew-resistant properties and dries to a hard, smooth finish. It is available at PPG Paints stores and some independent retailers. The mid-range price point makes it a solid choice for homeowners who want better performance than budget paint without paying premium prices.</p>
 
-<h3>5. <a href="https://www.amazon.com/s?k=Zinsser+Perma-White&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Zinsser Perma-White</a> (Best for Problem Bathrooms)</h3>
+<h3>5. <a href="https://www.amazon.com/s?k=Zinsser+Perma-White&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Zinsser Perma-White</a> (Best for Problem Bathrooms)</h3>
 
 <p><strong>Price:</strong> $28 to $35 per gallon</p>
 <p><strong>Coverage:</strong> 300 to 400 sq ft per gallon</p>
@@ -327,7 +327,7 @@ export const blogPosts: BlogPost[] = [
 <li><strong>Check for mildew first.</strong> Existing mildew must be killed and removed before painting. Use a bleach solution (1 part bleach to 3 parts water) and scrub thoroughly. Let the surface dry completely.</li>
 <li><strong>Sand glossy surfaces.</strong> If your bathroom currently has semi-gloss or high-gloss paint, lightly sand the walls with 120-grit sandpaper. This gives the new paint something to grip.</li>
 <li><strong>Repair damage.</strong> Fill any holes, cracks, or peeling areas with spackle. Sand smooth when dry.</li>
-<li><strong>Prime if needed.</strong> Use a mildew-resistant primer if you are painting over bare drywall, stains, or surfaces that have had mold issues. <a href="https://www.amazon.com/s?k=Zinsser+123+primer&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Zinsser 1-2-3</a> or <a href="https://www.amazon.com/s?k=KILZ+kitchen+bath+primer&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">KILZ Kitchen & Bath primer</a> are solid choices.</li>
+<li><strong>Prime if needed.</strong> Use a mildew-resistant primer if you are painting over bare drywall, stains, or surfaces that have had mold issues. <a href="https://www.amazon.com/s?k=Zinsser+123+primer&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Zinsser 1-2-3</a> or <a href="https://www.amazon.com/s?k=KILZ+kitchen+bath+primer&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">KILZ Kitchen & Bath primer</a> are solid choices.</li>
 <li><strong>Ventilate during painting.</strong> Open a window and run the exhaust fan while you paint and for 24 hours after. This helps the paint cure properly and prevents moisture from ruining your fresh paint job.</li>
 </ol>
 
@@ -369,9 +369,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Paint for Multiple Coats', href: '/#calculator' },
     relatedSlugs: ['how-much-does-it-cost-to-paint-a-room', 'best-paint-for-bathrooms', 'complete-room-painting-checklist'],
     affiliateProducts: [
-      { title: 'Premium Paint', description: 'High-hide, one-coat coverage paints that save you time and money.', icon: 'paint', link: 'https://www.amazon.com/s?k=premium+interior+paint+one+coat&tag=paintpro02-20', cta: 'Shop Premium Paint' },
-      { title: 'Tinted Primer', description: 'Gray and tinted primers that block dark colors and reduce coat count.', icon: 'primer', link: 'https://www.amazon.com/s?k=tinted+gray+primer+interior&tag=paintpro02-20', cta: 'Shop Tinted Primer' },
-      { title: 'Quality Roller Covers', description: 'Thick-nap roller covers for better paint pickup and even coverage.', icon: 'roller', link: 'https://www.amazon.com/s?k=paint+roller+cover+3%2F8+nap&tag=paintpro02-20', cta: 'Shop Roller Covers' },
+      { title: 'Premium Paint', description: 'High-hide, one-coat coverage paints that save you time and money.', icon: 'paint', link: 'https://www.amazon.com/s?k=premium+interior+paint+one+coat&i=tools&tag=paintpro02-20', cta: 'Shop Premium Paint' },
+      { title: 'Tinted Primer', description: 'Gray and tinted primers that block dark colors and reduce coat count.', icon: 'primer', link: 'https://www.amazon.com/s?k=tinted+gray+primer+interior&i=tools&tag=paintpro02-20', cta: 'Shop Tinted Primer' },
+      { title: 'Quality Roller Covers', description: 'Thick-nap roller covers for better paint pickup and even coverage.', icon: 'roller', link: 'https://www.amazon.com/s?k=paint+roller+cover+3%2F8+nap&i=tools&tag=paintpro02-20', cta: 'Shop Roller Covers' },
     ],
     faqs: [
       {
@@ -529,9 +529,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Paint Needed by Brand', href: '/paint-calculator' },
     relatedSlugs: ['how-much-does-it-cost-to-paint-a-room', 'best-paint-for-bathrooms', 'how-many-coats-of-paint'],
     affiliateProducts: [
-      { title: 'Interior Wall Paint', description: 'Top-rated interior paints from all major brands at competitive prices.', icon: 'paint', link: 'https://www.amazon.com/s?k=interior+wall+paint+gallon&tag=paintpro02-20', cta: 'Browse Paint' },
-      { title: 'Paint Supplies Kit', description: 'Everything you need in one kit: rollers, brushes, tape, tray, and drop cloths.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+supplies+kit+complete&tag=paintpro02-20', cta: 'Shop Supply Kits' },
-      { title: 'Paint Sprayer', description: 'Save time on large projects with an electric paint sprayer.', icon: 'sprayer', link: 'https://www.amazon.com/s?k=electric+paint+sprayer+interior&tag=paintpro02-20', cta: 'Shop Sprayers' },
+      { title: 'Interior Wall Paint', description: 'Top-rated interior paints from all major brands at competitive prices.', icon: 'paint', link: 'https://www.amazon.com/s?k=interior+wall+paint+gallon&i=tools&tag=paintpro02-20', cta: 'Browse Paint' },
+      { title: 'Paint Supplies Kit', description: 'Everything you need in one kit: rollers, brushes, tape, tray, and drop cloths.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+supplies+kit+complete&i=tools&tag=paintpro02-20', cta: 'Shop Supply Kits' },
+      { title: 'Paint Sprayer', description: 'Save time on large projects with an electric paint sprayer.', icon: 'sprayer', link: 'https://www.amazon.com/s?k=electric+paint+sprayer+interior&i=tools&tag=paintpro02-20', cta: 'Shop Sprayers' },
     ],
     faqs: [
       {
@@ -739,9 +739,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Your Paint Needs First', href: '/#calculator' },
     relatedSlugs: ['how-many-coats-of-paint', 'how-much-does-it-cost-to-paint-a-room', 'when-to-hire-a-painter-vs-diy'],
     affiliateProducts: [
-      { title: 'Complete Paint Kit', description: 'All-in-one painting kit with rollers, brushes, tray, tape, and drop cloths.', icon: 'brush', link: 'https://www.amazon.com/s?k=complete+paint+kit+room&tag=paintpro02-20', cta: 'Shop Paint Kits' },
-      { title: 'Angled Paint Brush', description: 'Professional-quality angled brushes for cutting in clean lines.', icon: 'brush', link: 'https://www.amazon.com/s?k=angled+paint+brush+purdy&tag=paintpro02-20', cta: 'Shop Brushes' },
-      { title: 'Sanding Sponge', description: 'Flexible sanding sponges for smooth wall prep between coats.', icon: 'tape', link: 'https://www.amazon.com/s?k=sanding+sponge+drywall&tag=paintpro02-20', cta: 'Shop Sanding' },
+      { title: 'Complete Paint Kit', description: 'All-in-one painting kit with rollers, brushes, tray, tape, and drop cloths.', icon: 'brush', link: 'https://www.amazon.com/s?k=complete+paint+kit+room&i=tools&tag=paintpro02-20', cta: 'Shop Paint Kits' },
+      { title: 'Angled Paint Brush', description: 'Professional-quality angled brushes for cutting in clean lines.', icon: 'brush', link: 'https://www.amazon.com/s?k=angled+paint+brush+purdy&i=tools&tag=paintpro02-20', cta: 'Shop Brushes' },
+      { title: 'Sanding Sponge', description: 'Flexible sanding sponges for smooth wall prep between coats.', icon: 'tape', link: 'https://www.amazon.com/s?k=sanding+sponge+drywall&i=tools&tag=paintpro02-20', cta: 'Shop Sanding' },
     ],
     faqs: [
       {
@@ -787,16 +787,16 @@ export const blogPosts: BlogPost[] = [
 
 <p><strong>Application tools:</strong></p>
 <ul>
-<li><a href="https://www.amazon.com/s?k=paint+roller+frame+9+inch&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Roller frame</a> (9-inch for walls, 4-inch mini roller for tight spots)</li>
-<li><a href="https://www.amazon.com/s?k=paint+roller+covers+variety+pack&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Roller covers</a>: 3/8-inch nap for smooth walls, 1/2-inch for light texture, 3/4-inch for heavy texture</li>
-<li><a href="https://www.amazon.com/s?k=angled+paint+brush+2+inch+purdy&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">2-inch angled brush</a> for cutting in corners and edges</li>
-<li><a href="https://www.amazon.com/s?k=paint+tray+disposable+liners&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Paint tray and disposable liners</a></li>
-<li><a href="https://www.amazon.com/s?k=paint+roller+extension+pole&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Extension pole</a> for reaching high areas without a ladder</li>
+<li><a href="https://www.amazon.com/s?k=paint+roller+frame+9+inch&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Roller frame</a> (9-inch for walls, 4-inch mini roller for tight spots)</li>
+<li><a href="https://www.amazon.com/s?k=paint+roller+covers+variety+pack&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Roller covers</a>: 3/8-inch nap for smooth walls, 1/2-inch for light texture, 3/4-inch for heavy texture</li>
+<li><a href="https://www.amazon.com/s?k=angled+paint+brush+2+inch+purdy&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">2-inch angled brush</a> for cutting in corners and edges</li>
+<li><a href="https://www.amazon.com/s?k=paint+tray+disposable+liners&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Paint tray and disposable liners</a></li>
+<li><a href="https://www.amazon.com/s?k=paint+roller+extension+pole&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Extension pole</a> for reaching high areas without a ladder</li>
 </ul>
 
 <p><strong>Prep supplies:</strong></p>
 <ul>
-<li>Painter's tape (<a href="https://www.amazon.com/s?k=FrogTape+painters+tape&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">FrogTape</a> or <a href="https://www.amazon.com/s?k=3M+ScotchBlue+painters+tape&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">3M ScotchBlue</a> are reliable choices)</li>
+<li>Painter's tape (<a href="https://www.amazon.com/s?k=FrogTape+painters+tape&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">FrogTape</a> or <a href="https://www.amazon.com/s?k=3M+ScotchBlue+painters+tape&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">3M ScotchBlue</a> are reliable choices)</li>
 <li>Drop cloths (canvas for floors, plastic for furniture)</li>
 <li>Spackle or lightweight filler for holes and cracks</li>
 <li>Putty knife (flexible 2-inch or 3-inch)</li>
@@ -973,9 +973,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Paint Costs for DIY', href: '/#calculator' },
     relatedSlugs: ['how-much-does-it-cost-to-paint-a-room', 'complete-room-painting-checklist', 'sherwin-williams-vs-behr-vs-benjamin-moore'],
     affiliateProducts: [
-      { title: 'DIY Paint Kit', description: 'Complete starter kit with everything a first-time painter needs.', icon: 'brush', link: 'https://www.amazon.com/s?k=diy+paint+kit+starter&tag=paintpro02-20', cta: 'Shop Starter Kits' },
-      { title: 'Premium Paint', description: 'Top-rated interior paints that deliver professional results for DIYers.', icon: 'paint', link: 'https://www.amazon.com/s?k=best+interior+paint+premium&tag=paintpro02-20', cta: 'Browse Paint' },
-      { title: 'Step Ladder', description: 'Lightweight, sturdy step ladders for safe painting at any height.', icon: 'brush', link: 'https://www.amazon.com/s?k=step+ladder+4+foot+painting&tag=paintpro02-20', cta: 'Shop Ladders' },
+      { title: 'DIY Paint Kit', description: 'Complete starter kit with everything a first-time painter needs.', icon: 'brush', link: 'https://www.amazon.com/s?k=diy+paint+kit+starter&i=tools&tag=paintpro02-20', cta: 'Shop Starter Kits' },
+      { title: 'Premium Paint', description: 'Top-rated interior paints that deliver professional results for DIYers.', icon: 'paint', link: 'https://www.amazon.com/s?k=best+interior+paint+premium&i=tools&tag=paintpro02-20', cta: 'Browse Paint' },
+      { title: 'Step Ladder', description: 'Lightweight, sturdy step ladders for safe painting at any height.', icon: 'brush', link: 'https://www.amazon.com/s?k=step+ladder+4+foot+painting&i=tools&tag=paintpro02-20', cta: 'Shop Ladders' },
     ],
     faqs: [
       {
@@ -1013,11 +1013,11 @@ export const blogPosts: BlogPost[] = [
 
 <ul>
 <li>Paint (2 gallons at $40 each): $80</li>
-<li><a href="https://www.amazon.com/s?k=paint+roller+kit+with+tray&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Roller frame, covers, and tray</a>: $15 to $25</li>
-<li><a href="https://www.amazon.com/s?k=angled+paint+brush+cutting+in&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Angled brush</a> for cutting in: $10 to $15</li>
-<li><a href="https://www.amazon.com/s?k=painters+tape+FrogTape&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Painter's tape</a> (2 rolls): $10 to $14</li>
-<li><a href="https://www.amazon.com/s?k=canvas+drop+cloth&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Drop cloths</a>: $8 to $15</li>
-<li><a href="https://www.amazon.com/s?k=spackle+sandpaper+putty+knife+kit&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Spackle, sandpaper, and putty knife</a>: $8 to $15</li>
+<li><a href="https://www.amazon.com/s?k=paint+roller+kit+with+tray&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Roller frame, covers, and tray</a>: $15 to $25</li>
+<li><a href="https://www.amazon.com/s?k=angled+paint+brush+cutting+in&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Angled brush</a> for cutting in: $10 to $15</li>
+<li><a href="https://www.amazon.com/s?k=painters+tape+FrogTape&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Painter's tape</a> (2 rolls): $10 to $14</li>
+<li><a href="https://www.amazon.com/s?k=canvas+drop+cloth&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Drop cloths</a>: $8 to $15</li>
+<li><a href="https://www.amazon.com/s?k=spackle+sandpaper+putty+knife+kit&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Spackle, sandpaper, and putty knife</a>: $8 to $15</li>
 </ul>
 
 <p><strong>Total materials: $130 to $165</strong></p>
@@ -1201,9 +1201,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Ceiling Paint Needed', href: '/#calculator' },
     relatedSlugs: ['complete-room-painting-checklist', 'how-many-coats-of-paint', 'how-to-fix-paint-drips-and-roller-marks'],
     affiliateProducts: [
-      { title: 'Ceiling Paint', description: 'Splatter-resistant flat white ceiling paint for a smooth, even finish.', icon: 'paint', link: 'https://www.amazon.com/s?k=ceiling+paint+white+flat&tag=paintpro02-20', cta: 'Shop Ceiling Paint' },
-      { title: 'Extension Pole', description: 'Telescoping extension pole so you can paint ceilings without a ladder.', icon: 'roller', link: 'https://www.amazon.com/s?k=paint+roller+extension+pole&tag=paintpro02-20', cta: 'Shop Extension Poles' },
-      { title: 'Thick Nap Roller', description: '3/4-inch nap roller covers designed for textured ceilings and maximum paint pickup.', icon: 'roller', link: 'https://www.amazon.com/s?k=3%2F4+inch+nap+roller+cover&tag=paintpro02-20', cta: 'Shop Roller Covers' },
+      { title: 'Ceiling Paint', description: 'Splatter-resistant flat white ceiling paint for a smooth, even finish.', icon: 'paint', link: 'https://www.amazon.com/s?k=ceiling+paint+white+flat&i=tools&tag=paintpro02-20', cta: 'Shop Ceiling Paint' },
+      { title: 'Extension Pole', description: 'Telescoping extension pole so you can paint ceilings without a ladder.', icon: 'roller', link: 'https://www.amazon.com/s?k=paint+roller+extension+pole&i=tools&tag=paintpro02-20', cta: 'Shop Extension Poles' },
+      { title: 'Thick Nap Roller', description: '3/4-inch nap roller covers designed for textured ceilings and maximum paint pickup.', icon: 'roller', link: 'https://www.amazon.com/s?k=3%2F4+inch+nap+roller+cover&i=tools&tag=paintpro02-20', cta: 'Shop Roller Covers' },
     ],
     faqs: [
       {
@@ -1244,7 +1244,7 @@ export const blogPosts: BlogPost[] = [
 
 <h3>Use Actual Ceiling Paint</h3>
 
-<p><a href="https://www.amazon.com/s?k=ceiling+paint+white+flat&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Ceiling paint</a> is not just white wall paint in a different can. It has a thicker consistency that resists dripping when applied overhead, and it dries to an ultra-flat finish that hides imperfections like patched areas, texture differences, and minor cracks.</p>
+<p><a href="https://www.amazon.com/s?k=ceiling+paint+white+flat&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Ceiling paint</a> is not just white wall paint in a different can. It has a thicker consistency that resists dripping when applied overhead, and it dries to an ultra-flat finish that hides imperfections like patched areas, texture differences, and minor cracks.</p>
 
 <p>Good ceiling paints to consider:</p>
 <ul>
@@ -1265,13 +1265,13 @@ export const blogPosts: BlogPost[] = [
 
 <h3>Roller Cover</h3>
 
-<p>Use a <a href="https://www.amazon.com/s?k=3%2F4+inch+nap+roller+cover&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">3/4-inch nap roller cover</a> for smooth or lightly textured ceilings. This thicker nap holds more paint than the 3/8-inch covers typically used on walls, which means fewer reloads and better coverage per pass. For heavy popcorn or knockdown texture, go with a 1-inch nap.</p>
+<p>Use a <a href="https://www.amazon.com/s?k=3%2F4+inch+nap+roller+cover&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">3/4-inch nap roller cover</a> for smooth or lightly textured ceilings. This thicker nap holds more paint than the 3/8-inch covers typically used on walls, which means fewer reloads and better coverage per pass. For heavy popcorn or knockdown texture, go with a 1-inch nap.</p>
 
 <p>Avoid cheap roller covers. They shed fibers into your paint and do not hold paint evenly. Purdy White Dove, Wooster Pro/Doo-Z, and the Sherwin-Williams branded covers are all reliable options in the $6 to $10 range.</p>
 
 <h3>Extension Pole</h3>
 
-<p>An <a href="https://www.amazon.com/s?k=paint+roller+extension+pole+telescoping&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">extension pole</a> is essential. Painting a ceiling from a ladder is slow, exhausting, and dangerous. A 4 to 6-foot telescoping pole lets you paint from the floor with much better control and speed. Most poles cost $10 to $25 and thread into any standard roller frame.</p>
+<p>An <a href="https://www.amazon.com/s?k=paint+roller+extension+pole+telescoping&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">extension pole</a> is essential. Painting a ceiling from a ladder is slow, exhausting, and dangerous. A 4 to 6-foot telescoping pole lets you paint from the floor with much better control and speed. Most poles cost $10 to $25 and thread into any standard roller frame.</p>
 
 <h3>Paint Tray</h3>
 
@@ -1349,9 +1349,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Your Paint Needs', href: '/#calculator' },
     relatedSlugs: ['best-paint-for-bathrooms', 'sherwin-williams-vs-behr-vs-benjamin-moore', 'how-many-coats-of-paint'],
     affiliateProducts: [
-      { title: 'Satin Interior Paint', description: 'Versatile satin finish paint that works in almost every room of the house.', icon: 'paint', link: 'https://www.amazon.com/s?k=satin+interior+paint&tag=paintpro02-20', cta: 'Shop Satin Paint' },
-      { title: 'Semi-Gloss Trim Paint', description: 'Durable semi-gloss paint perfect for baseboards, doors, and window frames.', icon: 'paint', link: 'https://www.amazon.com/s?k=semi+gloss+trim+paint+white&tag=paintpro02-20', cta: 'Shop Trim Paint' },
-      { title: 'Paint Sample Pots', description: 'Test different sheens before committing with small sample containers.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+sample+pots+test&tag=paintpro02-20', cta: 'Shop Samples' },
+      { title: 'Satin Interior Paint', description: 'Versatile satin finish paint that works in almost every room of the house.', icon: 'paint', link: 'https://www.amazon.com/s?k=satin+interior+paint&i=tools&tag=paintpro02-20', cta: 'Shop Satin Paint' },
+      { title: 'Semi-Gloss Trim Paint', description: 'Durable semi-gloss paint perfect for baseboards, doors, and window frames.', icon: 'paint', link: 'https://www.amazon.com/s?k=semi+gloss+trim+paint+white&i=tools&tag=paintpro02-20', cta: 'Shop Trim Paint' },
+      { title: 'Paint Sample Pots', description: 'Test different sheens before committing with small sample containers.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+sample+pots+test&i=tools&tag=paintpro02-20', cta: 'Shop Samples' },
     ],
     faqs: [
       {
@@ -1425,7 +1425,7 @@ export const blogPosts: BlogPost[] = [
 
 <h3>What It Looks Like</h3>
 
-<p><a href="https://www.amazon.com/s?k=satin+interior+paint&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Satin paint</a> has a smooth, velvety appearance with a noticeable but not overwhelming sheen. It reflects more light than eggshell, which makes colors appear slightly richer and more vibrant. In a well-lit room, you can clearly see the difference between satin and eggshell on the wall.</p>
+<p><a href="https://www.amazon.com/s?k=satin+interior+paint&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Satin paint</a> has a smooth, velvety appearance with a noticeable but not overwhelming sheen. It reflects more light than eggshell, which makes colors appear slightly richer and more vibrant. In a well-lit room, you can clearly see the difference between satin and eggshell on the wall.</p>
 
 <h3>Pros</h3>
 <ul>
@@ -1458,7 +1458,7 @@ export const blogPosts: BlogPost[] = [
 
 <h3>What It Looks Like</h3>
 
-<p><a href="https://www.amazon.com/s?k=semi+gloss+paint+interior&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Semi-gloss</a> has a definite shine that is visible from any angle. It reflects light clearly and gives surfaces a sleek, polished look. On walls, it can feel sterile or industrial if used in large areas, which is why most people limit it to trim and accents.</p>
+<p><a href="https://www.amazon.com/s?k=semi+gloss+paint+interior&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Semi-gloss</a> has a definite shine that is visible from any angle. It reflects light clearly and gives surfaces a sleek, polished look. On walls, it can feel sterile or industrial if used in large areas, which is why most people limit it to trim and accents.</p>
 
 <h3>Pros</h3>
 <ul>
@@ -1517,7 +1517,7 @@ export const blogPosts: BlogPost[] = [
 
 <h2>Testing Before You Commit</h2>
 
-<p>Colors look different in different sheens. The same gray in eggshell and satin will appear as two slightly different colors on your wall because of how light interacts with each finish. Before painting an entire room, buy <a href="https://www.amazon.com/s?k=paint+sample+pots+test&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">sample pots</a> and test your chosen color in the sheen you plan to use. Paint a 2x2-foot swatch on the wall and look at it in both natural and artificial light throughout the day.</p>
+<p>Colors look different in different sheens. The same gray in eggshell and satin will appear as two slightly different colors on your wall because of how light interacts with each finish. Before painting an entire room, buy <a href="https://www.amazon.com/s?k=paint+sample+pots+test&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">sample pots</a> and test your chosen color in the sheen you plan to use. Paint a 2x2-foot swatch on the wall and look at it in both natural and artificial light throughout the day.</p>
 
 <p>This is especially important if you are choosing between eggshell and satin for a large room. The difference in sheen is subtle but noticeable across a full wall.</p>
 
@@ -1549,9 +1549,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Paint for Touch-Ups', href: '/#calculator' },
     relatedSlugs: ['complete-room-painting-checklist', 'how-to-paint-a-ceiling-without-streaks', 'how-many-coats-of-paint'],
     affiliateProducts: [
-      { title: 'Sanding Sponge', description: 'Fine-grit sanding sponges for smoothing dried drips and roller marks.', icon: 'tape', link: 'https://www.amazon.com/s?k=fine+grit+sanding+sponge+paint&tag=paintpro02-20', cta: 'Shop Sanding Sponges' },
-      { title: 'Quality Roller Covers', description: 'Shed-free microfiber roller covers for a smooth, mark-free finish.', icon: 'roller', link: 'https://www.amazon.com/s?k=microfiber+paint+roller+cover+smooth&tag=paintpro02-20', cta: 'Shop Roller Covers' },
-      { title: 'Angled Brush', description: 'Purdy or Wooster angled brushes for clean cutting in without drips.', icon: 'brush', link: 'https://www.amazon.com/s?k=purdy+angled+paint+brush&tag=paintpro02-20', cta: 'Shop Brushes' },
+      { title: 'Sanding Sponge', description: 'Fine-grit sanding sponges for smoothing dried drips and roller marks.', icon: 'tape', link: 'https://www.amazon.com/s?k=fine+grit+sanding+sponge+paint&i=tools&tag=paintpro02-20', cta: 'Shop Sanding Sponges' },
+      { title: 'Quality Roller Covers', description: 'Shed-free microfiber roller covers for a smooth, mark-free finish.', icon: 'roller', link: 'https://www.amazon.com/s?k=microfiber+paint+roller+cover+smooth&i=tools&tag=paintpro02-20', cta: 'Shop Roller Covers' },
+      { title: 'Angled Brush', description: 'Purdy or Wooster angled brushes for clean cutting in without drips.', icon: 'brush', link: 'https://www.amazon.com/s?k=purdy+angled+paint+brush&i=tools&tag=paintpro02-20', cta: 'Shop Brushes' },
     ],
     faqs: [
       {
@@ -1591,7 +1591,7 @@ export const blogPosts: BlogPost[] = [
 
 <ol>
 <li>Let the drip dry completely (at least 24 hours). Sanding a partially dry drip creates a gummy mess.</li>
-<li>Sand the drip with <a href="https://www.amazon.com/s?k=220+grit+sandpaper+paint&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">220-grit sandpaper</a> or a <a href="https://www.amazon.com/s?k=fine+grit+sanding+sponge&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">fine sanding sponge</a>. Sand gently until the drip is level with the surrounding surface.</li>
+<li>Sand the drip with <a href="https://www.amazon.com/s?k=220+grit+sandpaper+paint&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">220-grit sandpaper</a> or a <a href="https://www.amazon.com/s?k=fine+grit+sanding+sponge&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">fine sanding sponge</a>. Sand gently until the drip is level with the surrounding surface.</li>
 <li>Wipe away the sanding dust with a damp cloth and let it dry.</li>
 <li>Apply a thin coat of paint over the sanded area using a small brush or mini roller. Feather the edges to blend with the existing paint.</li>
 <li>If the touch-up is visible after drying, apply a second thin coat.</li>
@@ -1629,7 +1629,7 @@ export const blogPosts: BlogPost[] = [
 
 <ol>
 <li>If the paint is wet, smooth the streaks with a damp (not wet) brush using light, long strokes in one direction.</li>
-<li>If dry, lightly sand with 220-grit paper and reapply with a better brush. Invest in a quality <a href="https://www.amazon.com/s?k=purdy+angled+paint+brush+2+inch&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">angled paint brush</a> ($10 to $15) instead of the $3 bargain bin brushes. The difference in finish quality is dramatic.</li>
+<li>If dry, lightly sand with 220-grit paper and reapply with a better brush. Invest in a quality <a href="https://www.amazon.com/s?k=purdy+angled+paint+brush+2+inch&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">angled paint brush</a> ($10 to $15) instead of the $3 bargain bin brushes. The difference in finish quality is dramatic.</li>
 </ol>
 
 <h2>Fixing Lap Marks</h2>
@@ -1661,7 +1661,7 @@ export const blogPosts: BlogPost[] = [
 <h3>Preventing Roller Marks</h3>
 
 <ul>
-<li><strong>Use quality roller covers.</strong> <a href="https://www.amazon.com/s?k=microfiber+paint+roller+cover&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Microfiber roller covers</a> or lambswool blends produce the smoothest finish. Cheap foam or polyester covers leave more texture.</li>
+<li><strong>Use quality roller covers.</strong> <a href="https://www.amazon.com/s?k=microfiber+paint+roller+cover&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Microfiber roller covers</a> or lambswool blends produce the smoothest finish. Cheap foam or polyester covers leave more texture.</li>
 <li><strong>Use the right nap thickness.</strong> 3/8-inch for smooth walls, 1/2-inch for lightly textured, 3/4-inch for heavy texture or ceilings.</li>
 <li><strong>Do not press too hard.</strong> Heavy pressure squeezes paint to the edges of the roller, creating ridges. Let the roller do the work with light, even pressure.</li>
 <li><strong>Finish with a light pass.</strong> After loading an area with paint, make one final pass with a nearly dry roller using very light pressure. This "lays off" the paint and smooths out any texture.</li>
@@ -1704,9 +1704,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Primer Needed', href: '/#calculator' },
     relatedSlugs: ['how-many-coats-of-paint', 'how-much-does-it-cost-to-paint-a-room', 'complete-room-painting-checklist'],
     affiliateProducts: [
-      { title: 'PVA Drywall Primer', description: 'Purpose-built PVA primer that seals new drywall for even paint absorption.', icon: 'primer', link: 'https://www.amazon.com/s?k=PVA+drywall+primer&tag=paintpro02-20', cta: 'Shop PVA Primer' },
-      { title: 'Drywall Sanding Sponge', description: 'Dual-grit sanding sponges for smoothing drywall joints before priming.', icon: 'tape', link: 'https://www.amazon.com/s?k=drywall+sanding+sponge&tag=paintpro02-20', cta: 'Shop Sanding Sponges' },
-      { title: 'Roller and Tray Kit', description: 'Complete kit with 9-inch roller frame, covers, and deep-well paint tray.', icon: 'roller', link: 'https://www.amazon.com/s?k=paint+roller+tray+kit+9+inch&tag=paintpro02-20', cta: 'Shop Roller Kits' },
+      { title: 'PVA Drywall Primer', description: 'Purpose-built PVA primer that seals new drywall for even paint absorption.', icon: 'primer', link: 'https://www.amazon.com/s?k=PVA+drywall+primer&i=tools&tag=paintpro02-20', cta: 'Shop PVA Primer' },
+      { title: 'Drywall Sanding Sponge', description: 'Dual-grit sanding sponges for smoothing drywall joints before priming.', icon: 'tape', link: 'https://www.amazon.com/s?k=drywall+sanding+sponge&i=tools&tag=paintpro02-20', cta: 'Shop Sanding Sponges' },
+      { title: 'Roller and Tray Kit', description: 'Complete kit with 9-inch roller frame, covers, and deep-well paint tray.', icon: 'roller', link: 'https://www.amazon.com/s?k=paint+roller+tray+kit+9+inch&i=tools&tag=paintpro02-20', cta: 'Shop Roller Kits' },
     ],
     faqs: [
       {
@@ -1747,7 +1747,7 @@ export const blogPosts: BlogPost[] = [
 
 <h3>PVA Primer (Best for New Drywall)</h3>
 
-<p><a href="https://www.amazon.com/s?k=PVA+drywall+primer&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">PVA (polyvinyl acetate) primer</a> is the standard choice for new drywall. It is specifically designed to seal porous surfaces and create a uniform base for paint. PVA primer is inexpensive, dries quickly, and does exactly what you need on bare drywall.</p>
+<p><a href="https://www.amazon.com/s?k=PVA+drywall+primer&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">PVA (polyvinyl acetate) primer</a> is the standard choice for new drywall. It is specifically designed to seal porous surfaces and create a uniform base for paint. PVA primer is inexpensive, dries quickly, and does exactly what you need on bare drywall.</p>
 
 <p>Top PVA primer options:</p>
 <ul>
@@ -1761,7 +1761,7 @@ export const blogPosts: BlogPost[] = [
 
 <h3>Shellac-Based Primer (For Problem Areas)</h3>
 
-<p>If your new drywall has any stains (water marks from construction, pencil markings, or tannin bleed from wood framing), a shellac-based primer like <a href="https://www.amazon.com/s?k=Zinsser+BIN+shellac+primer&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Zinsser B-I-N</a> will seal the stains and prevent bleed-through. Shellac primer is more expensive ($30 to $40 per gallon) and has a strong odor, so use it only on problem spots, not the entire wall.</p>
+<p>If your new drywall has any stains (water marks from construction, pencil markings, or tannin bleed from wood framing), a shellac-based primer like <a href="https://www.amazon.com/s?k=Zinsser+BIN+shellac+primer&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Zinsser B-I-N</a> will seal the stains and prevent bleed-through. Shellac primer is more expensive ($30 to $40 per gallon) and has a strong odor, so use it only on problem spots, not the entire wall.</p>
 
 <h3>What About Paint-and-Primer-in-One?</h3>
 
@@ -1783,7 +1783,7 @@ export const blogPosts: BlogPost[] = [
 
 <h3>Step 2: Sand the Walls</h3>
 
-<p>Even if the drywall finisher did a great job, a light sanding pass is worth doing. Use a <a href="https://www.amazon.com/s?k=drywall+sanding+sponge+medium&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">drywall sanding sponge</a> (medium grit on one side, fine on the other) and lightly sand all the mudded areas. You are not trying to remove material, just smooth out any minor ridges and tool marks.</p>
+<p>Even if the drywall finisher did a great job, a light sanding pass is worth doing. Use a <a href="https://www.amazon.com/s?k=drywall+sanding+sponge+medium&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">drywall sanding sponge</a> (medium grit on one side, fine on the other) and lightly sand all the mudded areas. You are not trying to remove material, just smooth out any minor ridges and tool marks.</p>
 
 <p>After sanding, wipe the walls with a damp cloth or use a shop vacuum with a brush attachment to remove all the dust. Primer will not adhere properly to a dusty surface.</p>
 
@@ -1835,9 +1835,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Paint for Color Changes', href: '/paint-calculator/dark-to-light-paint-calculator' },
     relatedSlugs: ['how-many-coats-of-paint', 'best-primer-for-new-drywall', 'how-much-does-it-cost-to-paint-a-room'],
     affiliateProducts: [
-      { title: 'High-Hide Primer', description: 'Stain-blocking primers designed to cover dark colors in one coat.', icon: 'primer', link: 'https://www.amazon.com/s?k=high+hide+primer+dark+paint&tag=paintpro02-20', cta: 'Shop High-Hide Primer' },
-      { title: 'Premium Interior Paint', description: 'High-coverage paint that performs well over dark colors with fewer coats.', icon: 'paint', link: 'https://www.amazon.com/s?k=premium+interior+paint+high+coverage&tag=paintpro02-20', cta: 'Shop Premium Paint' },
-      { title: 'Roller Covers 6-Pack', description: 'Stock up on quality roller covers for multi-coat dark-to-light projects.', icon: 'roller', link: 'https://www.amazon.com/s?k=paint+roller+covers+6+pack&tag=paintpro02-20', cta: 'Shop Roller Covers' },
+      { title: 'High-Hide Primer', description: 'Stain-blocking primers designed to cover dark colors in one coat.', icon: 'primer', link: 'https://www.amazon.com/s?k=high+hide+primer+dark+paint&i=tools&tag=paintpro02-20', cta: 'Shop High-Hide Primer' },
+      { title: 'Premium Interior Paint', description: 'High-coverage paint that performs well over dark colors with fewer coats.', icon: 'paint', link: 'https://www.amazon.com/s?k=premium+interior+paint+high+coverage&i=tools&tag=paintpro02-20', cta: 'Shop Premium Paint' },
+      { title: 'Roller Covers 6-Pack', description: 'Stock up on quality roller covers for multi-coat dark-to-light projects.', icon: 'roller', link: 'https://www.amazon.com/s?k=paint+roller+covers+6+pack&i=tools&tag=paintpro02-20', cta: 'Shop Roller Covers' },
     ],
     faqs: [
       {
@@ -1895,7 +1895,7 @@ export const blogPosts: BlogPost[] = [
 
 <h3>Step 2: Apply a Tinted Primer</h3>
 
-<p>This is the key step that most DIYers skip. Buy a <a href="https://www.amazon.com/s?k=high+hide+primer+paint&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">high-hide primer</a> and have it tinted at the paint counter.</p>
+<p>This is the key step that most DIYers skip. Buy a <a href="https://www.amazon.com/s?k=high+hide+primer+paint&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">high-hide primer</a> and have it tinted at the paint counter.</p>
 
 <p>How to choose the tint:</p>
 <ul>
@@ -1906,7 +1906,7 @@ export const blogPosts: BlogPost[] = [
 
 <p>Best primers for covering dark colors:</p>
 <ul>
-<li><strong><a href="https://www.amazon.com/s?k=Kilz+Original+primer&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Kilz Original</a>:</strong> $20 to $28 per gallon. Excellent stain and color blocking. Oil-based for maximum hide.</li>
+<li><strong><a href="https://www.amazon.com/s?k=Kilz+Original+primer&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Kilz Original</a>:</strong> $20 to $28 per gallon. Excellent stain and color blocking. Oil-based for maximum hide.</li>
 <li><strong>Zinsser Cover Stain:</strong> $22 to $30 per gallon. Oil-based with excellent adhesion and color blocking.</li>
 <li><strong>Benjamin Moore Fresh Start:</strong> $30 to $38 per gallon. Premium water-based option with excellent hide.</li>
 <li><strong>Zinsser B-I-N (for reds):</strong> $30 to $40 per gallon. Shellac-based. The only reliable option for red bleed-through.</li>
@@ -1939,7 +1939,7 @@ export const blogPosts: BlogPost[] = [
 
 <h3>Covering Red Walls</h3>
 
-<p>Red is the one color where standard primer may not be enough. Red pigments can bleed through water-based and even some oil-based primers. For red walls, use <a href="https://www.amazon.com/s?k=Zinsser+BIN+primer&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Zinsser B-I-N shellac primer</a>. It is the most effective bleed-through blocker available. Apply one coat, let it dry for 45 minutes, and then proceed with your finish coats.</p>
+<p>Red is the one color where standard primer may not be enough. Red pigments can bleed through water-based and even some oil-based primers. For red walls, use <a href="https://www.amazon.com/s?k=Zinsser+BIN+primer&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Zinsser B-I-N shellac primer</a>. It is the most effective bleed-through blocker available. Apply one coat, let it dry for 45 minutes, and then proceed with your finish coats.</p>
 
 <p>Be warned: shellac primer has a strong odor. Open all windows and run fans during application. The smell dissipates within a few hours after drying.</p>
 
@@ -1955,7 +1955,7 @@ export const blogPosts: BlogPost[] = [
 
 <ul>
 <li><strong>Do not thin the primer.</strong> Apply it at full strength for maximum hiding power.</li>
-<li><strong>Use a quality roller.</strong> A <a href="https://www.amazon.com/s?k=paint+roller+cover+3%2F8+nap+quality&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">3/8-inch nap roller cover</a> works well for smooth walls. Avoid cheap covers that leave texture.</li>
+<li><strong>Use a quality roller.</strong> A <a href="https://www.amazon.com/s?k=paint+roller+cover+3%2F8+nap+quality&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">3/8-inch nap roller cover</a> works well for smooth walls. Avoid cheap covers that leave texture.</li>
 <li><strong>Let each coat dry fully.</strong> Rushing between coats causes the underlying dark color to pull through the wet paint.</li>
 <li><strong>Use premium topcoat.</strong> Higher quality paints like Benjamin Moore Regal Select and Sherwin-Williams Emerald have better hiding pigments and achieve full coverage in fewer coats.</li>
 <li><strong>Do not panic after the first topcoat.</strong> The first coat of light paint over tinted primer will look uneven. That is normal. The second coat is what brings it all together.</li>
@@ -1977,9 +1977,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Paint Needed', href: '/#calculator' },
     relatedSlugs: ['complete-room-painting-checklist', 'how-many-coats-of-paint', 'when-to-hire-a-painter-vs-diy'],
     affiliateProducts: [
-      { title: 'Fast-Dry Paint', description: 'Quick-drying interior paint that is ready for a second coat in 1 hour.', icon: 'paint', link: 'https://www.amazon.com/s?k=quick+dry+interior+paint&tag=paintpro02-20', cta: 'Shop Fast-Dry Paint' },
-      { title: 'All-in-One Paint Kit', description: 'Complete painting kit with rollers, brushes, tape, tray, and drop cloths.', icon: 'brush', link: 'https://www.amazon.com/s?k=complete+paint+kit+room&tag=paintpro02-20', cta: 'Shop Paint Kits' },
-      { title: 'Mini Roller Set', description: 'Small foam rollers for fast touch-ups and tight spaces.', icon: 'roller', link: 'https://www.amazon.com/s?k=mini+paint+roller+set+4+inch&tag=paintpro02-20', cta: 'Shop Mini Rollers' },
+      { title: 'Fast-Dry Paint', description: 'Quick-drying interior paint that is ready for a second coat in 1 hour.', icon: 'paint', link: 'https://www.amazon.com/s?k=quick+dry+interior+paint&i=tools&tag=paintpro02-20', cta: 'Shop Fast-Dry Paint' },
+      { title: 'All-in-One Paint Kit', description: 'Complete painting kit with rollers, brushes, tape, tray, and drop cloths.', icon: 'brush', link: 'https://www.amazon.com/s?k=complete+paint+kit+room&i=tools&tag=paintpro02-20', cta: 'Shop Paint Kits' },
+      { title: 'Mini Roller Set', description: 'Small foam rollers for fast touch-ups and tight spaces.', icon: 'roller', link: 'https://www.amazon.com/s?k=mini+paint+roller+set+4+inch&i=tools&tag=paintpro02-20', cta: 'Shop Mini Rollers' },
     ],
     faqs: [
       {
@@ -2022,7 +2022,7 @@ export const blogPosts: BlogPost[] = [
 <ol>
 <li><strong>Move furniture.</strong> Clear the room completely or push everything to the center and cover with plastic. This takes 15 to 20 minutes and saves significant time the next day.</li>
 <li><strong>Remove wall hardware.</strong> Take down outlet covers, light switch plates, curtain rods, and wall art. Put screws back in the plates so you do not lose them.</li>
-<li><strong>Fill nail holes.</strong> Apply <a href="https://www.amazon.com/s?k=lightweight+spackle+quick+dry&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">quick-dry spackle</a> to any nail holes or small dents. Lightweight spackle dries in 15 to 30 minutes. By morning, it will be ready to sand.</li>
+<li><strong>Fill nail holes.</strong> Apply <a href="https://www.amazon.com/s?k=lightweight+spackle+quick+dry&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">quick-dry spackle</a> to any nail holes or small dents. Lightweight spackle dries in 15 to 30 minutes. By morning, it will be ready to sand.</li>
 <li><strong>Gather supplies.</strong> Set out everything you need: paint, roller, tray, brush, tape, drop cloths. Having it all staged saves 15 to 20 minutes of fumbling around in the morning.</li>
 </ol>
 
@@ -2083,7 +2083,7 @@ export const blogPosts: BlogPost[] = [
 <ol>
 <li><strong>Remove tape carefully</strong> while the paint is still slightly tacky. Pull at a 45-degree angle for the cleanest lines.</li>
 <li><strong>Touch up any spots</strong> where tape bled or coverage is thin. Use a small brush for precision.</li>
-<li><strong>Clean your tools.</strong> Wash <a href="https://www.amazon.com/s?k=paint+brush+roller+cleaning+tool&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">brushes and rollers</a> with warm water (for latex paint). Spin the roller in a bucket to remove excess water.</li>
+<li><strong>Clean your tools.</strong> Wash <a href="https://www.amazon.com/s?k=paint+brush+roller+cleaning+tool&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">brushes and rollers</a> with warm water (for latex paint). Spin the roller in a bucket to remove excess water.</li>
 <li><strong>Remove drop cloths</strong> carefully (fold paint drips inward).</li>
 <li><strong>Reinstall switch plates and outlet covers.</strong> Wait 24 hours before pressing them tight against the wall to avoid smudging.</li>
 </ol>
@@ -2099,7 +2099,7 @@ export const blogPosts: BlogPost[] = [
 <li><strong>Use a deep-well tray or 5-gallon bucket with a screen.</strong> Less refilling means less downtime.</li>
 <li><strong>Do not over-cut. </strong> You only need a 2-inch band when cutting in. Anything wider wastes time and paint.</li>
 <li><strong>Skip taping if you can.</strong> Experienced painters freehand the ceiling line. If you have a steady hand, try it on the least visible wall first.</li>
-<li><strong>Use a mini roller for tight spots</strong> instead of switching to a brush. A <a href="https://www.amazon.com/s?k=4+inch+mini+paint+roller&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">4-inch mini roller</a> covers behind toilets, radiators, and narrow spaces faster than a brush.</li>
+<li><strong>Use a mini roller for tight spots</strong> instead of switching to a brush. A <a href="https://www.amazon.com/s?k=4+inch+mini+paint+roller&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">4-inch mini roller</a> covers behind toilets, radiators, and narrow spaces faster than a brush.</li>
 </ul>
 
 <h2>What to Do If You Run Out of Time</h2>
@@ -2122,9 +2122,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Paint Needed', href: '/#calculator' },
     relatedSlugs: ['eggshell-vs-satin-vs-semi-gloss', 'sherwin-williams-vs-behr-vs-benjamin-moore', 'how-much-does-it-cost-to-paint-a-room'],
     affiliateProducts: [
-      { title: 'Paint Samples', description: 'Peel-and-stick paint samples to test colors without painting your wall.', icon: 'paint', link: 'https://www.amazon.com/s?k=peel+stick+paint+samples&tag=paintpro02-20', cta: 'Shop Paint Samples' },
-      { title: 'Color Wheel', description: 'Artist color wheel to help visualize complementary and coordinating colors.', icon: 'brush', link: 'https://www.amazon.com/s?k=color+wheel+paint+selection&tag=paintpro02-20', cta: 'Shop Color Wheels' },
-      { title: 'Sample Brushes', description: 'Small foam brushes for painting sample swatches on your walls.', icon: 'brush', link: 'https://www.amazon.com/s?k=foam+paint+brush+sample+small&tag=paintpro02-20', cta: 'Shop Sample Brushes' },
+      { title: 'Paint Samples', description: 'Peel-and-stick paint samples to test colors without painting your wall.', icon: 'paint', link: 'https://www.amazon.com/s?k=peel+stick+paint+samples&i=tools&tag=paintpro02-20', cta: 'Shop Paint Samples' },
+      { title: 'Color Wheel', description: 'Artist color wheel to help visualize complementary and coordinating colors.', icon: 'brush', link: 'https://www.amazon.com/s?k=color+wheel+paint+selection&i=tools&tag=paintpro02-20', cta: 'Shop Color Wheels' },
+      { title: 'Sample Brushes', description: 'Small foam brushes for painting sample swatches on your walls.', icon: 'brush', link: 'https://www.amazon.com/s?k=foam+paint+brush+sample+small&i=tools&tag=paintpro02-20', cta: 'Shop Sample Brushes' },
     ],
     faqs: [
       {
@@ -2197,7 +2197,7 @@ export const blogPosts: BlogPost[] = [
 
 <ol>
 <li><strong>Narrow down to 3 to 5 options.</strong> Browse the paint store or use an online color tool. Grab swatch cards for your top choices.</li>
-<li><strong>Buy sample pots.</strong> Most brands sell <a href="https://www.amazon.com/s?k=peel+stick+paint+samples&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">peel-and-stick samples</a> or small sample containers ($4 to $8 each). This is the best $20 to $40 you will spend on your entire paint project.</li>
+<li><strong>Buy sample pots.</strong> Most brands sell <a href="https://www.amazon.com/s?k=peel+stick+paint+samples&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">peel-and-stick samples</a> or small sample containers ($4 to $8 each). This is the best $20 to $40 you will spend on your entire paint project.</li>
 <li><strong>Paint large swatches.</strong> Paint a 2x2-foot area on at least two different walls in the room. One wall near a window and one away from the window. Use two coats for accurate color representation.</li>
 <li><strong>Live with the samples for 2 to 3 days.</strong> Check the swatches in morning light, afternoon light, evening with lamps on, and at night. Take photos at each time because your memory is unreliable for subtle color differences.</li>
 <li><strong>Make your decision based on real observation, not the swatch card.</strong> The wall sample is the truth. The card is an approximation.</li>
@@ -2283,9 +2283,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Garage Paint Needed', href: '/paint-calculator/garage-paint-calculator' },
     relatedSlugs: ['how-much-does-it-cost-to-paint-a-room', 'best-primer-for-new-drywall', 'when-to-hire-a-painter-vs-diy'],
     affiliateProducts: [
-      { title: 'Epoxy Floor Kit', description: 'Complete 2-part epoxy garage floor coating kit with color chips.', icon: 'paint', link: 'https://www.amazon.com/s?k=epoxy+garage+floor+coating+kit&tag=paintpro02-20', cta: 'Shop Epoxy Kits' },
-      { title: 'Concrete Etcher', description: 'Acid-based concrete etcher to prepare your garage floor for coating.', icon: 'brush', link: 'https://www.amazon.com/s?k=concrete+etcher+garage+floor&tag=paintpro02-20', cta: 'Shop Concrete Etcher' },
-      { title: 'Garage Floor Paint', description: 'One-part latex garage floor paint for a budget-friendly floor finish.', icon: 'paint', link: 'https://www.amazon.com/s?k=garage+floor+paint+latex&tag=paintpro02-20', cta: 'Shop Floor Paint' },
+      { title: 'Epoxy Floor Kit', description: 'Complete 2-part epoxy garage floor coating kit with color chips.', icon: 'paint', link: 'https://www.amazon.com/s?k=epoxy+garage+floor+coating+kit&i=tools&tag=paintpro02-20', cta: 'Shop Epoxy Kits' },
+      { title: 'Concrete Etcher', description: 'Acid-based concrete etcher to prepare your garage floor for coating.', icon: 'brush', link: 'https://www.amazon.com/s?k=concrete+etcher+garage+floor&i=tools&tag=paintpro02-20', cta: 'Shop Concrete Etcher' },
+      { title: 'Garage Floor Paint', description: 'One-part latex garage floor paint for a budget-friendly floor finish.', icon: 'paint', link: 'https://www.amazon.com/s?k=garage+floor+paint+latex&i=tools&tag=paintpro02-20', cta: 'Shop Floor Paint' },
     ],
     faqs: [
       {
@@ -2311,13 +2311,13 @@ export const blogPosts: BlogPost[] = [
 
 <h2>What Is Garage Floor Paint?</h2>
 
-<p><a href="https://www.amazon.com/s?k=garage+floor+paint+latex&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Garage floor paint</a> is a specially formulated latex or acrylic paint designed for concrete surfaces. It comes in a single can, applies like regular paint, and dries to a hard, durable finish. It is not the same as regular interior or exterior paint, which would peel off a garage floor within weeks.</p>
+<p><a href="https://www.amazon.com/s?k=garage+floor+paint+latex&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Garage floor paint</a> is a specially formulated latex or acrylic paint designed for concrete surfaces. It comes in a single can, applies like regular paint, and dries to a hard, durable finish. It is not the same as regular interior or exterior paint, which would peel off a garage floor within weeks.</p>
 
 <p>Common garage floor paint brands include Behr Premium 1-Part Epoxy, Rust-Oleum RockSolid Garage Floor Paint, and KILZ Interior/Exterior Concrete Paint. Prices range from $25 to $40 per gallon, and one gallon covers about 200 to 400 square feet depending on the product and surface porosity.</p>
 
 <h2>What Is Epoxy Floor Coating?</h2>
 
-<p>True <a href="https://www.amazon.com/s?k=epoxy+garage+floor+coating+kit&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">epoxy coating</a> is a two-part system: a resin and a hardener that you mix together before application. When the two parts react chemically, they create a thick, rock-hard surface that bonds to the concrete at a molecular level. It is fundamentally different from paint, which just sits on top of the surface.</p>
+<p>True <a href="https://www.amazon.com/s?k=epoxy+garage+floor+coating+kit&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">epoxy coating</a> is a two-part system: a resin and a hardener that you mix together before application. When the two parts react chemically, they create a thick, rock-hard surface that bonds to the concrete at a molecular level. It is fundamentally different from paint, which just sits on top of the surface.</p>
 
 <p>Popular DIY epoxy kits include Rust-Oleum EpoxyShield, KILZ Epoxy Garage Floor Coating, and Armor Garage Epoxy. Kits that cover a two-car garage (400 to 500 square feet) cost $150 to $400 depending on the brand and quality.</p>
 
@@ -2375,7 +2375,7 @@ export const blogPosts: BlogPost[] = [
 
 <ol>
 <li><strong>Clean thoroughly.</strong> Remove all oil stains, grease, dirt, and debris. Use a concrete degreaser for oil spots. A pressure washer helps for general cleaning.</li>
-<li><strong>Etch the surface.</strong> <a href="https://www.amazon.com/s?k=concrete+etcher+garage+floor&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Concrete etcher</a> (typically a mild acid solution) opens the pores of the concrete so the coating can grip. Without etching, both paint and epoxy will peel. Follow the product directions for dilution and contact time.</li>
+<li><strong>Etch the surface.</strong> <a href="https://www.amazon.com/s?k=concrete+etcher+garage+floor&i=tools&tag=paintpro02-20" target="_blank" rel="noopener noreferrer sponsored">Concrete etcher</a> (typically a mild acid solution) opens the pores of the concrete so the coating can grip. Without etching, both paint and epoxy will peel. Follow the product directions for dilution and contact time.</li>
 <li><strong>Test for moisture.</strong> Tape a 2x2-foot piece of plastic sheeting to the floor and leave it for 24 hours. If moisture appears under the plastic, your floor has a moisture problem that will cause any coating to fail. You will need a moisture-barrier primer before coating.</li>
 <li><strong>Repair cracks.</strong> Fill any cracks with a concrete repair product and let it cure before coating.</li>
 </ol>
@@ -2433,9 +2433,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate How Much Trim Paint You Need', href: '/#calculator' },
     relatedSlugs: ['eggshell-vs-satin-vs-semi-gloss', 'complete-room-painting-checklist', 'how-to-fix-paint-drips-and-roller-marks'],
     affiliateProducts: [
-      { title: 'Angled Sash Brush', description: 'A quality 2.5-inch angled brush is the single most important tool for trim work.', icon: 'brush', link: 'https://www.amazon.com/s?k=angled+sash+paint+brush+2.5+inch&tag=paintpro02-20', cta: 'Shop Brushes' },
-      { title: 'Trim Paint', description: 'Semi-gloss enamel paint designed for doors, trim, and cabinetry.', icon: 'paint', link: 'https://www.amazon.com/s?k=semi+gloss+trim+paint+white&tag=paintpro02-20', cta: 'Shop Trim Paint' },
-      { title: 'Painter\'s Tape', description: 'Sharp-line painter\'s tape for crisp edges between trim and walls.', icon: 'tape', link: 'https://www.amazon.com/s?k=frog+tape+painters+tape&tag=paintpro02-20', cta: 'Shop Tape' },
+      { title: 'Angled Sash Brush', description: 'A quality 2.5-inch angled brush is the single most important tool for trim work.', icon: 'brush', link: 'https://www.amazon.com/s?k=angled+sash+paint+brush+2.5+inch&i=tools&tag=paintpro02-20', cta: 'Shop Brushes' },
+      { title: 'Trim Paint', description: 'Semi-gloss enamel paint designed for doors, trim, and cabinetry.', icon: 'paint', link: 'https://www.amazon.com/s?k=semi+gloss+trim+paint+white&i=tools&tag=paintpro02-20', cta: 'Shop Trim Paint' },
+      { title: 'Painter\'s Tape', description: 'Sharp-line painter\'s tape for crisp edges between trim and walls.', icon: 'tape', link: 'https://www.amazon.com/s?k=frog+tape+painters+tape&i=tools&tag=paintpro02-20', cta: 'Shop Tape' },
     ],
     faqs: [
       {
@@ -2484,7 +2484,7 @@ export const blogPosts: BlogPost[] = [
 
 <h3>Formula</h3>
 
-<p>The best trim paints today are <strong>water-based alkyd hybrids</strong>. Products like <a href="https://www.amazon.com/s?k=benjamin+moore+advance+paint&tag=paintpro02-20">Benjamin Moore Advance</a>, <a href="https://www.amazon.com/s?k=sherwin+williams+emerald+urethane+trim&tag=paintpro02-20">Sherwin-Williams Emerald Urethane</a>, and <a href="https://www.amazon.com/s?k=behr+alkyd+semi+gloss+enamel&tag=paintpro02-20">Behr Alkyd Semi-Gloss Enamel</a> give you the smooth, self-leveling finish of traditional oil-based paint with the easy water cleanup and low odor of latex. They cost $45 to $75 per gallon but are absolutely worth it for trim.</p>
+<p>The best trim paints today are <strong>water-based alkyd hybrids</strong>. Products like <a href="https://www.amazon.com/s?k=benjamin+moore+advance+paint&i=tools&tag=paintpro02-20">Benjamin Moore Advance</a>, <a href="https://www.amazon.com/s?k=sherwin+williams+emerald+urethane+trim&i=tools&tag=paintpro02-20">Sherwin-Williams Emerald Urethane</a>, and <a href="https://www.amazon.com/s?k=behr+alkyd+semi+gloss+enamel&i=tools&tag=paintpro02-20">Behr Alkyd Semi-Gloss Enamel</a> give you the smooth, self-leveling finish of traditional oil-based paint with the easy water cleanup and low odor of latex. They cost $45 to $75 per gallon but are absolutely worth it for trim.</p>
 
 <p>Budget option: standard acrylic latex in semi-gloss works fine. It will not level quite as smoothly as the alkyd hybrids, but with good technique you can still get excellent results. Expect to pay $30 to $45 per gallon.</p>
 
@@ -2617,9 +2617,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate How Much Paint You Need', href: '/#calculator' },
     relatedSlugs: ['best-paint-for-bathrooms', 'sherwin-williams-vs-behr-vs-benjamin-moore', 'eggshell-vs-satin-vs-semi-gloss'],
     affiliateProducts: [
-      { title: 'Zero-VOC Paint', description: 'Top-rated zero-VOC interior paint for bedrooms, nurseries, and living spaces.', icon: 'paint', link: 'https://www.amazon.com/s?k=zero+voc+interior+paint&tag=paintpro02-20', cta: 'Shop Zero-VOC Paint' },
-      { title: 'Paint Respirator', description: 'Half-face respirator with organic vapor cartridges for painting in enclosed spaces.', icon: 'primer', link: 'https://www.amazon.com/s?k=paint+respirator+mask+organic+vapor&tag=paintpro02-20', cta: 'Shop Respirators' },
-      { title: 'Air Purifier', description: 'HEPA air purifier to remove paint fumes and improve indoor air quality during projects.', icon: 'sprayer', link: 'https://www.amazon.com/s?k=air+purifier+hepa+paint+fumes&tag=paintpro02-20', cta: 'Shop Air Purifiers' },
+      { title: 'Zero-VOC Paint', description: 'Top-rated zero-VOC interior paint for bedrooms, nurseries, and living spaces.', icon: 'paint', link: 'https://www.amazon.com/s?k=zero+voc+interior+paint&i=tools&tag=paintpro02-20', cta: 'Shop Zero-VOC Paint' },
+      { title: 'Paint Respirator', description: 'Half-face respirator with organic vapor cartridges for painting in enclosed spaces.', icon: 'primer', link: 'https://www.amazon.com/s?k=paint+respirator+mask+organic+vapor&i=tools&tag=paintpro02-20', cta: 'Shop Respirators' },
+      { title: 'Air Purifier', description: 'HEPA air purifier to remove paint fumes and improve indoor air quality during projects.', icon: 'sprayer', link: 'https://www.amazon.com/s?k=air+purifier+hepa+paint+fumes&i=tools&tag=paintpro02-20', cta: 'Shop Air Purifiers' },
     ],
     faqs: [
       {
@@ -2667,13 +2667,13 @@ export const blogPosts: BlogPost[] = [
 
 <h3>Sherwin-Williams Harmony (Zero-VOC)</h3>
 
-<p><a href="https://www.amazon.com/s?k=sherwin+williams+harmony+paint&tag=paintpro02-20">Sherwin-Williams Harmony</a> is zero-VOC and goes a step further with antimicrobial properties that help reduce mold and mildew on the paint surface. It also uses a technology that the company claims actually helps reduce ambient odors in the room after application. Coverage is good, though some painters find it slightly thinner than Sherwin-Williams' premium lines like Emerald.</p>
+<p><a href="https://www.amazon.com/s?k=sherwin+williams+harmony+paint&i=tools&tag=paintpro02-20">Sherwin-Williams Harmony</a> is zero-VOC and goes a step further with antimicrobial properties that help reduce mold and mildew on the paint surface. It also uses a technology that the company claims actually helps reduce ambient odors in the room after application. Coverage is good, though some painters find it slightly thinner than Sherwin-Williams' premium lines like Emerald.</p>
 
 <p>Price is around $55 to $65 per gallon, putting it in the mid-to-upper range. It is a solid choice for bedrooms, living rooms, and any space where you want both low emissions and mildew resistance.</p>
 
 <h3>Behr Premium Plus (Zero-VOC)</h3>
 
-<p>Here is a surprise that many people do not know: <a href="https://www.amazon.com/s?k=behr+premium+plus+interior+paint&tag=paintpro02-20">Behr Premium Plus</a>, the company's mid-tier line available at Home Depot, is actually zero-VOC. At $30 to $38 per gallon, it is one of the most affordable zero-VOC options. Coverage and durability are solid, though not quite at the level of Benjamin Moore Natura or Sherwin-Williams Emerald.</p>
+<p>Here is a surprise that many people do not know: <a href="https://www.amazon.com/s?k=behr+premium+plus+interior+paint&i=tools&tag=paintpro02-20">Behr Premium Plus</a>, the company's mid-tier line available at Home Depot, is actually zero-VOC. At $30 to $38 per gallon, it is one of the most affordable zero-VOC options. Coverage and durability are solid, though not quite at the level of Benjamin Moore Natura or Sherwin-Williams Emerald.</p>
 
 <p>For budget-conscious homeowners who want low emissions, Behr Premium Plus hits a great sweet spot of price and performance.</p>
 
@@ -2755,9 +2755,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Estimate Your Exterior Paint Needs', href: '/#calculator' },
     relatedSlugs: ['how-to-paint-trim-and-baseboards', 'eggshell-vs-satin-vs-semi-gloss', 'complete-room-painting-checklist'],
     affiliateProducts: [
-      { title: 'Exterior Door Paint', description: 'High-gloss exterior paint designed for front doors and heavy-use surfaces.', icon: 'paint', link: 'https://www.amazon.com/s?k=exterior+door+paint+high+gloss&tag=paintpro02-20', cta: 'Shop Door Paint' },
-      { title: 'Sanding Sponge', description: 'Flexible sanding sponges that conform to door panel profiles and molding details.', icon: 'brush', link: 'https://www.amazon.com/s?k=sanding+sponge+fine+grit+paint&tag=paintpro02-20', cta: 'Shop Sanding Supplies' },
-      { title: 'Mini Foam Roller', description: '4-inch high-density foam rollers for ultra-smooth finishes on doors and cabinets.', icon: 'roller', link: 'https://www.amazon.com/s?k=4+inch+foam+roller+smooth+finish&tag=paintpro02-20', cta: 'Shop Foam Rollers' },
+      { title: 'Exterior Door Paint', description: 'High-gloss exterior paint designed for front doors and heavy-use surfaces.', icon: 'paint', link: 'https://www.amazon.com/s?k=exterior+door+paint+high+gloss&i=tools&tag=paintpro02-20', cta: 'Shop Door Paint' },
+      { title: 'Sanding Sponge', description: 'Flexible sanding sponges that conform to door panel profiles and molding details.', icon: 'brush', link: 'https://www.amazon.com/s?k=sanding+sponge+fine+grit+paint&i=tools&tag=paintpro02-20', cta: 'Shop Sanding Supplies' },
+      { title: 'Mini Foam Roller', description: '4-inch high-density foam rollers for ultra-smooth finishes on doors and cabinets.', icon: 'roller', link: 'https://www.amazon.com/s?k=4+inch+foam+roller+smooth+finish&i=tools&tag=paintpro02-20', cta: 'Shop Foam Rollers' },
     ],
     faqs: [
       {
@@ -2791,8 +2791,8 @@ export const blogPosts: BlogPost[] = [
 
 <p>Top picks:</p>
 <ul>
-<li><a href="https://www.amazon.com/s?k=benjamin+moore+aura+grand+entrance&tag=paintpro02-20">Benjamin Moore Aura Grand Entrance</a> ($75 to $85/gallon) is formulated specifically for front doors. Extremely durable and self-leveling.</li>
-<li><a href="https://www.amazon.com/s?k=sherwin+williams+emerald+urethane+exterior&tag=paintpro02-20">Sherwin-Williams Emerald Urethane</a> ($80 to $90/gallon) produces a smooth, hard finish similar to factory-applied coatings.</li>
+<li><a href="https://www.amazon.com/s?k=benjamin+moore+aura+grand+entrance&i=tools&tag=paintpro02-20">Benjamin Moore Aura Grand Entrance</a> ($75 to $85/gallon) is formulated specifically for front doors. Extremely durable and self-leveling.</li>
+<li><a href="https://www.amazon.com/s?k=sherwin+williams+emerald+urethane+exterior&i=tools&tag=paintpro02-20">Sherwin-Williams Emerald Urethane</a> ($80 to $90/gallon) produces a smooth, hard finish similar to factory-applied coatings.</li>
 <li>Behr Ultra Exterior ($35 to $45/gallon) is a solid budget option with good durability and color retention.</li>
 </ul>
 
@@ -2913,9 +2913,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Your Paint Needs', href: '/#calculator' },
     relatedSlugs: ['complete-room-painting-checklist', 'best-primer-for-new-drywall', 'how-many-coats-of-paint'],
     affiliateProducts: [
-      { title: 'Wall Patch Kit', description: 'Everything you need to fill nail holes, cracks, and small dents before painting.', icon: 'brush', link: 'https://www.amazon.com/s?k=wall+patch+repair+kit+paint&tag=paintpro02-20', cta: 'Shop Patch Kits' },
-      { title: 'Sanding Block', description: 'Flexible sanding blocks and sponges for smoothing patched areas and scuffing walls.', icon: 'roller', link: 'https://www.amazon.com/s?k=sanding+block+fine+grit+drywall&tag=paintpro02-20', cta: 'Shop Sanding Blocks' },
-      { title: 'Primer', description: 'Quality primer for sealing patches, blocking stains, and ensuring paint adhesion.', icon: 'primer', link: 'https://www.amazon.com/s?k=interior+wall+primer+paint&tag=paintpro02-20', cta: 'Shop Primer' },
+      { title: 'Wall Patch Kit', description: 'Everything you need to fill nail holes, cracks, and small dents before painting.', icon: 'brush', link: 'https://www.amazon.com/s?k=wall+patch+repair+kit+paint&i=tools&tag=paintpro02-20', cta: 'Shop Patch Kits' },
+      { title: 'Sanding Block', description: 'Flexible sanding blocks and sponges for smoothing patched areas and scuffing walls.', icon: 'roller', link: 'https://www.amazon.com/s?k=sanding+block+fine+grit+drywall&i=tools&tag=paintpro02-20', cta: 'Shop Sanding Blocks' },
+      { title: 'Primer', description: 'Quality primer for sealing patches, blocking stains, and ensuring paint adhesion.', icon: 'primer', link: 'https://www.amazon.com/s?k=interior+wall+primer+paint&i=tools&tag=paintpro02-20', cta: 'Shop Primer' },
     ],
     faqs: [
       {
@@ -2965,7 +2965,7 @@ export const blogPosts: BlogPost[] = [
 
 <h3>Smoker's homes</h3>
 
-<p>Nicotine residue on walls is sticky and will bleed through regular paint. Wash walls thoroughly with TSP, let dry, then apply a shellac-based primer like <a href="https://www.amazon.com/s?k=zinsser+bin+shellac+primer&tag=paintpro02-20">Zinsser BIN</a> to seal the residue before painting.</p>
+<p>Nicotine residue on walls is sticky and will bleed through regular paint. Wash walls thoroughly with TSP, let dry, then apply a shellac-based primer like <a href="https://www.amazon.com/s?k=zinsser+bin+shellac+primer&i=tools&tag=paintpro02-20">Zinsser BIN</a> to seal the residue before painting.</p>
 
 <h2>Step 3: Patch and Repair</h2>
 
@@ -3036,7 +3036,7 @@ export const blogPosts: BlogPost[] = [
 <li><strong>Previously wallpapered areas</strong> (after proper removal)</li>
 </ul>
 
-<p>For spot priming patches and stains, a spray can of <a href="https://www.amazon.com/s?k=kilz+original+spray+primer&tag=paintpro02-20">Kilz or Zinsser primer</a> is convenient and fast. For full-wall priming, roll it on the same way you would roll paint.</p>
+<p>For spot priming patches and stains, a spray can of <a href="https://www.amazon.com/s?k=kilz+original+spray+primer&i=tools&tag=paintpro02-20">Kilz or Zinsser primer</a> is convenient and fast. For full-wall priming, roll it on the same way you would roll paint.</p>
 
 <h2>Step 7: Tape and Mask</h2>
 
@@ -3051,7 +3051,7 @@ export const blogPosts: BlogPost[] = [
 
 <p>Press the tape edge down firmly with a putty knife or the edge of a credit card. This creates a seal that prevents paint from bleeding underneath. Cheap tape or loosely applied tape results in ragged, bleeding lines.</p>
 
-<p>Use a quality tape like <a href="https://www.amazon.com/s?k=frog+tape+multi+surface&tag=paintpro02-20">FrogTape</a> or 3M ScotchBlue. The extra dollar or two per roll is worth it for cleaner lines and easier removal.</p>
+<p>Use a quality tape like <a href="https://www.amazon.com/s?k=frog+tape+multi+surface&i=tools&tag=paintpro02-20">FrogTape</a> or 3M ScotchBlue. The extra dollar or two per roll is worth it for cleaner lines and easier removal.</p>
 
 <h2>How to Know When Prep Is Done</h2>
 
@@ -3091,9 +3091,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Exterior Paint Quantity', href: '/#calculator' },
     relatedSlugs: ['how-much-does-it-cost-to-paint-a-room', 'when-to-hire-a-painter-vs-diy', 'how-to-paint-a-front-door'],
     affiliateProducts: [
-      { title: 'Exterior Paint', description: 'Premium exterior house paint with UV protection and weather resistance.', icon: 'paint', link: 'https://www.amazon.com/s?k=exterior+house+paint+acrylic+latex&tag=paintpro02-20', cta: 'Shop Exterior Paint' },
-      { title: 'Paint Sprayer', description: 'Airless paint sprayer for fast, even coverage on exterior siding.', icon: 'sprayer', link: 'https://www.amazon.com/s?k=airless+paint+sprayer+exterior&tag=paintpro02-20', cta: 'View Sprayers' },
-      { title: 'Pressure Washer', description: 'Electric pressure washer for cleaning siding and removing loose paint before painting.', icon: 'sprayer', link: 'https://www.amazon.com/s?k=electric+pressure+washer+house+siding&tag=paintpro02-20', cta: 'Shop Pressure Washers' },
+      { title: 'Exterior Paint', description: 'Premium exterior house paint with UV protection and weather resistance.', icon: 'paint', link: 'https://www.amazon.com/s?k=exterior+house+paint+acrylic+latex&i=tools&tag=paintpro02-20', cta: 'Shop Exterior Paint' },
+      { title: 'Paint Sprayer', description: 'Airless paint sprayer for fast, even coverage on exterior siding.', icon: 'sprayer', link: 'https://www.amazon.com/s?k=airless+paint+sprayer+exterior&i=tools&tag=paintpro02-20', cta: 'View Sprayers' },
+      { title: 'Pressure Washer', description: 'Electric pressure washer for cleaning siding and removing loose paint before painting.', icon: 'sprayer', link: 'https://www.amazon.com/s?k=electric+pressure+washer+house+siding&i=tools&tag=paintpro02-20', cta: 'Shop Pressure Washers' },
     ],
     faqs: [
       {
@@ -3159,10 +3159,10 @@ export const blogPosts: BlogPost[] = [
 <h3>Best Exterior Paints</h3>
 
 <ul>
-<li><a href="https://www.amazon.com/s?k=sherwin+williams+duration+exterior+paint&tag=paintpro02-20">Sherwin-Williams Duration</a> ($70 to $80/gallon): Widely considered the best overall exterior paint. Self-priming, excellent adhesion, and a warranty that backs it up.</li>
-<li><a href="https://www.amazon.com/s?k=benjamin+moore+aura+exterior+paint&tag=paintpro02-20">Benjamin Moore Aura Exterior</a> ($70 to $80/gallon): Outstanding color retention and adhesion. Applies well in a wider temperature range than most paints.</li>
+<li><a href="https://www.amazon.com/s?k=sherwin+williams+duration+exterior+paint&i=tools&tag=paintpro02-20">Sherwin-Williams Duration</a> ($70 to $80/gallon): Widely considered the best overall exterior paint. Self-priming, excellent adhesion, and a warranty that backs it up.</li>
+<li><a href="https://www.amazon.com/s?k=benjamin+moore+aura+exterior+paint&i=tools&tag=paintpro02-20">Benjamin Moore Aura Exterior</a> ($70 to $80/gallon): Outstanding color retention and adhesion. Applies well in a wider temperature range than most paints.</li>
 <li>Behr Marquee Exterior ($45 to $55/gallon): Best value for premium exterior paint. Available at Home Depot, one-coat coverage claim is reasonably accurate on repainted surfaces.</li>
-<li><a href="https://www.amazon.com/s?k=ppg+timeless+exterior+paint&tag=paintpro02-20">PPG Timeless Exterior</a> ($55 to $65/gallon): Good mid-range option with paint-and-primer technology and solid durability.</li>
+<li><a href="https://www.amazon.com/s?k=ppg+timeless+exterior+paint&i=tools&tag=paintpro02-20">PPG Timeless Exterior</a> ($55 to $65/gallon): Good mid-range option with paint-and-primer technology and solid durability.</li>
 </ul>
 
 <h3>Sheen for Exteriors</h3>
@@ -3207,7 +3207,7 @@ export const blogPosts: BlogPost[] = [
 <li><strong>Brush:</strong> Used for detail areas like trim, window frames, and corners where a sprayer would create overspray.</li>
 </ul>
 
-<p>For DIY exterior painting, a roller and brush combination is the most practical approach unless you are experienced with a sprayer. Renting a good <a href="https://www.amazon.com/s?k=graco+magnum+airless+paint+sprayer&tag=paintpro02-20">airless sprayer</a> can save significant time on large homes.</p>
+<p>For DIY exterior painting, a roller and brush combination is the most practical approach unless you are experienced with a sprayer. Renting a good <a href="https://www.amazon.com/s?k=graco+magnum+airless+paint+sprayer&i=tools&tag=paintpro02-20">airless sprayer</a> can save significant time on large homes.</p>
 
 <h3>Application Tips</h3>
 
@@ -3280,9 +3280,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Need More Than a Touch-Up? Calculate Paint', href: '/#calculator' },
     relatedSlugs: ['how-to-fix-paint-drips-and-roller-marks', 'how-to-prep-walls-before-painting', 'how-many-coats-of-paint'],
     affiliateProducts: [
-      { title: 'Touch-Up Kit', description: 'Small brushes, mini rollers, and tools designed specifically for paint touch-ups.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+touch+up+kit+small+roller&tag=paintpro02-20', cta: 'Shop Touch-Up Kits' },
-      { title: 'Paint Storage', description: 'Airtight paint storage containers to keep leftover paint fresh for future touch-ups.', icon: 'paint', link: 'https://www.amazon.com/s?k=paint+storage+container+airtight&tag=paintpro02-20', cta: 'Shop Storage' },
-      { title: 'Color Matching', description: 'Paint color matching tools and sample kits to find your exact wall color.', icon: 'paint', link: 'https://www.amazon.com/s?k=paint+color+match+sample&tag=paintpro02-20', cta: 'Shop Color Match' },
+      { title: 'Touch-Up Kit', description: 'Small brushes, mini rollers, and tools designed specifically for paint touch-ups.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+touch+up+kit+small+roller&i=tools&tag=paintpro02-20', cta: 'Shop Touch-Up Kits' },
+      { title: 'Paint Storage', description: 'Airtight paint storage containers to keep leftover paint fresh for future touch-ups.', icon: 'paint', link: 'https://www.amazon.com/s?k=paint+storage+container+airtight&i=tools&tag=paintpro02-20', cta: 'Shop Storage' },
+      { title: 'Color Matching', description: 'Paint color matching tools and sample kits to find your exact wall color.', icon: 'paint', link: 'https://www.amazon.com/s?k=paint+color+match+sample&i=tools&tag=paintpro02-20', cta: 'Shop Color Match' },
     ],
     faqs: [
       {
@@ -3347,7 +3347,7 @@ export const blogPosts: BlogPost[] = [
 
 <p>Clean the touch-up area with a damp cloth to remove dust, grease, and debris. If you patched a hole, make sure the patch compound is fully dry, sanded smooth, and primed. Unprimed patch compound absorbs paint differently than the surrounding wall, causing a visible dull spot called flashing.</p>
 
-<p>For spot priming, a quick spray of <a href="https://www.amazon.com/s?k=kilz+spray+primer+small+can&tag=paintpro02-20">Kilz or Zinsser spray primer</a> is the easiest approach. Let it dry before applying the topcoat.</p>
+<p>For spot priming, a quick spray of <a href="https://www.amazon.com/s?k=kilz+spray+primer+small+can&i=tools&tag=paintpro02-20">Kilz or Zinsser spray primer</a> is the easiest approach. Let it dry before applying the topcoat.</p>
 
 <h2>Step 3: Use the Right Application Tool</h2>
 
@@ -3424,9 +3424,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Paint for Your New Color', href: '/#calculator' },
     relatedSlugs: ['how-to-choose-paint-color', 'eggshell-vs-satin-vs-semi-gloss', 'best-paint-for-bathrooms'],
     affiliateProducts: [
-      { title: 'Paint Samples', description: 'Peel-and-stick paint samples to test trending colors on your walls before committing.', icon: 'paint', link: 'https://www.amazon.com/s?k=peel+stick+paint+sample+swatches&tag=paintpro02-20', cta: 'Shop Samples' },
-      { title: 'Premium Interior Paint', description: 'Top-rated interior paint in trending 2026 colors with excellent coverage.', icon: 'paint', link: 'https://www.amazon.com/s?k=interior+wall+paint+premium&tag=paintpro02-20', cta: 'Shop Interior Paint' },
-      { title: 'Accent Wall Supplies', description: 'Everything you need for a statement accent wall: paint, tape, and rollers.', icon: 'brush', link: 'https://www.amazon.com/s?k=accent+wall+paint+supplies+kit&tag=paintpro02-20', cta: 'Shop Accent Wall Kit' },
+      { title: 'Paint Samples', description: 'Peel-and-stick paint samples to test trending colors on your walls before committing.', icon: 'paint', link: 'https://www.amazon.com/s?k=peel+stick+paint+sample+swatches&i=tools&tag=paintpro02-20', cta: 'Shop Samples' },
+      { title: 'Premium Interior Paint', description: 'Top-rated interior paint in trending 2026 colors with excellent coverage.', icon: 'paint', link: 'https://www.amazon.com/s?k=interior+wall+paint+premium&i=tools&tag=paintpro02-20', cta: 'Shop Interior Paint' },
+      { title: 'Accent Wall Supplies', description: 'Everything you need for a statement accent wall: paint, tape, and rollers.', icon: 'brush', link: 'https://www.amazon.com/s?k=accent+wall+paint+supplies+kit&i=tools&tag=paintpro02-20', cta: 'Shop Accent Wall Kit' },
     ],
     faqs: [
       {
@@ -3476,7 +3476,7 @@ export const blogPosts: BlogPost[] = [
 
 <ul>
 <li><strong>Greige:</strong> Gray-beige blends like Sherwin-Williams Accessible Beige and Benjamin Moore Revere Pewter remain hugely popular.</li>
-<li><strong>Taupe:</strong> Deeper than greige, taupe adds warmth and sophistication. Try <a href="https://www.amazon.com/s?k=sherwin+williams+balanced+beige+paint&tag=paintpro02-20">Sherwin-Williams Balanced Beige</a> or Benjamin Moore Smokey Taupe.</li>
+<li><strong>Taupe:</strong> Deeper than greige, taupe adds warmth and sophistication. Try <a href="https://www.amazon.com/s?k=sherwin+williams+balanced+beige+paint&i=tools&tag=paintpro02-20">Sherwin-Williams Balanced Beige</a> or Benjamin Moore Smokey Taupe.</li>
 <li><strong>Mushroom:</strong> A soft, earthy neutral with brown and gray tones. Think the color of a portobello mushroom.</li>
 <li><strong>Warm white:</strong> Not bright white, but creamy, buttery whites like Benjamin Moore White Dove and Sherwin-Williams Alabaster.</li>
 </ul>
@@ -3574,9 +3574,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Paint for Your Project', href: '/#calculator' },
     relatedSlugs: ['how-to-paint-trim-and-baseboards', 'eggshell-vs-satin-vs-semi-gloss', 'when-to-hire-a-painter-vs-diy'],
     affiliateProducts: [
-      { title: 'Cabinet Paint', description: 'Self-leveling cabinet and trim paint for a smooth, factory-like finish.', icon: 'paint', link: 'https://www.amazon.com/s?k=cabinet+paint+self+leveling+enamel&tag=paintpro02-20', cta: 'Shop Cabinet Paint' },
-      { title: 'HVLP Sprayer', description: 'HVLP spray gun for ultra-smooth finishes on cabinets, doors, and fine woodwork.', icon: 'sprayer', link: 'https://www.amazon.com/s?k=hvlp+paint+sprayer+cabinets&tag=paintpro02-20', cta: 'Shop Sprayers' },
-      { title: 'Deglosser', description: 'Liquid deglosser to prep existing cabinet finishes without heavy sanding.', icon: 'primer', link: 'https://www.amazon.com/s?k=liquid+deglosser+paint+prep&tag=paintpro02-20', cta: 'Shop Deglosser' },
+      { title: 'Cabinet Paint', description: 'Self-leveling cabinet and trim paint for a smooth, factory-like finish.', icon: 'paint', link: 'https://www.amazon.com/s?k=cabinet+paint+self+leveling+enamel&i=tools&tag=paintpro02-20', cta: 'Shop Cabinet Paint' },
+      { title: 'HVLP Sprayer', description: 'HVLP spray gun for ultra-smooth finishes on cabinets, doors, and fine woodwork.', icon: 'sprayer', link: 'https://www.amazon.com/s?k=hvlp+paint+sprayer+cabinets&i=tools&tag=paintpro02-20', cta: 'Shop Sprayers' },
+      { title: 'Deglosser', description: 'Liquid deglosser to prep existing cabinet finishes without heavy sanding.', icon: 'primer', link: 'https://www.amazon.com/s?k=liquid+deglosser+paint+prep&i=tools&tag=paintpro02-20', cta: 'Shop Deglosser' },
     ],
     faqs: [
       {
@@ -3633,9 +3633,9 @@ export const blogPosts: BlogPost[] = [
 
 <h3>Best Cabinet Paints</h3>
 
-<p><strong><a href="https://www.amazon.com/s?k=benjamin+moore+advance+cabinet+paint&tag=paintpro02-20">Benjamin Moore Advance</a></strong> ($55 to $70/gallon): The gold standard for DIY cabinet painting. It is a waterborne alkyd that flows and levels beautifully, cures to a rock-hard finish, and cleans up with water. The main downside is a long dry time (16 to 24 hours between coats) and a 30-day cure time for full hardness.</p>
+<p><strong><a href="https://www.amazon.com/s?k=benjamin+moore+advance+cabinet+paint&i=tools&tag=paintpro02-20">Benjamin Moore Advance</a></strong> ($55 to $70/gallon): The gold standard for DIY cabinet painting. It is a waterborne alkyd that flows and levels beautifully, cures to a rock-hard finish, and cleans up with water. The main downside is a long dry time (16 to 24 hours between coats) and a 30-day cure time for full hardness.</p>
 
-<p><strong><a href="https://www.amazon.com/s?k=sherwin+williams+emerald+urethane+trim+enamel&tag=paintpro02-20">Sherwin-Williams Emerald Urethane Trim Enamel</a></strong> ($75 to $90/gallon): Similar performance to Advance with slightly better leveling in some painters' experience. Also a waterborne alkyd with long recoat times.</p>
+<p><strong><a href="https://www.amazon.com/s?k=sherwin+williams+emerald+urethane+trim+enamel&i=tools&tag=paintpro02-20">Sherwin-Williams Emerald Urethane Trim Enamel</a></strong> ($75 to $90/gallon): Similar performance to Advance with slightly better leveling in some painters' experience. Also a waterborne alkyd with long recoat times.</p>
 
 <p><strong>Behr Alkyd Semi-Gloss Enamel</strong> ($35 to $45/gallon): A budget-friendly option available at Home Depot. Not quite as smooth as Advance or Emerald, but solid performance at a lower price point.</p>
 
@@ -3765,9 +3765,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Plan Your Project: Calculate Paint Needs', href: '/#calculator' },
     relatedSlugs: ['how-many-coats-of-paint', 'painting-a-room-in-one-day', 'complete-room-painting-checklist'],
     affiliateProducts: [
-      { title: 'Humidity Meter', description: 'Small digital hygrometer to check room humidity before painting or recoating.', icon: 'paint', link: 'https://www.amazon.com/s?k=digital+hygrometer+humidity+meter&tag=paintpro02-20', cta: 'Check Humidity' },
-      { title: 'Box Fan', description: 'A standard box fan moves air across drying paint and cuts recoat times on humid days.', icon: 'paint', link: 'https://www.amazon.com/s?k=box+fan+20+inch&tag=paintpro02-20', cta: 'Shop Fans' },
-      { title: 'Fast-Dry Paint', description: 'Benjamin Moore Aura and similar premium paints recoat in 1 hour instead of 4.', icon: 'paint', link: 'https://www.amazon.com/s?k=fast+dry+interior+paint&tag=paintpro02-20', cta: 'Shop Fast-Dry Paint' },
+      { title: 'Humidity Meter', description: 'Small digital hygrometer to check room humidity before painting or recoating.', icon: 'paint', link: 'https://www.amazon.com/s?k=digital+hygrometer+humidity+meter&i=tools&tag=paintpro02-20', cta: 'Check Humidity' },
+      { title: 'Box Fan', description: 'A standard box fan moves air across drying paint and cuts recoat times on humid days.', icon: 'paint', link: 'https://www.amazon.com/s?k=box+fan+20+inch&i=tools&tag=paintpro02-20', cta: 'Shop Fans' },
+      { title: 'Fast-Dry Paint', description: 'Benjamin Moore Aura and similar premium paints recoat in 1 hour instead of 4.', icon: 'paint', link: 'https://www.amazon.com/s?k=fast+dry+interior+paint&i=tools&tag=paintpro02-20', cta: 'Shop Fast-Dry Paint' },
     ],
     faqs: [
       {
@@ -3921,9 +3921,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Paint for Your Project', href: '/#calculator' },
     relatedSlugs: ['cabinet-painting-guide', 'exterior-house-painting-guide', 'painting-a-room-in-one-day'],
     affiliateProducts: [
-      { title: 'Airless Sprayer', description: 'Graco Magnum X5 airless paint sprayer handles up to 50 gallons of paint per year.', icon: 'paint', link: 'https://www.amazon.com/s?k=graco+magnum+x5+paint+sprayer&tag=paintpro02-20', cta: 'Shop Sprayers' },
-      { title: 'HVLP Sprayer', description: 'Lower-pressure HVLP sprayer ideal for cabinets, furniture, and fine finish work.', icon: 'paint', link: 'https://www.amazon.com/s?k=hvlp+paint+sprayer+cabinets&tag=paintpro02-20', cta: 'Shop HVLP' },
-      { title: 'Roller Kit', description: 'Professional roller frames and covers for efficient wall painting without spray setup.', icon: 'roller', link: 'https://www.amazon.com/s?k=professional+paint+roller+kit&tag=paintpro02-20', cta: 'Shop Rollers' },
+      { title: 'Airless Sprayer', description: 'Graco Magnum X5 airless paint sprayer handles up to 50 gallons of paint per year.', icon: 'paint', link: 'https://www.amazon.com/s?k=graco+magnum+x5+paint+sprayer&i=tools&tag=paintpro02-20', cta: 'Shop Sprayers' },
+      { title: 'HVLP Sprayer', description: 'Lower-pressure HVLP sprayer ideal for cabinets, furniture, and fine finish work.', icon: 'paint', link: 'https://www.amazon.com/s?k=hvlp+paint+sprayer+cabinets&i=tools&tag=paintpro02-20', cta: 'Shop HVLP' },
+      { title: 'Roller Kit', description: 'Professional roller frames and covers for efficient wall painting without spray setup.', icon: 'roller', link: 'https://www.amazon.com/s?k=professional+paint+roller+kit&i=tools&tag=paintpro02-20', cta: 'Shop Rollers' },
     ],
     faqs: [
       {
@@ -4073,9 +4073,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Plan Your Next Paint Project', href: '/#calculator' },
     relatedSlugs: ['how-to-fix-paint-drips-and-roller-marks', 'how-to-prep-walls-before-painting', 'complete-room-painting-checklist'],
     affiliateProducts: [
-      { title: 'Brush Comb', description: 'Metal brush and roller comb removes dried paint from bristles and roller covers.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+brush+comb+spinner&tag=paintpro02-20', cta: 'Shop Brush Tools' },
-      { title: 'Paint Brush Cleaner', description: 'Professional brush cleaner solvent for removing oil-based and latex paint.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+brush+cleaner+solvent&tag=paintpro02-20', cta: 'Shop Cleaners' },
-      { title: 'Quality Brush Set', description: 'Purdy angled sash brushes last years if properly cleaned after each use.', icon: 'brush', link: 'https://www.amazon.com/s?k=purdy+angled+sash+brush+set&tag=paintpro02-20', cta: 'Shop Brushes' },
+      { title: 'Brush Comb', description: 'Metal brush and roller comb removes dried paint from bristles and roller covers.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+brush+comb+spinner&i=tools&tag=paintpro02-20', cta: 'Shop Brush Tools' },
+      { title: 'Paint Brush Cleaner', description: 'Professional brush cleaner solvent for removing oil-based and latex paint.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+brush+cleaner+solvent&i=tools&tag=paintpro02-20', cta: 'Shop Cleaners' },
+      { title: 'Quality Brush Set', description: 'Purdy angled sash brushes last years if properly cleaned after each use.', icon: 'brush', link: 'https://www.amazon.com/s?k=purdy+angled+sash+brush+set&i=tools&tag=paintpro02-20', cta: 'Shop Brushes' },
     ],
     faqs: [
       {
@@ -4197,9 +4197,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Estimate Paint Accurately Next Time', href: '/#calculator' },
     relatedSlugs: ['how-to-touch-up-paint', 'how-much-does-it-cost-to-paint-a-room', 'best-low-voc-paints'],
     affiliateProducts: [
-      { title: 'Paint Storage Cans', description: 'Small airtight metal paint cans for storing leftovers without rust or drying out.', icon: 'paint', link: 'https://www.amazon.com/s?k=empty+paint+can+storage+quart&tag=paintpro02-20', cta: 'Shop Storage Cans' },
-      { title: 'Label Maker', description: 'Waterproof label maker for marking stored paint with room, color, and date.', icon: 'paint', link: 'https://www.amazon.com/s?k=waterproof+label+maker&tag=paintpro02-20', cta: 'Shop Labels' },
-      { title: 'Paint Hardener', description: 'Cat litter or commercial paint hardener prepares latex paint for trash disposal.', icon: 'paint', link: 'https://www.amazon.com/s?k=paint+hardener+latex&tag=paintpro02-20', cta: 'Shop Hardener' },
+      { title: 'Paint Storage Cans', description: 'Small airtight metal paint cans for storing leftovers without rust or drying out.', icon: 'paint', link: 'https://www.amazon.com/s?k=empty+paint+can+storage+quart&i=tools&tag=paintpro02-20', cta: 'Shop Storage Cans' },
+      { title: 'Label Maker', description: 'Waterproof label maker for marking stored paint with room, color, and date.', icon: 'paint', link: 'https://www.amazon.com/s?k=waterproof+label+maker&i=tools&tag=paintpro02-20', cta: 'Shop Labels' },
+      { title: 'Paint Hardener', description: 'Cat litter or commercial paint hardener prepares latex paint for trash disposal.', icon: 'paint', link: 'https://www.amazon.com/s?k=paint+hardener+latex&i=tools&tag=paintpro02-20', cta: 'Shop Hardener' },
     ],
     faqs: [
       {
@@ -4335,9 +4335,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Paint for Your Walls', href: '/#calculator' },
     relatedSlugs: ['how-to-prep-walls-before-painting', 'best-primer-for-new-drywall', 'complete-room-painting-checklist'],
     affiliateProducts: [
-      { title: 'Wallpaper Steamer', description: 'Wagner wallpaper steamer loosens old adhesive with safe hot steam.', icon: 'paint', link: 'https://www.amazon.com/s?k=wagner+wallpaper+steamer&tag=paintpro02-20', cta: 'Shop Steamers' },
-      { title: 'Scoring Tool', description: 'Paper Tiger scoring tool perforates wallpaper without damaging the wall beneath.', icon: 'brush', link: 'https://www.amazon.com/s?k=paper+tiger+wallpaper+scorer&tag=paintpro02-20', cta: 'Shop Scorers' },
-      { title: 'Wallpaper Remover', description: 'DIF liquid wallpaper remover dissolves old paste for easy scraping.', icon: 'paint', link: 'https://www.amazon.com/s?k=DIF+wallpaper+remover&tag=paintpro02-20', cta: 'Shop Remover' },
+      { title: 'Wallpaper Steamer', description: 'Wagner wallpaper steamer loosens old adhesive with safe hot steam.', icon: 'paint', link: 'https://www.amazon.com/s?k=wagner+wallpaper+steamer&i=tools&tag=paintpro02-20', cta: 'Shop Steamers' },
+      { title: 'Scoring Tool', description: 'Paper Tiger scoring tool perforates wallpaper without damaging the wall beneath.', icon: 'brush', link: 'https://www.amazon.com/s?k=paper+tiger+wallpaper+scorer&i=tools&tag=paintpro02-20', cta: 'Shop Scorers' },
+      { title: 'Wallpaper Remover', description: 'DIF liquid wallpaper remover dissolves old paste for easy scraping.', icon: 'paint', link: 'https://www.amazon.com/s?k=DIF+wallpaper+remover&i=tools&tag=paintpro02-20', cta: 'Shop Remover' },
     ],
     faqs: [
       {
@@ -4483,9 +4483,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Coverage for Your Floor', href: '/#calculator' },
     relatedSlugs: ['garage-floor-paint-vs-epoxy', 'best-primer-for-new-drywall', 'how-to-prep-walls-before-painting'],
     affiliateProducts: [
-      { title: 'Concrete Floor Paint', description: 'Drylok Latex concrete floor paint formulated for basements and interior slabs.', icon: 'paint', link: 'https://www.amazon.com/s?k=drylok+concrete+floor+paint&tag=paintpro02-20', cta: 'Shop Floor Paint' },
-      { title: 'Concrete Etcher', description: 'Muriatic acid substitute safely etches smooth concrete for better coating adhesion.', icon: 'paint', link: 'https://www.amazon.com/s?k=concrete+etcher+cleaner&tag=paintpro02-20', cta: 'Shop Etcher' },
-      { title: 'Moisture Meter', description: 'Concrete moisture meter tells you if the slab is dry enough to paint.', icon: 'paint', link: 'https://www.amazon.com/s?k=concrete+moisture+meter&tag=paintpro02-20', cta: 'Check Moisture' },
+      { title: 'Concrete Floor Paint', description: 'Drylok Latex concrete floor paint formulated for basements and interior slabs.', icon: 'paint', link: 'https://www.amazon.com/s?k=drylok+concrete+floor+paint&i=tools&tag=paintpro02-20', cta: 'Shop Floor Paint' },
+      { title: 'Concrete Etcher', description: 'Muriatic acid substitute safely etches smooth concrete for better coating adhesion.', icon: 'paint', link: 'https://www.amazon.com/s?k=concrete+etcher+cleaner&i=tools&tag=paintpro02-20', cta: 'Shop Etcher' },
+      { title: 'Moisture Meter', description: 'Concrete moisture meter tells you if the slab is dry enough to paint.', icon: 'paint', link: 'https://www.amazon.com/s?k=concrete+moisture+meter&i=tools&tag=paintpro02-20', cta: 'Check Moisture' },
     ],
     faqs: [
       {
@@ -4629,9 +4629,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Paint for Your Fireplace', href: '/#calculator' },
     relatedSlugs: ['how-to-choose-paint-color', 'how-to-prep-walls-before-painting', 'eggshell-vs-satin-vs-semi-gloss'],
     affiliateProducts: [
-      { title: 'High-Heat Paint', description: 'Rutland 1200 degree heat resistant paint for the interior firebox area.', icon: 'paint', link: 'https://www.amazon.com/s?k=rutland+high+heat+paint+fireplace&tag=paintpro02-20', cta: 'Shop Heat Paint' },
-      { title: 'Masonry Primer', description: 'Zinsser BIN or Loxon primer bonds to rough brick and blocks stains.', icon: 'brush', link: 'https://www.amazon.com/s?k=zinsser+loxon+masonry+primer&tag=paintpro02-20', cta: 'Shop Primer' },
-      { title: 'TSP Cleaner', description: 'Trisodium phosphate cleans soot and grime from brick before painting.', icon: 'paint', link: 'https://www.amazon.com/s?k=TSP+trisodium+phosphate+cleaner&tag=paintpro02-20', cta: 'Shop TSP' },
+      { title: 'High-Heat Paint', description: 'Rutland 1200 degree heat resistant paint for the interior firebox area.', icon: 'paint', link: 'https://www.amazon.com/s?k=rutland+high+heat+paint+fireplace&i=tools&tag=paintpro02-20', cta: 'Shop Heat Paint' },
+      { title: 'Masonry Primer', description: 'Zinsser BIN or Loxon primer bonds to rough brick and blocks stains.', icon: 'brush', link: 'https://www.amazon.com/s?k=zinsser+loxon+masonry+primer&i=tools&tag=paintpro02-20', cta: 'Shop Primer' },
+      { title: 'TSP Cleaner', description: 'Trisodium phosphate cleans soot and grime from brick before painting.', icon: 'paint', link: 'https://www.amazon.com/s?k=TSP+trisodium+phosphate+cleaner&i=tools&tag=paintpro02-20', cta: 'Shop TSP' },
     ],
     faqs: [
       {
@@ -4766,9 +4766,9 @@ export const blogPosts: BlogPost[] = [
     calculatorCta: { text: 'Calculate Paint for Your Repair', href: '/#calculator' },
     relatedSlugs: ['how-to-prep-walls-before-painting', 'best-primer-for-new-drywall', 'how-to-fix-paint-drips-and-roller-marks'],
     affiliateProducts: [
-      { title: 'Paint Scraper Set', description: 'Multi-tool scraper set for removing loose and peeling paint cleanly.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+scraper+set+carbide&tag=paintpro02-20', cta: 'Shop Scrapers' },
-      { title: 'Stain-Block Primer', description: 'Zinsser Cover Stain primer seals problem areas and bonds new paint.', icon: 'brush', link: 'https://www.amazon.com/s?k=zinsser+cover+stain+primer&tag=paintpro02-20', cta: 'Shop Primer' },
-      { title: 'Moisture Meter', description: 'Pin-type moisture meter detects hidden wall moisture behind peeling paint.', icon: 'paint', link: 'https://www.amazon.com/s?k=pin+moisture+meter+wall&tag=paintpro02-20', cta: 'Shop Moisture Meter' },
+      { title: 'Paint Scraper Set', description: 'Multi-tool scraper set for removing loose and peeling paint cleanly.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+scraper+set+carbide&i=tools&tag=paintpro02-20', cta: 'Shop Scrapers' },
+      { title: 'Stain-Block Primer', description: 'Zinsser Cover Stain primer seals problem areas and bonds new paint.', icon: 'brush', link: 'https://www.amazon.com/s?k=zinsser+cover+stain+primer&i=tools&tag=paintpro02-20', cta: 'Shop Primer' },
+      { title: 'Moisture Meter', description: 'Pin-type moisture meter detects hidden wall moisture behind peeling paint.', icon: 'paint', link: 'https://www.amazon.com/s?k=pin+moisture+meter+wall&i=tools&tag=paintpro02-20', cta: 'Shop Moisture Meter' },
     ],
     faqs: [
       {

@@ -171,9 +171,9 @@ const bathroom: CalculatorPageData = {
     'bedroom-paint-calculator',
   ],
   affiliates: [
-    { title: 'Mildew-Resistant Paint', description: 'Bathroom-grade paint that resists mold and mildew in high-humidity environments.', icon: 'paint', link: 'https://www.amazon.com/s?k=mildew+resistant+bathroom+paint&tag=paintpro02-20', cta: 'Shop Bathroom Paint' },
-    { title: 'Bathroom Primer', description: 'Moisture-blocking primer designed for bathrooms and high-humidity areas.', icon: 'primer', link: 'https://www.amazon.com/s?k=moisture+blocking+primer+bathroom&tag=paintpro02-20', cta: 'Shop Primer' },
-    { title: 'Paint Supplies', description: 'Rollers, brushes, tape, and drop cloths for a professional bathroom finish.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+supplies+kit&tag=paintpro02-20', cta: 'Shop Supplies' },
+    { title: 'Mildew-Resistant Paint', description: 'Bathroom-grade paint that resists mold and mildew in high-humidity environments.', icon: 'paint', link: 'https://www.amazon.com/s?k=mildew+resistant+bathroom+paint&i=tools&tag=paintpro02-20', cta: 'Shop Bathroom Paint' },
+    { title: 'Bathroom Primer', description: 'Moisture-blocking primer designed for bathrooms and high-humidity areas.', icon: 'primer', link: 'https://www.amazon.com/s?k=moisture+blocking+primer+bathroom&i=tools&tag=paintpro02-20', cta: 'Shop Primer' },
+    { title: 'Paint Supplies', description: 'Rollers, brushes, tape, and drop cloths for a professional bathroom finish.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+supplies+kit&i=tools&tag=paintpro02-20', cta: 'Shop Supplies' },
   ],
 };
 
@@ -229,9 +229,9 @@ const kitchen: CalculatorPageData = {
     'bedroom-paint-calculator',
   ],
   affiliates: [
-    { title: 'Scrub-Resistant Paint', description: 'Kitchen-grade paint that resists grease and cleans easily near cooking areas.', icon: 'paint', link: 'https://www.amazon.com/s?k=scrub+resistant+kitchen+paint&tag=paintpro02-20', cta: 'Shop Kitchen Paint' },
-    { title: 'Kitchen Primer', description: 'Adhesion primer for kitchen walls, cabinets, and high-moisture surfaces.', icon: 'primer', link: 'https://www.amazon.com/s?k=kitchen+cabinet+primer&tag=paintpro02-20', cta: 'Shop Primer' },
-    { title: 'Paint Supplies', description: 'Quality rollers, brushes, tape, and drop cloths for a professional finish.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+supplies+kit&tag=paintpro02-20', cta: 'Shop Supplies' },
+    { title: 'Scrub-Resistant Paint', description: 'Kitchen-grade paint that resists grease and cleans easily near cooking areas.', icon: 'paint', link: 'https://www.amazon.com/s?k=scrub+resistant+kitchen+paint&i=tools&tag=paintpro02-20', cta: 'Shop Kitchen Paint' },
+    { title: 'Kitchen Primer', description: 'Adhesion primer for kitchen walls, cabinets, and high-moisture surfaces.', icon: 'primer', link: 'https://www.amazon.com/s?k=kitchen+cabinet+primer&i=tools&tag=paintpro02-20', cta: 'Shop Primer' },
+    { title: 'Paint Supplies', description: 'Quality rollers, brushes, tape, and drop cloths for a professional finish.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+supplies+kit&i=tools&tag=paintpro02-20', cta: 'Shop Supplies' },
   ],
 };
 
@@ -345,9 +345,9 @@ const garage: CalculatorPageData = {
     '16x20-room-paint-calculator',
   ],
   affiliates: [
-    { title: 'Epoxy Floor Paint', description: 'Garage-floor epoxy coating designed to resist common chemicals and tire marks.', icon: 'paint', link: 'https://www.amazon.com/s?k=epoxy+garage+floor+paint&tag=paintpro02-20', cta: 'Shop Floor Paint' },
-    { title: 'Drywall Primer', description: 'PVA primer for new drywall in garages. Seals the surface for even paint coverage.', icon: 'primer', link: 'https://www.amazon.com/s?k=pva+drywall+primer&tag=paintpro02-20', cta: 'Shop Primer' },
-    { title: 'Paint Supplies', description: 'Heavy-duty rollers, brushes, and trays for large garage painting projects.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+roller+kit+large&tag=paintpro02-20', cta: 'Shop Supplies' },
+    { title: 'Epoxy Floor Paint', description: 'Garage-floor epoxy coating designed to resist common chemicals and tire marks.', icon: 'paint', link: 'https://www.amazon.com/s?k=epoxy+garage+floor+paint&i=tools&tag=paintpro02-20', cta: 'Shop Floor Paint' },
+    { title: 'Drywall Primer', description: 'PVA primer for new drywall in garages. Seals the surface for even paint coverage.', icon: 'primer', link: 'https://www.amazon.com/s?k=pva+drywall+primer&i=tools&tag=paintpro02-20', cta: 'Shop Primer' },
+    { title: 'Paint Supplies', description: 'Heavy-duty rollers, brushes, and trays for large garage painting projects.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+roller+kit+large&i=tools&tag=paintpro02-20', cta: 'Shop Supplies' },
   ],
 };
 
@@ -604,9 +604,9 @@ const basement: CalculatorPageData = {
     '15x15-room-paint-calculator',
   ],
   affiliates: [
-    { title: 'Waterproofing Primer', description: 'Moisture-blocking primer that seals concrete and masonry basement walls.', icon: 'primer', link: 'https://www.amazon.com/s?k=waterproofing+basement+primer&tag=paintpro02-20', cta: 'Shop Primer' },
-    { title: 'Mold-Resistant Paint', description: 'Basement-grade paint with built-in mold and mildew protection for below-grade walls.', icon: 'paint', link: 'https://www.amazon.com/s?k=mold+resistant+basement+paint&tag=paintpro02-20', cta: 'Shop Paint' },
-    { title: 'Paint Supplies', description: 'Rollers, brushes, tape, and drop cloths for basement painting projects.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+supplies+kit&tag=paintpro02-20', cta: 'Shop Supplies' },
+    { title: 'Waterproofing Primer', description: 'Moisture-blocking primer that seals concrete and masonry basement walls.', icon: 'primer', link: 'https://www.amazon.com/s?k=waterproofing+basement+primer&i=tools&tag=paintpro02-20', cta: 'Shop Primer' },
+    { title: 'Mold-Resistant Paint', description: 'Basement-grade paint with built-in mold and mildew protection for below-grade walls.', icon: 'paint', link: 'https://www.amazon.com/s?k=mold+resistant+basement+paint&i=tools&tag=paintpro02-20', cta: 'Shop Paint' },
+    { title: 'Paint Supplies', description: 'Rollers, brushes, tape, and drop cloths for basement painting projects.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+supplies+kit&i=tools&tag=paintpro02-20', cta: 'Shop Supplies' },
   ],
 };
 
@@ -835,8 +835,8 @@ function brandPage(
     relatedPages: [...otherBrandSlugs.slice(0, 3), 'bedroom-paint-calculator', 'living-room-paint-calculator'],
     affiliates: [
       { title: `${brand} Paint`, description: `Shop ${brand} interior and exterior paints on Amazon.`, icon: 'paint', link: affiliateLink, cta: `Shop ${brand}` },
-      { title: 'Paint Supplies', description: 'Quality rollers, brushes, tape, and drop cloths for a professional finish.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+supplies+kit&tag=paintpro02-20', cta: 'Shop Supplies' },
-      { title: 'Paint Sprayers', description: 'Save time on big projects with an electric or airless paint sprayer.', icon: 'sprayer', link: 'https://www.amazon.com/s?k=paint+sprayer&tag=paintpro02-20', cta: 'View Sprayers' },
+      { title: 'Paint Supplies', description: 'Quality rollers, brushes, tape, and drop cloths for a professional finish.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+supplies+kit&i=tools&tag=paintpro02-20', cta: 'Shop Supplies' },
+      { title: 'Paint Sprayers', description: 'Save time on big projects with an electric or airless paint sprayer.', icon: 'sprayer', link: 'https://www.amazon.com/s?k=paint+sprayer&i=tools&tag=paintpro02-20', cta: 'View Sprayers' },
     ],
     brandDisclaimer: `This calculator is not affiliated with or endorsed by ${brand}. Coverage rates are based on published manufacturer specifications and may vary by product line, color, and surface condition.`,
     brandComparisonTable,
@@ -845,7 +845,7 @@ function brandPage(
 
 const behr = brandPage(
   'Behr', 'behr-coverage', 400, '$$',
-  'https://www.amazon.com/s?k=behr+paint&tag=paintpro02-20',
+  'https://www.amazon.com/s?k=behr+paint&i=tools&tag=paintpro02-20',
   'Behr paint, available exclusively at The Home Depot, covers approximately 400 square feet per gallon. Known for excellent value and a wide color selection, Behr is one of the most popular paint brands for DIY projects. Use our calculator below to see how much Behr paint you need for your room.',
   [
     'Behr Premium Plus covers up to 400 sq ft per gallon on smooth surfaces.',
@@ -862,7 +862,7 @@ const behr = brandPage(
 
 const sherwinWilliams = brandPage(
   'Sherwin-Williams', 'sherwin-williams-coverage', 400, '$$$',
-  'https://www.amazon.com/s?k=sherwin+williams+paint&tag=paintpro02-20',
+  'https://www.amazon.com/s?k=sherwin+williams+paint&i=tools&tag=paintpro02-20',
   'Sherwin-Williams sells several interior paint lines with different coverage, hide, and durability ratings. This preset uses 400 square feet per gallon as a planning value. Check the technical data sheet for the product and sheen you choose before buying.',
   [
     'Sherwin-Williams Duration covers up to 400 sq ft per gallon with excellent hide.',
@@ -879,7 +879,7 @@ const sherwinWilliams = brandPage(
 
 const benjaminMoore = brandPage(
   'Benjamin Moore', 'benjamin-moore-coverage', 400, '$$$',
-  'https://www.amazon.com/s?k=benjamin+moore+paint&tag=paintpro02-20',
+  'https://www.amazon.com/s?k=benjamin+moore+paint&i=tools&tag=paintpro02-20',
   'Benjamin Moore is a premium paint brand renowned for its color quality and coverage. Their interior paints cover approximately 400 square feet per gallon. With their proprietary Gennex color system, Benjamin Moore offers unmatched color accuracy and depth.',
   [
     'Benjamin Moore Regal Select covers up to 400 sq ft per gallon on smooth surfaces.',
@@ -896,7 +896,7 @@ const benjaminMoore = brandPage(
 
 const valspar = brandPage(
   'Valspar', 'valspar-coverage', 400, '$$',
-  'https://www.amazon.com/s?k=valspar+paint&tag=paintpro02-20',
+  'https://www.amazon.com/s?k=valspar+paint&i=tools&tag=paintpro02-20',
   'Valspar paint offers excellent coverage at a competitive price point. Available at Lowe\'s, Valspar covers approximately 400 square feet per gallon. Their paint-and-primer-in-one formulas make painting easier for DIYers.',
   [
     'Valspar Signature covers up to 400 sq ft per gallon with built-in primer.',
@@ -913,7 +913,7 @@ const valspar = brandPage(
 
 const ppg = brandPage(
   'PPG', 'ppg-coverage', 350, '$$',
-  'https://www.amazon.com/s?k=ppg+paint+interior&tag=paintpro02-20',
+  'https://www.amazon.com/s?k=ppg+paint+interior&i=tools&tag=paintpro02-20',
   'PPG paints cover approximately 350 square feet per gallon. PPG manufactures paints under several brand names and offers professional-quality coatings for every budget. Their Diamond and Timeless lines are popular at Home Depot.',
   [
     'PPG Diamond covers about 350 sq ft per gallon  -  plan for slightly more paint than premium brands.',
@@ -930,7 +930,7 @@ const ppg = brandPage(
 
 const glidden = brandPage(
   'Glidden', 'glidden-coverage', 350, '$',
-  'https://www.amazon.com/s?k=glidden+paint+interior&tag=paintpro02-20',
+  'https://www.amazon.com/s?k=glidden+paint+interior&i=tools&tag=paintpro02-20',
   'Glidden is a budget-friendly paint brand covering approximately 350 square feet per gallon. Owned by PPG, Glidden delivers reliable results for cost-conscious painters. It is a popular choice for rental properties and multi-room projects.',
   [
     'Glidden covers about 350 sq ft per gallon  -  budget for extra paint compared to premium brands.',
@@ -947,7 +947,7 @@ const glidden = brandPage(
 
 const rustOleum = brandPage(
   'Rust-Oleum', 'rust-oleum-coverage', 350, '$$',
-  'https://www.amazon.com/s?k=rust-oleum+interior+paint&tag=paintpro02-20',
+  'https://www.amazon.com/s?k=rust-oleum+interior+paint&i=tools&tag=paintpro02-20',
   'Rust-Oleum covers approximately 350 square feet per gallon and is best known for specialty coatings. While famous for their rust-prevention products, Rust-Oleum also makes excellent interior paints, cabinet kits, and floor coatings for DIY projects.',
   [
     'Rust-Oleum covers about 350 sq ft per gallon for standard interior wall paint.',
@@ -964,7 +964,7 @@ const rustOleum = brandPage(
 
 const farrowAndBall = brandPage(
   'Farrow & Ball', 'farrow-and-ball-coverage', 450, '$$$$',
-  'https://www.amazon.com/s?k=farrow+and+ball+paint&tag=paintpro02-20',
+  'https://www.amazon.com/s?k=farrow+and+ball+paint&i=tools&tag=paintpro02-20',
   'Farrow & Ball is a luxury paint brand covering approximately 450 square feet per gallon thanks to its high pigment concentration. Handcrafted in Dorset, England, Farrow & Ball paints are renowned for their exceptional depth of color and rich, complex finishes.',
   [
     'Farrow & Ball covers up to 450 sq ft per gallon  -  high pigment concentration means better coverage.',
@@ -1022,9 +1022,9 @@ function colorChangePage(
     faqs,
     relatedPages: [...otherSlugs.slice(0, 3), 'bedroom-paint-calculator', '12x12-room-paint-calculator'],
     affiliates: [
-      { title: 'High-Hide Primer', description: 'Stain-blocking primer for dramatic color changes. Ensures even coverage and true color.', icon: 'primer', link: 'https://www.amazon.com/s?k=high+hide+primer+paint&tag=paintpro02-20', cta: 'Shop Primer' },
-      { title: 'Premium Paint', description: 'Top-rated interior paints with excellent coverage for color transitions.', icon: 'paint', link: 'https://www.amazon.com/s?k=interior+wall+paint+high+coverage&tag=paintpro02-20', cta: 'Browse Paint' },
-      { title: 'Paint Supplies', description: 'Quality rollers, brushes, tape, and drop cloths for a professional finish.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+supplies+kit&tag=paintpro02-20', cta: 'Shop Supplies' },
+      { title: 'High-Hide Primer', description: 'Stain-blocking primer for dramatic color changes. Ensures even coverage and true color.', icon: 'primer', link: 'https://www.amazon.com/s?k=high+hide+primer+paint&i=tools&tag=paintpro02-20', cta: 'Shop Primer' },
+      { title: 'Premium Paint', description: 'Top-rated interior paints with excellent coverage for color transitions.', icon: 'paint', link: 'https://www.amazon.com/s?k=interior+wall+paint+high+coverage&i=tools&tag=paintpro02-20', cta: 'Browse Paint' },
+      { title: 'Paint Supplies', description: 'Quality rollers, brushes, tape, and drop cloths for a professional finish.', icon: 'brush', link: 'https://www.amazon.com/s?k=paint+supplies+kit&i=tools&tag=paintpro02-20', cta: 'Shop Supplies' },
     ],
   };
 }

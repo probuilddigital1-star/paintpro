@@ -5,9 +5,17 @@
 
 export const AMAZON_TAG = 'paintpro02-20';
 
+/**
+ * Amazon department to search within. Without this, queries like
+ * "paint supplies kit" return artist watercolor sets instead of house
+ * painting supplies. `tools` is Amazon's Tools & Home Improvement
+ * department, which is where paint, primers, rollers, and sprayers live.
+ */
+export const AMAZON_DEPARTMENT = 'tools';
+
 export function amazonSearch(query: string): string {
   const k = encodeURIComponent(query.trim()).replace(/%20/g, '+');
-  return `https://www.amazon.com/s?k=${k}&tag=${AMAZON_TAG}`;
+  return `https://www.amazon.com/s?k=${k}&i=${AMAZON_DEPARTMENT}&tag=${AMAZON_TAG}`;
 }
 
 export type Retailer = 'amazon' | 'homedepot' | 'lowes';

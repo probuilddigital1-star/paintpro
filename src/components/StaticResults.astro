@@ -1,16 +1,24 @@
 ---
 import type { CalculationResults, CalculationInputs } from '../utils/paint-calculator';
 import { roomRecommendations } from '../utils/paint-calculator';
+import { recommendProducts } from '../utils/product-recommendations';
+import { affiliateEnabled } from '../config/site';
 
 interface Props {
   results: CalculationResults;
   inputs: CalculationInputs;
+  /** Brand display name on a `*-coverage` page, so the brand's own paint is recommended. */
+  brand?: string;
+  /** Slug used as the analytics page source. */
+  pageSource?: string;
 }
 
-const { results, inputs } = Astro.props;
+const { results, inputs, brand, pageSource } = Astro.props;
 
 const totalArea = Math.round(results.paintableArea + results.ceilingPaintableArea);
 const recommendation = roomRecommendations[inputs.roomType];
+const recs = affiliateEnabled ? recommendProducts(inputs, results, { brand }) : [];
+const source = pageSource ?? 'calculator-static';
 ---
 
 <section class="max-w-2xl mx-auto px-4 py-8">
@@ -129,5 +137,49 @@ const recommendation = roomRecommendations[inputs.roomType];
     <p class="text-center mt-3">
       <a href="/calculator-methodology" class="text-sm text-primary font-medium hover:underline">See the formula and assumptions</a>
     </p>
+
+    {recs.length > 0 && (
+      <div class="mt-6 pt-6 border-t border-border">
+        <h3 class="font-semibold text-heading mb-1">Supplies for this room</h3>
+        <p class="text-xs text-gray-500 mb-3">
+          Picked from the inputs above. Links go to Amazon and we may earn a commission at no extra cost to you.
+          <a href="/affiliate-disclosure" class="underline hover:text-primary">Details</a>
+        </p>
+        <ul class="grid sm:grid-cols-2 gap-3">
+          {recs.map(({ product, reason }) => (
+            <li>
+              <a
+                href={product.url}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                class="block h-full p-3 rounded-lg border border-border bg-white hover:border-primary/40 hover:shadow-sm transition"
+                data-affiliate-product={product.id}
+                data-affiliate-link={product.url}
+                data-page-source={source}
+                data-static-affiliate
+              >
+                <span class="block font-medium text-heading text-sm">{product.title}</span>
+                <span class="block text-xs text-body mt-1">{reason}</span>
+                <span class="block text-xs text-primary font-medium mt-2">{product.cta} &rsaquo;</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
   </div>
 </section>
+
+<script>
+  import { trackAffiliateClick } from '../utils/analytics';
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-static-affiliate]').forEach((link) => {
+    link.addEventListener('click', () => {
+      trackAffiliateClick({
+        product: link.dataset.affiliateProduct,
+        link: link.dataset.affiliateLink,
+        pageSource: link.dataset.pageSource,
+      });
+    });
+  });
+</script>

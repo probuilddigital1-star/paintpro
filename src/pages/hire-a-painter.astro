@@ -1,0 +1,212 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const siteUrl = 'https://paintprocalculator.com';
+const pageUrl = `${siteUrl}/hire-a-painter`;
+
+// Networx quote form (affiliate lead network).
+// Networx's loader script (iframe.php) only builds a static <iframe> with this exact src,
+// so the iframe is written directly into the markup instead of loading their script.
+// The original snippet is kept in the HTML comment above the <iframe> below.
+const networxFormSrc =
+  'https://api.networx.com/form.php?aff_id=0dceb0ffa039ab83600259310bccae25&aff_to_form_id=8184&f_id=&referrer=';
+
+// Measured 2026-09-07: the rendered form is 432 to 433px tall at every width from 320px
+// to 900px (its wrapper has a fixed min-height with overflow hidden), so one reserved
+// height covers desktop and mobile without a layout shift when the iframe loads.
+const networxFormHeight = 435;
+
+const steps = [
+  {
+    title: 'Tell us about the project.',
+    detail: 'Pick the type of painting work, enter your zip code, and add your contact details.',
+  },
+  {
+    title: 'Painters near you get the details.',
+    detail: 'Networx passes your request to painters who work in your area.',
+  },
+  {
+    title: 'Compare quotes and pick one.',
+    detail: 'Talk with the painters who reach out and compare what they quote before you decide.',
+  },
+];
+
+const faqs = [
+  {
+    question: 'Does it cost anything to request quotes?',
+    answer: "There's no charge for using the form, and you're not obligated to hire anyone.",
+  },
+  {
+    question: 'How many painters will contact me?',
+    answer: 'That depends on how many painters in the network serve your area. You may hear from more than one.',
+  },
+  {
+    question: 'What happens with my information?',
+    answer:
+      'It goes to Networx, the contractor matching network that runs this form, so painters can contact you about this project. Their privacy policy is linked in the form.',
+  },
+  {
+    question: 'Can I still use the calculator?',
+    answer:
+      'Yes. Use the paint calculator to estimate how much paint the job needs before you get quotes, so you have a number to compare the bids against.',
+    answerHtml:
+      'Yes. Use the <a href="/#calculator" class="text-primary hover:underline">paint calculator</a> to estimate how much paint the job needs before you get quotes, so you have a number to compare the bids against.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Find a Painter', item: pageUrl },
+  ],
+};
+---
+
+<Layout
+  title="Find a Painter Near You | PaintPro Calculator"
+  description="Tell us about your painting project and get matched with local painters who can quote the job."
+>
+  <Header />
+
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <Breadcrumbs items={[
+    { name: 'Home', href: '/' },
+    { name: 'Find a Painter' },
+  ]} />
+
+  <main class="max-w-4xl mx-auto px-4 pb-12">
+    <section class="pt-4 pb-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-heading mb-5">Find a Painter for Your Project</h1>
+      <p class="text-lg text-body leading-relaxed mb-4">
+        If you've run the numbers and decided this is a job for a pro, this is the next step. Fill out the short form below with your zip code and a few details about the project, and painters in your area will reach out to quote it.
+      </p>
+      <p class="text-body leading-relaxed">
+        Interior, exterior, cabinets, trim, whole house. Any size job.
+      </p>
+    </section>
+
+    <section id="how-it-works" class="pb-10">
+      <h2 class="text-2xl font-bold text-heading mb-4">How it works</h2>
+      <ol class="list-decimal pl-6 space-y-3 text-body leading-relaxed">
+        {steps.map((step) => (
+          <li>
+            <span class="font-semibold text-heading">{step.title}</span> {step.detail}
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section id="quote-form" class="pb-10">
+      <h2 class="text-2xl font-bold text-heading mb-2">Request quotes for your project</h2>
+      <p class="text-body mb-5">Fill in the type of painting job, your zip code, and how painters can reach you.</p>
+
+      <div class="bg-white rounded-2xl shadow-sm border border-border p-3 md:p-5">
+        <!--
+          Networx form embed.
+          The container reserves the form's full height so nothing shifts when the iframe loads.
+          The iframe below replaces Networx's loader script. Their script only creates an
+          <iframe> with a static src (no message listener, no dynamic parameters), so the iframe
+          is written directly. If Networx changes the form, this is the snippet they issued:
+
+          <div id="networx_form_container" style="margin:0px;padding:0px;">
+              <div id="nx_form" style="height: 435px;">
+                  <script type="text/javascript" src="https://api.networx.com/iframe.php?aff_id=0dceb0ffa039ab83600259310bccae25&aff_to_form_id=8184"></script>
+              </div>
+          </div>
+        -->
+        <div class="nx-form-shell" style={`min-height:${networxFormHeight}px`}>
+          <iframe
+            src={networxFormSrc}
+            title="Painter quote request form"
+            width="100%"
+            height={networxFormHeight}
+            loading="lazy"
+            scrolling="no"
+            frameborder="0"
+            style="border:0;display:block;"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="pb-10">
+      <h2 class="text-2xl font-bold text-heading mb-6">Frequently asked questions</h2>
+      <div class="space-y-6">
+        {faqs.map((faq) => (
+          <div>
+            <h3 class="text-lg font-semibold text-heading mb-1">{faq.question}</h3>
+            {faq.answerHtml ? (
+              <p class="text-body leading-relaxed" set:html={faq.answerHtml} />
+            ) : (
+              <p class="text-body leading-relaxed">{faq.answer}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <p class="text-sm text-gray-500 leading-relaxed border-t border-border pt-6">
+      The quote form on this page is provided by Networx. PaintPro Calculator may earn a referral fee when a project is matched with a painter. This does not affect the quotes you receive.
+      <a href="/affiliate-disclosure" class="text-primary hover:underline">Read the full affiliate disclosure.</a>
+    </p>
+  </main>
+
+  <!--
+    Placement tracking. Internal links to this page carry ?src=<placement> (nav, footer, calc, ...).
+    GA4 is loaded site-wide by CookieConsent.astro after page load and only when the visitor has
+    not opted out, so this waits briefly for window.gtag and then sends one event.
+  -->
+  <script is:inline>
+    (function () {
+      var src;
+      try {
+        src = new URLSearchParams(window.location.search).get('src');
+      } catch (e) {
+        return;
+      }
+      if (!src) return;
+      src = String(src).trim().slice(0, 40);
+      if (!/^[A-Za-z0-9_-]+$/.test(src)) return;
+
+      var sent = false;
+      var tries = 0;
+
+      function send() {
+        if (sent) return;
+        try {
+          if (localStorage.getItem('cookie_consent') === 'opted_out') return;
+        } catch (e) {}
+        if (typeof window.gtag === 'function') {
+          sent = true;
+          window.gtag('event', 'quote_page_view', { src: src });
+          return;
+        }
+        if (++tries < 40) setTimeout(send, 250);
+      }
+
+      send();
+    })();
+  </script>
+
+  <Footer />
+</Layout>

@@ -93,7 +93,7 @@ import { adsEnabled } from '../config/site';
 
     function loadTracking() {
       // Only load in production
-      if (window.location.hostname === 'localhost') return;
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') return;
 
       // Check if already loaded
       if (window.gtag) return;

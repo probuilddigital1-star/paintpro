@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import PainterQuoteCTA from '../components/PainterQuoteCTA.astro';
 
 const updatedDate = '2026-07-11';
 const siteUrl = "https://paintprocalculator.com";
@@ -133,6 +134,10 @@ const aboutSchema = {
         <p class="text-sm text-gray-500">
           Mailing address available on request for legal or business correspondence.
         </p>
+      </div>
+
+      <div class="mt-10">
+        <PainterQuoteCTA variant="inline" src="about" />
       </div>
 
       <div class="mt-10 pt-6 border-t border-border">

@@ -5,7 +5,7 @@ import Footer from '../../components/Footer.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import AdSlot from '../../components/AdSlot.astro';
 import AffiliateCards from '../../components/AffiliateCards.astro';
-import PainterQuoteCta from '../../components/PainterQuoteCta.astro';
+import PainterQuoteCTA from '../../components/PainterQuoteCTA.astro';
 import { blogPosts, type BlogPost } from '../../data/blog-posts';
 import { prepareArticleHtml } from '../../config/site';
 import { indexableBlogSlugs } from '../../config/indexing';
@@ -28,13 +28,13 @@ const siteUrl = 'https://paintprocalculator.com';
 const pageUrl = `${siteUrl}/blog/${post.slug}`;
 const articleContent = prepareArticleHtml(post.content);
 
-// Hire-or-DIY and cost queries are lead-gen intent, so these posts get the painter CTA.
-// /blog/how-much-does-it-cost-to-paint-a-room ranks at position 8 on ~1,000 impressions.
-const painterCtaSlugs = new Set([
-  'how-much-does-it-cost-to-paint-a-room',
-  'when-to-hire-a-painter-vs-diy',
-]);
-const showPainterCta = painterCtaSlugs.has(post.slug);
+// Every post ends with one painter quote card. Posts with lead-gen intent set painterCtaSrc
+// in blog-posts.ts, which tags their links and enables an inline CTA wherever the article
+// content carries the PAINTER_CTA_MARKER comment. The inline CTA renders between
+// .blog-prose blocks, not inside one, so the prose link styles do not restyle its button.
+const PAINTER_CTA_MARKER = '<!-- painter-cta -->';
+const painterCtaSrc = post.painterCtaSrc ?? 'blog';
+const articleParts = articleContent.split(PAINTER_CTA_MARKER);
 const indexable = indexableBlogSlugs.has(post.slug);
 const sources = editorialSources[post.slug] ?? [];
 
@@ -98,7 +98,7 @@ const blogPostingSchema = {
     "@id": pageUrl,
   },
   "inLanguage": "en-US",
-  "wordCount": post.content.split(/\s+/).length,
+  "wordCount": post.content.split(PAINTER_CTA_MARKER).join(' ').split(/\s+/).length,
   "citation": sources.map(source => source.url),
 };
 
@@ -187,7 +187,16 @@ const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
     </header>
 
     <!-- Article Content -->
-    <div class="blog-prose" set:html={articleContent} />
+    {articleParts.map((part, index) => (
+      <>
+        <div class="blog-prose" set:html={part} />
+        {index < articleParts.length - 1 && (
+          <div class="my-8">
+            <PainterQuoteCTA variant="inline" src={painterCtaSrc} />
+          </div>
+        )}
+      </>
+    ))}
 
     <aside class="mt-8 rounded-lg border border-border bg-slate-50 p-4 text-sm text-body">
       Product instructions change. For coverage, drying time, temperature limits, and surface preparation, use the current label or technical data sheet for the product in your hand. <a href="/editorial-standards" class="text-primary hover:underline">Read how these guides are checked</a>.
@@ -228,8 +237,10 @@ const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
     <div class="max-w-3xl mx-auto"><AdSlot format="horizontal" /></div>
   </article>
 
-  <!-- Affiliate Cards -->
-  {showPainterCta && <PainterQuoteCta pageSource={`blog-${post.slug}`} />}
+  <!-- End-of-article painter quote card -->
+  <section class="max-w-3xl mx-auto px-4">
+    <PainterQuoteCTA src={painterCtaSrc} />
+  </section>
 
   <AffiliateCards products={post.affiliateProducts} pageSource={`blog-${post.slug}`} />
 

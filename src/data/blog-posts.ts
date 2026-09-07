@@ -13,11 +13,17 @@ export interface BlogPost {
   relatedSlugs: string[];
   calculatorCta: { text: string; href: string };
   affiliateProducts?: AffiliateProduct[];
+  /**
+   * Placement tag for this post's painter quote CTA links (default 'blog').
+   * Setting it also enables the inline CTA where content contains <!-- painter-cta -->.
+   */
+  painterCtaSrc?: string;
 }
 
 export const blogPosts: BlogPost[] = [
   {
     slug: 'how-much-does-it-cost-to-paint-a-room',
+    painterCtaSrc: 'blog-cost',
     title: 'How Much Does It Cost to Paint a Room? DIY vs Pro Prices',
     metaDescription: 'A 12x12 room runs $100 to $200 in paint and supplies as a DIY, or $400 to $800 hiring a painter. Full breakdown by room size, paint grade, and hourly rate.',
     publishedDate: '2026-01-15',
@@ -143,6 +149,8 @@ export const blogPosts: BlogPost[] = [
 <li><strong>Number of colors:</strong> Each additional color adds setup time and potentially more paint purchases.</li>
 <li><strong>Your location:</strong> Painters in major metro areas (New York, San Francisco, Chicago) charge 30% to 50% more than those in smaller cities or rural areas.</li>
 </ul>
+
+<!-- painter-cta -->
 
 <h2>Paint Quality: Does It Actually Matter?</h2>
 
@@ -964,6 +972,7 @@ export const blogPosts: BlogPost[] = [
 
   {
     slug: 'when-to-hire-a-painter-vs-diy',
+    painterCtaSrc: 'blog-hire',
     title: 'When to Hire a Painter vs DIY: Complete Cost Breakdown (2026)',
     metaDescription: 'Should you paint it yourself or hire a pro? Compare real costs, time investment, and quality outcomes for DIY painting versus hiring a professional painter in 2026.',
     publishedDate: '2026-02-24',
@@ -1140,6 +1149,8 @@ export const blogPosts: BlogPost[] = [
 <li><strong>You have physical limitations.</strong> Painting is physically demanding work. Overhead ceiling work, repetitive rolling, and ladder climbing can be rough on backs, shoulders, and knees.</li>
 <li><strong>Time is more valuable than money.</strong> If you earn significantly more per hour than the cost difference between DIY and hiring, paying a pro is the logical choice.</li>
 </ul>
+
+<!-- painter-cta -->
 
 <h2>The Middle Ground: Hybrid Approach</h2>
 
@@ -3082,6 +3093,7 @@ export const blogPosts: BlogPost[] = [
 
   {
     slug: 'exterior-house-painting-guide',
+    painterCtaSrc: 'blog-exterior',
     title: 'Exterior House Painting: Complete Cost, Timeline, and DIY Guide',
     metaDescription: 'Everything you need to know about exterior house painting in 2026. Covers costs, paint selection, prep work, DIY vs hiring, and how long the job takes.',
     publishedDate: '2026-03-12',
@@ -3151,6 +3163,8 @@ export const blogPosts: BlogPost[] = [
 <li><strong>Equipment rental:</strong> Scaffolding or lift rental = $100 to $500/week</li>
 <li><strong>Total DIY cost:</strong> $750 to $2,100</li>
 </ul>
+
+<!-- painter-cta -->
 
 <h2>Choosing Exterior Paint</h2>
 

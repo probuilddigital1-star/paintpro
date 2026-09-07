@@ -4,7 +4,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import StaticResults from '../../components/StaticResults.astro';
-import PainterQuoteCta from '../../components/PainterQuoteCta.astro';
+import PainterQuoteCTA from '../../components/PainterQuoteCTA.astro';
 import AffiliateCards from '../../components/AffiliateCards.astro';
 import PageFAQ from '../../components/PageFAQ.astro';
 import RelatedPages from '../../components/RelatedPages.astro';
@@ -150,7 +150,9 @@ const faqSchema = page.faqs.length > 0 ? {
 
   <!-- Pre-calculated Results -->
   <StaticResults results={results} inputs={page.defaults} brand={page.brand} pageSource={page.slug} />
-  <PainterQuoteCta pageSource={page.slug} />
+  <section class="max-w-2xl mx-auto px-4 pb-8">
+    <PainterQuoteCTA src="calc-page" heading="Rather have a pro do it?" body="You've got your paint numbers. Get quotes from local painters for this job." />
+  </section>
 
   {page.measurementGuide && (
     <section class="max-w-4xl mx-auto px-4 pb-8">

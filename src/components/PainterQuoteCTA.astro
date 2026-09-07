@@ -1,0 +1,63 @@
+---
+// Painter quote call to action. Every instance is a plain link to /hire-a-painter with a
+// placement tag in the query string, which that page reads for the quote_page_view event.
+// No script, no third-party code: the Networx embed lives only on /hire-a-painter.
+//
+// Variants:
+//   card   - boxed block with heading, one line of body text, and a button. Dark slate
+//            background so it reads as a service prompt, not another product tile.
+//   inline - one sentence for use mid-article, with the second sentence as the button.
+//            Defaults: "Thinking about hiring this out?" + "Get quotes from local painters."
+interface Props {
+  /** Placement tag, appended as ?src=... (letters, digits, dash, underscore). */
+  src: string;
+  variant?: 'card' | 'inline';
+  heading?: string;
+  body?: string;
+  buttonText?: string;
+}
+
+const {
+  src,
+  variant = 'card',
+  heading = 'Want a pro to handle it?',
+  body,
+  buttonText,
+} = Astro.props;
+
+if (!/^[A-Za-z0-9_-]+$/.test(src)) {
+  throw new Error(`PainterQuoteCTA: src "${src}" must contain only letters, digits, dashes, or underscores.`);
+}
+
+const href = `/hire-a-painter?src=${src}`;
+const isInline = variant === 'inline';
+
+const bodyText = body ?? (isInline
+  ? 'Thinking about hiring this out?'
+  : 'Tell us about the project and get quotes from local painters.');
+const button = buttonText ?? (isInline ? 'Get quotes from local painters.' : 'Get painter quotes');
+---
+
+{isInline ? (
+  <p class="flex flex-wrap items-center gap-x-3 gap-y-2 text-body leading-relaxed" data-painter-cta={src}>
+    <span>{bodyText}</span>
+    <a
+      href={href}
+      class="inline-flex items-center rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white no-underline hover:bg-accent-dark transition-colors"
+    >{button}</a>
+  </p>
+) : (
+  <div
+    class="rounded-2xl bg-heading px-6 py-6 md:px-7 text-white flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+    data-painter-cta={src}
+  >
+    <div class="min-w-0">
+      <p class="text-lg font-bold text-white leading-snug">{heading}</p>
+      <p class="mt-1 text-sm text-gray-300 leading-relaxed">{bodyText}</p>
+    </div>
+    <a
+      href={href}
+      class="inline-flex shrink-0 items-center justify-center rounded-lg bg-accent px-5 py-2.5 font-semibold text-white hover:bg-accent-dark transition-colors whitespace-nowrap"
+    >{button}</a>
+  </div>
+)}

@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import PainterQuoteCTA from '../components/PainterQuoteCTA.astro';
 import {
   createPaintProject,
   createPaintRoom,
@@ -382,6 +383,10 @@ const plannerSchema = {
               <div id="summary-cards" class="mt-4 grid grid-cols-2 gap-3"></div>
               <div id="container-plan" class="mt-4 space-y-3"></div>
             </section>
+
+            <div class="planner-no-print">
+              <PainterQuoteCTA src="planner" heading="Big project? Get it quoted." body="Send the details to local painters and compare quotes." />
+            </div>
 
             <section class="rounded-2xl border border-border bg-white p-5 md:p-6">
               <p class="text-sm font-semibold uppercase tracking-wide text-primary">Room notes</p>

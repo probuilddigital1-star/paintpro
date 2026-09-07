@@ -25,13 +25,9 @@ AdSense ad slots and the AdSense script are off by default and only render when:
 PUBLIC_ADS_ENABLED=true
 ```
 
-The "Get painter quotes" button after calculator results links to a pay-per-lead program when this is set, and to the email signup form when it is empty:
+Both variables are read at build time, so rebuild after changing them. The article data keeps its Amazon links either way; the affiliate flag only controls whether they render as links.
 
-```text
-PUBLIC_PAINTER_LEAD_URL=https://example-network.com/your-tracking-link
-```
-
-All three variables are read at build time, so rebuild after changing them. The article data keeps its Amazon links either way; the affiliate flag only controls whether they render as links.
+Painter quote calls to action are plain links to `/hire-a-painter?src=<placement>` rendered by `src/components/PainterQuoteCTA.astro`. The Networx form embed lives only on that page.
 
 ## Indexing
 

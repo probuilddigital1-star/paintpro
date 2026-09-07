@@ -2,6 +2,14 @@
 // Paint coverage calculator
 // Mobile-first design with large touch targets (44px min)
 // Accounts for texture, primer, and surface condition
+import PainterQuoteCTA from './PainterQuoteCTA.astro';
+
+interface Props {
+  /** Set false where the painter quote card does not belong, such as the third-party embed. */
+  showPainterCta?: boolean;
+}
+
+const { showPainterCta = true } = Astro.props;
 ---
 
 <section id="calculator" class="max-w-2xl mx-auto px-4 py-8">
@@ -508,6 +516,13 @@
     <p class="text-body text-center mb-6" id="result-summary">
       The likely calculation uses <span id="raw-gallons">0</span> gallons before the selected buffer. If you are buying whole gallons, plan on <strong><span id="purchase-gallons">0</span> gallons</strong>. This covers <span id="total-area">0</span> square feet with <span id="num-coats">2</span> coats.
     </p>
+
+    {/* Painter quote CTA. Lives inside the results container so it appears with the estimate. */}
+    {showPainterCta && (
+      <div class="mb-6">
+        <PainterQuoteCTA src="calc" heading="Rather have a pro do it?" body="You've got your paint numbers. Get quotes from local painters for this job." />
+      </div>
+    )}
 
     <div class="mb-6 p-4 bg-slate-50 rounded-lg border border-slate-200">
       <div class="flex items-center justify-between gap-3 mb-2">

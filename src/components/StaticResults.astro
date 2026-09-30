@@ -138,6 +138,13 @@ const source = pageSource ?? 'calculator-static';
       <a href="/calculator-methodology" class="text-sm text-primary font-medium hover:underline">See the formula and assumptions</a>
     </p>
 
+    <!-- Optional content between the estimate and the supplies list (the painter quote CTA on room pages). -->
+    {Astro.slots.has('after-estimate') && (
+      <div class="mt-6">
+        <slot name="after-estimate" />
+      </div>
+    )}
+
     {recs.length > 0 && (
       <div class="mt-6 pt-6 border-t border-border">
         <h3 class="font-semibold text-heading mb-1">Supplies for this room</h3>

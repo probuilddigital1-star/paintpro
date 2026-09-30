@@ -179,6 +179,8 @@ const appUpdatedDate = '2026-07-11';
       }
     })} />
 
+    <!-- Page-specific head tags (e.g. a preconnect used by one page only). -->
+    <slot name="head" />
   </head>
   <body class="min-h-screen flex flex-col">
     <!-- Skip Navigation Link for Accessibility -->

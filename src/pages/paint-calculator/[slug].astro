@@ -149,10 +149,9 @@ const faqSchema = page.faqs.length > 0 ? {
   )}
 
   <!-- Pre-calculated Results -->
-  <StaticResults results={results} inputs={page.defaults} brand={page.brand} pageSource={page.slug} />
-  <section class="max-w-2xl mx-auto px-4 pb-8">
-    <PainterQuoteCTA src="calc-page" heading="Rather have a pro do it?" body="You've got your paint numbers. Get quotes from local painters for this job." />
-  </section>
+  <StaticResults results={results} inputs={page.defaults} brand={page.brand} pageSource={page.slug}>
+    <PainterQuoteCTA slot="after-estimate" src="calc-page" heading="Rather have a pro do it?" body="You've got your paint numbers. Get quotes from local painters for this job." />
+  </StaticResults>
 
   {page.measurementGuide && (
     <section class="max-w-4xl mx-auto px-4 pb-8">

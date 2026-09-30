@@ -223,7 +223,7 @@ const faqSchema = page.faqs.length > 0 ? {
           <thead>
             <tr class="bg-light-gray">
               {page.dataTable.columns.map((col, i) => (
-                <th class={`px-4 py-3 font-semibold text-heading ${i === 0 ? 'text-left' : 'text-center'}`}>{col}</th>
+                <th class={`px-2 sm:px-4 py-3 font-semibold text-heading ${i === 0 ? 'text-left' : 'text-center'}`}>{col}</th>
               ))}
             </tr>
           </thead>
@@ -231,7 +231,7 @@ const faqSchema = page.faqs.length > 0 ? {
             {page.dataTable.rows.map((row) => (
               <tr class="border-t border-border">
                 {row.map((cell, i) => (
-                  <td class={`px-4 py-3 ${i === 0 ? 'text-heading font-medium' : 'text-center text-body'}`}>{cell}</td>
+                  <td class={`px-2 sm:px-4 py-3 ${i === 0 ? 'text-heading font-medium' : 'text-center text-body'}`}>{cell}</td>
                 ))}
               </tr>
             ))}
@@ -254,19 +254,19 @@ const faqSchema = page.faqs.length > 0 ? {
         <table class="w-full bg-white rounded-lg border border-border text-sm">
           <thead>
             <tr class="bg-light-gray">
-              <th class="text-left px-4 py-3 font-semibold text-heading">Brand</th>
-              <th class="text-center px-4 py-3 font-semibold text-heading">Coverage (sq ft/gal)</th>
-              <th class="text-center px-4 py-3 font-semibold text-heading">Price Tier</th>
-              <th class="text-center px-4 py-3 font-semibold text-heading">Calculator</th>
+              <th class="text-left px-2 sm:px-4 py-3 font-semibold text-heading">Brand</th>
+              <th class="text-center px-2 sm:px-4 py-3 font-semibold text-heading">Coverage (sq ft/gal)</th>
+              <th class="text-center px-2 sm:px-4 py-3 font-semibold text-heading">Price Tier</th>
+              <th class="text-center px-2 sm:px-4 py-3 font-semibold text-heading">Calculator</th>
             </tr>
           </thead>
           <tbody>
             {page.brandComparisonTable.map((entry) => (
               <tr class={`border-t border-border ${entry.slug === page.slug ? 'bg-primary/5 font-semibold' : ''}`}>
-                <td class="px-4 py-3 text-heading">{entry.brand}</td>
-                <td class="px-4 py-3 text-center">{entry.coverageRate}</td>
-                <td class="px-4 py-3 text-center">{entry.priceTier}</td>
-                <td class="px-4 py-3 text-center">
+                <td class="px-2 sm:px-4 py-3 text-heading">{entry.brand}</td>
+                <td class="px-2 sm:px-4 py-3 text-center">{entry.coverageRate}</td>
+                <td class="px-2 sm:px-4 py-3 text-center">{entry.priceTier}</td>
+                <td class="px-2 sm:px-4 py-3 text-center">
                   {entry.slug === page.slug ? (
                     <span class="text-primary text-xs">You are here</span>
                   ) : (

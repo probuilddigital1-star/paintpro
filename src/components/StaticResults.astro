@@ -251,6 +251,7 @@ const receiptSub = `${inputs.length}x${inputs.width} ft ${roomLabel}, ${inputs.n
   .receipt-supply-cta {
     color: var(--color-primary);
     font-weight: 500;
+    white-space: nowrap; /* "View tape" moves down whole instead of splitting across lines */
     text-decoration-line: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;

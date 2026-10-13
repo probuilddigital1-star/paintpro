@@ -167,11 +167,8 @@ const faqSchema = page.faqs.length > 0 ? {
         The result above is a worked example using the dimensions and openings shown in the breakdown. Use these room-specific checks before treating it as a shopping quantity.
       </p>
       <ol class="mt-8 grid gap-x-10 md:grid-cols-3">
-        {page.measurementGuide.map((item, index) => (
-          <li class="border-t border-border pt-4 pb-6">
-            <span class="numeral block text-[1.75rem] text-heading">{index + 1}</span>
-            <span class="mt-2 block text-[0.9375rem] leading-relaxed">{item}</span>
-          </li>
+        {page.measurementGuide.map((item) => (
+          <li class="border-t border-border pt-4 pb-6 text-[0.9375rem] leading-relaxed">{item}</li>
         ))}
       </ol>
     </section>

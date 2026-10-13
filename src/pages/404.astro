@@ -14,6 +14,9 @@ const popular = [
   { href: '/paint-planner', label: 'Project planner', note: 'Total a whole house, room by room' },
   { href: '/blog', label: 'Painting guides', note: 'Prep, coats, finishes, and cost' },
 ];
+
+// The first link is the main way back, so it becomes the button. The rest are plain text links.
+const [primary, ...others] = popular;
 ---
 
 <Layout
@@ -23,23 +26,22 @@ const popular = [
 >
   <Header />
 
-  <main class="max-w-2xl mx-auto px-4 py-16">
-    <p class="text-sm font-semibold text-primary mb-2">Error 404</p>
-    <h1 class="text-3xl md:text-4xl font-bold text-heading mb-3">That page does not exist</h1>
-    <p class="text-body mb-8">
+  <main class="mx-auto max-w-xl px-4 pt-10 pb-20 md:pt-20">
+    <h1 class="mb-4 text-[2.5rem] md:text-[3.75rem]">That page does not exist</h1>
+    <p class="mb-8 text-[1.0625rem] leading-relaxed md:text-[1.1875rem]">
       The link may be out of date or slightly mistyped. Here is where most people are headed.
     </p>
 
-    <ul class="space-y-3">
-      {popular.map((item) => (
-        <li>
-          <a
-            href={item.href}
-            class="block p-4 rounded-lg border border-border bg-white hover:border-primary/40 hover:shadow-sm transition"
-          >
-            <span class="block font-medium text-heading">{item.label}</span>
-            <span class="block text-sm text-body mt-1">{item.note}</span>
-          </a>
+    <div class="mb-10 flex flex-wrap items-center gap-x-5 gap-y-3">
+      <a href={primary.href} class="btn btn-primary">{primary.label}</a>
+      <span class="text-sm text-muted">{primary.note}</span>
+    </div>
+
+    <ul class="border-t border-border">
+      {others.map((item) => (
+        <li class="border-b border-border py-4">
+          <a href={item.href} class="link">{item.label}</a>
+          <span class="mt-0.5 block text-sm text-muted">{item.note}</span>
         </li>
       ))}
     </ul>

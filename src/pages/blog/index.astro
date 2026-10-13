@@ -27,15 +27,6 @@ const breadcrumbSchema = {
     },
   ],
 };
-
-// Category badge colors
-const categoryColors: Record<string, string> = {
-  'Cost Guide': 'bg-green-100 text-green-800',
-  'Paint Guide': 'bg-blue-100 text-blue-800',
-  'Painting Tips': 'bg-amber-100 text-amber-800',
-  'Brand Comparison': 'bg-purple-100 text-purple-800',
-  'How-To Guide': 'bg-rose-100 text-rose-800',
-};
 ---
 
 <Layout
@@ -51,68 +42,154 @@ const categoryColors: Record<string, string> = {
     { name: 'Blog' },
   ]} />
 
-  <!-- Hero -->
-  <div class="bg-gradient-to-b from-slate-50 to-secondary">
-    <div class="h-1 bg-gradient-to-r from-amber-400 via-rose-400 to-cyan-400"></div>
-    <div class="max-w-4xl mx-auto px-4 py-10 text-center">
-      <span class="inline-block bg-primary/10 text-primary text-sm font-semibold px-4 py-1 rounded-full mb-4">Reviewed guides</span>
-      <h1 class="text-3xl md:text-4xl font-bold mb-4">
-        <span class="text-gradient">Paint Calculator</span> Blog
-      </h1>
-      <p class="text-body text-lg leading-relaxed max-w-2xl mx-auto">
-        Practical notes on estimating, preparation, application, and the mistakes that cost time or paint.
-      </p>
-    </div>
-  </div>
+  <!-- Intro -->
+  <section class="mx-auto max-w-4xl px-4 pb-8 pt-6 md:pb-12 md:pt-10">
+    <p class="text-sm text-muted">Reviewed guides</p>
+    <h1 class="blog-title">Paint Calculator Blog</h1>
+    <p class="mt-5 max-w-xl text-[1.1875rem] leading-[1.55]">
+      Practical notes on estimating, preparation, application, and the mistakes that cost time or paint.
+    </p>
+  </section>
 
-  <!-- Blog Grid -->
-  <div class="max-w-4xl mx-auto px-4 py-10">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {reviewedPosts.map(post => {
-        const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
-        return (
-          <a
-            href={`/blog/${post.slug}`}
-            class="group block bg-white rounded-xl border border-border shadow-sm hover:shadow-md hover:border-primary/30 transition-all overflow-hidden"
-          >
-            <div class="p-5">
-              <div class="flex items-center gap-2 mb-3">
-                <span class={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${badgeColor}`}>{post.category}</span>
-                <span class="text-xs text-gray-400">{post.readingTime} min read</span>
-              </div>
-              <h2 class="font-semibold text-heading group-hover:text-primary transition-colors mb-2 line-clamp-2">{post.title}</h2>
-              <p class="text-sm text-body line-clamp-3">{post.metaDescription}</p>
-              <div class="mt-4 flex items-center justify-between">
-                <time class="text-xs text-gray-400" datetime={post.publishedDate}>
-                  {new Date(post.publishedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                </time>
-                <span class="text-sm font-medium text-primary group-hover:underline flex items-center gap-1">
-                  Read more
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                  </svg>
-                </span>
-              </div>
-            </div>
+  <!-- Post list: one column on phones, two ruled columns from md up -->
+  <div class="mx-auto max-w-4xl px-4 pb-12 md:pb-16">
+    <ul class="post-list" role="list">
+      {reviewedPosts.map(post => (
+        <li>
+          <a href={`/blog/${post.slug}`} class="post-item">
+            <span class="post-cat">{post.category}</span>
+            <span class="post-read">{post.readingTime} min read</span>
+            <h2 class="post-title">{post.title}</h2>
+            <p class="post-desc">{post.metaDescription}</p>
+            <time class="post-date" datetime={post.publishedDate}>
+              {new Date(post.publishedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </time>
+            <span class="post-more">Read more</span>
           </a>
-        );
-      })}
-    </div>
+        </li>
+      ))}
+    </ul>
   </div>
 
   <!-- CTA -->
-  <div class="max-w-4xl mx-auto px-4 pb-10">
-    <div class="bg-light-gray rounded-2xl p-8 text-center">
-      <h2 class="text-xl font-bold text-heading mb-2">Ready to Start Your Project?</h2>
-      <p class="text-body mb-4">Use the calculator to make a sensible buying estimate before you head to the store.</p>
-      <a
-        href="/#calculator"
-        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold py-3 px-8 rounded-lg transition-all shadow-md hover:shadow-lg text-lg"
-      >
-        Try the Paint Calculator
-      </a>
+  <div class="mx-auto max-w-4xl px-4 pb-14 md:pb-20">
+    <div class="panel flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between md:p-8">
+      <div>
+        <h2 class="cta-heading">Ready to Start Your Project?</h2>
+        <p class="mt-1 text-[0.9375rem]">Use the calculator to make a sensible buying estimate before you head to the store.</p>
+      </div>
+      <a href="/#calculator" class="btn btn-primary shrink-0">Try the Paint Calculator</a>
     </div>
   </div>
 
   <Footer />
 </Layout>
+
+<style>
+  .blog-title {
+    margin-top: 0.75rem;
+    font-size: clamp(2.5rem, 1.85rem + 2.6vw, 3.5rem);
+  }
+
+  .cta-heading {
+    font-size: 1.75rem;
+    line-height: 1.12;
+  }
+
+  /*
+    The list. Every post is one link with a hairline above it. The link's parts sit in a grid so the
+    category, date and reading time share one small line while the markup keeps the original order.
+  */
+  .post-list {
+    display: grid;
+    column-gap: 3rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 768px) {
+    .post-list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .post-list > li {
+    display: flex;
+  }
+
+  .post-item {
+    display: grid;
+    flex: 1;
+    min-width: 0;
+    grid-template-columns: auto auto 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-areas:
+      "cat   date  read"
+      "title title title"
+      "desc  desc  desc"
+      "more  more  more";
+    column-gap: 1.25rem;
+    padding-block: 1.5rem 1.75rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: var(--color-muted);
+    transition: border-color 150ms ease;
+  }
+
+  .post-item:hover {
+    border-top-color: var(--color-heading);
+  }
+
+  .post-cat {
+    grid-area: cat;
+  }
+
+  .post-date {
+    grid-area: date;
+  }
+
+  .post-read {
+    grid-area: read;
+  }
+
+  .post-title {
+    grid-area: title;
+    margin-top: 0.625rem;
+    font-size: 1.625rem;
+    line-height: 1.12;
+  }
+
+  .post-item:hover .post-title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+  }
+
+  .post-desc {
+    grid-area: desc;
+    margin-top: 0.625rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--color-body);
+  }
+
+  .post-more {
+    grid-area: more;
+    justify-self: start;
+    align-self: end;
+    margin-top: 0.75rem;
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .post-item:hover .post-more {
+    color: var(--color-primary-dark);
+    text-decoration-thickness: 2px;
+  }
+</style>

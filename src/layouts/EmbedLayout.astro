@@ -1,4 +1,8 @@
 ---
+import '@fontsource/instrument-serif/latin-400.css';
+import '@fontsource/instrument-serif/latin-400-italic.css';
+import '@fontsource-variable/instrument-sans/wght.css';
+import '@fontsource-variable/instrument-sans/wght-italic.css';
 import '../styles/global.css';
 
 interface Props {
@@ -16,10 +20,6 @@ const { title = 'Paint Calculator Widget' } = Astro.props;
     <meta name="robots" content="noindex" />
     <title>{title}</title>
 
-    <!-- Google Fonts - DM Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body class="bg-white">
     <slot />

@@ -282,7 +282,7 @@ export const blogPosts: BlogPost[] = [
 
 <p>Sherwin-Williams Emerald is not marketed as a bathroom-specific paint, but it is one of the best options available. It includes antimicrobial agents that resist mold and mildew, and the advanced resin technology creates an extremely durable, washable surface.</p>
 
-<p>The <a href="/paint-calculator/sherwin-williams-paint-calculator">Sherwin-Williams Emerald</a> line excels in coverage. Many painters report true one-coat coverage on most color transitions, which is impressive. The self-leveling formula also means fewer visible roller marks, giving you a smoother, more professional finish.</p>
+<p>The <a href="/paint-calculator/sherwin-williams-coverage">Sherwin-Williams Emerald</a> line excels in coverage. Many painters report true one-coat coverage on most color transitions, which is impressive. The self-leveling formula also means fewer visible roller marks, giving you a smoother, more professional finish.</p>
 
 <p>Sherwin-Williams stores frequently run 30% to 40% off sales, making this premium paint more affordable if you time your purchase right. Check for their spring and fall sales events.</p>
 
@@ -292,7 +292,7 @@ export const blogPosts: BlogPost[] = [
 <p><strong>Coverage:</strong> 350 to 400 sq ft per gallon</p>
 <p><strong>Sheens available:</strong> Satin, Semi-Gloss</p>
 
-<p><a href="/paint-calculator/behr-paint-calculator">Behr's</a> Kitchen & Bath formula is the best budget-friendly bathroom paint you can buy. At roughly $30 per gallon, it costs less than half of the premium options while still delivering solid moisture and mildew resistance.</p>
+<p><a href="/paint-calculator/behr-coverage">Behr's</a> Kitchen & Bath formula is the best budget-friendly bathroom paint you can buy. At roughly $30 per gallon, it costs less than half of the premium options while still delivering solid moisture and mildew resistance.</p>
 
 <p>The built-in primer saves time and reduces total project cost. Coverage is good (though typically requires two coats for full hide), and the mildew-resistant finish holds up well in standard bathroom conditions.</p>
 
@@ -600,12 +600,12 @@ export const blogPosts: BlogPost[] = [
 <li>Benjamin Moore Aura: $75 to $85</li>
 </ul>
 
-<p>The price gap is significant. <a href="/paint-calculator/behr-paint-calculator">Behr's</a> most expensive paint costs about the same as Sherwin-Williams' and Benjamin Moore's mid-range options. For a typical 12x12 room needing 2 gallons, you are looking at:</p>
+<p>The price gap is significant. <a href="/paint-calculator/behr-coverage">Behr's</a> most expensive paint costs about the same as Sherwin-Williams' and Benjamin Moore's mid-range options. For a typical 12x12 room needing 2 gallons, you are looking at:</p>
 
 <ul>
 <li>Behr Marquee: $84 to $96</li>
-<li><a href="/paint-calculator/sherwin-williams-paint-calculator">Sherwin-Williams</a> Duration: $130 to $150</li>
-<li><a href="/paint-calculator/benjamin-moore-paint-calculator">Benjamin Moore</a> Regal Select: $130 to $150</li>
+<li><a href="/paint-calculator/sherwin-williams-coverage">Sherwin-Williams</a> Duration: $130 to $150</li>
+<li><a href="/paint-calculator/benjamin-moore-coverage">Benjamin Moore</a> Regal Select: $130 to $150</li>
 </ul>
 
 <p>However, Sherwin-Williams runs frequent sales (30% to 40% off) that bring their prices closer to Behr's regular pricing. If you time your purchase right, SW Duration drops to $40 to $50 per gallon.</p>

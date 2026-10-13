@@ -1,48 +1,69 @@
 ---
-// Footer component
+// Footer: the ink section. Links run down in columns on wider screens (site pages first,
+// then the policy pages), two to a row on phones.
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-heading text-white mt-auto">
-  <div class="max-w-4xl mx-auto px-4 py-8">
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+<footer class="site-footer mt-auto bg-heading text-on-ink">
+  <div class="mx-auto max-w-4xl px-4 pt-12 pb-8 md:pt-14">
+    <div class="flex flex-col gap-8 md:flex-row md:justify-between md:gap-12">
       <!-- Brand -->
-      <div>
-        <div class="flex items-center gap-2 mb-2">
-          <svg
-            class="w-6 h-6 text-primary"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
-            <path d="M7 17h10c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1zm1-4h8v2H8v-2z"/>
-            <path d="M17 7H7v2h10V7z"/>
-          </svg>
-          <span class="font-bold">PaintPro Calculator</span>
-        </div>
-        <p class="text-gray-300 text-sm">Calculate paint coverage with confidence</p>
+      <div class="md:max-w-[18rem]">
+        <p class="wordmark text-on-ink">PaintPro Calculator</p>
+        <p class="mt-2 text-sm text-on-ink-muted">Calculate paint coverage with confidence</p>
       </div>
 
       <!-- Links -->
-      <nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm" aria-label="Footer navigation">
-        <a href="/blog" class="text-gray-300 hover:text-white transition-colors">Blog</a>
-        <a href="/paint-planner" class="text-gray-300 hover:text-white transition-colors">Planner</a>
-        <a href="/hire-a-painter?src=footer" class="text-gray-300 hover:text-white transition-colors">Find a Painter</a>
-        <a href="/about" class="text-gray-300 hover:text-white transition-colors">About</a>
-        <a href="/editorial-standards" class="text-gray-300 hover:text-white transition-colors">Editorial Standards</a>
-        <a href="/calculator-methodology" class="text-gray-300 hover:text-white transition-colors">Calculator Method</a>
-        <a href="/affiliate-disclosure" class="text-gray-300 hover:text-white transition-colors">Affiliate Disclosure</a>
-        <a href="/privacy" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a>
-        <button onclick="openCookieSettings()" class="text-gray-300 hover:text-white transition-colors">Cookie Settings</button>
-        <a href="mailto:zack.pearson@probuilddigital.com" class="text-gray-300 hover:text-white transition-colors">Contact</a>
+      <nav class="grid grid-cols-2 gap-x-6 gap-y-3 text-[0.9375rem] md:grid-flow-col md:grid-cols-[repeat(3,auto)] md:grid-rows-4 md:gap-x-12" aria-label="Footer navigation">
+        <a href="/blog" class="footer-link">Blog</a>
+        <a href="/paint-planner" class="footer-link">Planner</a>
+        <a href="/hire-a-painter?src=footer" class="footer-link">Find a Painter</a>
+        <a href="/about" class="footer-link">About</a>
+        <a href="/editorial-standards" class="footer-link">Editorial Standards</a>
+        <a href="/calculator-methodology" class="footer-link">Calculator Method</a>
+        <a href="/affiliate-disclosure" class="footer-link">Affiliate Disclosure</a>
+        <a href="/privacy" class="footer-link">Privacy Policy</a>
+        <button type="button" onclick="openCookieSettings()" class="footer-link text-left">Cookie Settings</button>
+        <a href="mailto:zack.pearson@probuilddigital.com" class="footer-link">Contact</a>
       </nav>
     </div>
 
-    <hr class="border-gray-700 my-6" />
+    <hr class="my-8 border-on-ink/15" />
 
-    <p class="text-center text-gray-300 text-sm">
+    <p class="text-sm text-on-ink-muted">
       &copy; {currentYear} ProBuild Digital LLC. All rights reserved.
     </p>
   </div>
 </footer>
+
+<style>
+  .wordmark {
+    font-family: var(--font-serif);
+    font-size: 1.625rem;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .footer-link {
+    justify-self: start;
+    color: var(--color-on-ink-muted);
+    line-height: 1.4;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: transparent;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    transition: color 150ms ease, text-decoration-color 150ms ease;
+  }
+
+  .footer-link:hover {
+    color: var(--color-on-ink);
+    text-decoration-color: currentColor;
+  }
+
+  /* The terracotta focus ring is only about 3:1 on ink, so use linen here. */
+  .site-footer :focus-visible {
+    outline-color: var(--color-on-ink);
+  }
+</style>

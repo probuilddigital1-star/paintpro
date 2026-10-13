@@ -41,7 +41,7 @@ const faqs = [
     answer:
       'Yes. Use the paint calculator to estimate how much paint the job needs before you get quotes, so you have a number to compare the bids against.',
     answerHtml:
-      'Yes. Use the <a href="/#calculator" class="text-primary hover:underline">paint calculator</a> to estimate how much paint the job needs before you get quotes, so you have a number to compare the bids against.',
+      'Yes. Use the <a href="/#calculator" class="link">paint calculator</a> to estimate how much paint the job needs before you get quotes, so you have a number to compare the bids against.',
   },
 ];
 
@@ -84,23 +84,24 @@ const breadcrumbSchema = {
     { name: 'Find a Painter' },
   ]} />
 
-  <main class="max-w-4xl mx-auto px-4 pb-12">
+  <main class="mx-auto max-w-4xl px-4 pb-16">
     {/*
       The form comes first: visitors arrive from a "Get painter quotes" button, and on a phone the
       form used to start a full screen down, below the intro and the three steps. Keep this heading
       block short so the form's top edge lands inside the first screen on a phone.
     */}
-    <section class="pt-3 pb-5">
-      <h1 class="text-3xl md:text-4xl font-bold text-heading mb-2">Find a Painter for Your Project</h1>
-      <p class="text-body leading-relaxed">
+    <section class="pt-3 pb-6 md:pt-6 md:pb-8">
+      <h1 class="mb-3 text-[2.5rem] md:text-[3.75rem]">Find a Painter for Your Project</h1>
+      <p class="max-w-[34rem] text-[1.0625rem] leading-relaxed md:text-[1.1875rem]">
         Interior, exterior, cabinets, trim, whole house. Any size job.
       </p>
     </section>
 
     <section id="quote-form" class="pb-8">
-      <h2 class="text-2xl font-bold text-heading mb-3">Request quotes for your project</h2>
+      <h2 class="mb-4 text-[1.875rem] md:text-[2.5rem]">Request quotes for your project</h2>
 
-      <div class="bg-white rounded-2xl shadow-sm border border-border p-3 md:p-5">
+      {/* White on purpose: the Networx form inside is white, so the wrapper is a plain white box with a hairline border. */}
+      <div class="rounded border border-border bg-white p-3 md:p-5">
         <!--
           Networx form embed, exactly as Networx issues it.
           We previously hard-coded the <iframe> that their loader builds, copied from a curl request.
@@ -122,41 +123,44 @@ const breadcrumbSchema = {
       </div>
     </section>
 
-    <p class="text-body leading-relaxed pb-8">
-      If you've run the numbers and decided this is a job for a pro, this is the next step. Fill out the short form above with your zip code and a few details about the project, and painters in your area will reach out to quote it.
-    </p>
+    {/* Text below the form stays in one reading column (about 68 characters a line). */}
+    <div class="max-w-[34rem]">
+      <p class="pb-10 leading-relaxed">
+        If you've run the numbers and decided this is a job for a pro, this is the next step. Fill out the short form above with your zip code and a few details about the project, and painters in your area will reach out to quote it.
+      </p>
 
-    <section id="how-it-works" class="pb-10">
-      <h2 class="text-2xl font-bold text-heading mb-4">How it works</h2>
-      <ol class="list-decimal pl-6 space-y-3 text-body leading-relaxed">
-        {steps.map((step) => (
-          <li>
-            <span class="font-semibold text-heading">{step.title}</span> {step.detail}
-          </li>
-        ))}
-      </ol>
-    </section>
+      <section id="how-it-works" class="pb-12">
+        <h2 class="mb-5 text-[1.875rem] md:text-[2.5rem]">How it works</h2>
+        <ol class="list-decimal space-y-4 pl-6 leading-relaxed marker:font-semibold marker:text-primary">
+          {steps.map((step) => (
+            <li class="pl-1">
+              <span class="font-semibold text-heading">{step.title}</span> {step.detail}
+            </li>
+          ))}
+        </ol>
+      </section>
 
-    <section id="faq" class="pb-10">
-      <h2 class="text-2xl font-bold text-heading mb-6">Frequently asked questions</h2>
-      <div class="space-y-6">
-        {faqs.map((faq) => (
-          <div>
-            <h3 class="text-lg font-semibold text-heading mb-1">{faq.question}</h3>
-            {faq.answerHtml ? (
-              <p class="text-body leading-relaxed" set:html={faq.answerHtml} />
-            ) : (
-              <p class="text-body leading-relaxed">{faq.answer}</p>
-            )}
-          </div>
-        ))}
-      </div>
-    </section>
+      <section id="faq" class="pb-8">
+        <h2 class="mb-5 text-[1.875rem] md:text-[2.5rem]">Frequently asked questions</h2>
+        <div class="border-t border-border">
+          {faqs.map((faq) => (
+            <div class="border-b border-border py-5">
+              <h3 class="mb-1.5 text-[1.125rem] md:text-[1.25rem]">{faq.question}</h3>
+              {faq.answerHtml ? (
+                <p class="leading-relaxed" set:html={faq.answerHtml} />
+              ) : (
+                <p class="leading-relaxed">{faq.answer}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
 
-    <p class="text-sm text-gray-500 leading-relaxed border-t border-border pt-6">
-      The quote form on this page is provided by Networx. PaintPro Calculator may earn a referral fee when a project is matched with a painter. This does not affect the quotes you receive.
-      <a href="/affiliate-disclosure" class="text-primary hover:underline">Read the full affiliate disclosure.</a>
-    </p>
+      <p class="text-sm leading-relaxed text-muted">
+        The quote form on this page is provided by Networx. PaintPro Calculator may earn a referral fee when a project is matched with a painter. This does not affect the quotes you receive.
+        <a href="/affiliate-disclosure" class="link">Read the full affiliate disclosure.</a>
+      </p>
+    </div>
   </main>
 
   <!--

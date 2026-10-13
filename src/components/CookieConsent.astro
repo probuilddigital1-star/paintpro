@@ -5,61 +5,47 @@
 import { adsEnabled } from '../config/site';
 ---
 
-<div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-50 p-4 hidden">
-  <div class="max-w-xl mx-auto bg-slate-900 text-white rounded-2xl shadow-2xl shadow-slate-900/50 overflow-hidden animate-slide-up">
-    <!-- Gradient accent bar -->
-    <div class="h-1 bg-gradient-to-r from-amber-400 via-rose-400 to-cyan-400"></div>
+<div id="cookie-banner" class="cookie-bar fixed bottom-0 left-0 right-0 z-50 hidden bg-heading text-on-ink">
+  <div class="mx-auto flex max-w-4xl flex-col gap-4 px-4 pt-5 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+    <div class="min-w-0">
+      <h3 class="text-base text-on-ink">Cookie Settings</h3>
+      <p class="mt-1 text-sm text-on-ink-muted">
+        We use cookies for analytics and advertising to improve your experience.
+        <a href="/privacy" class="cookie-link">Learn more</a>
+      </p>
+    </div>
 
-    <div class="p-5">
-      <div class="flex items-start gap-4">
-        <!-- Cookie icon -->
-        <div class="flex-shrink-0 w-10 h-10 bg-amber-400/20 rounded-xl flex items-center justify-center">
-          <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-
-        <div class="flex-1">
-          <h3 class="font-semibold text-white mb-1">Cookie Settings</h3>
-          <p class="text-sm text-slate-300 leading-relaxed">
-            We use cookies for analytics and advertising to improve your experience.
-            <a href="/privacy" class="text-amber-400 hover:text-amber-300 underline underline-offset-2">Learn more</a>
-          </p>
-        </div>
-      </div>
-
-      <div class="flex gap-3 mt-4 ml-14">
-        <button
-          id="cookie-optout"
-          class="px-5 py-2.5 text-sm font-medium text-slate-300 hover:text-white border border-slate-600 hover:border-slate-500 rounded-xl transition-colors"
-        >
-          Opt out
-        </button>
-        <button
-          id="cookie-close"
-          class="px-5 py-2.5 text-sm font-medium bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-900 rounded-xl transition-all shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40"
-        >
-          Got it
-        </button>
-      </div>
+    <div class="flex shrink-0 gap-3">
+      <button id="cookie-optout" type="button" class="btn btn-on-ink btn-sm">
+        Opt out
+      </button>
+      <button id="cookie-close" type="button" class="btn btn-primary btn-sm">
+        Got it
+      </button>
     </div>
   </div>
 </div>
 
 <style>
-  @keyframes slide-up {
-    from {
-      opacity: 0;
-      transform: translateY(100%);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  /* Clear the home indicator on phones that have one. */
+  .cookie-bar > div {
+    padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
   }
 
-  .animate-slide-up {
-    animation: slide-up 0.4s ease-out forwards;
+  .cookie-link {
+    color: var(--color-on-ink);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .cookie-link:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  /* The terracotta focus ring is only about 3:1 on ink, so use linen here. */
+  .cookie-bar :focus-visible {
+    outline-color: var(--color-on-ink);
   }
 </style>
 
@@ -92,8 +78,10 @@ import { adsEnabled } from '../config/site';
     });
 
     function loadTracking() {
-      // Only load in production
-      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') return;
+      // Only load in production. Cloudflare Pages preview deployments (*.pages.dev) are skipped
+      // too, so previews never count in the production GA4 property.
+      var host = window.location.hostname;
+      if (host === 'localhost' || host === '127.0.0.1' || host.endsWith('.pages.dev')) return;
 
       // Check if already loaded
       if (window.gtag) return;

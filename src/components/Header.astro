@@ -1,35 +1,98 @@
 ---
-// Header component - Polished navigation with glass effect
+// Site header: serif wordmark, plain text nav, the current section marked with a terracotta
+// underline. Phones get the wordmark on one row and all four links on a single row below it
+// (the full wordmark and four links need about 395px, more than a 360px screen has).
+//
+// build.format is 'file', so Astro.url.pathname ends in .html (and /index.html at the root).
+const path =
+  Astro.url.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '').replace(/\/$/, '') || '/';
+const inSection = (base: string) => path === base || path.startsWith(`${base}/`);
+
+// aria-current is "page" when the link is this page, "true" when it is the section this page sits in.
+const links = [
+  {
+    href: '/#calculator',
+    label: 'Calculator',
+    current: path === '/' ? 'page' : inSection('/paint-calculator') ? 'true' : undefined,
+  },
+  { href: '/paint-planner', label: 'Planner', current: path === '/paint-planner' ? 'page' : undefined },
+  { href: '/blog', label: 'Guides', current: path === '/blog' ? 'page' : inSection('/blog') ? 'true' : undefined },
+  {
+    href: '/hire-a-painter?src=nav',
+    label: 'Find a Painter',
+    current: path === '/hire-a-painter' ? 'page' : undefined,
+  },
+  { href: '/about', label: 'About', current: path === '/about' ? 'page' : undefined, wide: true },
+];
 ---
 
-<header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-slate-100">
-  <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-3 group" aria-label="PaintPro Calculator - Home">
-      <!-- Paint bucket icon with gradient -->
-      <div class="w-10 h-10 bg-gradient-to-br from-primary to-primary-dark rounded-xl flex items-center justify-center shadow-lg shadow-primary/25 group-hover:shadow-primary/40 transition-shadow">
-        <svg
-          class="w-5 h-5 text-white"
-          fill="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
-          <path d="M7 17h10c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1zm1-4h8v2H8v-2z"/>
-          <path d="M17 7H7v2h10V7z"/>
-        </svg>
-      </div>
-      <div>
-        <span class="text-xl font-bold text-heading">PaintPro</span>
-        <span class="text-xl font-bold text-gradient">Calculator</span>
-      </div>
+<header class="sticky top-0 z-50 border-b border-border bg-secondary">
+  <div class="mx-auto flex max-w-4xl flex-col px-4 pt-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6 sm:py-4">
+    <a href="/" class="logo self-start text-heading" aria-label="PaintPro Calculator - Home">
+      <span>PaintPro</span>
+      <span>Calculator</span>
     </a>
 
-    <nav class="flex flex-wrap items-center justify-end gap-x-3 gap-y-1 sm:gap-x-5" aria-label="Main navigation">
-      <a href="/#calculator" class="text-sm font-medium text-body hover:text-primary transition-colors">Calculator</a>
-      <a href="/paint-planner" class="text-sm font-medium text-body hover:text-primary transition-colors">Planner</a>
-      <a href="/blog" class="text-sm font-medium text-body hover:text-primary transition-colors">Guides</a>
-      <a href="/hire-a-painter?src=nav" class="whitespace-nowrap text-sm font-medium text-body hover:text-primary transition-colors">Find a Painter</a>
-      <a href="/about" class="hidden sm:inline text-sm font-medium text-body hover:text-primary transition-colors">About</a>
+    <nav class="flex max-w-[21rem] items-baseline justify-between sm:max-w-none sm:justify-end sm:gap-x-5 md:gap-x-7 lg:gap-x-9" aria-label="Main navigation">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class:list={['nav-link whitespace-nowrap', link.wide && 'hidden sm:inline']}
+          aria-current={link.current}
+        >{link.label}</a>
+      ))}
     </nav>
   </div>
 </header>
+
+<style>
+  .logo {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+
+  .nav-link {
+    /* The vertical padding makes a taller tap target without making the header taller. */
+    padding-block: 0.625rem;
+    color: var(--color-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5;
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: transparent;
+    text-underline-offset: 6px;
+    transition: color 150ms ease, text-decoration-color 150ms ease;
+  }
+
+  .nav-link:hover {
+    color: var(--color-heading);
+    text-decoration-color: var(--color-border-strong);
+  }
+
+  .nav-link[aria-current] {
+    color: var(--color-heading);
+    text-decoration-color: var(--color-accent);
+  }
+
+  @media (min-width: 640px) {
+    .logo {
+      font-size: 1.625rem;
+    }
+
+    .nav-link {
+      padding-block: 0.375rem;
+      font-size: 0.9375rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .logo {
+      font-size: 1.75rem;
+    }
+  }
+</style>

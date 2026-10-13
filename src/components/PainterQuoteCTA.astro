@@ -4,8 +4,10 @@
 // No script, no third-party code: the Networx embed lives only on /hire-a-painter.
 //
 // Variants:
-//   card   - boxed block with heading, one line of body text, and a button. Dark slate
-//            background so it reads as a service prompt, not another product tile.
+//   card   - ink panel with heading, one line of body text, and a terracotta button, so it
+//            reads as a service prompt, not another product tile. It goes side by side when
+//            the card itself is at least 32rem wide (a container query), so it also fits
+//            narrow sidebars like the planner's.
 //   inline - one sentence for use mid-article, with the second sentence as the button.
 //            Defaults: "Thinking about hiring this out?" + "Get quotes from local painters."
 interface Props {
@@ -39,25 +41,43 @@ const button = buttonText ?? (isInline ? 'Get quotes from local painters.' : 'Ge
 ---
 
 {isInline ? (
-  <p class="flex flex-wrap items-center gap-x-3 gap-y-2 text-body leading-relaxed" data-painter-cta={src}>
+  <p class="flex flex-wrap items-center gap-x-4 gap-y-3 text-body" data-painter-cta={src}>
     <span>{bodyText}</span>
-    <a
-      href={href}
-      class="inline-flex items-center rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white no-underline hover:bg-accent-dark transition-colors"
-    >{button}</a>
+    <a href={href} class="quote-btn btn btn-primary btn-sm">{button}</a>
   </p>
 ) : (
-  <div
-    class="rounded-2xl bg-heading px-6 py-6 md:px-7 text-white flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-    data-painter-cta={src}
-  >
-    <div class="min-w-0">
-      <p class="text-lg font-bold text-white leading-snug">{heading}</p>
-      <p class="mt-1 text-sm text-gray-300 leading-relaxed">{bodyText}</p>
+  <div class="quote-card panel-ink @container" data-painter-cta={src}>
+    <div class="flex flex-col gap-5 px-6 py-7 @lg:flex-row @lg:items-center @lg:justify-between @lg:gap-8 @lg:px-8">
+      <div class="min-w-0">
+        <p class="quote-heading">{heading}</p>
+        <p class="mt-2 text-[0.9375rem] text-on-ink-muted">{bodyText}</p>
+      </div>
+      <a href={href} class="quote-btn btn btn-primary shrink-0 whitespace-nowrap">{button}</a>
     </div>
-    <a
-      href={href}
-      class="inline-flex shrink-0 items-center justify-center rounded-lg bg-accent px-5 py-2.5 font-semibold text-white hover:bg-accent-dark transition-colors whitespace-nowrap"
-    >{button}</a>
   </div>
 )}
+
+<style>
+  .quote-heading {
+    font-family: var(--font-serif);
+    font-size: 1.625rem;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    color: var(--color-on-ink);
+  }
+
+  /* Keep the button a button even when a page drops this inside article styles that
+     color and underline every link. */
+  a.quote-btn,
+  a.quote-btn:hover {
+    color: var(--color-on-accent);
+    text-decoration: none;
+  }
+
+  /* The terracotta focus ring is only about 3:1 on ink, so use linen inside the card. */
+  .quote-card :focus-visible {
+    outline-color: var(--color-on-ink);
+  }
+</style>

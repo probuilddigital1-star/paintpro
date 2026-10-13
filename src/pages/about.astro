@@ -67,89 +67,80 @@ const aboutSchema = {
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />
 
-  <main class="max-w-3xl mx-auto px-4 py-12">
-    <article class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
-      <h1 class="text-3xl md:text-4xl font-bold text-heading mb-6">About PaintPro Calculator</h1>
+  <main class="mx-auto max-w-xl px-4 pt-8 pb-16 md:pt-14 md:pb-24">
+    <article>
+      <h1 class="mb-4 text-[2.5rem] md:text-[3.75rem]">About PaintPro Calculator</h1>
 
-      <p class="text-sm text-gray-500 mb-8">
-        By <a href="/about" class="text-primary hover:underline font-medium">Zack Pearson</a>
-        <span class="mx-2">·</span>
-        Last updated July 11, 2026
+      <p class="mb-8 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted">
+        <span>By <a href="/about" class="link">Zack Pearson</a></span>
+        <span>Last updated July 11, 2026</span>
       </p>
 
-      <div class="prose prose-slate max-w-none">
-        <p class="text-lg text-body mb-6">
+      <div class="prose-linen [&>h2]:mt-12 [&>h2]:border-t [&>h2]:border-border [&>h2]:pt-7 md:[&>h2]:mt-14 md:[&>h2]:pt-8">
+        <p class="text-[1.1875rem] leading-[1.55]">
           PaintPro Calculator started as a spreadsheet, and the painting part is personal.
         </p>
 
-        <p class="text-body mb-6">
+        <p>
           In 2024, my wife and I built our own house. We self-contracted the whole project, which meant hiring and managing every trade ourselves: foundation, framing, electrical, plumbing, drywall, the works. By the time the painters were ready to walk through, I had spent enough time on the job site to know what I cared about getting right.
         </p>
 
-        <p class="text-body mb-6">
+        <p>
           What I cared about was not paying for paint twice. On the first bedroom we bought too much, on the second we bought too little, ran out mid-coat, and ended up with a streaky wall that I had to sand back and redo. After that I started keeping a simple spreadsheet. Square footage, coverage rates, deductions for doors and windows, plus a small buffer for touch-ups. It worked.
         </p>
 
-        <p class="text-body mb-6">
+        <p>
           A while after we moved in, after watching a couple of friends hit the same problem on their own projects, I rebuilt that spreadsheet into a real calculator and put it online. That's where this site came from. No team of experts. One person who has actually painted a house, who has a stake in getting the math right, and who keeps this tool free because the math should be free.
         </p>
 
-        <h2 class="text-xl font-bold text-heading mt-10 mb-4">About me</h2>
-        <p class="text-body mb-6">
+        <h2>About me</h2>
+        <p>
           I'm Zack Pearson. I live in Ohio. I run a small digital studio called ProBuild Digital LLC that builds practical web tools, and PaintPro Calculator is one of them. I'm not a licensed contractor and I don't pretend to be. The advice on this site comes from doing the work in my own house, reading manufacturer technical data sheets, and double-checking the numbers against published spec sheets before anything goes live. The painters who finished our drywall taught me plenty too.
         </p>
 
-        <p class="text-body mb-6">
-          If something on the site is wrong, email me at <a href="mailto:zack.pearson@probuilddigital.com" class="text-primary hover:underline">zack.pearson@probuilddigital.com</a> and I'll fix it.
+        <p>
+          If something on the site is wrong, email me at <a href="mailto:zack.pearson@probuilddigital.com">zack.pearson@probuilddigital.com</a> and I'll fix it.
         </p>
 
-        <h2 class="text-xl font-bold text-heading mt-10 mb-4">What this site does</h2>
-        <p class="text-body mb-6">
+        <h2>What this site does</h2>
+        <p>
           The calculator gives you a buying estimate based on the measurements and assumptions you enter. The guides cover prep, application, common mistakes, and the limits of the math. They are written for homeowners doing the work themselves or checking whether a quote sounds reasonable.
         </p>
 
-        <h2 class="text-xl font-bold text-heading mt-10 mb-4">How I keep it accurate</h2>
-        <p class="text-body mb-6">
-          I use the coverage range printed by the manufacturer when I can verify it, and I label calculator defaults as assumptions. I am also working back through older guides to add clearer source notes and remove claims that cannot be checked. The process is described on the <a href="/editorial-standards" class="text-primary hover:underline">editorial standards page</a>.
+        <h2>How I keep it accurate</h2>
+        <p>
+          I use the coverage range printed by the manufacturer when I can verify it, and I label calculator defaults as assumptions. I am also working back through older guides to add clearer source notes and remove claims that cannot be checked. The process is described on the <a href="/editorial-standards">editorial standards page</a>.
         </p>
 
-        <h2 class="text-xl font-bold text-heading mt-10 mb-4">Affiliate links</h2>
-        <p class="text-body mb-6">
-          Some posts link to products on Amazon. Those are affiliate links and they help cover hosting plus the time that goes into updates. They don't change which products I recommend. The full breakdown is on the <a href="/affiliate-disclosure" class="text-primary hover:underline">affiliate disclosure page</a>.
+        <h2>Affiliate links</h2>
+        <p>
+          Some posts link to products on Amazon. Those are affiliate links and they help cover hosting plus the time that goes into updates. They don't change which products I recommend. The full breakdown is on the <a href="/affiliate-disclosure">affiliate disclosure page</a>.
         </p>
 
-        <h2 class="text-xl font-bold text-heading mt-10 mb-4">Embed the calculator</h2>
-        <p class="text-body mb-4">
+        <h2>Embed the calculator</h2>
+        <p>
           Want to put the paint calculator on your own site? Copy and paste this:
         </p>
-        <div class="bg-slate-50 border border-border rounded-lg p-4 mb-6">
-          <code class="text-sm text-slate-700 block whitespace-pre-wrap break-all">&lt;iframe src="https://paintprocalculator.com/embed" width="100%" height="800" frameborder="0"&gt;&lt;/iframe&gt;</code>
+        <div class="panel p-4">
+          <code class="block whitespace-pre-wrap bg-transparent p-0 text-sm text-heading [overflow-wrap:anywhere]">&lt;iframe src="https://paintprocalculator.com/embed" width="100%" height="800" frameborder="0"&gt;&lt;/iframe&gt;</code>
         </div>
-        <p class="text-sm text-body mb-6">It's responsive, has no API key, and is free to use.</p>
+        <p class="text-sm">It's responsive, has no API key, and is free to use.</p>
 
-        <h2 class="text-xl font-bold text-heading mt-10 mb-4">Contact</h2>
-        <p class="text-body mb-6">
-          Email: <a href="mailto:zack.pearson@probuilddigital.com" class="text-primary hover:underline">zack.pearson@probuilddigital.com</a>
+        <h2>Contact</h2>
+        <p>
+          Email: <a href="mailto:zack.pearson@probuilddigital.com">zack.pearson@probuilddigital.com</a>
         </p>
-        <p class="text-sm text-gray-500">
+        <p class="text-sm text-muted">
           Mailing address available on request for legal or business correspondence.
         </p>
       </div>
 
-      <div class="mt-10">
+      <div class="mt-12">
         <PainterQuoteCTA variant="inline" src="about" />
       </div>
 
-      <div class="mt-10 pt-6 border-t border-border">
-        <a
-          href="/"
-          class="inline-flex items-center gap-2 text-primary font-medium hover:underline"
-        >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          Back to Calculator
-        </a>
+      <div class="mt-12 border-t border-border pt-6">
+        <a href="/" class="link">Back to Calculator</a>
       </div>
     </article>
   </main>

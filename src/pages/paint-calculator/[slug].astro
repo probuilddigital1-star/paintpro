@@ -31,6 +31,17 @@ const results = calculatePaint(page.defaults);
 
 const updatedDate = '2026-02-25';
 const indexable = indexableCalculatorSlugs.has(page.slug);
+
+// Receipt subline: room pages name the room ("garage", "dining room"); size, brand and color
+// pages use a generic room, since their room type is only a default.
+const roomLabel = page.pageType === 'room-type'
+  ? page.slug.replace(/-paint-calculator$/, '').replace(/-/g, ' ')
+  : 'room';
+
+// Reference table columns that hold numbers (every cell starts with a digit) are right-aligned.
+const numericColumns = page.dataTable
+  ? page.dataTable.columns.map((_, i) => i > 0 && page.dataTable!.rows.every((row) => /^\d/.test(row[i]?.trim() ?? '')))
+  : [];
 const siteUrl = 'https://paintprocalculator.com';
 const pageUrl = `${siteUrl}/paint-calculator/${page.slug}`;
 
@@ -118,159 +129,139 @@ const faqSchema = page.faqs.length > 0 ? {
     { name: page.h1 },
   ]} />
 
-  <!-- Hero / Intro -->
-  <section class="max-w-4xl mx-auto px-4 pt-6 pb-2">
-    <h1 class="text-3xl md:text-4xl font-bold text-heading mb-4">{page.h1}</h1>
-    <p class="text-body text-lg leading-relaxed max-w-3xl">{page.introText}</p>
+  <!-- Intro -->
+  <section class="mx-auto max-w-4xl px-4 pt-4 pb-2 md:pt-8">
+    <h1 class="text-[2.5rem] md:text-[3.75rem]">{page.h1}</h1>
+    <p class="mt-5 max-w-[34rem] text-[1.0625rem] leading-relaxed md:text-[1.1875rem]">{page.introText}</p>
   </section>
 
   <div class="max-w-4xl mx-auto px-4"><AdSlot format="horizontal" /></div>
 
   <!-- Brand Disclaimer -->
   {page.brandDisclaimer && (
-    <div class="max-w-4xl mx-auto px-4 pt-2 pb-2">
-      <p class="text-xs text-gray-500 italic">{page.brandDisclaimer}</p>
+    <div class="mx-auto max-w-4xl px-4 pt-3">
+      <p class="max-w-[34rem] text-[0.8125rem] leading-normal text-muted">{page.brandDisclaimer}</p>
     </div>
   )}
 
   <!-- Color Change Scenario Explanation -->
   {page.scenarioExplanation && (
-    <section class="max-w-2xl mx-auto px-4 py-4">
-      <div class="bg-amber-50 border border-amber-200 rounded-lg p-5">
-        <h2 class="font-semibold text-amber-800 mb-2 flex items-center gap-2">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          Why This Matters
-        </h2>
-        <p class="text-sm text-amber-900">{page.scenarioExplanation}</p>
+    <section class="mx-auto max-w-4xl px-4 pt-8">
+      <div class="callout max-w-[40rem]">
+        <h2 class="text-[1.5rem]">Why This Matters</h2>
+        <p class="mt-2 text-[0.9375rem] leading-relaxed">{page.scenarioExplanation}</p>
       </div>
     </section>
   )}
 
   <!-- Pre-calculated Results -->
-  <StaticResults results={results} inputs={page.defaults} brand={page.brand} pageSource={page.slug}>
+  <StaticResults results={results} inputs={page.defaults} brand={page.brand} pageSource={page.slug} roomLabel={roomLabel}>
     <PainterQuoteCTA slot="after-estimate" src="calc-page" heading="Rather have a pro do it?" body="You've got your paint numbers. Get quotes from local painters for this job." />
   </StaticResults>
 
   {page.measurementGuide && (
-    <section class="max-w-4xl mx-auto px-4 pb-8">
-      <div class="rounded-2xl border border-border bg-slate-50 p-5 md:p-6">
-        <p class="text-sm font-semibold uppercase tracking-wide text-primary">Before using the preset</p>
-        <h2 class="mt-1 text-2xl font-bold text-heading">Measure this room without the usual shortcuts</h2>
-        <p class="mt-3 max-w-3xl text-sm leading-relaxed text-body">
-          The result above is a worked example using the dimensions and openings shown in the breakdown. Use these room-specific checks before treating it as a shopping quantity.
-        </p>
-        <ol class="mt-4 grid gap-3 md:grid-cols-3">
-          {page.measurementGuide.map((item, index) => (
-            <li class="rounded-xl border border-border bg-white p-4 text-sm leading-relaxed text-body">
-              <span class="mb-2 flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">{index + 1}</span>
-              {item}
-            </li>
-          ))}
-        </ol>
-      </div>
+    <section class="mx-auto max-w-4xl px-4 pt-14 pb-4 md:pt-20">
+      <p class="text-[0.9375rem] text-muted">Before using the preset</p>
+      <h2 class="mt-1 text-[1.875rem] md:text-[2.5rem]">Measure this room without the usual shortcuts</h2>
+      <p class="mt-4 max-w-[36rem]">
+        The result above is a worked example using the dimensions and openings shown in the breakdown. Use these room-specific checks before treating it as a shopping quantity.
+      </p>
+      <ol class="mt-8 grid gap-x-10 md:grid-cols-3">
+        {page.measurementGuide.map((item, index) => (
+          <li class="border-t border-border pt-4 pb-6">
+            <span class="numeral block text-[1.75rem] text-heading">{index + 1}</span>
+            <span class="mt-2 block text-[0.9375rem] leading-relaxed">{item}</span>
+          </li>
+        ))}
+      </ol>
     </section>
   )}
 
-  <!-- CTA to Interactive Calculator -->
-  <div class="max-w-2xl mx-auto px-4 pb-8">
-    <a
-      href="/#calculator"
-      class="cta-link block w-full text-center bg-accent hover:bg-accent-dark text-white font-semibold py-4 px-6 rounded-lg transition-all shadow-md hover:shadow-lg text-lg"
-      data-cta-text="Customize This Calculation"
-      data-page-source={page.slug}
-    >
-      Customize This Calculation
-      <span class="block text-sm font-normal mt-1 opacity-90">Adjust dimensions, texture, primer, and more</span>
-    </a>
-    <a href="/paint-planner" class="mt-3 block text-center text-sm font-semibold text-primary hover:underline">
-      Estimating several rooms? Build one combined project plan
-    </a>
-  </div>
+  <!-- CTA to Interactive Calculator. Outline pill: the painter card's terracotta pill is the
+       one filled button near here. -->
+  <section class="mx-auto max-w-4xl px-4 pt-8 pb-10 md:pb-14">
+    <div class="flex flex-col items-start gap-x-6 gap-y-3 sm:flex-row sm:items-center">
+      <a
+        href="/#calculator"
+        class="cta-link btn btn-secondary"
+        data-cta-text="Customize This Calculation"
+        data-page-source={page.slug}
+      >
+        Customize This Calculation
+      </a>
+      <p class="text-[0.9375rem] text-muted">Adjust dimensions, texture, primer, and more</p>
+    </div>
+    <p class="mt-5">
+      <a href="/paint-planner" class="link text-[0.9375rem]">Estimating several rooms? Build one combined project plan</a>
+    </p>
+  </section>
 
   <!-- Room-specific Tips -->
   {page.tips.length > 0 && (
-    <section class="max-w-4xl mx-auto px-4 py-8">
-      <h2 class="text-2xl font-bold text-heading mb-4 flex items-center gap-2">
-        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        Tips for This Room
-      </h2>
-      <div class="bg-blue-50 rounded-lg border border-blue-100 p-5">
-        <ul class="space-y-2 text-sm text-body">
-          {page.tips.map(tip => (
-            <li class="flex items-start gap-2">
-              <svg class="w-4 h-4 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-              </svg>
-              <span>{tip}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+    <section class="mx-auto max-w-4xl px-4 py-10 md:py-14">
+      <h2 class="text-[1.875rem] md:text-[2.5rem]">Tips for This Room</h2>
+      <ul class="mt-6 grid gap-x-12 md:grid-cols-2">
+        {page.tips.map(tip => (
+          <li class="border-t border-border py-4 leading-relaxed">{tip}</li>
+        ))}
+      </ul>
     </section>
   )}
 
-  <!-- Brand Comparison Table -->
+  <!-- Reference table (gallons by garage size, coverage by product line) -->
   {page.dataTable && (
-    <section class="max-w-4xl mx-auto px-4 py-8">
-      <h2 class="text-2xl font-bold text-heading mb-3">{page.dataTable.title}</h2>
-      {page.dataTable.intro && <p class="text-body mb-4 max-w-3xl">{page.dataTable.intro}</p>}
-      <div class="overflow-x-auto">
-        <table class="w-full bg-white rounded-lg border border-border text-sm">
+    <section class="mx-auto max-w-4xl px-4 py-10 md:py-14">
+      <h2 class="text-[1.875rem] md:text-[2.5rem]">{page.dataTable.title}</h2>
+      {page.dataTable.intro && <p class="mt-4 max-w-[36rem]">{page.dataTable.intro}</p>}
+      <div class="mt-6 overflow-x-auto">
+        <table class="table-ruled calc-table">
           <thead>
-            <tr class="bg-light-gray">
+            <tr>
               {page.dataTable.columns.map((col, i) => (
-                <th class={`px-2 sm:px-4 py-3 font-semibold text-heading ${i === 0 ? 'text-left' : 'text-center'}`}>{col}</th>
+                <th class:list={[{ 'text-right': numericColumns[i] }]}>{col}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {page.dataTable.rows.map((row) => (
-              <tr class="border-t border-border">
+              <tr>
                 {row.map((cell, i) => (
-                  <td class={`px-2 sm:px-4 py-3 ${i === 0 ? 'text-heading font-medium' : 'text-center text-body'}`}>{cell}</td>
+                  <td class:list={[{ 'row-label': i === 0, 'text-right': numericColumns[i] }]}>{cell}</td>
                 ))}
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      {page.dataTable.footnote && <p class="text-xs text-gray-500 mt-3">{page.dataTable.footnote}</p>}
+      {page.dataTable.footnote && <p class="mt-4 max-w-[40rem] text-[0.8125rem] leading-normal text-muted">{page.dataTable.footnote}</p>}
     </section>
   )}
 
+  <!-- Brand Comparison Table -->
   {page.brandComparisonTable && (
-    <section class="max-w-4xl mx-auto px-4 py-8">
-      <h2 class="text-2xl font-bold text-heading mb-4 flex items-center gap-2">
-        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg>
-        Paint Brand Coverage Comparison
-      </h2>
-      <div class="overflow-x-auto">
-        <table class="w-full bg-white rounded-lg border border-border text-sm">
+    <section class="mx-auto max-w-4xl px-4 py-10 md:py-14">
+      <h2 class="text-[1.875rem] md:text-[2.5rem]">Paint Brand Coverage Comparison</h2>
+      <div class="mt-6 overflow-x-auto">
+        <table class="table-ruled calc-table">
           <thead>
-            <tr class="bg-light-gray">
-              <th class="text-left px-2 sm:px-4 py-3 font-semibold text-heading">Brand</th>
-              <th class="text-center px-2 sm:px-4 py-3 font-semibold text-heading">Coverage (sq ft/gal)</th>
-              <th class="text-center px-2 sm:px-4 py-3 font-semibold text-heading">Price Tier</th>
-              <th class="text-center px-2 sm:px-4 py-3 font-semibold text-heading">Calculator</th>
+            <tr>
+              <th>Brand</th>
+              <th class="text-right">Coverage (sq ft/gal)</th>
+              <th>Price Tier</th>
+              <th>Calculator</th>
             </tr>
           </thead>
           <tbody>
             {page.brandComparisonTable.map((entry) => (
-              <tr class={`border-t border-border ${entry.slug === page.slug ? 'bg-primary/5 font-semibold' : ''}`}>
-                <td class="px-2 sm:px-4 py-3 text-heading">{entry.brand}</td>
-                <td class="px-2 sm:px-4 py-3 text-center">{entry.coverageRate}</td>
-                <td class="px-2 sm:px-4 py-3 text-center">{entry.priceTier}</td>
-                <td class="px-2 sm:px-4 py-3 text-center">
+              <tr class:list={[{ 'is-current': entry.slug === page.slug }]}>
+                <td class="row-label">{entry.brand}</td>
+                <td class="text-right">{entry.coverageRate}</td>
+                <td>{entry.priceTier}</td>
+                <td>
                   {entry.slug === page.slug ? (
-                    <span class="text-primary text-xs">You are here</span>
+                    <span>You are here</span>
                   ) : (
-                    <a href={`/paint-calculator/${entry.slug}`} class="text-primary hover:underline text-xs">
+                    <a href={`/paint-calculator/${entry.slug}`} class="link">
                       Calculate
                     </a>
                   )}
@@ -296,6 +287,26 @@ const faqSchema = page.faqs.length > 0 ? {
 
   <Footer />
 </Layout>
+
+<style>
+  /* Row labels in ink. The row for this page is marked with weight, not a tinted fill. */
+  .calc-table .row-label {
+    color: var(--color-heading);
+    font-weight: 500;
+  }
+
+  .calc-table .is-current td {
+    color: var(--color-heading);
+    font-weight: 600;
+  }
+
+  /* A notch smaller on phones so the five-column garage table and the brand table fit at 360px. */
+  @media (max-width: 639px) {
+    .calc-table {
+      font-size: 0.875rem;
+    }
+  }
+</style>
 
 <script>
   import { trackCtaClick } from '../../utils/analytics';

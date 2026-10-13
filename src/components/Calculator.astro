@@ -359,7 +359,8 @@ const { showPainterCta = true } = Astro.props;
      paper on the table. -->
 <section id="results" class="calc-results mx-auto max-w-4xl px-4 pb-10 md:pb-14 hidden">
   <div class="animate-results pt-2 md:pt-4">
-    <h2 class="results-title">
+    <!-- Focus moves here after Calculate (tabindex -1: reachable by script, not by Tab). -->
+    <h2 id="results-heading" class="results-title" tabindex="-1">
       Your Paint Estimate
     </h2>
 
@@ -373,30 +374,81 @@ const { showPainterCta = true } = Astro.props;
         <p class="estimate-number" id="estimate-number">0</p>
         <p class="estimate-unit" id="estimate-unit">gallons</p>
 
-        <div class="estimate-range" aria-label="Estimated paint range">
+        <div class="estimate-range" role="group" aria-label="Estimated paint range">
           <div>
             <span class="estimate-range-label">Low</span>
-            <span class="estimate-range-value"><span id="gallons-low-result">0</span> <span class="range-unit">gal</span></span>
+            <span class="estimate-range-value"><span id="gallons-low-result">0</span> <span class="estimate-range-unit">gal</span></span>
           </div>
           <div class="is-likely">
             <span class="estimate-range-label">Likely</span>
-            <span class="estimate-range-value"><span id="gallons-result">0</span> <span class="range-unit">gal</span></span>
+            <span class="estimate-range-value"><span id="gallons-result">0</span> <span class="estimate-range-unit">gal</span></span>
           </div>
           <div>
             <span class="estimate-range-label">High</span>
-            <span class="estimate-range-value"><span id="gallons-high-result">0</span> <span class="range-unit">gal</span></span>
+            <span class="estimate-range-value"><span id="gallons-high-result">0</span> <span class="estimate-range-unit">gal</span></span>
           </div>
         </div>
 
         <!-- Result Summary -->
         <p class="estimate-summary" id="result-summary">
-          The likely calculation uses <span id="raw-gallons">0</span> gallons before the selected buffer. If you are buying whole gallons, plan on <strong><span id="purchase-gallons">0</span> gallons</strong>. This covers <span id="total-area">0</span> square feet with <span id="num-coats">2</span> coats.
+          The likely calculation uses <span id="raw-gallons">0</span> gallons before the selected buffer. If you are buying whole gallons, plan on <strong><span id="purchase-gallons">0</span> <span id="purchase-gallons-unit">gallons</span></strong>. This covers <span id="total-area">0</span> square feet with <span id="num-coats">2</span> coats.
         </p>
 
-        <div id="primer-result-box" class="primer-line hidden">
-          <p class="primer-line-label">Primer Needed</p>
-          <p class="primer-line-value"><span id="primer-gallons-result">0</span> gallons</p>
+        <div id="primer-result-box" class="estimate-primer hidden">
+          <span class="estimate-range-label">Primer Needed</span>
+          <span class="estimate-range-value"><span id="primer-gallons-result">0</span> <span class="estimate-range-unit" id="primer-gallons-unit">gallons</span></span>
         </div>
+
+        <!-- Breakdown (collapsible), under the number it explains, as on the calculator pages -->
+        <details class="breakdown disclosure">
+          <summary>
+            View Detailed Breakdown
+          </summary>
+          <div class="breakdown-rows">
+            <div class="breakdown-row">
+              <span>Wall Area:</span>
+              <span id="wall-area">0 sq ft</span>
+            </div>
+            <div class="breakdown-row" id="ceiling-row">
+              <span>Ceiling Area:</span>
+              <span id="ceiling-area">0 sq ft</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Deductions:</span>
+              <span id="deductions">-0 sq ft</span>
+            </div>
+            <hr />
+            <div class="breakdown-row is-total">
+              <span>Net Paintable Area:</span>
+              <span id="net-area">0 sq ft</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Base Coverage Rate:</span>
+              <span id="coverage-rate">400 sq ft/gal</span>
+            </div>
+            <div class="breakdown-row" id="texture-adjustment-row">
+              <span>Texture Adjustment:</span>
+              <span id="texture-adjustment">None</span>
+            </div>
+            <div class="breakdown-row">
+              <span>Adjusted Coverage:</span>
+              <span id="adjusted-coverage">400 sq ft/gal</span>
+            </div>
+            <div class="breakdown-row">
+              <span>With <span id="coats-display">2</span> Coats:</span>
+              <span id="total-coverage">0 sq ft needed</span>
+            </div>
+            <div class="breakdown-row" id="waste-row">
+              <span>+ 15% Waste Buffer:</span>
+              <span id="waste-amount">0 gal</span>
+            </div>
+            <hr id="primer-breakdown-hr" />
+            <div class="breakdown-row" id="primer-breakdown-row">
+              <span>Primer (<span id="primer-coats-display">1</span> coat):</span>
+              <span id="primer-breakdown">0 gal</span>
+            </div>
+          </div>
+        </details>
       </div>
 
       <div class="receipt">
@@ -413,7 +465,7 @@ const { showPainterCta = true } = Astro.props;
         <div id="recommended-products" class="hidden">
           <hr class="receipt-rule" />
           <h3 class="receipt-heading">Supplies for this room</h3>
-          <ul id="recommended-products-list" class="receipt-list"></ul>
+          <ul id="recommended-products-list" class="receipt-supplies"></ul>
         </div>
 
         <hr class="receipt-rule" />
@@ -421,9 +473,9 @@ const { showPainterCta = true } = Astro.props;
           <span id="receipt-total-label">Wall area</span>
           <span class="receipt-total-value"><span id="receipt-area">0</span> sq ft</span>
         </div>
-        <p id="recommended-products-note" class="receipt-note mt-5 hidden">
+        <p id="recommended-products-note" class="receipt-note hidden">
           Picked from your inputs. Links go to Amazon and we may earn a commission at no extra cost to you.
-          <a href="/affiliate-disclosure" class="receipt-note-link">Details</a>
+          <a href="/affiliate-disclosure">Details</a>
         </p>
       </div>
 
@@ -432,14 +484,14 @@ const { showPainterCta = true } = Astro.props;
           receipt on phones. */}
       {showPainterCta && (
         <div class="estimate-hire">
-          <p id="pro-cost-note" class="hire-line hidden mb-4 max-w-[40rem]"></p>
+          <p id="pro-cost-note" class="hire-line hidden mb-4 max-w-[36rem]"></p>
           <PainterQuoteCTA src="calc" heading="Rather have a pro do it?" body="You've got your paint numbers. Get quotes from local painters for this job." />
         </div>
       )}
     </div>
 
-    <!-- The quieter details: confidence, the breakdown, and the before-you-buy tips -->
-    <div class="mt-10 grid gap-8 md:mt-12 md:grid-cols-2 md:gap-x-12">
+    <!-- The quieter details: confidence and the before-you-buy tips -->
+    <div class="mt-10 grid gap-8 md:mt-12 md:grid-cols-2 md:items-start md:gap-x-12">
       <div>
         <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
           <h3 class="text-[1.0625rem]">Estimate confidence</h3>
@@ -450,7 +502,7 @@ const { showPainterCta = true } = Astro.props;
       </div>
 
       <!-- Practical checks, with the room-specific recommendation first -->
-      <div class="callout md:col-start-2 md:row-span-2 md:row-start-1 md:self-start">
+      <div class="callout">
         <h3 class="text-[1.0625rem]">
           Before you buy
         </h3>
@@ -463,57 +515,6 @@ const { showPainterCta = true } = Astro.props;
           <li>Check the coverage range on the exact paint label before buying.</li>
         </ul>
       </div>
-
-      <!-- Breakdown (collapsible) -->
-      <details class="breakdown md:col-start-1 md:row-start-2">
-        <summary>
-          View Detailed Breakdown
-        </summary>
-        <div class="breakdown-rows">
-          <div class="breakdown-row">
-            <span>Wall Area:</span>
-            <span id="wall-area">0 sq ft</span>
-          </div>
-          <div class="breakdown-row" id="ceiling-row">
-            <span>Ceiling Area:</span>
-            <span id="ceiling-area">0 sq ft</span>
-          </div>
-          <div class="breakdown-row">
-            <span>Deductions:</span>
-            <span id="deductions">-0 sq ft</span>
-          </div>
-          <hr class="my-2" />
-          <div class="breakdown-row breakdown-row-strong">
-            <span>Net Paintable Area:</span>
-            <span id="net-area">0 sq ft</span>
-          </div>
-          <div class="breakdown-row">
-            <span>Base Coverage Rate:</span>
-            <span id="coverage-rate">400 sq ft/gal</span>
-          </div>
-          <div class="breakdown-row" id="texture-adjustment-row">
-            <span>Texture Adjustment:</span>
-            <span id="texture-adjustment">None</span>
-          </div>
-          <div class="breakdown-row">
-            <span>Adjusted Coverage:</span>
-            <span id="adjusted-coverage">400 sq ft/gal</span>
-          </div>
-          <div class="breakdown-row">
-            <span>With <span id="coats-display">2</span> Coats:</span>
-            <span id="total-coverage">0 sq ft needed</span>
-          </div>
-          <div class="breakdown-row" id="waste-row">
-            <span>+ 15% Waste Buffer:</span>
-            <span id="waste-amount">0 gal</span>
-          </div>
-          <hr class="my-2" id="primer-breakdown-hr" />
-          <div class="breakdown-row" id="primer-breakdown-row">
-            <span>Primer (<span id="primer-coats-display">1</span> coat):</span>
-            <span id="primer-breakdown">0 gal</span>
-          </div>
-        </div>
-      </details>
     </div>
 
     <!-- Reset Button -->
@@ -634,7 +635,8 @@ const { showPainterCta = true } = Astro.props;
     color: var(--color-muted);
   }
 
-  /* Checkbox rows: the whole bordered row is the label, so all of it is a target. */
+  /* Checkbox rows: the whole bordered row is the label, so all of it is a target, and its border
+     is the control's outline (field border, 3:1). */
   .option-row {
     display: flex;
     align-items: center;
@@ -642,7 +644,7 @@ const { showPainterCta = true } = Astro.props;
     min-height: 3rem;
     padding: 0.75rem 1.125rem;
     background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-field-border);
     border-radius: 6px;
     font-size: 0.9375rem;
     line-height: 1.4;
@@ -662,9 +664,25 @@ const { showPainterCta = true } = Astro.props;
     cursor: pointer;
   }
 
-  /* Results */
+  /* Results. The estimate, receipt and breakdown styles are shared with the calculator pages and
+     live in global.css. */
   .results-title {
+    width: fit-content;
+    max-width: 100%;
     font-size: 1.875rem;
+  }
+
+  /* Focus lands on the heading after Calculate, so screen reader and keyboard users start at the
+     result. The heading isn't a control, so a mouse user sees nothing; a keyboard user sees a
+     light ring that hugs the words. */
+  .results-title:focus {
+    outline: none;
+  }
+
+  .results-title:focus-visible {
+    outline: 2px solid oklch(0.55 0.11 45 / 0.4);
+    outline-offset: 4px;
+    border-radius: 2px;
   }
 
   .results-intro {
@@ -673,124 +691,6 @@ const { showPainterCta = true } = Astro.props;
     font-size: 1rem;
     line-height: 1.6;
     color: var(--color-body);
-  }
-
-  .range-unit {
-    font-size: 1rem;
-  }
-
-  .primer-line {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: 1.25rem;
-    padding-top: 0.875rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .primer-line.hidden {
-    display: none;
-  }
-
-  .primer-line-label {
-    font-size: 0.8125rem;
-    color: var(--color-muted);
-  }
-
-  .primer-line-value {
-    font-family: var(--font-serif);
-    font-size: 1.75rem;
-    font-variant-numeric: lining-nums tabular-nums;
-    line-height: 1.1;
-    color: var(--color-heading);
-  }
-
-  .receipt-heading {
-    margin-bottom: 0.375rem;
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: var(--color-heading);
-  }
-
-  .receipt-note-link {
-    color: inherit;
-    text-decoration: underline;
-    text-decoration-color: var(--color-border-strong);
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-  }
-
-  .receipt-note-link:hover {
-    color: var(--color-heading);
-    text-decoration-color: currentColor;
-  }
-
-  .breakdown {
-    border-block: 1px solid var(--color-border);
-  }
-
-  .breakdown summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    min-height: 3rem;
-    padding: 0.625rem 0;
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: var(--color-heading);
-    cursor: pointer;
-    list-style: none;
-  }
-
-  .breakdown summary::-webkit-details-marker {
-    display: none;
-  }
-
-  /* A drawn chevron in place of the default triangle */
-  .breakdown summary::after {
-    content: '';
-    flex: none;
-    width: 0.5rem;
-    height: 0.5rem;
-    margin-right: 0.25rem;
-    border-right: 1.5px solid currentColor;
-    border-bottom: 1.5px solid currentColor;
-    transform: translateY(-25%) rotate(45deg);
-  }
-
-  .breakdown[open] summary::after {
-    transform: translateY(25%) rotate(-135deg);
-  }
-
-  .breakdown-rows {
-    padding: 0.25rem 0 1rem;
-    font-size: 0.9375rem;
-    font-variant-numeric: tabular-nums;
-    color: var(--color-body);
-  }
-
-  .breakdown-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.25rem 0;
-  }
-
-  .breakdown-row.hidden {
-    display: none;
-  }
-
-  .breakdown-row > :last-child {
-    font-weight: 500;
-    text-align: right;
-    color: var(--color-heading);
-  }
-
-  .breakdown-row-strong {
-    font-weight: 600;
-    color: var(--color-heading);
   }
 
   @media (min-width: 768px) {
@@ -806,62 +706,6 @@ const { showPainterCta = true } = Astro.props;
     .results-title {
       font-size: 2.5rem;
     }
-  }
-</style>
-
-<style is:global>
-  /* Markup the script builds (receipt supply lines, the hiring line's link) carries no scoped
-     attribute, so these rules are global but kept under the results wrapper. */
-  .calc-results .receipt-list > li + li {
-    margin-top: 0.375rem;
-  }
-
-  /* Each supply line is one link, as before: name, why, and the store prompt. */
-  .calc-results .receipt-row > .receipt-item {
-    flex: 1 1 auto;
-    min-width: 0;
-    font-weight: 400;
-    text-align: left;
-    white-space: normal;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .calc-results .receipt-item-name {
-    display: block;
-    color: var(--color-heading);
-  }
-
-  .calc-results .receipt-item-why {
-    display: block;
-    margin-top: 0.125rem;
-    font-size: 0.8125rem;
-    line-height: 1.45;
-    color: var(--color-muted);
-  }
-
-  .calc-results .receipt-item-cta {
-    font-weight: 600;
-    color: var(--color-primary);
-    white-space: nowrap;
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-  }
-
-  .calc-results .receipt-item:hover .receipt-item-cta {
-    color: var(--color-primary-dark);
-    text-decoration-thickness: 2px;
-  }
-
-  .calc-results .hire-line a {
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-  }
-
-  .calc-results .hire-line a:hover {
-    color: var(--color-primary-dark);
-    text-decoration-thickness: 2px;
   }
 </style>
 
@@ -1042,11 +886,14 @@ const { showPainterCta = true } = Astro.props;
         (document.getElementById('gallons-high-result') as HTMLElement).textContent = results.estimateRange.high.gallonsWithWaste.toFixed(1);
         (document.getElementById('raw-gallons') as HTMLElement).textContent = results.estimateRange.likely.rawGallons.toFixed(2);
         (document.getElementById('purchase-gallons') as HTMLElement).textContent = purchaseGallons.toString();
+        (document.getElementById('purchase-gallons-unit') as HTMLElement).textContent = purchaseGallons === 1 ? 'gallon' : 'gallons';
         (document.getElementById('total-area') as HTMLElement).textContent = Math.round(results.paintableArea + results.ceilingPaintableArea).toString();
         (document.getElementById('num-coats') as HTMLElement).textContent = inputs.numCoats.toString();
 
-        // Receipt: room and coats, the paint line, and the area it covers. A trim-only job has no
-        // wall or ceiling area to show, so it leaves the total out.
+        // Receipt: room and coats, the paint line, and the area it covers. The total follows the
+        // job, so it always matches the area in the summary: walls only show the net wall area,
+        // walls and ceiling show both together, a ceiling-only job shows the ceiling. A trim-only
+        // job has no wall or ceiling area to show, so it leaves the total out.
         const roomLabel = roomTypeSelect.selectedOptions[0]?.textContent?.trim() ?? '';
         (document.getElementById('receipt-sub') as HTMLElement).textContent =
           `${roomLabel}, ${inputs.numCoats} ${inputs.numCoats === 1 ? 'coat' : 'coats'}`;
@@ -1055,10 +902,13 @@ const { showPainterCta = true } = Astro.props;
         if (inputs.surfaceType === 'trim') {
           receiptTotal.classList.add('hidden');
         } else {
-          const ceilingOnly = inputs.surfaceType === 'ceiling';
-          (document.getElementById('receipt-total-label') as HTMLElement).textContent = ceilingOnly ? 'Ceiling area' : 'Wall area';
-          (document.getElementById('receipt-area') as HTMLElement).textContent =
-            Math.round(ceilingOnly ? results.ceilingPaintableArea : results.paintableArea).toString();
+          const receiptArea = {
+            walls: { label: 'Wall area', area: results.paintableArea },
+            'walls-ceiling': { label: 'Wall and ceiling area', area: results.paintableArea + results.ceilingPaintableArea },
+            ceiling: { label: 'Ceiling area', area: results.ceilingPaintableArea },
+          }[inputs.surfaceType];
+          (document.getElementById('receipt-total-label') as HTMLElement).textContent = receiptArea.label;
+          (document.getElementById('receipt-area') as HTMLElement).textContent = Math.round(receiptArea.area).toString();
           receiptTotal.classList.remove('hidden');
         }
 
@@ -1092,6 +942,7 @@ const { showPainterCta = true } = Astro.props;
           primerBreakdownHr.classList.remove('hidden');
           receiptPrimerRow.classList.remove('hidden');
           (document.getElementById('primer-gallons-result') as HTMLElement).textContent = results.primerGallons.toString();
+          (document.getElementById('primer-gallons-unit') as HTMLElement).textContent = results.primerGallons === 1 ? 'gallon' : 'gallons';
           (document.getElementById('receipt-primer') as HTMLElement).textContent = results.primerGallons.toString();
           (document.getElementById('primer-coats-display') as HTMLElement).textContent = (inputs.primerCoats ?? 1).toString();
           (document.getElementById('primer-breakdown') as HTMLElement).textContent = `${results.primerGallons} gal`;
@@ -1172,21 +1023,21 @@ const { showPainterCta = true } = Astro.props;
             a.href = product.url;
             a.target = '_blank';
             a.rel = 'noopener noreferrer sponsored';
-            a.className = 'receipt-item';
+            a.className = 'receipt-supply';
             a.dataset.affiliateProduct = product.id;
             a.dataset.affiliateLink = product.url;
             a.dataset.pageSource = 'calculator-result';
 
             const title = document.createElement('span');
-            title.className = 'receipt-item-name';
+            title.className = 'receipt-supply-name';
             title.textContent = product.title;
 
             const why = document.createElement('span');
-            why.className = 'receipt-item-why';
+            why.className = 'receipt-supply-note';
             why.textContent = `${reason} `;
 
             const cta = document.createElement('span');
-            cta.className = 'receipt-item-cta';
+            cta.className = 'receipt-supply-cta';
             cta.textContent = product.cta;
             why.append(cta);
 
@@ -1216,8 +1067,11 @@ const { showPainterCta = true } = Astro.props;
           primer: results.primerGallons,
         });
 
-        // Defer scroll to avoid blocking paint
+        // Defer scroll to avoid blocking paint. Focus goes to the results heading first (without
+        // its own jump, since the scroll below already brings it into view), so keyboard and
+        // screen reader users land on the result instead of back at the top of the page.
         setTimeout(() => {
+          (document.getElementById('results-heading') as HTMLElement).focus({ preventScroll: true });
           resultsSection.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
         }, 0);
       });

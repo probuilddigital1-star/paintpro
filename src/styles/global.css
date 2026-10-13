@@ -17,7 +17,8 @@
 
   /* Lines */
   --color-border: oklch(0.86 0.02 65);        /* hairlines and panel borders (#DBCFC4) */
-  --color-border-strong: oklch(0.8 0.02 60);  /* input borders */
+  --color-border-strong: oklch(0.8 0.02 60);  /* quiet underlines and dividers */
+  --color-field-border: oklch(0.62 0.02 60);  /* form control outlines (#90847A): 3.5:1 on surface, 3.3:1 on linen, 3.1:1 on light gray */
 
   /* Ink and text */
   --color-heading: oklch(0.26 0.02 50);       /* ink: headings, strong text, dark sections (#2C211B) */
@@ -177,7 +178,10 @@
   .panel-ink                Dark ink box with linen text (painter CTA card, footer blocks).
   .field / .field-label / .field-hint
                             Text inputs and selects (select.field gets a drawn chevron), the label
-                            above a field, and the small hint under it.
+                            above a field, and the small hint under it. Anything that outlines a
+                            form control uses --color-field-border (3:1 or better); hairlines don't.
+  .disclosure               Put on a <details>: hides the browser marker and draws the site's one
+                            open/close chevron at the end of the summary. It turns when open.
   .table-ruled              Data tables: ink rule under the header, hairline rows, tabular numbers.
                             Wrap in <div class="overflow-x-auto"> when it can get wide.
   .callout                  Tip, note or caution: quiet fill with a terracotta left rule. No icons.
@@ -185,8 +189,10 @@
   .numeral                  Serif tabular numbers for results and stats.
   .panel-link               A whole panel that is a link (border darkens on hover, nothing moves).
   .on-ink                   Add to a dark section that isn't .panel-ink so focus rings turn linen.
-  .estimate (+ .estimate-number, -unit, -range, -range-label, -range-value, -summary)
-                            The calculator answer: a big ink serif number beside the receipt.
+  .estimate (+ .estimate-number, -unit, -range, -range-label, -range-value, -range-unit,
+            -summary, -primer, and .breakdown)
+                            The calculator answer: a big ink serif number beside the receipt. The
+                            homepage calculator and the calculator pages share every class here.
   .hire-line                The "Hiring a painter for this room usually runs..." sentence.
   .receipt (+ parts)        The shopping-list receipt for calculator results (see its block).
 */
@@ -332,7 +338,7 @@
     min-height: 44px;
     padding: 0.625rem 0.875rem;
     background-color: var(--color-surface);
-    border: 1px solid var(--color-border-strong);
+    border: 1px solid var(--color-field-border);
     border-radius: 6px;
     color: var(--color-heading);
     font-size: 16px;
@@ -439,6 +445,49 @@
     margin-bottom: 0;
   }
 
+  /*
+    Open/close toggle, the one marker for every <details> on the site: a chevron at the end of the
+    summary that turns to point up when open (under reduced motion it flips without turning).
+      <details class="disclosure"><summary>View Detailed Breakdown</summary>...</details>
+    The chevron is centered on the summary's first line (1lh), so a question that wraps keeps it
+    beside the first line. When the summary text sits in a child with its own size (an h3), give
+    the summary the same size and line height so the two line up.
+  */
+  .disclosure > summary {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--color-heading);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .disclosure > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .disclosure > summary::after {
+    content: '';
+    flex: none;
+    width: 1rem;
+    height: 1.5em;
+    height: 1lh;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2.5 5.25 8 10.75l5.5-5.5' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 1rem no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2.5 5.25 8 10.75l5.5-5.5' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 1rem no-repeat;
+  }
+
+  .disclosure[open] > summary::after {
+    transform: rotate(180deg);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .disclosure > summary::after {
+      transition: transform 200ms ease;
+    }
+  }
+
   /* Numbers */
   .numeral {
     font-family: var(--font-serif);
@@ -451,20 +500,33 @@
 
   /*
     Estimate block for calculator results. The receipt is the one bold element, so the number
-    beside it stays ink on the page instead of a filled color block.
+    beside it stays ink on the page instead of a filled color block. The homepage calculator
+    (Calculator.astro) and the calculator pages (StaticResults.astro) both use this markup, so the
+    two results look the same; only their extra content differs.
       <div class="estimate">
         <div class="estimate-figure">
           <p class="estimate-number">3</p>
           <p class="estimate-unit">gallons</p>
-          <div class="estimate-range">
-            <div><span class="estimate-range-label">Low</span><span class="estimate-range-value">2.2</span></div>
+          <div class="estimate-range" role="group" aria-label="Estimated paint range">
+            <div>
+              <span class="estimate-range-label">Low</span>
+              <span class="estimate-range-value">2.2 <span class="estimate-range-unit">gal</span></span>
+            </div>
             <div class="is-likely">...</div>
             <div>...</div>
           </div>
           <p class="estimate-summary">The likely calculation uses ...</p>
+          <div class="estimate-primer">(label and value, styled like a range cell)</div>
+          <details class="breakdown disclosure">
+            <summary>View Detailed Breakdown</summary>
+            <div class="breakdown-rows">
+              <div class="breakdown-row"><span>Wall Area:</span><span>384 sq ft</span></div>
+              <hr />
+              <div class="breakdown-row is-total">...</div>
+            </div>
+          </details>
         </div>
         <div class="receipt">...</div>
-      </div>
         <div class="estimate-hire">
           <p class="hire-line">Hiring a painter for this room usually runs ... <a class="link">...</a></p>
           (painter quote card)
@@ -563,11 +625,67 @@
     color: var(--color-primary);
   }
 
+  /* "gal" after a range value: the same serif, smaller, like the unit on the size fields. */
+  .estimate-range-unit {
+    font-size: 1rem;
+  }
+
   .estimate-summary {
     margin-top: 1rem;
     font-size: 0.9375rem;
     line-height: 1.55;
     color: var(--color-body);
+  }
+
+  /* Primer amount, when the job includes primer: a label over the value, like a range cell. */
+  .estimate-primer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    margin-top: 1.25rem;
+  }
+
+  /* The worked breakdown under the number: a quiet toggle, then label and figure rows. */
+  .breakdown {
+    margin-top: 1.5rem;
+    border-block: 1px solid var(--color-border);
+  }
+
+  .breakdown > summary {
+    padding: 0.75rem 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+
+  .breakdown-rows {
+    padding: 0.25rem 0 1rem;
+    font-size: 0.9375rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-body);
+  }
+
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.3rem;
+  }
+
+  .breakdown-row > :last-child {
+    font-weight: 500;
+    color: var(--color-heading);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .breakdown-row.is-total > * {
+    font-weight: 600;
+    color: var(--color-heading);
+  }
+
+  .breakdown-rows > hr {
+    margin: 0.375rem 0 0.3rem;
+    border-color: var(--color-border);
   }
 
   .hire-line {
@@ -588,8 +706,18 @@
         <hr class="receipt-rule" />
         <div class="receipt-row"><span>Interior paint</span><span>3 gal</span></div>
         <hr class="receipt-rule" />
+        <h3 class="receipt-heading">Supplies for this room</h3>
+        <ul class="receipt-supplies">
+          <li class="receipt-row">
+            <a class="receipt-supply" href="...">
+              <span class="receipt-supply-name">Interior wall paint</span>
+              <span class="receipt-supply-note">Why it fits. <span class="receipt-supply-cta">Browse paint</span></span>
+            </a>
+          </li>
+        </ul>
+        <hr class="receipt-rule" />
         <div class="receipt-total"><span>Wall area</span><span class="receipt-total-value">365 sq ft</span></div>
-        <p class="receipt-note">...</p>
+        <p class="receipt-note">... <a href="/affiliate-disclosure">Details</a></p>
       </div>
     It tilts slightly from md up only, never on phones (a tilt there could push the page sideways).
   */
@@ -673,6 +801,66 @@
     text-decoration-color: currentColor;
   }
 
+  /* Supplies: each line is one link (name, why it fits, the store prompt) with no quantity
+     column, so the link takes the whole line instead of the right-aligned quantity style. */
+  .receipt-heading {
+    margin-bottom: 0.375rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-heading);
+  }
+
+  .receipt-supplies {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .receipt-row > .receipt-supply {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+    font-weight: inherit;
+    text-align: left;
+    white-space: normal;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .receipt-supply-name {
+    display: block;
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--color-heading);
+  }
+
+  .receipt-supply-note {
+    display: block;
+    margin-top: 0.125rem;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--color-muted);
+  }
+
+  .receipt-supply-cta {
+    font-weight: 500;
+    color: var(--color-primary);
+    white-space: nowrap; /* "View tape" moves down whole instead of splitting across lines */
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .receipt-supply:hover .receipt-supply-name {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .receipt-supply:hover .receipt-supply-cta {
+    color: var(--color-primary-dark);
+    text-decoration-thickness: 2px;
+  }
+
   .receipt-total {
     display: flex;
     align-items: baseline;
@@ -689,9 +877,21 @@
   }
 
   .receipt-note {
+    margin-top: 1.25rem;
     font-size: 0.8125rem;
     line-height: 1.45;
     color: var(--color-muted);
+  }
+
+  .receipt-note a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .receipt-note a:hover {
+    color: var(--color-heading);
   }
 
   /* Article body */

@@ -1,4 +1,7 @@
 ---
+// The calculator-page result. It uses the same markup and classes as the homepage calculator's
+// result (Calculator.astro); the estimate, receipt and breakdown styles live in global.css, so
+// the two always look the same.
 import type { CalculationResults, CalculationInputs } from '../utils/paint-calculator';
 import { estimateProCost, proCostJob, roomRecommendations } from '../utils/paint-calculator';
 import { proCostNoteParts, proCostScopeFor } from '../utils/pro-cost-note';
@@ -37,6 +40,15 @@ const rangePoints = [
   { label: 'High', value: range.high.gallonsWithWaste, likely: false },
 ];
 const receiptSub = `${inputs.length}x${inputs.width} ft ${roomLabel}, ${inputs.numCoats} ${inputs.numCoats === 1 ? 'coat' : 'coats'}`;
+
+// The receipt total follows the job, as on the homepage calculator: the net wall area for walls,
+// both together for walls and ceiling, the ceiling alone for a ceiling job, and no total for trim.
+const receiptArea = {
+  walls: { label: 'Wall area', area: results.paintableArea },
+  'walls-ceiling': { label: 'Wall and ceiling area', area: results.paintableArea + results.ceilingPaintableArea },
+  ceiling: { label: 'Ceiling area', area: results.ceilingPaintableArea },
+  trim: null,
+}[inputs.surfaceType];
 ---
 
 <section class="mx-auto max-w-4xl px-4 pt-10 pb-4 md:pt-14" aria-labelledby="static-estimate-title">
@@ -52,7 +64,7 @@ const receiptSub = `${inputs.length}x${inputs.width} ft ${roomLabel}, ${inputs.n
         {rangePoints.map((point) => (
           <div class:list={[{ 'is-likely': point.likely }]}>
             <span class="estimate-range-label">{point.label}</span>
-            <span class="estimate-range-value">{point.value.toFixed(1)} <span class="range-unit">gal</span></span>
+            <span class="estimate-range-value">{point.value.toFixed(1)} <span class="estimate-range-unit">gal</span></span>
           </div>
         ))}
       </div>
@@ -62,37 +74,37 @@ const receiptSub = `${inputs.length}x${inputs.width} ft ${roomLabel}, ${inputs.n
       </p>
 
       {results.primerGallons > 0 && (
-        <p class="estimate-primer">
+        <div class="estimate-primer">
           <span class="estimate-range-label">Primer Needed</span>
-          <span class="estimate-primer-amount"><span class="estimate-primer-number">{results.primerGallons}</span> <span>gallons</span></span>
-        </p>
+          <span class="estimate-range-value">{results.primerGallons} <span class="estimate-range-unit">{results.primerGallons === 1 ? 'gallon' : 'gallons'}</span></span>
+        </div>
       )}
 
-      <details class="breakdown group mt-6 border-y border-border">
-        <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-3.5 font-medium text-heading [&::-webkit-details-marker]:hidden">
+      <details class="breakdown disclosure">
+        <summary>
           View Detailed Breakdown
-          <svg class="size-4 shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-            <path d="M2 8h12" />
-            <path class="origin-center transition-transform duration-200 [transform-box:fill-box] group-open:rotate-90 motion-reduce:transition-none" d="M8 2v12" />
-          </svg>
         </summary>
-        <dl class="breakdown-rows pb-4 text-[0.9375rem]">
-          <div><dt>Wall Area:</dt><dd>{Math.round(results.wallArea)} sq ft</dd></div>
+        <div class="breakdown-rows">
+          <div class="breakdown-row"><span>Wall Area:</span><span>{Math.round(results.wallArea)} sq ft</span></div>
           {results.includesCeiling && (
-            <div><dt>Ceiling Area:</dt><dd>{Math.round(results.ceilingArea)} sq ft</dd></div>
+            <div class="breakdown-row"><span>Ceiling Area:</span><span>{Math.round(results.ceilingArea)} sq ft</span></div>
           )}
-          <div><dt>Deductions:</dt><dd>-{Math.round(results.totalDeduction)} sq ft</dd></div>
-          <div class="is-total"><dt>Net Paintable Area:</dt><dd>{totalArea} sq ft</dd></div>
-          <div><dt>Base Coverage Rate:</dt><dd>{results.baseCoverage} sq ft/gal</dd></div>
-          <div><dt>Adjusted Coverage:</dt><dd>{Math.round(results.adjustedWallCoverage)} sq ft/gal</dd></div>
-          <div><dt>With {inputs.numCoats} Coats:</dt><dd>{Math.round(results.wallCoverageNeeded + results.ceilingCoverageNeeded)} sq ft needed</dd></div>
+          <div class="breakdown-row"><span>Deductions:</span><span>-{Math.round(results.totalDeduction)} sq ft</span></div>
+          <hr />
+          <div class="breakdown-row is-total"><span>Net Paintable Area:</span><span>{totalArea} sq ft</span></div>
+          <div class="breakdown-row"><span>Base Coverage Rate:</span><span>{results.baseCoverage} sq ft/gal</span></div>
+          <div class="breakdown-row"><span>Adjusted Coverage:</span><span>{Math.round(results.adjustedWallCoverage)} sq ft/gal</span></div>
+          <div class="breakdown-row"><span>With {inputs.numCoats} Coats:</span><span>{Math.round(results.wallCoverageNeeded + results.ceilingCoverageNeeded)} sq ft needed</span></div>
           {inputs.includeWaste && (
-            <div><dt>+ 15% Waste Buffer:</dt><dd>+{results.wasteAmount.toFixed(2)} gal</dd></div>
+            <div class="breakdown-row"><span>+ 15% Waste Buffer:</span><span>+{results.wasteAmount.toFixed(2)} gal</span></div>
           )}
           {results.primerGallons > 0 && (
-            <div class="is-split"><dt>Primer ({inputs.primerCoats ?? 1} coat):</dt><dd>{results.primerGallons} gal</dd></div>
+            <>
+              <hr />
+              <div class="breakdown-row"><span>Primer ({inputs.primerCoats ?? 1} coat):</span><span>{results.primerGallons} gal</span></div>
+            </>
           )}
-        </dl>
+        </div>
       </details>
 
       <p class="mt-4 text-[0.8125rem] leading-normal text-muted">
@@ -121,7 +133,7 @@ const receiptSub = `${inputs.length}x${inputs.width} ft ${roomLabel}, ${inputs.n
       {recs.length > 0 && (
         <>
           <hr class="receipt-rule" />
-          <h3 class="receipt-section-title">Supplies for this room</h3>
+          <h3 class="receipt-heading">Supplies for this room</h3>
           <ul class="receipt-supplies">
             {recs.map(({ product, reason }) => (
               <li class="receipt-row">
@@ -144,12 +156,16 @@ const receiptSub = `${inputs.length}x${inputs.width} ft ${roomLabel}, ${inputs.n
         </>
       )}
 
-      <hr class="receipt-rule" />
+      {receiptArea && (
+        <>
+          <hr class="receipt-rule" />
 
-      <div class="receipt-total">
-        <span>Wall area</span>
-        <span class="receipt-total-value">{totalArea} sq ft</span>
-      </div>
+          <div class="receipt-total">
+            <span>{receiptArea.label}</span>
+            <span class="receipt-total-value">{Math.round(receiptArea.area)} sq ft</span>
+          </div>
+        </>
+      )}
 
       {recs.length > 0 && (
         <p class="receipt-note">
@@ -171,150 +187,11 @@ const receiptSub = `${inputs.length}x${inputs.width} ft ${roomLabel}, ${inputs.n
     )}
   </div>
 
-  <!-- The room tip, as a quiet note after the card. -->
+  <!-- The room tip, as a quiet note after the card, across the full width of the result. -->
   {recommendation && (
-    <p class="callout mt-10 max-w-[40rem] text-[0.9375rem] leading-relaxed md:mt-12">{recommendation}</p>
+    <p class="callout mt-10 text-[0.9375rem] leading-relaxed md:mt-12">{recommendation}</p>
   )}
 </section>
-
-<style>
-  /* "gal" after each range value: small sans, so the serif number leads. */
-  .range-unit {
-    margin-left: 0.0625rem;
-    font-family: var(--font-sans);
-    font-size: 0.8125rem;
-    letter-spacing: 0;
-  }
-
-  .estimate-primer {
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
-    margin-top: 1.25rem;
-  }
-
-  .estimate-primer-amount {
-    font-size: 0.9375rem;
-    color: var(--color-heading);
-  }
-
-  .estimate-primer-number {
-    font-family: var(--font-serif);
-    font-size: 1.75rem;
-    font-synthesis: none;
-    font-variant-numeric: lining-nums tabular-nums;
-    line-height: 1.1;
-  }
-
-  /* Receipt parts this page adds: the supplies heading, supply lines and the disclosure link. */
-  .receipt-section-title {
-    margin-bottom: 0.375rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-heading);
-  }
-
-  .receipt-supplies {
-    display: grid;
-    gap: 0.5rem;
-  }
-
-  /* A supply line has no quantity column (the paint and primer rows above carry the amounts),
-     so the link takes the whole line instead of the right-aligned quantity style. */
-  .receipt-supplies > .receipt-row > a {
-    flex: 1 1 auto;
-    min-width: 0;
-    font-weight: inherit;
-    text-align: left;
-    white-space: normal;
-  }
-
-  .receipt-supply {
-    display: block;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .receipt-supply-name {
-    display: block;
-    font-weight: 500;
-    line-height: 1.35;
-  }
-
-  .receipt-supply-note {
-    display: block;
-    margin-top: 0.125rem;
-    font-size: 0.8125rem;
-    line-height: 1.45;
-    color: var(--color-muted);
-  }
-
-  .receipt-supply-cta {
-    color: var(--color-primary);
-    font-weight: 500;
-    white-space: nowrap; /* "View tape" moves down whole instead of splitting across lines */
-    text-decoration-line: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-  }
-
-  .receipt-supply:hover .receipt-supply-name {
-    text-decoration-line: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-  }
-
-  .receipt-supply:hover .receipt-supply-cta {
-    color: var(--color-primary-dark);
-    text-decoration-thickness: 2px;
-  }
-
-  .receipt-note {
-    margin-top: 1rem;
-  }
-
-  .receipt-note a {
-    color: inherit;
-    text-decoration-line: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-  }
-
-  .receipt-note a:hover {
-    color: var(--color-heading);
-  }
-
-  /* Worked breakdown: label on the left, tabular figure on the right. */
-  .breakdown-rows > div {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    padding-block: 0.3rem;
-  }
-
-  .breakdown-rows dt {
-    color: var(--color-body);
-  }
-
-  .breakdown-rows dd {
-    font-weight: 500;
-    color: var(--color-heading);
-    font-variant-numeric: tabular-nums;
-    text-align: right;
-    white-space: nowrap;
-  }
-
-  .breakdown-rows > :is(.is-total, .is-split) {
-    margin-top: 0.375rem;
-    padding-top: 0.6rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .breakdown-rows > .is-total :is(dt, dd) {
-    font-weight: 600;
-    color: var(--color-heading);
-  }
-</style>
 
 <script>
   import { trackAffiliateClick } from '../utils/analytics';

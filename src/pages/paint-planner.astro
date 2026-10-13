@@ -91,8 +91,8 @@ const plannerSchema = {
           <input id="open-copy-input" type="file" accept="application/json,.json" class="sr-only" />
           <p id="save-status" class="mt-4 text-sm text-muted" role="status" aria-live="polite" tabindex="-1">Your changes are saved automatically in this browser.</p>
 
-          <details class="mt-4 border-t border-border pt-4 text-sm">
-            <summary class="cursor-pointer font-semibold text-heading">How saving and backups work</summary>
+          <details class="disclosure mt-4 border-t border-border pt-4 text-sm">
+            <summary class="-my-3 py-3 font-semibold">How saving and backups work</summary>
             <div class="mt-3 space-y-3 leading-relaxed">
               <p><strong>Staying on this device:</strong> Your plan saves automatically as you make changes. You can close this page and return later in the same browser.</p>
               <div>
@@ -233,8 +233,8 @@ const plannerSchema = {
               </select>
             </label>
 
-            <details id="fine-tune-details" class="min-w-0 rounded border border-border p-4 md:col-span-2">
-              <summary class="cursor-pointer font-semibold text-heading">Fine-tune the estimate</summary>
+            <details id="fine-tune-details" class="disclosure min-w-0 rounded border border-border p-4 md:col-span-2">
+              <summary class="-my-2.5 py-2.5 font-semibold">Fine-tune the estimate</summary>
               <p class="mt-2 text-sm">Adjust texture, openings, primer, and the waste allowance when those details matter for your room.</p>
               <div class="mt-4 grid min-w-0 gap-4">
                 <div class="grid min-w-0 gap-4 sm:grid-cols-2">
@@ -1238,17 +1238,6 @@ const plannerSchema = {
 <style is:global>
   /* The planner draws its room rows and receipt lines in the browser, so these rules are global,
      scoped under .planner-page. */
-
-  /* The pricing sentence and its link are built by src/utils/pro-cost-note.ts. */
-  .planner-page .hire-line a {
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-  }
-
-  .planner-page .hire-line a:hover {
-    color: var(--color-primary-dark);
-    text-decoration-thickness: 2px;
-  }
 
   @media print {
     /* The printed sheet is plain, so the receipt drops its tape strip. */

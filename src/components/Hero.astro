@@ -62,12 +62,15 @@ const chips = [
   /* Paint chips laid on a table: the color runs to the edges and the name is printed on the
      paper strip below it, like the chips at a paint counter. The chips sit high and low in
      turn, so no chip covers another chip's name. On phones they shrink to a short row so the
-     calculator still shows on the first screen. */
+     calculator still shows on the first screen. The name strip keeps its size while the chips
+     shrink, so on phones the high/low step is larger (about a third of a chip, as on desktop)
+     and a high chip's bottom edge stays clear of the name beside it. A name that still can't fit
+     on a very narrow screen wraps instead of being cut off. */
   .chips {
     position: relative;
     width: 100%;
     max-width: 22rem;
-    aspect-ratio: 22 / 8;
+    aspect-ratio: 11 / 5;
   }
 
   .chip {
@@ -92,16 +95,15 @@ const chips = [
   .chip::after {
     content: attr(data-name);
     display: block;
-    padding: 5px 7px 6px;
+    padding: 5px 6px 6px;
     font-size: 0.6875rem;
     line-height: 1.2;
     color: var(--color-heading);
-    white-space: nowrap;
   }
 
-  .chip-1 { --x: 0%;    --y: 15%; --r: -4deg; }
+  .chip-1 { --x: 0%;    --y: 25%; --r: -4deg; }
   .chip-2 { --x: 24%;   --y: 3%;  --r: 1deg; }
-  .chip-3 { --x: 48.5%; --y: 13%; --r: -1.5deg; }
+  .chip-3 { --x: 48.5%; --y: 23%; --r: -1.5deg; }
   .chip-4 { --x: 72%;   --y: 4%;  --r: 3.5deg; }
 
   @media (min-width: 768px) {

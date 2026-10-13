@@ -1,6 +1,7 @@
 ---
 import type { CalculationResults, CalculationInputs } from '../utils/paint-calculator';
-import { roomRecommendations } from '../utils/paint-calculator';
+import { estimateProCost, proCostJob, roomRecommendations } from '../utils/paint-calculator';
+import { proCostNoteParts, proCostScopeFor } from '../utils/pro-cost-note';
 import { recommendProducts } from '../utils/product-recommendations';
 import { affiliateEnabled } from '../config/site';
 
@@ -19,6 +20,11 @@ const totalArea = Math.round(results.paintableArea + results.ceilingPaintableAre
 const recommendation = roomRecommendations[inputs.roomType];
 const recs = affiliateEnabled ? recommendProducts(inputs, results, { brand }) : [];
 const source = pageSource ?? 'calculator-static';
+
+// Hiring-a-painter range for the line above the painter quote card, worked out at build time.
+const proJob = proCostJob(inputs, results);
+const proRange = proJob ? estimateProCost(proJob) : null;
+const proNote = proRange ? proCostNoteParts(proRange, proCostScopeFor(inputs.surfaceType)) : null;
 ---
 
 <section class="max-w-2xl mx-auto px-4 py-8">
@@ -141,6 +147,9 @@ const source = pageSource ?? 'calculator-static';
     <!-- Optional content between the estimate and the supplies list (the painter quote CTA on room pages). -->
     {Astro.slots.has('after-estimate') && (
       <div class="mt-6">
+        {proNote && (
+          <p class="text-sm text-body mb-3">{proNote.text}<a href={proNote.href} class={proNote.linkClass}>{proNote.linkText}</a></p>
+        )}
         <slot name="after-estimate" />
       </div>
     )}

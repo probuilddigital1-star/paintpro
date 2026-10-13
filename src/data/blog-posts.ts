@@ -25,9 +25,9 @@ export const blogPosts: BlogPost[] = [
     slug: 'how-much-does-it-cost-to-paint-a-room',
     painterCtaSrc: 'blog-cost',
     title: 'How Much Does It Cost to Paint a Room? DIY vs Pro Prices',
-    metaDescription: 'A 12x12 room runs $100 to $200 in paint and supplies as a DIY, or $400 to $800 hiring a painter. Full breakdown by room size, paint grade, and hourly rate.',
+    metaDescription: 'A 12x12 room runs $100 to $200 in paint and supplies as a DIY, or $400 to $1,000 hiring a painter. Full breakdown by room size, paint grade, and hourly rate.',
     publishedDate: '2026-01-15',
-    updatedDate: '2026-07-11',
+    updatedDate: '2026-10-13',
     category: 'Cost Guide',
     readingTime: 8,
     calculatorCta: { text: 'Calculate Your Paint Needs', href: '/#calculator' },
@@ -40,7 +40,7 @@ export const blogPosts: BlogPost[] = [
     faqs: [
       {
         question: 'How much does it cost to paint a 12x12 room?',
-        answer: 'For a standard 12x12 room with 8-foot ceilings, expect to spend $100 to $200 on paint and supplies for a DIY job (2 coats of mid-range paint). Hiring a professional typically costs $400 to $800 depending on your location and the condition of the walls.'
+        answer: 'For a standard 12x12 room with 8-foot ceilings, expect to spend $100 to $200 on paint and supplies for a DIY job (2 coats of mid-range paint). Hiring a professional typically costs $400 to $1,000 for the walls, or about $550 to $1,350 with the ceiling, depending on your location and the condition of the walls.'
       },
       {
         question: 'How much do professional painters charge per hour?',
@@ -48,7 +48,7 @@ export const blogPosts: BlogPost[] = [
       },
       {
         question: 'Is it cheaper to paint a room yourself or hire a painter?',
-        answer: 'DIY painting is usually 50% to 70% cheaper than hiring a pro. A room that costs $150 in paint and supplies could run $400 to $800 with a professional. However, pros finish faster, deliver cleaner lines, and handle prep work that DIYers often skip.'
+        answer: 'DIY painting is usually 60% to 85% cheaper than hiring a pro. A room that costs $150 in paint and supplies could run $400 to $1,000 with a professional. However, pros finish faster, deliver cleaner lines, and handle prep work that DIYers often skip.'
       },
       {
         question: 'How many gallons of paint do I need for a bedroom?',
@@ -64,7 +64,7 @@ export const blogPosts: BlogPost[] = [
 <p>For a standard 12x12 bedroom with 8-foot ceilings:</p>
 <ul>
 <li><strong>DIY cost:</strong> $100 to $250 (paint + supplies)</li>
-<li><strong>Professional cost:</strong> $400 to $900 (labor + materials)</li>
+<li><strong>Professional cost:</strong> $400 to $1,000 for the walls, $550 to $1,350 with the ceiling (labor + materials)</li>
 </ul>
 
 <p>That is a big range, so let's dig into what drives these numbers up or down.</p>
@@ -119,23 +119,25 @@ export const blogPosts: BlogPost[] = [
 <p>Most professional painters use one of three pricing models:</p>
 
 <ol>
-<li><strong>Per square foot:</strong> $2 to $6 per square foot of wall area</li>
-<li><strong>Per room:</strong> $200 to $800 per room (depending on size and complexity)</li>
+<li><strong>Per square foot:</strong> $1.25 to $3 per square foot of wall area (about $3 to $7 per square foot of floor area)</li>
+<li><strong>Per room:</strong> $300 to $1,500 per room (depending on size and complexity)</li>
 <li><strong>Hourly rate:</strong> $25 to $75 per hour per painter</li>
 </ol>
+
+<p>Some cost guides quote $2 to $6 per square foot. That figure is usually per square foot of floor, and applying it to wall area roughly doubles the price of a typical bedroom.</p>
 
 <p>The per-room rate is most common for residential work. When a painter gives you a quote, it typically includes labor, paint, and basic supplies. Some painters ask homeowners to purchase the paint separately, especially if you want a specific brand or color.</p>
 
 <h3>Professional Cost by Room Size</h3>
 
 <ul>
-<li><strong>Small room (10x10):</strong> $300 to $550</li>
-<li><strong>Average room (12x12):</strong> $400 to $700</li>
-<li><strong>Large room (14x16):</strong> $550 to $900</li>
-<li><strong>Master bedroom (16x18):</strong> $700 to $1,200</li>
+<li><strong>Small room (10x10):</strong> $350 to $800</li>
+<li><strong>Average room (12x12):</strong> $400 to $1,000</li>
+<li><strong>Large room (14x16):</strong> $550 to $1,300</li>
+<li><strong>Master bedroom (16x18):</strong> $600 to $1,500</li>
 </ul>
 
-<p>These ranges assume standard ceiling height (8 feet), walls in decent condition, and two coats of quality paint. Prices go up for tall ceilings, extensive prep work (patching holes, sanding, priming), and accent walls or multiple colors.</p>
+<p>These ranges cover walls only and assume standard ceiling height (8 feet), one door and two windows, walls in decent condition, and two coats of quality paint. Painting the ceiling too adds about $1 to $2.50 per square foot of ceiling, roughly $150 to $350 for a 12x12 room. Prices go up for tall ceilings, extensive prep work (patching holes, sanding, priming), and accent walls or multiple colors.</p>
 
 <h3>What Affects the Price?</h3>
 
@@ -145,7 +147,7 @@ export const blogPosts: BlogPost[] = [
 <li><strong>Wall condition:</strong> Holes, cracks, and peeling paint need repair before painting. Expect to add $50 to $200 for moderate prep work.</li>
 <li><strong>Primer needs:</strong> Going from dark to light, covering stains, or painting new drywall all require primer. That is an extra $30 to $60 in materials per room.</li>
 <li><strong>Ceiling height:</strong> Rooms with 9 or 10-foot ceilings cost 15% to 25% more because of the extra wall area and the need for taller ladders.</li>
-<li><strong>Trim and doors:</strong> Painting baseboards, crown molding, window frames, and doors adds $100 to $300 per room.</li>
+<li><strong>Trim and doors:</strong> Painting baseboards, crown molding, window frames, and doors adds about $150 to $500 per room (trim runs $1 to $3 per linear foot, doors $40 to $100 each).</li>
 <li><strong>Number of colors:</strong> Each additional color adds setup time and potentially more paint purchases.</li>
 <li><strong>Your location:</strong> Painters in major metro areas (New York, San Francisco, Chicago) charge 30% to 50% more than those in smaller cities or rural areas.</li>
 </ul>
@@ -195,17 +197,17 @@ export const blogPosts: BlogPost[] = [
 <p>To help you budget for a full home painting project, here are average costs by room type (professional rates, including labor and materials):</p>
 
 <ul>
-<li><strong>Bedroom:</strong> $400 to $800</li>
-<li><strong>Bathroom:</strong> $300 to $600 (smaller but may need specialty moisture-resistant paint)</li>
-<li><strong>Kitchen:</strong> $400 to $900 (requires durable, washable finishes)</li>
-<li><strong>Living room:</strong> $500 to $1,200 (larger spaces with more wall area)</li>
-<li><strong>Hallway:</strong> $250 to $500 (narrow but tall, often needs ladder work)</li>
+<li><strong>Bedroom:</strong> $400 to $1,000</li>
+<li><strong>Bathroom:</strong> $250 to $600 (smaller but may need specialty moisture-resistant paint)</li>
+<li><strong>Kitchen:</strong> $250 to $750 (requires durable, washable finishes)</li>
+<li><strong>Living room:</strong> $600 to $2,000 (larger spaces with more wall area)</li>
+<li><strong>Hallway:</strong> $300 to $1,000 (narrow but tall, often needs ladder work, and tall entries cost more)</li>
 <li><strong>Whole house interior (3-bedroom):</strong> $3,000 to $7,000</li>
 </ul>
 
 <h2>Bottom Line</h2>
 
-<p>Painting a room is still one of the most affordable ways to refresh your home. A DIY paint job on an average room costs $120 to $200, while hiring a professional runs $400 to $700. The best approach depends on your budget, your skills, and how much you value your weekend time.</p>
+<p>Painting a room is still one of the most affordable ways to refresh your home. A DIY paint job on an average room costs $120 to $200, while hiring a professional runs $400 to $1,000. The best approach depends on your budget, your skills, and how much you value your weekend time.</p>
 
 <p>Before you start, use our <a href="/#calculator">free paint calculator</a> to figure out exactly how many gallons you need. Getting the right amount saves money and avoids those frustrating mid-project trips back to the hardware store.</p>`
   },
@@ -976,7 +978,7 @@ export const blogPosts: BlogPost[] = [
     title: 'When to Hire a Painter vs DIY: Complete Cost Breakdown (2026)',
     metaDescription: 'Should you paint it yourself or hire a pro? Compare real costs, time investment, and quality outcomes for DIY painting versus hiring a professional painter in 2026.',
     publishedDate: '2026-02-24',
-    updatedDate: '2026-07-11',
+    updatedDate: '2026-10-13',
     category: 'Cost Guide',
     readingTime: 8,
     calculatorCta: { text: 'Calculate Paint Costs for DIY', href: '/#calculator' },
@@ -989,11 +991,11 @@ export const blogPosts: BlogPost[] = [
     faqs: [
       {
         question: 'Is it worth hiring a painter for one room?',
-        answer: 'For a single room in good condition, DIY usually makes more sense financially. However, hiring a painter is worth it if the room has high ceilings, extensive repair needs, or if you simply do not have the time or physical ability. Many painters charge a minimum of $300 to $400 per visit, so smaller jobs have a higher per-square-foot cost.'
+        answer: 'For a single room in good condition, DIY usually makes more sense financially. However, hiring a painter is worth it if the room has high ceilings, extensive repair needs, or if you simply do not have the time or physical ability. Many painters charge a minimum job price, often $250 to $500, so smaller jobs have a higher per-square-foot cost.'
       },
       {
         question: 'How much do painters charge for a whole house interior?',
-        answer: 'For a typical 3-bedroom, 2-bathroom home (approximately 1,500 to 2,000 square feet of paintable wall area), professional painters charge $3,000 to $7,000 for the full interior. This includes labor, paint, and supplies. Higher-end homes with tall ceilings, extensive trim work, or premium paint selections can run $8,000 to $12,000 or more.'
+        answer: 'For a typical 3-bedroom, 2-bathroom home (approximately 1,500 to 2,000 square feet of floor space), professional painters charge $3,000 to $7,000 for the full interior. This includes labor, paint, and supplies. Higher-end homes with tall ceilings, extensive trim work, or premium paint selections can run $8,000 to $12,000 or more.'
       },
       {
         question: 'How do I find a reliable painter?',
@@ -1071,9 +1073,9 @@ export const blogPosts: BlogPost[] = [
 <p>Professional rates vary significantly by location, experience, and scope. Here are 2026 averages:</p>
 
 <ul>
-<li><strong>Per room (12x12, walls only):</strong> $400 to $700</li>
-<li><strong>Per room (including ceiling and trim):</strong> $600 to $1,000</li>
-<li><strong>Per square foot of wall area:</strong> $2 to $6</li>
+<li><strong>Per room (12x12, walls only):</strong> $400 to $1,000</li>
+<li><strong>Per room (including ceiling and trim):</strong> $700 to $1,850</li>
+<li><strong>Per square foot of wall area:</strong> $1.25 to $3</li>
 <li><strong>Whole house interior (3-bed, 2-bath):</strong> $3,000 to $7,000</li>
 </ul>
 
@@ -1111,8 +1113,8 @@ export const blogPosts: BlogPost[] = [
 <h3>Single Bedroom (12x12, Walls Only)</h3>
 <ul>
 <li><strong>DIY:</strong> $130 to $165 materials + 6 to 10 hours of labor</li>
-<li><strong>Professional:</strong> $400 to $700 all-inclusive</li>
-<li><strong>Savings with DIY:</strong> $235 to $535</li>
+<li><strong>Professional:</strong> $400 to $1,000 all-inclusive</li>
+<li><strong>Savings with DIY:</strong> $235 to $870</li>
 </ul>
 
 <h3>Whole House Interior (3-Bed, 2-Bath, Living Room, Kitchen)</h3>
@@ -1129,7 +1131,7 @@ export const blogPosts: BlogPost[] = [
 <p>Do it yourself when:</p>
 
 <ul>
-<li><strong>Budget is tight.</strong> If $400 to $700 per room is not in your budget, DIY is clearly the way to go. Quality paint and basic supplies will always be cheaper than labor.</li>
+<li><strong>Budget is tight.</strong> If $400 to $1,000 per room is not in your budget, DIY is clearly the way to go. Quality paint and basic supplies will always be cheaper than labor.</li>
 <li><strong>The room is simple.</strong> Standard rectangular rooms with 8-foot ceilings, good wall condition, and no special challenges are ideal DIY projects.</li>
 <li><strong>You enjoy the process.</strong> Many people find painting meditative and satisfying. If you are doing it partly for enjoyment, the "cost of your time" calculation is different.</li>
 <li><strong>You have the time.</strong> A weekend per room is a realistic timeline. If your schedule allows it and you are not under time pressure, DIY works great.</li>

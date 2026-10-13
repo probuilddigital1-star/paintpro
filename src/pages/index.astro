@@ -22,16 +22,15 @@ import AdSlot from '../components/AdSlot.astro';
     <Hero />
     <div class="max-w-4xl mx-auto px-4"><AdSlot format="horizontal" /></div>
     <Calculator />
-    <section class="max-w-4xl mx-auto px-4 pb-8">
-      <div class="rounded-3xl border border-border bg-white p-6 md:p-8 shadow-sm flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-        <div class="max-w-2xl">
-          <p class="text-sm font-semibold uppercase tracking-wide text-primary">New</p>
-          <h2 class="mt-2 text-2xl font-bold text-heading">Plan a whole project, not just one room.</h2>
-          <p class="mt-3 text-body">
+    <section class="mx-auto max-w-4xl px-4 pt-6 pb-4 md:pt-10">
+      <div class="panel flex flex-col gap-6 p-6 md:flex-row md:items-center md:justify-between md:gap-10 md:p-8">
+        <div class="max-w-xl">
+          <h2 class="text-[1.75rem] md:text-[2rem]">Plan a whole project, not just one room.</h2>
+          <p class="mt-2">
             Add multiple rooms, keep primer separate, save the plan locally, and print a shopping sheet before you buy.
           </p>
         </div>
-        <a href="/paint-planner" class="inline-flex items-center justify-center rounded-xl bg-accent px-5 py-3 font-semibold text-white shadow-sm hover:bg-accent-dark">
+        <a href="/paint-planner" class="btn btn-secondary shrink-0 self-start md:self-center">
           Open Project Planner
         </a>
       </div>
@@ -39,10 +38,11 @@ import AdSlot from '../components/AdSlot.astro';
     <AffiliateCards />
     <div class="max-w-4xl mx-auto px-4"><AdSlot format="rectangle" /></div>
     <LeadGenForm />
-    <section class="max-w-2xl mx-auto px-4 py-8">
+    <section class="mx-auto max-w-2xl px-4 pt-12 md:pt-16">
       <PainterQuoteCTA src="home" />
     </section>
     <SEOContent />
+    <div class="mx-auto max-w-4xl px-4"><div class="border-t border-border"></div></div>
     <FAQ />
   </main>
 

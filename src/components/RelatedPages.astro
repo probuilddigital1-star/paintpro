@@ -13,7 +13,7 @@ const pages = slugs
 ---
 
 {pages.length > 0 && (
-  <section class="max-w-4xl mx-auto px-4 py-10 md:py-12">
+  <section class="max-w-4xl mx-auto px-4 py-10 md:py-14">
     <h2 class="mb-6 text-[1.875rem] md:text-[2.5rem] text-heading">Related Calculators</h2>
     <ul class="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
       {pages.map(page => (
@@ -29,10 +29,11 @@ const pages = slugs
 )}
 
 <style>
+  /* The rule above each item already marks the list, so the title stays plain until hover. */
   .related-title {
     text-decoration-line: underline;
     text-decoration-thickness: 1px;
-    text-decoration-color: var(--color-border-strong);
+    text-decoration-color: transparent;
     text-underline-offset: 4px;
     transition: color 150ms ease, text-decoration-color 150ms ease;
   }

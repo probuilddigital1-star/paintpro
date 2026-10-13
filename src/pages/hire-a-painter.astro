@@ -85,30 +85,20 @@ const breadcrumbSchema = {
   ]} />
 
   <main class="max-w-4xl mx-auto px-4 pb-12">
-    <section class="pt-4 pb-8">
-      <h1 class="text-3xl md:text-4xl font-bold text-heading mb-5">Find a Painter for Your Project</h1>
-      <p class="text-lg text-body leading-relaxed mb-4">
-        If you've run the numbers and decided this is a job for a pro, this is the next step. Fill out the short form below with your zip code and a few details about the project, and painters in your area will reach out to quote it.
-      </p>
+    {/*
+      The form comes first: visitors arrive from a "Get painter quotes" button, and on a phone the
+      form used to start a full screen down, below the intro and the three steps. Keep this heading
+      block short so the form's top edge lands inside the first screen on a phone.
+    */}
+    <section class="pt-3 pb-5">
+      <h1 class="text-3xl md:text-4xl font-bold text-heading mb-2">Find a Painter for Your Project</h1>
       <p class="text-body leading-relaxed">
         Interior, exterior, cabinets, trim, whole house. Any size job.
       </p>
     </section>
 
-    <section id="how-it-works" class="pb-10">
-      <h2 class="text-2xl font-bold text-heading mb-4">How it works</h2>
-      <ol class="list-decimal pl-6 space-y-3 text-body leading-relaxed">
-        {steps.map((step) => (
-          <li>
-            <span class="font-semibold text-heading">{step.title}</span> {step.detail}
-          </li>
-        ))}
-      </ol>
-    </section>
-
-    <section id="quote-form" class="pb-10">
-      <h2 class="text-2xl font-bold text-heading mb-2">Request quotes for your project</h2>
-      <p class="text-body mb-5">Fill in the type of painting job, your zip code, and how painters can reach you.</p>
+    <section id="quote-form" class="pb-8">
+      <h2 class="text-2xl font-bold text-heading mb-3">Request quotes for your project</h2>
 
       <div class="bg-white rounded-2xl shadow-sm border border-border p-3 md:p-5">
         <!--
@@ -130,6 +120,21 @@ const breadcrumbSchema = {
             </div>
         </div>
       </div>
+    </section>
+
+    <p class="text-body leading-relaxed pb-8">
+      If you've run the numbers and decided this is a job for a pro, this is the next step. Fill out the short form above with your zip code and a few details about the project, and painters in your area will reach out to quote it.
+    </p>
+
+    <section id="how-it-works" class="pb-10">
+      <h2 class="text-2xl font-bold text-heading mb-4">How it works</h2>
+      <ol class="list-decimal pl-6 space-y-3 text-body leading-relaxed">
+        {steps.map((step) => (
+          <li>
+            <span class="font-semibold text-heading">{step.title}</span> {step.detail}
+          </li>
+        ))}
+      </ol>
     </section>
 
     <section id="faq" class="pb-10">
@@ -155,39 +160,73 @@ const breadcrumbSchema = {
   </main>
 
   <!--
-    Placement tracking. Internal links to this page carry ?src=<placement> (nav, footer, calc, ...).
-    GA4 is loaded site-wide by CookieConsent.astro after page load and only when the visitor has
-    not opted out, so this waits briefly for window.gtag and then sends one event.
+    Placement and form-start tracking. Internal links to this page carry ?src=<placement> (nav,
+    footer, calc, ...). GA4 is loaded site-wide by CookieConsent.astro after page load and only
+    when the visitor has not opted out, so each event waits briefly for window.gtag and then
+    sends once.
+
+    quote_page_view  on load, only when the URL carries a valid src.
+    quote_form_focus the first time the visitor clicks or tabs into the Networx form, with the
+                     same src, or "direct" when there is none. The form is a cross-origin iframe,
+                     so the page cannot see inside it. What it can see is the window losing focus
+                     while document.activeElement becomes that iframe. Nothing the visitor types
+                     is read or sent.
   -->
   <script is:inline>
     (function () {
-      var src;
+      var src = 'direct';
+      var hasSrc = false;
       try {
-        src = new URLSearchParams(window.location.search).get('src');
-      } catch (e) {
-        return;
-      }
-      if (!src) return;
-      src = String(src).trim().slice(0, 40);
-      if (!/^[A-Za-z0-9_-]+$/.test(src)) return;
-
-      var sent = false;
-      var tries = 0;
-
-      function send() {
-        if (sent) return;
-        try {
-          if (localStorage.getItem('cookie_consent') === 'opted_out') return;
-        } catch (e) {}
-        if (typeof window.gtag === 'function') {
-          sent = true;
-          window.gtag('event', 'quote_page_view', { src: src });
-          return;
+        var raw = new URLSearchParams(window.location.search).get('src');
+        if (raw) {
+          raw = String(raw).trim().slice(0, 40);
+          if (/^[A-Za-z0-9_-]+$/.test(raw)) {
+            src = raw;
+            hasSrc = true;
+          }
         }
-        if (++tries < 40) setTimeout(send, 250);
+      } catch (e) {}
+
+      // Send one event, honoring the opt-out and waiting up to 10 seconds for gtag to load.
+      function track(name) {
+        var tries = 0;
+
+        function send() {
+          try {
+            if (localStorage.getItem('cookie_consent') === 'opted_out') return;
+          } catch (e) {}
+          if (typeof window.gtag === 'function') {
+            window.gtag('event', name, { src: src });
+            return;
+          }
+          if (++tries < 40) setTimeout(send, 250);
+        }
+
+        send();
       }
 
-      send();
+      if (hasSrc) track('quote_page_view');
+
+      // The window's focus-loss event name is built from two pieces on purpose. Tailwind scans this
+      // file for class names, and the whole word is also a Tailwind class, so spelling it out
+      // would add an unused rule to the stylesheet that every page loads.
+      var FOCUS_LOST = 'bl' + 'ur';
+      var focusSent = false;
+
+      function onFocusLost() {
+        // Wait a tick so document.activeElement has moved onto the iframe.
+        setTimeout(function () {
+          if (focusSent) return;
+          var box = document.getElementById('networx_form_container');
+          var el = document.activeElement;
+          if (!box || !el || el.tagName !== 'IFRAME' || !box.contains(el)) return;
+          focusSent = true;
+          window.removeEventListener(FOCUS_LOST, onFocusLost);
+          track('quote_form_focus');
+        }, 0);
+      }
+
+      window.addEventListener(FOCUS_LOST, onFocusLost);
     })();
   </script>
 

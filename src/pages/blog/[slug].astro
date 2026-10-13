@@ -26,12 +26,30 @@ const { post } = Astro.props;
 
 const siteUrl = 'https://paintprocalculator.com';
 const pageUrl = `${siteUrl}/blog/${post.slug}`;
-const articleContent = prepareArticleHtml(post.content);
+
+// Post bodies are HTML strings, so a table has no box of its own to scroll in on a phone, and any
+// Tailwind classes baked into one (borders, grey header fills, padding) would fight the ruled
+// table style. Strip those classes (text alignment stays) and wrap each table in a box that
+// scrolls sideways by itself. The box can take focus so a keyboard can scroll it too.
+const keepAlignment = (classes: string) =>
+  classes.split(/\s+/).filter((name) => /^text-(left|center|right)$/.test(name)).join(' ');
+
+function wrapTables(html: string): string {
+  return html.replace(/<table\b[\s\S]*?<\/table>/gi, (table) => {
+    const plain = table.replace(/\sclass=(["'])(.*?)\1/gi, (_match, _quote, classes: string) => {
+      const kept = keepAlignment(classes);
+      return kept ? ` class="${kept}"` : '';
+    });
+    return `<div class="table-scroll" role="region" aria-label="Scrollable table" tabindex="0">${plain}</div>`;
+  });
+}
+
+const articleContent = wrapTables(prepareArticleHtml(post.content));
 
 // Every post ends with one painter quote card. Posts with lead-gen intent set painterCtaSrc
 // in blog-posts.ts, which tags their links and enables an inline CTA wherever the article
 // content carries the PAINTER_CTA_MARKER comment. The inline CTA renders between
-// .blog-prose blocks, not inside one, so the prose link styles do not restyle its button.
+// .prose-linen blocks, not inside one, so the prose link styles do not restyle its button.
 const PAINTER_CTA_MARKER = '<!-- painter-cta -->';
 const painterCtaSrc = post.painterCtaSrc ?? 'blog';
 const articleParts = articleContent.split(PAINTER_CTA_MARKER);
@@ -128,16 +146,8 @@ const faqSchema = post.faqs.length > 0 ? {
   },
 } : null;
 
-// Category badge colors
-const categoryColors: Record<string, string> = {
-  'Cost Guide': 'bg-green-100 text-green-800',
-  'Paint Guide': 'bg-blue-100 text-blue-800',
-  'Painting Tips': 'bg-amber-100 text-amber-800',
-  'Brand Comparison': 'bg-purple-100 text-purple-800',
-  'How-To Guide': 'bg-rose-100 text-rose-800',
-};
-
-const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
+const longDate = (date: string) =>
+  new Date(date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 ---
 
 <Layout title={post.title} description={post.metaDescription} indexable={indexable}>
@@ -156,66 +166,63 @@ const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
     { name: post.title },
   ]} />
 
-  <article class="max-w-3xl mx-auto px-4 py-8">
+  <!--
+    One 4xl container for the whole page, so the article lines up with the breadcrumbs and the
+    affiliate cards. Text blocks keep a 68 character measure inside it (.measure); the calculator
+    and painter modules use the full width.
+  -->
+  <article class="mx-auto max-w-4xl px-4 pt-6 md:pt-10">
     <!-- Article Header -->
-    <header class="mb-8">
-      <div class="flex items-center gap-3 mb-4">
-        <span class={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${badgeColor}`}>{post.category}</span>
-        <time class="text-sm text-gray-500" datetime={post.publishedDate}>
-          {new Date(post.publishedDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-        </time>
-        <span class="text-sm text-gray-400">{post.readingTime} min read</span>
+    <header class="border-b border-border pb-7 md:pb-9">
+      <div class="flex flex-wrap items-baseline gap-x-5 gap-y-1 text-sm text-muted">
+        <span>{post.category}</span>
+        <time datetime={post.publishedDate}>{longDate(post.publishedDate)}</time>
+        <span>{post.readingTime} min read</span>
       </div>
-      <h1 class="text-3xl md:text-4xl font-bold text-heading leading-tight mb-5">{post.title}</h1>
+      <h1 class="article-title">{post.title}</h1>
 
       <!-- Byline -->
-      <div class="flex items-center gap-3 pt-4 border-t border-border">
-        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-white font-bold text-sm shadow-sm flex-shrink-0">
-          ZP
-        </div>
-        <div class="text-sm">
-          <div class="text-heading">
-            By <a href="/about" class="font-semibold hover:text-primary transition-colors">Zack Pearson</a>
-          </div>
-          <div class="text-gray-500 text-xs">
-            Founder, PaintPro Calculator
-            <span class="mx-1.5">·</span>
-            Last updated <time datetime={post.updatedDate}>{new Date(post.updatedDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</time>
-          </div>
-        </div>
+      <div class="mt-6 text-sm text-muted">
+        <p>By <a href="/about" class="link">Zack Pearson</a></p>
+        <p class="mt-0.5 flex flex-wrap gap-x-5">
+          <span>Founder, PaintPro Calculator</span>
+          <span>Last updated <time datetime={post.updatedDate}>{longDate(post.updatedDate)}</time></span>
+        </p>
       </div>
     </header>
 
     <!-- Article Content -->
-    {articleParts.map((part, index) => (
-      <>
-        <div class="blog-prose" set:html={part} />
-        {index < articleParts.length - 1 && (
-          <div class="my-8">
-            <PainterQuoteCTA variant="inline" src={painterCtaSrc} />
-          </div>
-        )}
-      </>
-    ))}
+    <div class="article-body pt-8 md:pt-10">
+      {articleParts.map((part, index) => (
+        <>
+          <div class="prose-linen" set:html={part} />
+          {index < articleParts.length - 1 && (
+            <div class="measure my-8 md:my-10">
+              <PainterQuoteCTA variant="inline" src={painterCtaSrc} />
+            </div>
+          )}
+        </>
+      ))}
+    </div>
 
-    <aside class="mt-8 rounded-lg border border-border bg-slate-50 p-4 text-sm text-body">
-      Product instructions change. For coverage, drying time, temperature limits, and surface preparation, use the current label or technical data sheet for the product in your hand. <a href="/editorial-standards" class="text-primary hover:underline">Read how these guides are checked</a>.
+    <aside class="callout measure mt-10 text-sm md:mt-12">
+      Product instructions change. For coverage, drying time, temperature limits, and surface preparation, use the current label or technical data sheet for the product in your hand. <a href="/editorial-standards" class="link">Read how these guides are checked</a>.
     </aside>
 
     {sources.length > 0 && (
-      <section class="mt-8 rounded-2xl border border-border bg-white p-5 md:p-6" aria-labelledby="sources-heading">
-        <h2 id="sources-heading" class="text-xl font-bold text-heading">Sources checked</h2>
-        <p class="mt-2 text-sm leading-relaxed text-body">
+      <section class="measure mt-12 md:mt-14" aria-labelledby="sources-heading">
+        <h2 id="sources-heading" class="article-h2 article-h2-sm">Sources checked</h2>
+        <p class="mt-3 text-[0.9375rem]">
           These primary references are used to check technical and safety guidance. The label and technical data sheet for the paint you buy should decide product-specific timing and application limits.
         </p>
-        <ul class="mt-4 space-y-4">
+        <ul class="mt-5 border-t border-border" role="list">
           {sources.map(source => (
-            <li>
-              <a href={source.url} target="_blank" rel="noopener noreferrer" class="font-semibold text-primary hover:underline">
+            <li class="border-b border-border py-4">
+              <a href={source.url} target="_blank" rel="noopener noreferrer" class="link font-semibold">
                 {source.title}
               </a>
-              <p class="mt-1 text-xs font-medium uppercase tracking-wide text-gray-500">{source.publisher}</p>
-              <p class="mt-1 text-sm text-body">{source.note}</p>
+              <p class="mt-0.5 text-[0.8125rem] text-muted">{source.publisher}</p>
+              <p class="mt-1 text-[0.9375rem]">{source.note}</p>
             </li>
           ))}
         </ul>
@@ -223,42 +230,39 @@ const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
     )}
 
     <!-- Mid-article CTA -->
-    <div class="my-10 bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20 rounded-xl p-6 text-center">
-      <p class="font-semibold text-heading mb-2">{post.calculatorCta.text}</p>
-      <p class="text-sm text-body mb-4">Enter your room measurements to get a practical starting estimate.</p>
-      <a
-        href={post.calculatorCta.href}
-        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold py-2.5 px-6 rounded-lg transition-all shadow-md hover:shadow-lg"
-      >
-        Try the Calculator
-      </a>
+    <div class="panel mt-12 flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between md:mt-14 md:p-8">
+      <div>
+        <p class="cta-title">{post.calculatorCta.text}</p>
+        <p class="mt-1 text-[0.9375rem]">Enter your room measurements to get a practical starting estimate.</p>
+      </div>
+      <a href={post.calculatorCta.href} class="btn btn-secondary shrink-0">Try the Calculator</a>
     </div>
 
-    <div class="max-w-3xl mx-auto"><AdSlot format="horizontal" /></div>
+    <div class="max-w-3xl"><AdSlot format="horizontal" /></div>
   </article>
 
   <!-- End-of-article painter quote card -->
-  <section class="max-w-3xl mx-auto px-4">
+  <section class="mx-auto mt-10 max-w-4xl px-4 md:mt-12">
     <PainterQuoteCTA src={painterCtaSrc} />
   </section>
 
   <AffiliateCards products={post.affiliateProducts} pageSource={`blog-${post.slug}`} />
 
-  <article class="max-w-3xl mx-auto px-4">
+  <article class="mx-auto max-w-4xl px-4 pb-14 md:pb-20">
     <!-- FAQ Section -->
     {post.faqs.length > 0 && (
-      <section class="mt-12 mb-8">
-        <h2 class="text-2xl font-bold text-heading mb-6">Frequently Asked Questions</h2>
-        <div class="space-y-4">
+      <section class="measure">
+        <h2 class="article-h2">Frequently Asked Questions</h2>
+        <div class="mt-6 border-t border-border">
           {post.faqs.map(faq => (
-            <details class="group bg-white border border-border rounded-lg shadow-sm">
-              <summary class="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-heading hover:text-primary transition-colors">
-                {faq.question}
-                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <details class="group border-b border-border">
+              <summary class="flex cursor-pointer items-start justify-between gap-4 py-4 font-semibold text-heading hover:text-primary">
+                <span>{faq.question}</span>
+                <svg class="mt-1 h-5 w-5 shrink-0 text-muted transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </summary>
-              <div class="px-5 pb-4 text-body text-sm leading-relaxed">
+              <div class="pb-5 pr-9">
                 {faq.answer}
               </div>
             </details>
@@ -268,57 +272,39 @@ const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
     )}
 
     <!-- Author Bio -->
-    <section class="mt-12 mb-8 bg-light-gray rounded-2xl p-6 md:p-8">
-      <div class="flex items-start gap-4">
-        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-white font-bold text-xl shadow-md flex-shrink-0">
-          ZP
-        </div>
-        <div class="flex-1 min-w-0">
-          <h3 class="font-bold text-heading mb-1">About the author</h3>
-          <p class="text-sm font-semibold text-heading mb-2">
-            <a href="/about" class="hover:text-primary transition-colors">Zack Pearson</a>
-            <span class="text-gray-400 font-normal ml-1">· Founder, PaintPro Calculator</span>
-          </p>
-          <p class="text-sm text-body leading-relaxed">
-            Zack self-contracted his own home build in Ohio and started keeping a paint-buying spreadsheet after running out of paint mid-coat on a bedroom wall. That spreadsheet became this site. He writes every article here and verifies coverage rates and prices against manufacturer data sheets before publishing.
-            <a href="/about" class="text-primary hover:underline whitespace-nowrap ml-1">Read more</a>
-          </p>
-        </div>
-      </div>
+    <section class="panel measure mt-12 p-6 md:mt-14 md:p-7">
+      <h3 class="text-lg">About the author</h3>
+      <p class="mt-1 flex flex-wrap items-baseline gap-x-3 text-sm">
+        <a href="/about" class="link font-semibold">Zack Pearson</a>
+        <span class="text-muted">Founder, PaintPro Calculator</span>
+      </p>
+      <p class="mt-3 text-[0.9375rem] leading-relaxed">
+        Zack self-contracted his own home build in Ohio and started keeping a paint-buying spreadsheet after running out of paint mid-coat on a bedroom wall. That spreadsheet became this site. He writes every article here and verifies coverage rates and prices against manufacturer data sheets before publishing.
+        <a href="/about" class="link whitespace-nowrap">Read more</a>
+      </p>
     </section>
 
     <!-- Related Posts -->
     {relatedPosts.length > 0 && (
-      <section class="mt-12 mb-8">
-        <h2 class="text-2xl font-bold text-heading mb-6">Related Articles</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {relatedPosts.map(related => {
-            const relBadgeColor = categoryColors[related.category] || 'bg-gray-100 text-gray-800';
-            return (
-              <a
-                href={`/blog/${related.slug}`}
-                class="group block bg-white rounded-xl border border-border p-4 shadow-sm hover:shadow-md hover:border-primary/30 transition-all"
-              >
-                <span class={`text-xs font-semibold px-2 py-0.5 rounded-full ${relBadgeColor}`}>{related.category}</span>
-                <h3 class="font-semibold text-heading group-hover:text-primary transition-colors mt-2 mb-1 line-clamp-2 text-sm">{related.title}</h3>
-                <span class="text-xs text-gray-400">{related.readingTime} min read</span>
-              </a>
-            );
-          })}
+      <section class="measure mt-14 md:mt-16">
+        <h2 class="article-h2">Related Articles</h2>
+        <div class="mt-6 border-t border-border">
+          {relatedPosts.map(related => (
+            <a href={`/blog/${related.slug}`} class="related-item">
+              <span class="related-cat">{related.category}</span>
+              <h3 class="related-title">{related.title}</h3>
+              <span class="related-time">{related.readingTime} min read</span>
+            </a>
+          ))}
         </div>
       </section>
     )}
 
     <!-- Bottom CTA -->
-    <div class="mt-10 bg-light-gray rounded-xl p-6 text-center">
-      <p class="font-semibold text-heading mb-2">Ready to Start Your Project?</p>
-      <p class="text-sm text-body mb-4">Use the calculator to estimate your paint before you shop.</p>
-      <a
-        href="/#calculator"
-        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold py-2.5 px-6 rounded-lg transition-all shadow-md hover:shadow-lg"
-      >
-        Calculate Paint Needed
-      </a>
+    <div class="measure mt-14 md:mt-16">
+      <p class="cta-title">Ready to Start Your Project?</p>
+      <p class="mt-1 text-[0.9375rem]">Use the calculator to estimate your paint before you shop.</p>
+      <a href="/#calculator" class="btn btn-secondary mt-5 w-full sm:w-auto">Calculate Paint Needed</a>
     </div>
   </article>
 
@@ -326,51 +312,173 @@ const badgeColor = categoryColors[post.category] || 'bg-gray-100 text-gray-800';
 </Layout>
 
 <style>
-  .blog-prose :global(h2) {
+  /* The text measure, about 68 characters of Instrument Sans (68ch is wider than that in this
+     font because its zero is wide). Matches the .prose-linen override below so every text block
+     shares one column edge. */
+  .measure {
+    max-width: 34rem;
+  }
+
+  .article-title {
+    margin-top: 0.875rem;
+    font-size: clamp(2.5rem, 1.85rem + 2.6vw, 3.5rem);
+  }
+
+  .article-h2 {
+    font-size: clamp(1.75rem, 1.45rem + 1vw, 2.25rem);
+    line-height: 1.12;
+  }
+
+  /* Sources is reference matter, so its heading steps down a size. */
+  .article-h2-sm {
     font-size: 1.5rem;
-    font-weight: 700;
+  }
+
+  /* The heading line of a call to action. It is a paragraph, not a heading. */
+  .cta-title {
+    font-family: var(--font-serif);
+    font-size: 1.625rem;
+    font-synthesis: none;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
     color: var(--color-heading);
-    margin-top: 2rem;
-    margin-bottom: 1rem;
   }
-  .blog-prose :global(h3) {
-    font-size: 1.25rem;
-    font-weight: 600;
+
+  /* Related articles: a quiet ruled list. Category and reading time share the top line. */
+  .related-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 1rem;
+    row-gap: 0.375rem;
+    padding-block: 1.125rem;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: var(--color-muted);
+    transition: border-color 150ms ease;
+  }
+
+  .related-item:hover {
+    border-bottom-color: var(--color-heading);
+  }
+
+  .related-cat {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .related-time {
+    grid-column: 2;
+    grid-row: 1;
+    white-space: nowrap;
+  }
+
+  .related-title {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    font-weight: 400;
+    font-synthesis: none;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
     color: var(--color-heading);
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
   }
-  .blog-prose :global(p) {
-    color: var(--color-body);
-    line-height: 1.75;
-    margin-bottom: 1rem;
-  }
-  .blog-prose :global(ul),
-  .blog-prose :global(ol) {
-    color: var(--color-body);
-    line-height: 1.75;
-    margin-bottom: 1rem;
-    padding-left: 1.5rem;
-  }
-  .blog-prose :global(ul) {
-    list-style-type: disc;
-  }
-  .blog-prose :global(ol) {
-    list-style-type: decimal;
-  }
-  .blog-prose :global(li) {
-    margin-bottom: 0.375rem;
-  }
-  .blog-prose :global(strong) {
-    color: var(--color-heading);
-    font-weight: 600;
-  }
-  .blog-prose :global(a) {
-    color: var(--color-primary);
+
+  .related-item:hover .related-title {
     text-decoration: underline;
-    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
   }
-  .blog-prose :global(a:hover) {
-    color: var(--color-primary-dark);
+</style>
+
+<style is:global>
+  /*
+    Post bodies are HTML strings from blog-posts.ts. The shared .prose-linen class styles the plain
+    elements (paragraphs, lists, headings, tables). The rules below tidy anything else a body can
+    carry, so a post can use a table, a tinted box or an icon circle and still match the page.
+    They are scoped under .article-body .prose-linen, so the inline painter CTA between the prose
+    blocks is never touched, and they are unlayered, so they win over Tailwind utilities.
+  */
+  .article-body {
+    overflow-wrap: break-word;
+  }
+
+  /* About 68 characters per line. See .measure in the scoped styles. */
+  .article-body .prose-linen {
+    max-width: 34rem;
+  }
+
+  /* A wide table scrolls inside its own box (the box is added in the page frontmatter). */
+  .article-body .prose-linen .table-scroll {
+    max-width: 100%;
+    margin-block: 1.75em;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border-strong) transparent;
+  }
+
+  .article-body .prose-linen .table-scroll > table {
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  /* Any box with a baked-in tint (blue tips, amber warnings, green notes) becomes the quiet callout. */
+  .article-body .prose-linen :is(div, aside, section, blockquote, p)[class*="bg-"]:not([class*="rounded-full"]),
+  .article-body .prose-linen :is(div, aside, section, blockquote)[class*="border-l-"] {
+    padding: 1rem 1.25rem;
+    background-color: var(--color-light-gray);
+    border: 0;
+    border-left: 3px solid var(--color-accent);
+    border-radius: 0 4px 4px 0;
+    box-shadow: none;
+    color: var(--color-body);
+  }
+
+  /* A tinted box inside a tinted box stays plain, so callouts never nest. */
+  .article-body .prose-linen :is([class*="bg-"], [class*="border-l-"]) :is(div, section, p)[class*="bg-"]:not([class*="rounded-full"]) {
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .article-body .prose-linen :is([class*="bg-"], [class*="border-l-"]) > :first-child {
+    margin-top: 0;
+  }
+
+  .article-body .prose-linen :is([class*="bg-"], [class*="border-l-"]) > :last-child {
+    margin-bottom: 0;
+  }
+
+  .article-body .prose-linen [class*="shadow"] {
+    box-shadow: none;
+  }
+
+  /* Colored text from Tailwind classes goes back to the page's ink and body colors. */
+  .article-body .prose-linen :is(
+      [class*="text-blue-"], [class*="text-sky-"], [class*="text-indigo-"], [class*="text-purple-"],
+      [class*="text-amber-"], [class*="text-yellow-"], [class*="text-orange-"], [class*="text-red-"],
+      [class*="text-rose-"], [class*="text-green-"], [class*="text-emerald-"], [class*="text-teal-"],
+      [class*="text-gray-"], [class*="text-slate-"]
+    ) {
+    color: inherit;
+  }
+
+  /* Icon circles and colored pill badges become plain inline text. */
+  .article-body .prose-linen [class*="rounded-full"],
+  .article-body .prose-linen :is(span, strong, em, b, i, mark)[class*="bg-"] {
+    display: inline;
+    width: auto;
+    height: auto;
+    padding: 0;
+    background: none;
+    border-radius: 0;
+    color: inherit;
+  }
+
+  .article-body .prose-linen [class*="rounded-full"] {
+    font-weight: 600;
   }
 </style>

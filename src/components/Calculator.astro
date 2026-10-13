@@ -1,7 +1,10 @@
 ---
-// Paint coverage calculator
-// Mobile-first design with large touch targets (44px min)
-// Accounts for texture, primer, and surface condition
+// Paint coverage calculator ("Linen" design).
+// The form is one quiet panel: the room's length, width and height show large in Instrument Serif
+// over an ink underline, every other choice is a plain field. The result is the whole-gallon
+// number in ink beside the shopping-list receipt, then the hiring line and painter card, then the
+// quieter details. Touch targets stay at 44px or more.
+// Accounts for texture, primer, and surface condition.
 import PainterQuoteCTA from './PainterQuoteCTA.astro';
 
 interface Props {
@@ -12,27 +15,22 @@ interface Props {
 const { showPainterCta = true } = Astro.props;
 ---
 
-<section id="calculator" class="max-w-2xl mx-auto px-4 py-8">
-  <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-    <h1 class="text-2xl md:text-3xl font-bold text-heading mb-2">Paint Calculator</h1>
-    <p class="text-body mb-6">A practical buying estimate based on your room and the paint label.</p>
+<section id="calculator" class="mx-auto max-w-4xl px-4 pt-2 pb-8 md:pb-12">
+  <div class="panel p-5 sm:p-8 md:p-11">
+    <h1 class="calc-title">Paint Calculator</h1>
+    <p class="calc-intro">A practical buying estimate based on your room and the paint label.</p>
 
-    <form id="paint-calculator-form" class="space-y-6">
+    <form id="paint-calculator-form" class="calc-form">
       <!-- Room Dimensions -->
-      <fieldset class="space-y-4">
-        <legend class="text-lg font-semibold text-heading flex items-center gap-2 mb-3">
-          <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-          </svg>
-          Room Dimensions
-        </legend>
+      <fieldset class="calc-set">
+        <legend class="calc-legend">Room Dimensions</legend>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-2 items-end gap-x-5 gap-y-6 md:grid-cols-[1fr_1fr_1.45fr] md:gap-x-8">
           <div>
-            <label for="length" class="block text-sm font-medium text-body mb-1">
+            <label for="length" class="field-label">
               Room Length
             </label>
-            <div class="relative">
+            <div class="dim">
               <input
                 type="number"
                 id="length"
@@ -42,17 +40,17 @@ const { showPainterCta = true } = Astro.props;
                 step="0.5"
                 placeholder="12"
                 required
-                class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                class="dim-input"
               />
-              <span class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">ft</span>
+              <span class="dim-unit">ft</span>
             </div>
           </div>
 
           <div>
-            <label for="width" class="block text-sm font-medium text-body mb-1">
+            <label for="width" class="field-label">
               Room Width
             </label>
-            <div class="relative">
+            <div class="dim">
               <input
                 type="number"
                 id="width"
@@ -62,36 +60,38 @@ const { showPainterCta = true } = Astro.props;
                 step="0.5"
                 placeholder="10"
                 required
-                class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                class="dim-input"
               />
-              <span class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">ft</span>
+              <span class="dim-unit">ft</span>
             </div>
           </div>
 
-          <div class="col-span-1 sm:col-span-2 md:col-span-1">
-            <label for="height" class="block text-sm font-medium text-body mb-1">
+          <div class="col-span-2 md:col-span-1">
+            <label for="height" class="field-label">
               Ceiling Height
             </label>
-            <select
-              id="height"
-              name="height"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
-            >
-              <option value="8" selected>8 ft (Standard)</option>
-              <option value="9">9 ft</option>
-              <option value="10">10 ft</option>
-              <option value="12">12 ft</option>
-              <option value="custom">Custom</option>
-            </select>
+            <div class="dim">
+              <select
+                id="height"
+                name="height"
+                class="dim-input dim-select"
+              >
+                <option value="8" selected>8 ft (Standard)</option>
+                <option value="9">9 ft</option>
+                <option value="10">10 ft</option>
+                <option value="12">12 ft</option>
+                <option value="custom">Custom</option>
+              </select>
+            </div>
           </div>
         </div>
 
         <!-- Custom height input (hidden by default) -->
-        <div id="custom-height-container" class="hidden">
-          <label for="custom-height" class="block text-sm font-medium text-body mb-1">
+        <div id="custom-height-container" class="hidden mt-6">
+          <label for="custom-height" class="field-label">
             Custom Height
           </label>
-          <div class="relative max-w-[150px]">
+          <div class="dim max-w-[10rem]">
             <input
               type="number"
               id="custom-height"
@@ -100,32 +100,23 @@ const { showPainterCta = true } = Astro.props;
               max="30"
               step="0.5"
               placeholder="10"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+              class="dim-input"
             />
-            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">ft</span>
+            <span class="dim-unit">ft</span>
           </div>
         </div>
       </fieldset>
 
       <!-- Room Type & Surface Condition -->
-      <fieldset class="space-y-4">
-        <legend class="text-lg font-semibold text-heading flex items-center gap-2 mb-3">
-          <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-          </svg>
-          Room & Surface Details
-        </legend>
+      <fieldset class="calc-set">
+        <legend class="calc-legend">Room & Surface Details</legend>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="grid gap-x-6 gap-y-5 sm:grid-cols-2">
           <div>
-            <label for="room-type" class="block text-sm font-medium text-body mb-1">
+            <label for="room-type" class="field-label">
               Room Type
             </label>
-            <select
-              id="room-type"
-              name="room-type"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
-            >
+            <select id="room-type" name="room-type" class="field">
               <option value="bedroom" selected>Bedroom / Living Room</option>
               <option value="kitchen">Kitchen</option>
               <option value="bathroom">Bathroom</option>
@@ -136,14 +127,10 @@ const { showPainterCta = true } = Astro.props;
           </div>
 
           <div>
-            <label for="surface-condition" class="block text-sm font-medium text-body mb-1">
+            <label for="surface-condition" class="field-label">
               Wall Condition
             </label>
-            <select
-              id="surface-condition"
-              name="surface-condition"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
-            >
+            <select id="surface-condition" name="surface-condition" class="field">
               <option value="good" selected>Previously Painted (Good)</option>
               <option value="fair">Previously Painted (Fair/Patched)</option>
               <option value="new-drywall">New Drywall</option>
@@ -151,18 +138,12 @@ const { showPainterCta = true } = Astro.props;
               <option value="glossy">Glossy / Semi-Gloss Surface</option>
             </select>
           </div>
-        </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label for="wall-texture" class="block text-sm font-medium text-body mb-1">
+            <label for="wall-texture" class="field-label">
               Wall Texture
             </label>
-            <select
-              id="wall-texture"
-              name="wall-texture"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
-            >
+            <select id="wall-texture" name="wall-texture" class="field">
               <option value="smooth" selected>Smooth</option>
               <option value="light">Light Texture (Orange Peel)</option>
               <option value="medium">Medium Texture (Knockdown)</option>
@@ -171,14 +152,10 @@ const { showPainterCta = true } = Astro.props;
           </div>
 
           <div>
-            <label for="ceiling-texture" class="block text-sm font-medium text-body mb-1">
+            <label for="ceiling-texture" class="field-label">
               Ceiling Texture
             </label>
-            <select
-              id="ceiling-texture"
-              name="ceiling-texture"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
-            >
+            <select id="ceiling-texture" name="ceiling-texture" class="field">
               <option value="smooth" selected>Smooth</option>
               <option value="light">Light Texture</option>
               <option value="popcorn">Popcorn / Acoustic</option>
@@ -187,168 +164,100 @@ const { showPainterCta = true } = Astro.props;
         </div>
       </fieldset>
 
-      <!-- Openings to Deduct -->
-      <fieldset class="space-y-4">
-        <legend class="text-lg font-semibold text-heading flex items-center gap-2 mb-3">
-          <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h8m-8 5h8m-8 5h8M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" />
-          </svg>
-          Openings to Deduct
-        </legend>
+      <!-- Openings to Deduct. Bottom-aligned so the boxes still line up when a label wraps. -->
+      <fieldset class="calc-set">
+        <legend class="calc-legend">Openings to Deduct</legend>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+        <div class="grid grid-cols-2 items-end gap-x-5 gap-y-5 sm:grid-cols-3 md:gap-x-6">
           <div>
-            <label for="doors" class="block text-sm font-medium text-body mb-1">
+            <label for="doors" class="field-label">
               Standard Doors
             </label>
-            <input
-              type="number"
-              id="doors"
-              name="doors"
-              min="0"
-              max="20"
-              value="1"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-center"
-            />
-            <p class="text-xs text-gray-500 mt-1">(21 sq ft each)</p>
+            <input type="number" id="doors" name="doors" min="0" max="20" value="1" class="field tabular-nums" />
+            <p class="field-hint">(21 sq ft each)</p>
           </div>
 
           <div>
-            <label for="french-doors" class="block text-sm font-medium text-body mb-1">
+            <label for="french-doors" class="field-label">
               French Doors
             </label>
-            <input
-              type="number"
-              id="french-doors"
-              name="french-doors"
-              min="0"
-              max="10"
-              value="0"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-center"
-            />
-            <p class="text-xs text-gray-500 mt-1">(18 sq ft each)</p>
+            <input type="number" id="french-doors" name="french-doors" min="0" max="10" value="0" class="field tabular-nums" />
+            <p class="field-hint">(18 sq ft each)</p>
           </div>
 
           <div>
-            <label for="closet-doors" class="block text-sm font-medium text-body mb-1">
+            <label for="closet-doors" class="field-label">
               Closet/Bifold
             </label>
-            <input
-              type="number"
-              id="closet-doors"
-              name="closet-doors"
-              min="0"
-              max="10"
-              value="0"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-center"
-            />
-            <p class="text-xs text-gray-500 mt-1">(25 sq ft each)</p>
+            <input type="number" id="closet-doors" name="closet-doors" min="0" max="10" value="0" class="field tabular-nums" />
+            <p class="field-hint">(25 sq ft each)</p>
           </div>
 
           <div>
-            <label for="windows" class="block text-sm font-medium text-body mb-1">
+            <label for="windows" class="field-label">
               Standard Windows
             </label>
-            <input
-              type="number"
-              id="windows"
-              name="windows"
-              min="0"
-              max="20"
-              value="2"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-center"
-            />
-            <p class="text-xs text-gray-500 mt-1">(15 sq ft each)</p>
+            <input type="number" id="windows" name="windows" min="0" max="20" value="2" class="field tabular-nums" />
+            <p class="field-hint">(15 sq ft each)</p>
           </div>
 
           <div>
-            <label for="large-windows" class="block text-sm font-medium text-body mb-1">
+            <label for="large-windows" class="field-label">
               Picture/Sliding
             </label>
-            <input
-              type="number"
-              id="large-windows"
-              name="large-windows"
-              min="0"
-              max="10"
-              value="0"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-center"
-            />
-            <p class="text-xs text-gray-500 mt-1">(50 sq ft each)</p>
+            <input type="number" id="large-windows" name="large-windows" min="0" max="10" value="0" class="field tabular-nums" />
+            <p class="field-hint">(50 sq ft each)</p>
           </div>
 
           <div>
-            <label for="small-windows" class="block text-sm font-medium text-body mb-1">
+            <label for="small-windows" class="field-label">
               Small Windows
             </label>
-            <input
-              type="number"
-              id="small-windows"
-              name="small-windows"
-              min="0"
-              max="10"
-              value="0"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors text-center"
-            />
-            <p class="text-xs text-gray-500 mt-1">(8 sq ft each)</p>
+            <input type="number" id="small-windows" name="small-windows" min="0" max="10" value="0" class="field tabular-nums" />
+            <p class="field-hint">(8 sq ft each)</p>
           </div>
         </div>
       </fieldset>
 
       <!-- Paint Details -->
-      <fieldset class="space-y-4">
-        <legend class="text-lg font-semibold text-heading flex items-center gap-2 mb-3">
-          <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-          </svg>
-          Paint Details
-        </legend>
+      <fieldset class="calc-set">
+        <legend class="calc-legend">Paint Details</legend>
 
-        <div class="space-y-4">
-          <div>
-            <label for="surface-type" class="block text-sm font-medium text-body mb-1">
-              What are you painting?
-            </label>
-            <select
-              id="surface-type"
-              name="surface-type"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
-            >
-              <option value="walls" selected>Walls Only</option>
-              <option value="walls-ceiling">Walls + Ceiling</option>
-              <option value="ceiling">Ceiling Only</option>
-              <option value="trim">Trim Only</option>
-            </select>
-          </div>
-
-          <!-- Trim Height (shown when trim selected) -->
-          <div id="trim-height-container" class="hidden">
-            <label for="trim-height" class="block text-sm font-medium text-body mb-1">
-              Trim/Baseboard Height
-            </label>
-            <select
-              id="trim-height"
-              name="trim-height"
-              class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
-            >
-              <option value="4">4 inches</option>
-              <option value="6" selected>6 inches (Standard)</option>
-              <option value="8">8 inches</option>
-              <option value="10">10 inches</option>
-              <option value="12">12 inches (Crown Molding)</option>
-            </select>
-          </div>
-
-          <div class="grid grid-cols-2 gap-4">
+        <div class="space-y-5">
+          <div class="grid gap-x-6 gap-y-5 sm:grid-cols-2">
             <div>
-              <label for="coats" class="block text-sm font-medium text-body mb-1">
+              <label for="surface-type" class="field-label">
+                What are you painting?
+              </label>
+              <select id="surface-type" name="surface-type" class="field">
+                <option value="walls" selected>Walls Only</option>
+                <option value="walls-ceiling">Walls + Ceiling</option>
+                <option value="ceiling">Ceiling Only</option>
+                <option value="trim">Trim Only</option>
+              </select>
+            </div>
+
+            <!-- Trim Height (shown when trim selected) -->
+            <div id="trim-height-container" class="hidden">
+              <label for="trim-height" class="field-label">
+                Trim/Baseboard Height
+              </label>
+              <select id="trim-height" name="trim-height" class="field">
+                <option value="4">4 inches</option>
+                <option value="6" selected>6 inches (Standard)</option>
+                <option value="8">8 inches</option>
+                <option value="10">10 inches</option>
+                <option value="12">12 inches (Crown Molding)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid gap-x-6 gap-y-5 sm:grid-cols-2">
+            <div>
+              <label for="coats" class="field-label">
                 Number of Coats
               </label>
-              <select
-                id="coats"
-                name="coats"
-                class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
-              >
+              <select id="coats" name="coats" class="field">
                 <option value="1">1 Coat</option>
                 <option value="2" selected>2 Coats (Recommended)</option>
                 <option value="3">3 Coats</option>
@@ -356,14 +265,10 @@ const { showPainterCta = true } = Astro.props;
             </div>
 
             <div>
-              <label for="paint-quality" class="block text-sm font-medium text-body mb-1">
+              <label for="paint-quality" class="field-label">
                 Paint Quality
               </label>
-              <select
-                id="paint-quality"
-                name="paint-quality"
-                class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
-              >
+              <select id="paint-quality" name="paint-quality" class="field">
                 <option value="budget">Budget (350 sq ft/gal)</option>
                 <option value="standard" selected>Standard (400 sq ft/gal)</option>
                 <option value="premium">Premium (450 sq ft/gal)</option>
@@ -374,63 +279,44 @@ const { showPainterCta = true } = Astro.props;
       </fieldset>
 
       <!-- Primer Options -->
-      <fieldset class="space-y-4">
-        <legend class="text-lg font-semibold text-heading flex items-center gap-2 mb-3">
-          <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-          </svg>
-          Primer (Recommended for Best Results)
-        </legend>
+      <fieldset class="calc-set">
+        <legend class="calc-legend">Primer (Recommended for Best Results)</legend>
 
-        <div class="space-y-3">
-          <div class="flex items-center gap-3">
+        <div class="space-y-5">
+          <label for="needs-primer" class="option-row">
             <input
               type="checkbox"
               id="needs-primer"
               name="needs-primer"
-              class="w-5 h-5 text-primary border-border rounded focus:ring-primary cursor-pointer"
             />
-            <label for="needs-primer" class="text-sm text-body cursor-pointer">
-              Include primer in estimate
-            </label>
-          </div>
+            <span>Include primer in estimate</span>
+          </label>
 
-          <div id="primer-options" class="hidden pl-8 space-y-3">
+          <div id="primer-options" class="hidden grid gap-x-6 gap-y-5 sm:grid-cols-2">
             <div>
-              <label for="primer-type" class="block text-sm font-medium text-body mb-1">
+              <label for="primer-type" class="field-label">
                 Primer Type
               </label>
-              <select
-                id="primer-type"
-                name="primer-type"
-                class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
-              >
+              <select id="primer-type" name="primer-type" class="field">
                 <option value="standard" selected>Standard Primer (300 sq ft/gal)</option>
                 <option value="high-hide">High-Hide/Stain Block (250 sq ft/gal)</option>
                 <option value="pva">PVA Drywall Primer (300 sq ft/gal)</option>
               </select>
             </div>
             <div>
-              <label for="primer-coats" class="block text-sm font-medium text-body mb-1">
+              <label for="primer-coats" class="field-label">
                 Primer Coats
               </label>
-              <select
-                id="primer-coats"
-                name="primer-coats"
-                class="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors bg-white"
-              >
+              <select id="primer-coats" name="primer-coats" class="field">
                 <option value="1" selected>1 Coat (Standard)</option>
                 <option value="2">2 Coats (Stains/Dark Colors)</option>
               </select>
             </div>
           </div>
 
-          <!-- Primer recommendation alert -->
-          <div id="primer-recommendation" class="hidden p-3 bg-amber-50 border border-amber-200 rounded-lg">
-            <p class="text-sm text-amber-800 flex items-start gap-2">
-              <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
+          <!-- Primer recommendation note -->
+          <div id="primer-recommendation" class="callout hidden">
+            <p class="text-[0.9375rem]">
               <span id="primer-recommendation-text">Primer recommended for this surface condition.</span>
             </p>
           </div>
@@ -438,26 +324,23 @@ const { showPainterCta = true } = Astro.props;
       </fieldset>
 
       <!-- Options -->
-      <div class="flex items-center gap-3 py-2">
+      <label for="waste-buffer" class="option-row">
         <input
           type="checkbox"
           id="waste-buffer"
           name="waste-buffer"
           checked
-          class="w-5 h-5 text-primary border-border rounded focus:ring-primary cursor-pointer"
         />
-        <label for="waste-buffer" class="text-sm text-body cursor-pointer">
-          Include 15% waste buffer (recommended for touch-ups)
-        </label>
-      </div>
+        <span>Include 15% waste buffer (recommended for touch-ups)</span>
+      </label>
 
-      <!-- Calculate Button with INP-optimized visual feedback -->
+      <!-- Calculate. The loading state shows before the work starts (INP). -->
       <button
         type="submit"
         id="calculate-btn"
-        class="w-full bg-accent hover:bg-accent-dark text-white font-semibold py-4 px-6 rounded-lg transition-all shadow-md hover:shadow-lg focus:ring-4 focus:ring-accent/30 text-lg relative overflow-hidden group"
+        class="btn btn-primary btn-block min-h-[3.25rem] text-[1.0625rem]"
       >
-        <span id="btn-text" class="flex items-center justify-center gap-2">
+        <span id="btn-text">
           Calculate Paint Needed
         </span>
         <span id="btn-loading" class="hidden flex items-center justify-center gap-2" role="status" aria-live="polite">
@@ -467,167 +350,522 @@ const { showPainterCta = true } = Astro.props;
           </svg>
           Calculating...
         </span>
-        <!-- Ripple effect for immediate visual feedback (INP optimization) -->
-        <span class="absolute inset-0 bg-white/20 scale-0 group-active:scale-100 transition-transform duration-150 rounded-lg"></span>
       </button>
     </form>
   </div>
 </section>
 
-<!-- Results Section (hidden initially) -->
-<section id="results" class="max-w-2xl mx-auto px-4 pb-8 hidden">
-  <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 border-t-4 border-accent">
-    <h2 class="text-xl font-bold text-heading mb-4 flex items-center gap-2">
-      <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
+<!-- Results Section (hidden initially). It sits on the page, not in a box, so the receipt reads as
+     paper on the table. -->
+<section id="results" class="calc-results mx-auto max-w-4xl px-4 pb-10 md:pb-14 hidden">
+  <div class="animate-results pt-2 md:pt-4">
+    <h2 class="results-title">
       Your Paint Estimate
     </h2>
 
-    <p class="text-sm text-body mb-3">
+    <p class="results-intro">
       Paint labels give a coverage range because texture, color changes, and application method affect the result. Here is a realistic buying range.
     </p>
 
-    <!-- Main Result -->
-    <div class="grid grid-cols-3 gap-2 sm:gap-4 mb-4" aria-label="Estimated paint range">
-      <div class="text-center py-4 px-2 bg-light-gray rounded-xl">
-        <p class="text-xs sm:text-sm text-body mb-1">Low</p>
-        <p class="text-3xl md:text-4xl font-bold text-heading" id="gallons-low-result">0</p>
-        <p class="text-sm font-medium text-heading">gal</p>
+    <!-- Main result: the whole-gallon number beside the receipt -->
+    <div class="estimate mt-8 md:mt-10">
+      <div class="estimate-figure">
+        <p class="estimate-number" id="estimate-number">0</p>
+        <p class="estimate-unit" id="estimate-unit">gallons</p>
+
+        <div class="estimate-range" aria-label="Estimated paint range">
+          <div>
+            <span class="estimate-range-label">Low</span>
+            <span class="estimate-range-value"><span id="gallons-low-result">0</span> <span class="range-unit">gal</span></span>
+          </div>
+          <div class="is-likely">
+            <span class="estimate-range-label">Likely</span>
+            <span class="estimate-range-value"><span id="gallons-result">0</span> <span class="range-unit">gal</span></span>
+          </div>
+          <div>
+            <span class="estimate-range-label">High</span>
+            <span class="estimate-range-value"><span id="gallons-high-result">0</span> <span class="range-unit">gal</span></span>
+          </div>
+        </div>
+
+        <!-- Result Summary -->
+        <p class="estimate-summary" id="result-summary">
+          The likely calculation uses <span id="raw-gallons">0</span> gallons before the selected buffer. If you are buying whole gallons, plan on <strong><span id="purchase-gallons">0</span> gallons</strong>. This covers <span id="total-area">0</span> square feet with <span id="num-coats">2</span> coats.
+        </p>
+
+        <div id="primer-result-box" class="primer-line hidden">
+          <p class="primer-line-label">Primer Needed</p>
+          <p class="primer-line-value"><span id="primer-gallons-result">0</span> gallons</p>
+        </div>
       </div>
-      <div class="text-center py-4 px-2 bg-blue-50 border-2 border-primary rounded-xl">
-        <p class="text-xs sm:text-sm text-primary font-semibold mb-1">Likely</p>
-        <p class="text-3xl md:text-4xl font-bold text-primary" id="gallons-result">0</p>
-        <p class="text-sm font-medium text-heading">gal</p>
-      </div>
-      <div class="text-center py-4 px-2 bg-light-gray rounded-xl">
-        <p class="text-xs sm:text-sm text-body mb-1">High</p>
-        <p class="text-3xl md:text-4xl font-bold text-heading" id="gallons-high-result">0</p>
-        <p class="text-sm font-medium text-heading">gal</p>
+
+      <div class="receipt">
+        <span class="receipt-tape" aria-hidden="true"></span>
+        <div class="receipt-head">
+          <p class="receipt-title">Your paint run</p>
+          <p class="receipt-sub" id="receipt-sub"></p>
+        </div>
+        <hr class="receipt-rule" />
+        <div class="receipt-row"><span>Paint</span><span><span id="receipt-paint">0</span> gal</span></div>
+        <div class="receipt-row hidden" id="receipt-primer-row"><span>Primer</span><span><span id="receipt-primer">0</span> gal</span></div>
+
+        <!-- Recommended products (affiliate, hidden until a result exists) -->
+        <div id="recommended-products" class="hidden">
+          <hr class="receipt-rule" />
+          <h3 class="receipt-heading">Supplies for this room</h3>
+          <ul id="recommended-products-list" class="receipt-list"></ul>
+        </div>
+
+        <hr class="receipt-rule" />
+        <div class="receipt-total" id="receipt-total">
+          <span id="receipt-total-label">Wall area</span>
+          <span class="receipt-total-value"><span id="receipt-area">0</span> sq ft</span>
+        </div>
+        <p id="recommended-products-note" class="receipt-note mt-5 hidden">
+          Picked from your inputs. Links go to Amazon and we may earn a commission at no extra cost to you.
+          <a href="/affiliate-disclosure" class="receipt-note-link">Details</a>
+        </p>
       </div>
     </div>
-
-    <div id="primer-result-box" class="text-center py-4 bg-amber-50 rounded-xl mb-4 hidden">
-      <p class="text-sm text-body mb-1">Primer Needed</p>
-      <p class="text-3xl font-bold text-amber-600"><span id="primer-gallons-result">0</span> gallons</p>
-    </div>
-
-    <!-- Result Summary -->
-    <p class="text-body text-center mb-6" id="result-summary">
-      The likely calculation uses <span id="raw-gallons">0</span> gallons before the selected buffer. If you are buying whole gallons, plan on <strong><span id="purchase-gallons">0</span> gallons</strong>. This covers <span id="total-area">0</span> square feet with <span id="num-coats">2</span> coats.
-    </p>
 
     {/* Painter quote CTA. Lives inside the results container so it appears with the estimate. */}
     {showPainterCta && (
-      <div class="mb-6">
-        <p id="pro-cost-note" class="hidden text-sm text-body mb-3"></p>
+      <div class="mt-10 md:mt-14">
+        <p id="pro-cost-note" class="hire-line hidden mb-4 max-w-[40rem]"></p>
         <PainterQuoteCTA src="calc" heading="Rather have a pro do it?" body="You've got your paint numbers. Get quotes from local painters for this job." />
       </div>
     )}
 
-    <div class="mb-6 p-4 bg-slate-50 rounded-lg border border-slate-200">
-      <div class="flex items-center justify-between gap-3 mb-2">
-        <h3 class="font-semibold text-heading">Estimate confidence</h3>
-        <span id="confidence-badge" class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-semibold uppercase">Medium</span>
+    <!-- The quieter details: confidence, the breakdown, and the before-you-buy tips -->
+    <div class="mt-10 grid gap-8 md:mt-12 md:grid-cols-2 md:gap-x-12">
+      <div>
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <h3 class="text-[1.0625rem]">Estimate confidence</h3>
+          <span id="confidence-badge" class="text-[0.9375rem] font-semibold capitalize text-heading">Medium</span>
+        </div>
+        <ul id="confidence-reasons" class="mt-2 space-y-1 text-[0.9375rem] text-body"></ul>
+        <a href="/calculator-methodology" class="link mt-3 inline-block text-[0.9375rem]">See the formula and assumptions</a>
       </div>
-      <ul id="confidence-reasons" class="text-sm text-body space-y-1"></ul>
-      <a href="/calculator-methodology" class="inline-block mt-3 text-sm text-primary font-medium hover:underline">See the formula and assumptions</a>
-    </div>
 
-    <!-- Room-specific recommendation -->
-    <div id="room-recommendation" class="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-100 hidden">
-      <p class="text-sm text-blue-800 flex items-start gap-2">
-        <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span id="room-recommendation-text"></span>
-      </p>
-    </div>
-
-    <!-- Breakdown (collapsible) -->
-    <details class="border border-border rounded-lg">
-      <summary class="px-4 py-3 cursor-pointer font-medium text-heading hover:bg-gray-50 transition-colors">
-        View Detailed Breakdown
-      </summary>
-      <div class="px-4 py-4 border-t border-border space-y-2 text-sm">
-        <div class="flex justify-between">
-          <span class="text-body">Wall Area:</span>
-          <span class="font-medium" id="wall-area">0 sq ft</span>
+      <!-- Practical checks, with the room-specific recommendation first -->
+      <div class="callout md:col-start-2 md:row-span-2 md:row-start-1 md:self-start">
+        <h3 class="text-[1.0625rem]">
+          Before you buy
+        </h3>
+        <div id="room-recommendation" class="mt-2 hidden">
+          <p class="text-[0.9375rem] text-heading">
+            <span id="room-recommendation-text"></span>
+          </p>
         </div>
-        <div class="flex justify-between" id="ceiling-row">
-          <span class="text-body">Ceiling Area:</span>
-          <span class="font-medium" id="ceiling-area">0 sq ft</span>
-        </div>
-        <div class="flex justify-between text-red-600">
-          <span>Deductions:</span>
-          <span class="font-medium" id="deductions">-0 sq ft</span>
-        </div>
-        <hr class="my-2" />
-        <div class="flex justify-between font-semibold">
-          <span class="text-heading">Net Paintable Area:</span>
-          <span id="net-area">0 sq ft</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-body">Base Coverage Rate:</span>
-          <span class="font-medium" id="coverage-rate">400 sq ft/gal</span>
-        </div>
-        <div class="flex justify-between" id="texture-adjustment-row">
-          <span class="text-body">Texture Adjustment:</span>
-          <span class="font-medium" id="texture-adjustment">None</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-body">Adjusted Coverage:</span>
-          <span class="font-medium" id="adjusted-coverage">400 sq ft/gal</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-body">With <span id="coats-display">2</span> Coats:</span>
-          <span class="font-medium" id="total-coverage">0 sq ft needed</span>
-        </div>
-        <div class="flex justify-between" id="waste-row">
-          <span class="text-body">+ 15% Waste Buffer:</span>
-          <span class="font-medium" id="waste-amount">0 gal</span>
-        </div>
-        <hr class="my-2" id="primer-breakdown-hr" />
-        <div class="flex justify-between" id="primer-breakdown-row">
-          <span class="text-body">Primer (<span id="primer-coats-display">1</span> coat):</span>
-          <span class="font-medium" id="primer-breakdown">0 gal</span>
-        </div>
+        <ul class="mt-3 list-disc space-y-1.5 pl-5 text-[0.9375rem] marker:text-accent" id="tips-list">
+          <li>Check the coverage range on the exact paint label before buying.</li>
+        </ul>
       </div>
-    </details>
 
-    <!-- Practical checks -->
-    <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
-      <h3 class="font-semibold text-primary mb-2 flex items-center gap-2">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        Before you buy
-      </h3>
-      <ul class="text-sm text-body space-y-1" id="tips-list">
-        <li>Check the coverage range on the exact paint label before buying.</li>
-      </ul>
-    </div>
-
-    <!-- Recommended products (affiliate, hidden until a result exists) -->
-    <div id="recommended-products" class="mt-6 hidden">
-      <h3 class="font-semibold text-heading mb-1">Supplies for this room</h3>
-      <p class="text-xs text-gray-500 mb-3">
-        Picked from your inputs. Links go to Amazon and we may earn a commission at no extra cost to you.
-        <a href="/affiliate-disclosure" class="underline hover:text-primary">Details</a>
-      </p>
-      <ul id="recommended-products-list" class="grid sm:grid-cols-2 gap-3"></ul>
+      <!-- Breakdown (collapsible) -->
+      <details class="breakdown md:col-start-1 md:row-start-2">
+        <summary>
+          View Detailed Breakdown
+        </summary>
+        <div class="breakdown-rows">
+          <div class="breakdown-row">
+            <span>Wall Area:</span>
+            <span id="wall-area">0 sq ft</span>
+          </div>
+          <div class="breakdown-row" id="ceiling-row">
+            <span>Ceiling Area:</span>
+            <span id="ceiling-area">0 sq ft</span>
+          </div>
+          <div class="breakdown-row">
+            <span>Deductions:</span>
+            <span id="deductions">-0 sq ft</span>
+          </div>
+          <hr class="my-2" />
+          <div class="breakdown-row breakdown-row-strong">
+            <span>Net Paintable Area:</span>
+            <span id="net-area">0 sq ft</span>
+          </div>
+          <div class="breakdown-row">
+            <span>Base Coverage Rate:</span>
+            <span id="coverage-rate">400 sq ft/gal</span>
+          </div>
+          <div class="breakdown-row" id="texture-adjustment-row">
+            <span>Texture Adjustment:</span>
+            <span id="texture-adjustment">None</span>
+          </div>
+          <div class="breakdown-row">
+            <span>Adjusted Coverage:</span>
+            <span id="adjusted-coverage">400 sq ft/gal</span>
+          </div>
+          <div class="breakdown-row">
+            <span>With <span id="coats-display">2</span> Coats:</span>
+            <span id="total-coverage">0 sq ft needed</span>
+          </div>
+          <div class="breakdown-row" id="waste-row">
+            <span>+ 15% Waste Buffer:</span>
+            <span id="waste-amount">0 gal</span>
+          </div>
+          <hr class="my-2" id="primer-breakdown-hr" />
+          <div class="breakdown-row" id="primer-breakdown-row">
+            <span>Primer (<span id="primer-coats-display">1</span> coat):</span>
+            <span id="primer-breakdown">0 gal</span>
+          </div>
+        </div>
+      </details>
     </div>
 
     <!-- Reset Button -->
-    <button
-      type="button"
-      id="reset-btn"
-      class="w-full mt-6 bg-gray-100 hover:bg-gray-200 text-heading font-medium py-3 px-6 rounded-lg transition-colors"
-    >
-      Start Over
-    </button>
+    <div class="mt-10 md:mt-12">
+      <button
+        type="button"
+        id="reset-btn"
+        class="btn btn-ghost -ml-3"
+      >
+        Start Over
+      </button>
+    </div>
   </div>
 </section>
+
+<style>
+  .calc-title {
+    font-size: 2.25rem;
+    line-height: 1.05;
+  }
+
+  .calc-intro {
+    margin-top: 0.75rem;
+    max-width: 34rem;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--color-body);
+  }
+
+  .calc-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+    margin-top: 2rem;
+  }
+
+  /* Fieldsets size to their content by default, which can push a phone page sideways. */
+  .calc-set {
+    min-width: 0;
+  }
+
+  .calc-legend {
+    padding: 0;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    font-synthesis: none;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--color-heading);
+  }
+
+  /* Legend margins are unreliable across browsers, so the space goes on what follows. */
+  .calc-legend + * {
+    margin-top: 1.125rem;
+  }
+
+  /* Room dimensions: the value large in serif over an ink underline (direction 1a).
+     The ring goes around the whole field, unit included. */
+  .dim {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--color-heading);
+  }
+
+  .dim:focus-within {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .dim-input {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    min-height: 3rem;
+    padding: 0.25rem 0 0.375rem;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 1.5rem + 2vw, 2.5rem);
+    font-weight: 400;
+    font-synthesis: none;
+    font-variant-numeric: lining-nums tabular-nums;
+    line-height: 1.1;
+    color: var(--color-heading);
+  }
+
+  .dim-input:focus,
+  .dim-input:focus-visible {
+    outline: none;
+  }
+
+  /* Lighter than a typed value so an empty field never reads as filled in. Large text, 3.5:1. */
+  .dim-input::placeholder {
+    color: oklch(0.62 0.02 55);
+    opacity: 1;
+  }
+
+  .dim-select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 1.75rem;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%232C211B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.25rem center;
+    background-size: 12px 8px;
+  }
+
+  .dim-unit {
+    flex: none;
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1;
+    color: var(--color-muted);
+  }
+
+  /* Checkbox rows: the whole bordered row is the label, so all of it is a target. */
+  .option-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.125rem;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    color: var(--color-heading);
+    cursor: pointer;
+    transition: border-color 150ms ease;
+  }
+
+  .option-row:hover {
+    border-color: var(--color-muted);
+  }
+
+  .option-row:has(input:checked) {
+    border-color: var(--color-heading);
+  }
+
+  .option-row input {
+    flex: none;
+    width: 1.125rem;
+    height: 1.125rem;
+    cursor: pointer;
+  }
+
+  /* Results */
+  .results-title {
+    font-size: 1.875rem;
+  }
+
+  .results-intro {
+    margin-top: 0.75rem;
+    max-width: 34rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-body);
+  }
+
+  .range-unit {
+    font-size: 1rem;
+  }
+
+  .primer-line {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    padding-top: 0.875rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .primer-line.hidden {
+    display: none;
+  }
+
+  .primer-line-label {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  .primer-line-value {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    font-variant-numeric: lining-nums tabular-nums;
+    line-height: 1.1;
+    color: var(--color-heading);
+  }
+
+  .receipt-heading {
+    margin-bottom: 0.375rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-heading);
+  }
+
+  .receipt-note-link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--color-border-strong);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .receipt-note-link:hover {
+    color: var(--color-heading);
+    text-decoration-color: currentColor;
+  }
+
+  .breakdown {
+    border-block: 1px solid var(--color-border);
+  }
+
+  .breakdown summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 3rem;
+    padding: 0.625rem 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-heading);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .breakdown summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* A drawn chevron in place of the default triangle */
+  .breakdown summary::after {
+    content: '';
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-right: 0.25rem;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: translateY(-25%) rotate(45deg);
+  }
+
+  .breakdown[open] summary::after {
+    transform: translateY(25%) rotate(-135deg);
+  }
+
+  .breakdown-rows {
+    padding: 0.25rem 0 1rem;
+    font-size: 0.9375rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-body);
+  }
+
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.25rem 0;
+  }
+
+  .breakdown-row.hidden {
+    display: none;
+  }
+
+  .breakdown-row > :last-child {
+    font-weight: 500;
+    text-align: right;
+    color: var(--color-heading);
+  }
+
+  .breakdown-row-strong {
+    font-weight: 600;
+    color: var(--color-heading);
+  }
+
+  @media (min-width: 768px) {
+    .calc-title {
+      font-size: 2.75rem;
+    }
+
+    .calc-form {
+      gap: 2.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .results-title {
+      font-size: 2.5rem;
+    }
+  }
+</style>
+
+<style is:global>
+  /* Markup the script builds (receipt supply lines, the hiring line's link) carries no scoped
+     attribute, so these rules are global but kept under the results wrapper. */
+  .calc-results .receipt-list > li + li {
+    margin-top: 0.375rem;
+  }
+
+  /* Each supply line is one link, as before: name, why, and the store prompt. */
+  .calc-results .receipt-row > .receipt-item {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-weight: 400;
+    text-align: left;
+    white-space: normal;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .calc-results .receipt-item-name {
+    display: block;
+    font-weight: 500;
+    color: var(--color-heading);
+  }
+
+  .calc-results .receipt-item-why {
+    display: block;
+    margin-top: 0.125rem;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--color-muted);
+  }
+
+  .calc-results .receipt-item-cta {
+    font-weight: 600;
+    color: var(--color-primary);
+    white-space: nowrap;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .calc-results .receipt-item:hover .receipt-item-cta {
+    color: var(--color-primary-dark);
+    text-decoration-thickness: 2px;
+  }
+
+  .calc-results .hire-line a {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .calc-results .hire-line a:hover {
+    color: var(--color-primary-dark);
+    text-decoration-thickness: 2px;
+  }
+</style>
 
 <script>
   import {
@@ -663,6 +901,7 @@ const { showPainterCta = true } = Astro.props;
   const surfaceConditionSelect = document.getElementById('surface-condition') as HTMLSelectElement;
   const surfaceTypeSelect = document.getElementById('surface-type') as HTMLSelectElement;
   const trimHeightContainer = document.getElementById('trim-height-container') as HTMLElement;
+  const roomTypeSelect = document.getElementById('room-type') as HTMLSelectElement;
 
   // INP-optimized button feedback functions
   function showLoadingState() {
@@ -756,7 +995,7 @@ const { showPainterCta = true } = Astro.props;
       wallTexture: (document.getElementById('wall-texture') as HTMLSelectElement).value as CalculationInputs['wallTexture'],
       ceilingTexture: (document.getElementById('ceiling-texture') as HTMLSelectElement).value as CalculationInputs['ceilingTexture'],
       surfaceCondition: surfaceConditionSelect.value as CalculationInputs['surfaceCondition'],
-      roomType: (document.getElementById('room-type') as HTMLSelectElement).value,
+      roomType: roomTypeSelect.value,
       needsPrimer: needsPrimerCheckbox.checked,
       primerType: (document.getElementById('primer-type') as HTMLSelectElement).value as CalculationInputs['primerType'],
       primerCoats: parseInt((document.getElementById('primer-coats') as HTMLSelectElement).value),
@@ -777,6 +1016,7 @@ const { showPainterCta = true } = Astro.props;
         // Pure computation (no DOM reads/writes)
         const inputs = gatherInputs();
         const results = calculatePaint(inputs);
+        const purchaseGallons = results.estimateRange.likely.purchaseGallons;
 
         // Generate contextual tips
         const tips: string[] = [];
@@ -792,13 +1032,32 @@ const { showPainterCta = true } = Astro.props;
         if (results.gallonsNeeded > 1) tips.push('If this is part of a bigger project, move the room list into the project planner and total everything together before you buy.');
 
         // Batch all DOM writes together
+        (document.getElementById('estimate-number') as HTMLElement).textContent = purchaseGallons.toString();
+        (document.getElementById('estimate-unit') as HTMLElement).textContent = purchaseGallons === 1 ? 'gallon' : 'gallons';
         (document.getElementById('gallons-low-result') as HTMLElement).textContent = results.estimateRange.low.gallonsWithWaste.toFixed(1);
         (document.getElementById('gallons-result') as HTMLElement).textContent = results.estimateRange.likely.gallonsWithWaste.toFixed(1);
         (document.getElementById('gallons-high-result') as HTMLElement).textContent = results.estimateRange.high.gallonsWithWaste.toFixed(1);
         (document.getElementById('raw-gallons') as HTMLElement).textContent = results.estimateRange.likely.rawGallons.toFixed(2);
-        (document.getElementById('purchase-gallons') as HTMLElement).textContent = results.estimateRange.likely.purchaseGallons.toString();
+        (document.getElementById('purchase-gallons') as HTMLElement).textContent = purchaseGallons.toString();
         (document.getElementById('total-area') as HTMLElement).textContent = Math.round(results.paintableArea + results.ceilingPaintableArea).toString();
         (document.getElementById('num-coats') as HTMLElement).textContent = inputs.numCoats.toString();
+
+        // Receipt: room and coats, the paint line, and the area it covers. A trim-only job has no
+        // wall or ceiling area to show, so it leaves the total out.
+        const roomLabel = roomTypeSelect.selectedOptions[0]?.textContent?.trim() ?? '';
+        (document.getElementById('receipt-sub') as HTMLElement).textContent =
+          `${roomLabel}, ${inputs.numCoats} ${inputs.numCoats === 1 ? 'coat' : 'coats'}`;
+        (document.getElementById('receipt-paint') as HTMLElement).textContent = purchaseGallons.toString();
+        const receiptTotal = document.getElementById('receipt-total') as HTMLElement;
+        if (inputs.surfaceType === 'trim') {
+          receiptTotal.classList.add('hidden');
+        } else {
+          const ceilingOnly = inputs.surfaceType === 'ceiling';
+          (document.getElementById('receipt-total-label') as HTMLElement).textContent = ceilingOnly ? 'Ceiling area' : 'Wall area';
+          (document.getElementById('receipt-area') as HTMLElement).textContent =
+            Math.round(ceilingOnly ? results.ceilingPaintableArea : results.paintableArea).toString();
+          receiptTotal.classList.remove('hidden');
+        }
 
         // Hiring-a-painter range above the painter quote card. The paragraph is not on the page
         // when the card is off (the embed widget), and showProCostNote then does nothing.
@@ -809,15 +1068,8 @@ const { showPainterCta = true } = Astro.props;
           proCostScopeFor(inputs.surfaceType),
         );
 
-        const confidenceBadge = document.getElementById('confidence-badge') as HTMLElement;
-        confidenceBadge.textContent = results.estimateRange.confidence;
-        confidenceBadge.className = `px-2.5 py-1 rounded-full text-xs font-semibold uppercase ${
-          results.estimateRange.confidence === 'high'
-            ? 'bg-green-100 text-green-800'
-            : results.estimateRange.confidence === 'low'
-              ? 'bg-red-100 text-red-800'
-              : 'bg-amber-100 text-amber-800'
-        }`;
+        // Confidence reads as plain text, so only the word changes.
+        (document.getElementById('confidence-badge') as HTMLElement).textContent = results.estimateRange.confidence;
         const confidenceReasons = document.getElementById('confidence-reasons') as HTMLElement;
         confidenceReasons.replaceChildren(...results.estimateRange.confidenceReasons.map(reason => {
           const item = document.createElement('li');
@@ -829,18 +1081,22 @@ const { showPainterCta = true } = Astro.props;
         const primerResultBox = document.getElementById('primer-result-box') as HTMLElement;
         const primerBreakdownRow = document.getElementById('primer-breakdown-row') as HTMLElement;
         const primerBreakdownHr = document.getElementById('primer-breakdown-hr') as HTMLElement;
+        const receiptPrimerRow = document.getElementById('receipt-primer-row') as HTMLElement;
 
         if (inputs.needsPrimer && results.primerGallons > 0) {
           primerResultBox.classList.remove('hidden');
           primerBreakdownRow.classList.remove('hidden');
           primerBreakdownHr.classList.remove('hidden');
+          receiptPrimerRow.classList.remove('hidden');
           (document.getElementById('primer-gallons-result') as HTMLElement).textContent = results.primerGallons.toString();
+          (document.getElementById('receipt-primer') as HTMLElement).textContent = results.primerGallons.toString();
           (document.getElementById('primer-coats-display') as HTMLElement).textContent = (inputs.primerCoats ?? 1).toString();
           (document.getElementById('primer-breakdown') as HTMLElement).textContent = `${results.primerGallons} gal`;
         } else {
           primerResultBox.classList.add('hidden');
           primerBreakdownRow.classList.add('hidden');
           primerBreakdownHr.classList.add('hidden');
+          receiptPrimerRow.classList.add('hidden');
         }
 
         // Breakdown
@@ -899,35 +1155,39 @@ const { showPainterCta = true } = Astro.props;
           return li;
         });
         tipsList.replaceChildren(...tipElements);
-        // Recommended products, matched to the inputs (affiliate)
+        // Recommended products, matched to the inputs (affiliate). Each one is a receipt line:
+        // the whole line is the link, with the name, why it fits, and the store prompt.
         const recBox = document.getElementById('recommended-products') as HTMLElement;
         const recList = document.getElementById('recommended-products-list') as HTMLElement;
+        const recNote = document.getElementById('recommended-products-note') as HTMLElement;
         if (affiliateEnabled) {
           const recs = recommendProducts(inputs, results);
           recList.replaceChildren(...recs.map(({ product, reason }) => {
             const li = document.createElement('li');
+            li.className = 'receipt-row';
             const a = document.createElement('a');
             a.href = product.url;
             a.target = '_blank';
             a.rel = 'noopener noreferrer sponsored';
-            a.className = 'block h-full p-3 rounded-lg border border-border bg-white hover:border-primary/40 hover:shadow-sm transition';
+            a.className = 'receipt-item';
             a.dataset.affiliateProduct = product.id;
             a.dataset.affiliateLink = product.url;
             a.dataset.pageSource = 'calculator-result';
 
             const title = document.createElement('span');
-            title.className = 'block font-medium text-heading text-sm';
+            title.className = 'receipt-item-name';
             title.textContent = product.title;
 
             const why = document.createElement('span');
-            why.className = 'block text-xs text-body mt-1';
-            why.textContent = reason;
+            why.className = 'receipt-item-why';
+            why.textContent = `${reason} `;
 
             const cta = document.createElement('span');
-            cta.className = 'block text-xs text-primary font-medium mt-2';
-            cta.textContent = `${product.cta} ›`;
+            cta.className = 'receipt-item-cta';
+            cta.textContent = product.cta;
+            why.append(cta);
 
-            a.append(title, why, cta);
+            a.append(title, why);
             a.addEventListener('click', () => {
               trackAffiliateClick({ product: product.id, link: product.url, pageSource: 'calculator-result' });
             });
@@ -935,8 +1195,10 @@ const { showPainterCta = true } = Astro.props;
             return li;
           }));
           recBox.classList.toggle('hidden', recs.length === 0);
+          recNote.classList.toggle('hidden', recs.length === 0);
         } else {
           recBox.classList.add('hidden');
+          recNote.classList.add('hidden');
         }
         // Show results section
         resultsSection.classList.remove('hidden');

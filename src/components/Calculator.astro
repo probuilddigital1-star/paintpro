@@ -520,6 +520,7 @@ const { showPainterCta = true } = Astro.props;
     {/* Painter quote CTA. Lives inside the results container so it appears with the estimate. */}
     {showPainterCta && (
       <div class="mb-6">
+        <p id="pro-cost-note" class="hidden text-sm text-body mb-3"></p>
         <PainterQuoteCTA src="calc" heading="Rather have a pro do it?" body="You've got your paint numbers. Get quotes from local painters for this job." />
       </div>
     )}
@@ -638,8 +639,11 @@ const { showPainterCta = true } = Astro.props;
     deductionValues,
     roomRecommendations,
     calculatePaint,
+    estimateProCost,
+    proCostJob,
     type CalculationInputs,
   } from '../utils/paint-calculator';
+  import { proCostScopeFor, showProCostNote } from '../utils/pro-cost-note';
   import { trackCalculatorUsed, trackAffiliateClick } from '../utils/analytics';
   import { recommendProducts } from '../utils/product-recommendations';
   import { affiliateEnabled } from '../config/site';
@@ -795,6 +799,15 @@ const { showPainterCta = true } = Astro.props;
         (document.getElementById('purchase-gallons') as HTMLElement).textContent = results.estimateRange.likely.purchaseGallons.toString();
         (document.getElementById('total-area') as HTMLElement).textContent = Math.round(results.paintableArea + results.ceilingPaintableArea).toString();
         (document.getElementById('num-coats') as HTMLElement).textContent = inputs.numCoats.toString();
+
+        // Hiring-a-painter range above the painter quote card. The paragraph is not on the page
+        // when the card is off (the embed widget), and showProCostNote then does nothing.
+        const proJob = proCostJob(inputs, results);
+        showProCostNote(
+          document.getElementById('pro-cost-note'),
+          proJob ? estimateProCost(proJob) : null,
+          proCostScopeFor(inputs.surfaceType),
+        );
 
         const confidenceBadge = document.getElementById('confidence-badge') as HTMLElement;
         confidenceBadge.textContent = results.estimateRange.confidence;

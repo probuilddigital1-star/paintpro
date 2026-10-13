@@ -316,3 +316,109 @@ export function calculatePaint(inputs: CalculationInputs): CalculationResults {
     estimateRange,
   };
 }
+
+// --- What a painter would charge ---------------------------------------------------------------
+//
+// Pros price interior walls at about $1.25 to $3.00 per square foot of paintable wall area
+// (openings deducted), labor plus paint and supplies, two coats. A painted ceiling adds $1.00 to
+// $2.50 per square foot of ceiling. Typical job minimum is $250 to $500. Cost guides (Angi,
+// HomeAdvisor, HomeGuide, Homewyse, This Old House, Thumbtack, 2025 to 2026) that quote "$2 to $6
+// per square foot" mean per square foot of floor, not wall, so do not apply that figure to wall area.
+
+const PRO_WALL_RATE = { low: 1.25, high: 3.0 } as const;
+const PRO_CEILING_RATE = { low: 1.0, high: 2.5 } as const;
+const PRO_HARDER_FACTOR = 1.25;
+const PRO_ROUND_TO = 50;
+const PRO_MINIMUM = { low: 250, high: 500 } as const;
+
+export interface ProCostJob {
+  /** Paintable wall area in square feet, openings already deducted. */
+  wallArea: number;
+  /** Ceiling area in square feet. Leave it out unless the ceiling is part of the job. */
+  ceilingArea?: number;
+  /** Raises the range by 25 percent, once. See proCostJob() for what counts as harder. */
+  harder?: boolean;
+}
+
+export interface ProCostRange {
+  low: number;
+  high: number;
+}
+
+function positiveArea(value: number | undefined): number {
+  return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : 0;
+}
+
+/**
+ * Cost range for one or more jobs. Each job's harder factor is applied to that job, the jobs are
+ * added up, and only then is the total rounded to the nearest $50 and held to the job minimums.
+ * Returns null when there is no area to paint.
+ */
+export function estimateProCostTotal(jobs: readonly ProCostJob[]): ProCostRange | null {
+  let area = 0;
+  let low = 0;
+  let high = 0;
+
+  for (const job of jobs) {
+    const wall = positiveArea(job.wallArea);
+    const ceiling = positiveArea(job.ceilingArea);
+    const factor = job.harder ? PRO_HARDER_FACTOR : 1;
+    area += wall + ceiling;
+    low += (wall * PRO_WALL_RATE.low + ceiling * PRO_CEILING_RATE.low) * factor;
+    high += (wall * PRO_WALL_RATE.high + ceiling * PRO_CEILING_RATE.high) * factor;
+  }
+
+  if (area <= 0) return null;
+
+  return {
+    low: Math.max(PRO_MINIMUM.low, Math.round(low / PRO_ROUND_TO) * PRO_ROUND_TO),
+    high: Math.max(PRO_MINIMUM.high, Math.round(high / PRO_ROUND_TO) * PRO_ROUND_TO),
+  };
+}
+
+/** Cost range for hiring out a single room or job, or null when there is no area to paint. */
+export function estimateProCost({ wallArea, ceilingArea = 0, harder = false }: ProCostJob): ProCostRange | null {
+  return estimateProCostTotal([{ wallArea, ceilingArea, harder }]);
+}
+
+const harderSurfaceConditions: readonly CalculationInputs['surfaceCondition'][] = ['new-drywall', 'stained', 'glossy'];
+const harderWallTextures: readonly CalculationInputs['wallTexture'][] = ['medium', 'heavy'];
+
+/**
+ * Turns a calculator result into the job a painter would price, or null when no painter price
+ * applies (trim only). Wall area is the paintable wall area the calculator already computed, with
+ * openings deducted, and only when the walls are part of the job. Ceiling area counts only when
+ * the ceiling is part of the job. The coats setting is ignored because pro prices assume two coats.
+ *
+ * A job is harder, and priced 25 percent higher, when any of these is true:
+ *  - the wall condition is new drywall, stained or glossy
+ *  - the walls being painted have medium or heavy texture
+ *  - the ceiling being painted is popcorn
+ */
+export function proCostJob(inputs: CalculationInputs, results: CalculationResults): ProCostJob | null {
+  if (inputs.surfaceType === 'trim') return null;
+
+  const paintsWalls = inputs.surfaceType === 'walls' || inputs.surfaceType === 'walls-ceiling';
+  const paintsCeiling = inputs.surfaceType === 'ceiling' || inputs.surfaceType === 'walls-ceiling';
+
+  const harder =
+    harderSurfaceConditions.includes(inputs.surfaceCondition) ||
+    (paintsWalls && harderWallTextures.includes(inputs.wallTexture)) ||
+    (paintsCeiling && inputs.ceilingTexture === 'popcorn');
+
+  return {
+    wallArea: paintsWalls ? results.paintableArea : 0,
+    ceilingArea: paintsCeiling ? results.ceilingPaintableArea : 0,
+    harder,
+  };
+}
+
+/** 1350 becomes "$1,350". */
+export function formatDollars(amount: number): string {
+  return `$${amount.toLocaleString('en-US')}`;
+}
+
+/** { low: 550, high: 1350 } becomes "$550 to $1,350". */
+export function formatProCostRange(range: ProCostRange): string {
+  return `${formatDollars(range.low)} to ${formatDollars(range.high)}`;
+}

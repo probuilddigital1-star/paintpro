@@ -385,6 +385,7 @@ const plannerSchema = {
             </section>
 
             <div class="planner-no-print">
+              <p id="pro-cost-note" class="hidden text-sm text-body mb-3"></p>
               <PainterQuoteCTA src="planner" heading="Big project? Get it quoted." body="Send the details to local painters and compare quotes." />
             </div>
 
@@ -426,9 +427,12 @@ const plannerSchema = {
     <script>
       import {
         calculatePaint,
+        estimateProCostTotal,
+        proCostJob,
         roomRecommendations,
         type CalculationInputs,
       } from '../utils/paint-calculator';
+      import { showProCostNote } from '../utils/pro-cost-note';
       import {
         createPaintRoom,
         createPaintProject,
@@ -458,6 +462,7 @@ const plannerSchema = {
       const selectedRoomHint = document.getElementById('selected-room-hint') as HTMLElement;
       const selectedRoomResult = document.getElementById('selected-room-result') as HTMLElement;
       const mobileProjectTotal = document.getElementById('mobile-project-total') as HTMLElement;
+      const proCostNote = document.getElementById('pro-cost-note');
       const saveStatus = document.getElementById('save-status') as HTMLElement;
       const addRoomBtn = document.getElementById('add-room-btn') as HTMLButtonElement;
       const copyLinkBtn = document.getElementById('copy-link-btn') as HTMLButtonElement;
@@ -972,6 +977,14 @@ const plannerSchema = {
           )),
         ];
         containerPlan.replaceChildren(...rows);
+
+        // Hiring-a-painter range for the whole project: every room's low and high are added up
+        // first, then rounded and held to the job minimums once. Trim-only rooms add nothing.
+        showProCostNote(
+          proCostNote,
+          estimateProCostTotal(summary.rooms.flatMap((room) => proCostJob(room.inputs, room.estimate) ?? [])),
+          'project',
+        );
       }
 
       function formatRoomNames(names: string[]) {

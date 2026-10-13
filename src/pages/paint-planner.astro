@@ -58,208 +58,204 @@ const plannerSchema = {
     { name: 'Paint Project Planner' },
   ]} />
 
-  <main class="pb-12">
-    <section class="max-w-6xl mx-auto px-4 pt-8">
-      <div class="rounded-3xl border border-border bg-white shadow-sm overflow-hidden">
-        <div class="planner-no-print bg-gradient-to-r from-slate-50 via-white to-emerald-50 px-6 py-8 md:px-8">
-          <div class="max-w-3xl">
-            <span class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">Multi-room planner</span>
-            <h1 class="mt-4 text-3xl md:text-5xl font-bold text-heading">Plan the whole project in one place.</h1>
-            <p class="mt-4 text-body text-lg leading-relaxed">
-              Add every room, keep primer separate, save the plan on this device, and create a shareable shopping sheet when you are ready to buy.
-            </p>
+  <main class="planner-page mx-auto max-w-4xl px-4 pb-16">
+    <div class="planner-no-print pt-4 pb-8 md:pt-8 md:pb-10">
+      <h1 class="mb-4 text-[2.5rem] md:text-[3.75rem]">Plan the whole project in one place.</h1>
+      <p class="max-w-[34rem] text-[1.0625rem] leading-relaxed md:text-[1.1875rem]">
+        Add every room, keep primer separate, save the plan on this device, and create a shareable shopping sheet when you are ready to buy.
+      </p>
+    </div>
+
+    <div id="planner-grid" class="grid max-w-[36rem] grid-cols-[minmax(0,1fr)] gap-6 lg:max-w-none lg:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)] lg:gap-10">
+      <div class="planner-print-only mb-6">
+        <h1 id="print-project-title" class="text-[2rem]"></h1>
+        <p class="mt-1 text-sm text-muted">Paint shopping plan</p>
+      </div>
+
+      <div class="min-w-0 space-y-6">
+        <section class="planner-no-print panel p-5 md:p-6">
+          <label class="block">
+            <span class="field-label">Project name</span>
+            <input id="project-name" type="text" class="field" />
+          </label>
+
+          <div class="mt-4 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+            <button id="copy-link-btn" type="button" class="btn btn-secondary btn-sm px-2 text-[0.875rem] sm:px-4 sm:text-[0.9375rem]">Copy plan link</button>
+            <button id="download-json-btn" type="button" title="Download a backup you can restore in this planner" class="btn btn-secondary btn-sm px-2 text-[0.875rem] sm:px-4 sm:text-[0.9375rem]">Download backup</button>
+            <button id="open-copy-btn" type="button" title="Restore a backup you previously downloaded" class="btn btn-secondary btn-sm px-2 text-[0.875rem] sm:px-4 sm:text-[0.9375rem]">Restore backup</button>
+            <button id="print-btn" type="button" title="Print the shopping sheet or save it as a PDF" class="btn btn-secondary btn-sm px-2 text-[0.875rem] sm:px-4 sm:text-[0.9375rem]">Print or save PDF</button>
+            <div class="col-span-2 sm:basis-full">
+              <button id="new-plan-btn" type="button" class="btn btn-ghost btn-sm px-0">Start a new plan</button>
+            </div>
           </div>
-        </div>
+          <input id="open-copy-input" type="file" accept="application/json,.json" class="sr-only" />
+          <p id="save-status" class="mt-4 text-sm text-muted" role="status" aria-live="polite" tabindex="-1">Your changes are saved automatically in this browser.</p>
 
-        <div id="planner-grid" class="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] p-6 md:p-8">
-          <div class="planner-print-only">
-            <h1 id="print-project-title" class="text-3xl font-bold text-heading"></h1>
-            <p class="mt-1 text-sm text-body">Paint shopping plan</p>
+          <details class="mt-4 border-t border-border pt-4 text-sm">
+            <summary class="cursor-pointer font-semibold text-heading">How saving and backups work</summary>
+            <div class="mt-3 space-y-3 leading-relaxed">
+              <p><strong>Staying on this device:</strong> Your plan saves automatically as you make changes. You can close this page and return later in the same browser.</p>
+              <div>
+                <p class="font-semibold text-heading">Moving or protecting your plan:</p>
+                <ol class="mt-2 list-decimal space-y-1 pl-5 marker:text-accent">
+                  <li>Select <strong>Download backup</strong> and keep the downloaded file.</li>
+                  <li>When you need it, return to this planner and select <strong>Restore backup</strong>.</li>
+                  <li>Choose the backup file from your Downloads folder or wherever you saved it.</li>
+                </ol>
+              </div>
+              <p class="callout"><strong>Important:</strong> Do not open the downloaded file by itself. Restore it from this planner. Restoring a backup replaces the plan currently saved in this browser.</p>
+            </div>
+          </details>
+        </section>
+
+        <section id="room-list-section" class="planner-no-print panel overflow-hidden">
+          <div class="flex flex-wrap items-end justify-between gap-x-4 gap-y-3 p-5 md:p-6">
+            <div>
+              <p class="text-[0.8125rem] text-muted">Step 1</p>
+              <h2 class="text-[1.75rem] md:text-[2rem]">Choose a room</h2>
+            </div>
+            <div class="flex items-center gap-4">
+              <p id="room-count" class="hidden text-sm text-muted sm:block"></p>
+              <button id="add-room-btn" type="button" class="btn btn-primary">Add room</button>
+            </div>
           </div>
-          <div class="space-y-6">
-            <section class="planner-no-print rounded-2xl border border-border bg-slate-50 p-5 md:p-6">
-              <div class="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+          <div id="room-list"></div>
+        </section>
+
+        <section id="room-editor-section" class="planner-no-print panel p-5 md:p-6">
+          <div class="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
+            <div>
+              <p class="text-[0.8125rem] text-muted">Step 2</p>
+              <h2 class="text-[1.75rem] md:text-[2rem]">Enter room details</h2>
+            </div>
+            <div class="sm:text-right">
+              <p id="selected-room-hint" class="text-sm text-muted first-letter:uppercase"></p>
+              <a href="#room-list-section" class="link mt-1 inline-block text-sm lg:hidden">Back to rooms</a>
+            </div>
+          </div>
+          <div id="selected-room-result" class="callout mt-5 text-sm text-heading" aria-live="polite"></div>
+          <a id="mobile-project-summary" href="#shopping-list-section" class="panel-link mt-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 px-4 py-3 text-sm lg:hidden">
+            <span id="mobile-project-total" class="font-medium text-heading"></span>
+            <span class="shrink-0 font-semibold text-primary underline decoration-1 underline-offset-[3px]">View shopping list</span>
+          </a>
+
+          <form id="room-editor" class="mt-5 grid gap-4 md:grid-cols-2">
+            <label class="block">
+              <span class="field-label">Room name</span>
+              <input id="room-name" type="text" class="field" />
+            </label>
+
+            <label class="block">
+              <span class="field-label">Room type</span>
+              <select id="room-type" class="field">
+                <option value="living-room">Living room</option>
+                <option value="bedroom">Bedroom</option>
+                <option value="kitchen">Kitchen</option>
+                <option value="bathroom">Bathroom</option>
+                <option value="hallway">Hallway</option>
+                <option value="basement">Basement</option>
+                <option value="garage">Garage</option>
+                <option value="office">Office</option>
+                <option value="dining-room">Dining room</option>
+              </select>
+            </label>
+
+            <div class="rounded bg-light-gray p-4 md:col-span-2">
+              <div class="grid gap-4 md:grid-cols-2">
                 <label class="block">
-                  <span class="text-sm font-semibold uppercase tracking-wide text-primary">Project name</span>
-                  <input id="project-name" type="text" class="mt-2 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading shadow-sm" />
+                  <span class="field-label">Paint name or color</span>
+                  <input id="paint-name" type="text" placeholder="Example: Soft white walls" class="field" />
                 </label>
-
-                <div class="grid grid-cols-2 gap-2">
-                  <button id="copy-link-btn" type="button" class="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-heading border border-border shadow-sm hover:bg-slate-50">Copy plan link</button>
-                  <button id="download-json-btn" type="button" title="Download a backup you can restore in this planner" class="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-heading border border-border shadow-sm hover:bg-slate-50">Download backup</button>
-                  <button id="open-copy-btn" type="button" title="Restore a backup you previously downloaded" class="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-heading border border-border shadow-sm hover:bg-slate-50">Restore backup</button>
-                  <button id="print-btn" type="button" title="Print the shopping sheet or save it as a PDF" class="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-heading border border-border shadow-sm hover:bg-slate-50">Print or save PDF</button>
-                  <button id="new-plan-btn" type="button" class="col-span-2 rounded-xl px-4 py-2 text-sm font-semibold text-body hover:bg-white">Start a new plan</button>
-                </div>
-              </div>
-              <input id="open-copy-input" type="file" accept="application/json,.json" class="sr-only" />
-              <p id="save-status" class="mt-4 rounded-xl border border-border bg-white px-4 py-3 text-sm text-body" role="status" aria-live="polite" tabindex="-1">Your changes are saved automatically in this browser.</p>
-
-              <details class="mt-3 rounded-xl border border-border bg-white px-4 py-3 text-sm text-body">
-                <summary class="cursor-pointer font-semibold text-heading">How saving and backups work</summary>
-                <div class="mt-3 space-y-3 border-t border-border pt-3 leading-relaxed">
-                  <p><strong class="text-heading">Staying on this device:</strong> Your plan saves automatically as you make changes. You can close this page and return later in the same browser.</p>
-                  <div>
-                    <p class="font-semibold text-heading">Moving or protecting your plan:</p>
-                    <ol class="mt-2 list-decimal space-y-1 pl-5">
-                      <li>Select <strong>Download backup</strong> and keep the downloaded file.</li>
-                      <li>When you need it, return to this planner and select <strong>Restore backup</strong>.</li>
-                      <li>Choose the backup file from your Downloads folder or wherever you saved it.</li>
-                    </ol>
-                  </div>
-                  <p class="rounded-lg bg-amber-50 px-3 py-2 text-amber-900"><strong>Important:</strong> Do not open the downloaded file by itself. Restore it from this planner. Restoring a backup replaces the plan currently saved in this browser.</p>
-                </div>
-              </details>
-            </section>
-
-            <section id="room-list-section" class="planner-no-print scroll-mt-24 rounded-2xl border border-border bg-white p-5 md:p-6">
-              <div class="flex items-center justify-between gap-3">
-                <div>
-                  <p class="text-sm font-semibold uppercase tracking-wide text-primary">Step 1</p>
-                  <h2 class="mt-1 text-xl font-bold text-heading">Choose a room</h2>
-                </div>
-                <div class="flex items-center gap-3">
-                  <p id="room-count" class="hidden text-sm text-body sm:block"></p>
-                  <button id="add-room-btn" type="button" class="rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-accent-dark">Add room</button>
-                </div>
-              </div>
-              <div id="room-list" class="mt-4 space-y-3"></div>
-            </section>
-
-            <section id="room-editor-section" class="planner-no-print scroll-mt-24 rounded-2xl border border-border bg-white p-5 md:p-6">
-              <div class="flex items-center justify-between gap-3">
-                <div>
-                  <p class="text-sm font-semibold uppercase tracking-wide text-primary">Step 2</p>
-                  <h2 class="mt-1 text-xl font-bold text-heading">Enter room details</h2>
-                </div>
-                <div class="text-right">
-                  <p id="selected-room-hint" class="text-sm text-body"></p>
-                  <a href="#room-list-section" class="mt-1 inline-block text-xs font-semibold text-primary lg:hidden">Back to rooms</a>
-                </div>
-              </div>
-              <div id="selected-room-result" class="mt-4 rounded-xl bg-primary/10 px-4 py-3 text-sm font-medium text-heading" aria-live="polite"></div>
-              <a id="mobile-project-summary" href="#shopping-list-section" class="mt-3 flex items-center justify-between gap-3 rounded-xl border border-border bg-white px-4 py-3 text-sm lg:hidden">
-                <span id="mobile-project-total" class="font-medium text-heading"></span>
-                <span class="shrink-0 font-semibold text-primary">View shopping list</span>
-              </a>
-
-              <form id="room-editor" class="mt-5 grid gap-4 md:grid-cols-2">
                 <label class="block">
-                  <span class="text-sm font-medium text-body">Room name</span>
-                  <input id="room-name" type="text" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
-                </label>
-
-                <label class="block">
-                  <span class="text-sm font-medium text-body">Room type</span>
-                  <select id="room-type" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
-                    <option value="living-room">Living room</option>
-                    <option value="bedroom">Bedroom</option>
-                    <option value="kitchen">Kitchen</option>
-                    <option value="bathroom">Bathroom</option>
-                    <option value="hallway">Hallway</option>
-                    <option value="basement">Basement</option>
-                    <option value="garage">Garage</option>
-                    <option value="office">Office</option>
-                    <option value="dining-room">Dining room</option>
+                  <span class="field-label">Sheen</span>
+                  <select id="paint-sheen" class="field">
+                    <option value="flat">Flat</option>
+                    <option value="matte">Matte</option>
+                    <option value="eggshell">Eggshell</option>
+                    <option value="satin">Satin</option>
+                    <option value="semi-gloss">Semi-gloss</option>
+                    <option value="gloss">Gloss</option>
                   </select>
                 </label>
-
-                <div class="md:col-span-2 rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4">
-                  <div class="grid gap-4 md:grid-cols-2">
-                    <label class="block">
-                      <span class="text-sm font-medium text-heading">Paint name or color</span>
-                      <input id="paint-name" type="text" placeholder="Example: Soft white walls" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
-                    </label>
-                    <label class="block">
-                      <span class="text-sm font-medium text-heading">Sheen</span>
-                      <select id="paint-sheen" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
-                        <option value="flat">Flat</option>
-                        <option value="matte">Matte</option>
-                        <option value="eggshell">Eggshell</option>
-                        <option value="satin">Satin</option>
-                        <option value="semi-gloss">Semi-gloss</option>
-                        <option value="gloss">Gloss</option>
-                      </select>
-                    </label>
-                  </div>
-                  <p class="mt-2 text-xs text-body">Rooms with the same paint name, sheen, and quality are combined on the shopping list.</p>
-                  <div id="ceiling-paint-panel" class="mt-4 hidden border-t border-emerald-200 pt-4">
-                    <p class="mb-3 text-sm font-semibold text-heading">Ceiling paint</p>
-                    <div class="grid gap-4 md:grid-cols-2">
-                      <label class="block">
-                        <span class="text-sm font-medium text-heading">Paint name or color</span>
-                        <input id="ceiling-paint-name" type="text" placeholder="Example: Flat ceiling white" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
-                      </label>
-                      <label class="block">
-                        <span class="text-sm font-medium text-heading">Sheen</span>
-                        <select id="ceiling-paint-sheen" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
-                          <option value="flat">Flat</option>
-                          <option value="matte">Matte</option>
-                          <option value="eggshell">Eggshell</option>
-                          <option value="satin">Satin</option>
-                        </select>
-                      </label>
-                    </div>
-                  </div>
+              </div>
+              <p class="field-hint mt-3">Rooms with the same paint name, sheen, and quality are combined on the shopping list.</p>
+              <div id="ceiling-paint-panel" class="mt-4 hidden border-t border-border-strong pt-4">
+                <p class="mb-3 text-sm font-semibold text-heading">Ceiling paint</p>
+                <div class="grid gap-4 md:grid-cols-2">
+                  <label class="block">
+                    <span class="field-label">Paint name or color</span>
+                    <input id="ceiling-paint-name" type="text" placeholder="Example: Flat ceiling white" class="field" />
+                  </label>
+                  <label class="block">
+                    <span class="field-label">Sheen</span>
+                    <select id="ceiling-paint-sheen" class="field">
+                      <option value="flat">Flat</option>
+                      <option value="matte">Matte</option>
+                      <option value="eggshell">Eggshell</option>
+                      <option value="satin">Satin</option>
+                    </select>
+                  </label>
                 </div>
+              </div>
+            </div>
 
-                <label class="block">
-                  <span class="text-sm font-medium text-body">Length</span>
-                  <div class="relative mt-1">
-                    <input id="length" type="number" min="1" step="0.5" class="w-full rounded-xl border border-border bg-white py-3 pl-4 pr-12 text-heading" />
-                    <span class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-body">ft</span>
-                  </div>
-                </label>
+            <label class="block">
+              <span class="field-label">Length</span>
+              <span class="relative block">
+                <input id="length" type="number" min="1" step="0.5" class="field pr-12" />
+                <span class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-muted">ft</span>
+              </span>
+            </label>
 
-                <label class="block">
-                  <span class="text-sm font-medium text-body">Width</span>
-                  <div class="relative mt-1">
-                    <input id="width" type="number" min="1" step="0.5" class="w-full rounded-xl border border-border bg-white py-3 pl-4 pr-12 text-heading" />
-                    <span class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-body">ft</span>
-                  </div>
-                </label>
+            <label class="block">
+              <span class="field-label">Width</span>
+              <span class="relative block">
+                <input id="width" type="number" min="1" step="0.5" class="field pr-12" />
+                <span class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-muted">ft</span>
+              </span>
+            </label>
 
-                <label class="block">
-                  <span class="text-sm font-medium text-body">Ceiling height</span>
-                  <div class="relative mt-1">
-                    <input id="height" type="number" min="6" step="0.5" class="w-full rounded-xl border border-border bg-white py-3 pl-4 pr-12 text-heading" />
-                    <span class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-body">ft</span>
-                  </div>
-                </label>
+            <label class="block">
+              <span class="field-label">Ceiling height</span>
+              <span class="relative block">
+                <input id="height" type="number" min="6" step="0.5" class="field pr-12" />
+                <span class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-muted">ft</span>
+              </span>
+            </label>
 
-                <label class="block">
-                  <span class="text-sm font-medium text-body">What are you painting?</span>
-                  <select id="surface-type" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
-                    <option value="walls">Walls only</option>
-                    <option value="walls-ceiling">Walls + ceiling</option>
-                    <option value="ceiling">Ceiling only</option>
-                    <option value="trim">Trim only</option>
-                  </select>
-                </label>
+            <label class="block">
+              <span class="field-label">What are you painting?</span>
+              <select id="surface-type" class="field">
+                <option value="walls">Walls only</option>
+                <option value="walls-ceiling">Walls + ceiling</option>
+                <option value="ceiling">Ceiling only</option>
+                <option value="trim">Trim only</option>
+              </select>
+            </label>
 
-                <details id="fine-tune-details" class="min-w-0 overflow-visible md:col-span-2 rounded-2xl border border-border bg-slate-50 p-4">
-                  <summary class="cursor-pointer font-semibold text-heading">Fine-tune the estimate</summary>
-                  <p class="mt-2 text-sm text-body">Adjust texture, openings, primer, and the waste allowance when those details matter for your room.</p>
-                  <div class="mt-4 grid min-w-0 gap-4">
+            <details id="fine-tune-details" class="min-w-0 rounded border border-border p-4 md:col-span-2">
+              <summary class="cursor-pointer font-semibold text-heading">Fine-tune the estimate</summary>
+              <p class="mt-2 text-sm">Adjust texture, openings, primer, and the waste allowance when those details matter for your room.</p>
+              <div class="mt-4 grid min-w-0 gap-4">
                 <div class="grid min-w-0 gap-4 sm:grid-cols-2">
                   <label class="block min-w-0">
-                    <span class="text-sm font-medium text-body">Paint quality</span>
-                    <select id="paint-quality" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                    <span class="field-label">Paint quality</span>
+                    <select id="paint-quality" class="field">
                       <option value="budget">Budget</option>
                       <option value="standard">Standard</option>
                       <option value="premium">Premium</option>
                     </select>
                   </label>
                   <label class="block min-w-0">
-                    <span class="text-sm font-medium text-body">Label coverage rate</span>
-                    <div class="relative mt-1">
-                    <input id="custom-coverage-rate" type="number" min="1" step="1" placeholder="Optional" class="w-full rounded-xl border border-border bg-white py-3 pl-4 pr-20 text-heading" />
-                      <span class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-xs text-body">sq ft/gal</span>
-                    </div>
+                    <span class="field-label">Label coverage rate</span>
+                    <span class="relative block">
+                      <input id="custom-coverage-rate" type="number" min="1" step="1" placeholder="Optional" class="field pr-[5.5rem]" />
+                      <span class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-sm text-muted">sq ft/gal</span>
+                    </span>
                   </label>
                   <label class="block min-w-0">
-                    <span class="text-sm font-medium text-body">Coats</span>
-                    <select id="num-coats" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                    <span class="field-label">Coats</span>
+                    <select id="num-coats" class="field">
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -269,8 +265,8 @@ const plannerSchema = {
 
                 <div class="grid min-w-0 gap-4 sm:grid-cols-2">
                   <label class="block min-w-0">
-                    <span class="text-sm font-medium text-body">Wall texture</span>
-                    <select id="wall-texture" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                    <span class="field-label">Wall texture</span>
+                    <select id="wall-texture" class="field">
                       <option value="smooth">Smooth</option>
                       <option value="light">Light texture</option>
                       <option value="medium">Medium texture</option>
@@ -278,16 +274,16 @@ const plannerSchema = {
                     </select>
                   </label>
                   <label class="block min-w-0">
-                    <span class="text-sm font-medium text-body">Ceiling texture</span>
-                    <select id="ceiling-texture" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                    <span class="field-label">Ceiling texture</span>
+                    <select id="ceiling-texture" class="field">
                       <option value="smooth">Smooth</option>
                       <option value="light">Light texture</option>
                       <option value="popcorn">Popcorn</option>
                     </select>
                   </label>
                   <label class="block min-w-0 sm:col-span-2">
-                    <span class="text-sm font-medium text-body">Surface condition</span>
-                    <select id="surface-condition" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                    <span class="field-label">Surface condition</span>
+                    <select id="surface-condition" class="field">
                       <option value="good">Previously painted</option>
                       <option value="fair">Fair or patched</option>
                       <option value="new-drywall">New drywall</option>
@@ -297,69 +293,69 @@ const plannerSchema = {
                   </label>
                 </div>
 
-                <div class="rounded-2xl border border-slate-200 bg-white p-4">
+                <div class="border-t border-border pt-4">
                   <p class="text-sm font-semibold text-heading">Openings to deduct</p>
-                  <div class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  <div class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
                     <label class="block">
-                      <span class="text-xs font-medium uppercase tracking-wide text-body">Doors</span>
-                      <input id="doors" type="number" min="0" step="1" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
+                      <span class="field-label">Doors</span>
+                      <input id="doors" type="number" min="0" step="1" class="field" />
                     </label>
                     <label class="block">
-                      <span class="text-xs font-medium uppercase tracking-wide text-body">French doors</span>
-                      <input id="french-doors" type="number" min="0" step="1" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
+                      <span class="field-label">French doors</span>
+                      <input id="french-doors" type="number" min="0" step="1" class="field" />
                     </label>
                     <label class="block">
-                      <span class="text-xs font-medium uppercase tracking-wide text-body">Closet doors</span>
-                      <input id="closet-doors" type="number" min="0" step="1" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
+                      <span class="field-label">Closet doors</span>
+                      <input id="closet-doors" type="number" min="0" step="1" class="field" />
                     </label>
                     <label class="block">
-                      <span class="text-xs font-medium uppercase tracking-wide text-body">Windows</span>
-                      <input id="windows" type="number" min="0" step="1" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
+                      <span class="field-label">Windows</span>
+                      <input id="windows" type="number" min="0" step="1" class="field" />
                     </label>
                     <label class="block">
-                      <span class="text-xs font-medium uppercase tracking-wide text-body">Large windows</span>
-                      <input id="large-windows" type="number" min="0" step="1" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
+                      <span class="field-label">Large windows</span>
+                      <input id="large-windows" type="number" min="0" step="1" class="field" />
                     </label>
                     <label class="block">
-                      <span class="text-xs font-medium uppercase tracking-wide text-body">Small windows</span>
-                      <input id="small-windows" type="number" min="0" step="1" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading" />
+                      <span class="field-label">Small windows</span>
+                      <input id="small-windows" type="number" min="0" step="1" class="field" />
                     </label>
                   </div>
                 </div>
 
-                <div class="rounded-2xl border border-slate-200 bg-white p-4">
-                  <div class="flex flex-wrap items-center justify-between gap-4">
-                    <label class="inline-flex items-center gap-3 text-sm font-medium text-body">
-                      <input id="include-waste" type="checkbox" class="h-5 w-5 rounded border-border text-primary" />
+                <div class="border-t border-border pt-4">
+                  <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+                    <label class="inline-flex min-h-11 items-center gap-3 text-sm font-medium text-heading">
+                      <input id="include-waste" type="checkbox" class="h-5 w-5" />
                       Include waste buffer
                     </label>
-                    <label class="inline-flex items-center gap-3 text-sm font-medium text-body">
-                      <input id="needs-primer" type="checkbox" class="h-5 w-5 rounded border-border text-primary" />
+                    <label class="inline-flex min-h-11 items-center gap-3 text-sm font-medium text-heading">
+                      <input id="needs-primer" type="checkbox" class="h-5 w-5" />
                       Include primer
                     </label>
                   </div>
 
-                  <div id="primer-panel" class="mt-4 grid gap-4 md:grid-cols-2">
+                  <div id="primer-panel" class="mt-3 grid gap-4 sm:grid-cols-2">
                     <label class="block">
-                      <span class="text-xs font-medium uppercase tracking-wide text-body">Primer type</span>
-                      <select id="primer-type" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                      <span class="field-label">Primer type</span>
+                      <select id="primer-type" class="field">
                         <option value="standard">Standard</option>
                         <option value="high-hide">High hide</option>
                         <option value="pva">PVA drywall</option>
                       </select>
                     </label>
                     <label class="block">
-                      <span class="text-xs font-medium uppercase tracking-wide text-body">Primer coats</span>
-                      <select id="primer-coats" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                      <span class="field-label">Primer coats</span>
+                      <select id="primer-coats" class="field">
                         <option value="1">1</option>
                         <option value="2">2</option>
                       </select>
                     </label>
                   </div>
-                  <div id="trim-panel" class="mt-4 hidden">
+                  <div id="trim-panel" class="mt-3 hidden">
                     <label class="block max-w-xs">
-                      <span class="text-xs font-medium uppercase tracking-wide text-body">Trim height</span>
-                      <select id="trim-height" class="mt-1 w-full rounded-xl border border-border bg-white px-4 py-3 text-heading">
+                      <span class="field-label">Trim height</span>
+                      <select id="trim-height" class="field">
                         <option value="4">4 in</option>
                         <option value="6">6 in</option>
                         <option value="8">8 in</option>
@@ -369,51 +365,57 @@ const plannerSchema = {
                     </label>
                   </div>
                 </div>
-                  </div>
-                </details>
-                <p id="form-error" class="hidden md:col-span-2 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700" role="alert"></p>
-              </form>
-            </section>
-          </div>
-
-          <aside class="space-y-6 lg:sticky lg:top-24 lg:self-start">
-            <section id="shopping-list-section" class="scroll-mt-24 rounded-2xl border border-border bg-white p-5 md:p-6">
-              <p class="text-sm font-semibold uppercase tracking-wide text-primary">Step 3</p>
-              <h2 class="mt-1 text-xl font-bold text-heading">Shopping list</h2>
-              <div id="summary-cards" class="mt-4 grid grid-cols-2 gap-3"></div>
-              <div id="container-plan" class="mt-4 space-y-3"></div>
-            </section>
-
-            <div class="planner-no-print">
-              <p id="pro-cost-note" class="hidden text-sm text-body mb-3"></p>
-              <PainterQuoteCTA src="planner" heading="Big project? Get it quoted." body="Send the details to local painters and compare quotes." />
-            </div>
-
-            <section class="rounded-2xl border border-border bg-white p-5 md:p-6">
-              <p class="text-sm font-semibold uppercase tracking-wide text-primary">Room notes</p>
-              <h2 class="mt-1 text-xl font-bold text-heading">Per-room plan</h2>
-              <div id="room-summary-list" class="mt-4 space-y-3"></div>
-            </section>
-
-            <section class="planner-no-print rounded-2xl border border-border bg-slate-50 p-5 md:p-6">
-              <p class="text-sm font-semibold uppercase tracking-wide text-primary">Why it helps</p>
-              <ul class="mt-3 space-y-2 text-sm text-body">
-                <li>Combine rooms before you buy so the total is not guesswork.</li>
-                <li>Keep primer separate when the surface needs it.</li>
-                <li>Share the plan with a contractor, partner, or store associate.</li>
-                <li>Print a single sheet instead of juggling notes on the phone.</li>
-              </ul>
-            </section>
-          </aside>
-        </div>
+              </div>
+            </details>
+            <p id="form-error" class="callout hidden text-sm font-semibold text-heading md:col-span-2" role="alert"></p>
+          </form>
+        </section>
       </div>
-    </section>
 
-    <div id="undo-room-bar" class="planner-no-print fixed inset-x-4 bottom-4 z-50 mx-auto hidden max-w-lg flex-col items-start justify-between gap-3 rounded-2xl bg-heading px-5 py-4 text-white shadow-xl sm:flex-row sm:items-center" role="status" aria-live="polite">
+      <aside class="min-w-0 space-y-8 lg:sticky lg:top-24 lg:self-start">
+        <section id="shopping-list-section">
+          <p class="text-[0.8125rem] text-muted print:hidden">Step 3</p>
+          <h2 class="text-[1.75rem] md:text-[2rem]">Shopping list</h2>
+          <div class="receipt mt-6">
+            <span class="receipt-tape" aria-hidden="true"></span>
+            <div class="receipt-head">
+              <p class="receipt-title">Your paint run</p>
+            </div>
+            <hr class="receipt-rule" />
+            <div id="container-plan"></div>
+            <hr class="receipt-rule" />
+            <div id="summary-cards"></div>
+          </div>
+        </section>
+
+        <div class="planner-no-print">
+          <p id="pro-cost-note" class="hire-line hidden mb-4"></p>
+          <PainterQuoteCTA src="planner" heading="Big project? Get it quoted." body="Send the details to local painters and compare quotes." />
+        </div>
+
+        <section class="panel p-5 md:p-6">
+          <p class="text-[0.8125rem] text-muted print:hidden">Room notes</p>
+          <h2 class="text-[1.75rem] md:text-[2rem]">Per-room plan</h2>
+          <div id="room-summary-list" class="mt-4 border-t border-border"></div>
+        </section>
+
+        <section class="planner-no-print callout">
+          <p class="font-semibold text-heading">Why it helps</p>
+          <ul class="mt-3 list-disc space-y-2 pl-5 text-sm marker:text-accent">
+            <li>Combine rooms before you buy so the total is not guesswork.</li>
+            <li>Keep primer separate when the surface needs it.</li>
+            <li>Share the plan with a contractor, partner, or store associate.</li>
+            <li>Print a single sheet instead of juggling notes on the phone.</li>
+          </ul>
+        </section>
+      </aside>
+    </div>
+
+    <div id="undo-room-bar" class="planner-no-print panel-ink fixed inset-x-4 bottom-4 z-50 mx-auto hidden max-w-lg flex-col items-start justify-between gap-3 px-5 py-4 sm:flex-row sm:items-center" role="status" aria-live="polite">
       <span id="undo-room-message" class="text-sm font-medium"></span>
       <div class="flex shrink-0 items-center gap-2">
-        <button id="confirm-room-removal-btn" type="button" class="rounded-lg border border-white/40 px-3 py-2 text-sm font-semibold text-white hover:bg-white/10">Keep removed</button>
-        <button id="undo-room-btn" type="button" class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-heading">Undo</button>
+        <button id="confirm-room-removal-btn" type="button" class="btn btn-on-ink btn-sm">Keep removed</button>
+        <button id="undo-room-btn" type="button" class="btn btn-primary btn-sm">Undo</button>
       </div>
     </div>
 
@@ -535,13 +537,15 @@ const plannerSchema = {
       type SaveStatusTone = 'neutral' | 'success' | 'warning' | 'error';
 
       function showSaveStatus(message: string, tone: SaveStatusTone = 'neutral') {
+        // Plain text for routine messages; warnings and errors get the callout rule so they stand
+        // out without a color of their own.
         const toneClasses: Record<SaveStatusTone, string> = {
-          neutral: 'border-border bg-white text-body',
-          success: 'border-green-200 bg-green-50 text-green-900',
-          warning: 'border-amber-200 bg-amber-50 text-amber-900',
-          error: 'border-red-200 bg-red-50 text-red-900',
+          neutral: 'text-muted',
+          success: 'font-medium text-heading',
+          warning: 'callout px-4 py-3 font-medium text-heading',
+          error: 'callout px-4 py-3 font-semibold text-heading',
         };
-        saveStatus.className = `mt-4 rounded-xl border px-4 py-3 text-sm font-medium ${toneClasses[tone]}`;
+        saveStatus.className = `mt-4 text-sm ${toneClasses[tone]}`;
         saveStatus.textContent = message;
       }
 
@@ -687,10 +691,7 @@ const plannerSchema = {
         if (!room) return;
         const estimate = calculatePaint(room.inputs);
         const totalPaintableArea = estimate.paintableArea + estimate.ceilingPaintableArea;
-        selectedRoomResult.classList.toggle('bg-primary/10', totalPaintableArea > 0);
-        selectedRoomResult.classList.toggle('text-heading', totalPaintableArea > 0);
-        selectedRoomResult.classList.toggle('bg-red-50', totalPaintableArea === 0);
-        selectedRoomResult.classList.toggle('text-red-700', totalPaintableArea === 0);
+        selectedRoomResult.classList.toggle('font-semibold', totalPaintableArea === 0);
         if (totalPaintableArea === 0) {
           selectedRoomResult.textContent = `${room.name}: no paintable area remains after deductions. Check the room dimensions and opening counts.`;
           return;
@@ -761,7 +762,7 @@ const plannerSchema = {
           || inputs.surfaceCondition !== 'good'
           || inputs.surfaceType === 'trim'
         );
-        selectedRoomHint.textContent = `${inputs.surfaceType.replace('-', ' ')} - ${inputs.paintQuality} paint`;
+        selectedRoomHint.textContent = `${inputs.surfaceType.replace('-', ' ')}, ${inputs.paintQuality} paint`;
         syncSelectedRoomResult(room);
       }
 
@@ -922,28 +923,31 @@ const plannerSchema = {
 
       function renderRoomList() {
         roomCount.textContent = `${state.project.rooms.length} room${state.project.rooms.length === 1 ? '' : 's'}`;
+        const onlyRoom = state.project.rooms.length === 1;
         roomList.replaceChildren(...state.project.rooms.map((room) => {
           const selected = room.id === state.selectedRoomId;
           const article = document.createElement('article');
-          article.className = `cursor-pointer rounded-2xl border p-4 transition-colors ${selected ? 'border-primary bg-blue-50 ring-1 ring-primary/20' : 'border-border bg-white hover:bg-slate-50'}`;
+          // A ruled list: hairline between rows, a quiet fill on the room being edited.
+          article.className = `cursor-pointer border-t border-border px-5 py-4 transition-[background-color] md:px-6 ${selected ? 'bg-light-gray' : 'hover:bg-light-gray/50'}`;
           article.dataset.roomId = room.id;
           article.setAttribute('aria-current', selected ? 'true' : 'false');
+          const safeRoomId = escapeHtml(room.id);
           const safeRoomName = escapeHtml(room.name);
           const safeRoomType = escapeHtml(room.inputs.roomType.replace('-', ' '));
           const safePaintName = escapeHtml(room.paint.name);
           article.innerHTML = `
-            <div class="flex items-start justify-between gap-3">
-              <div>
-                <h3 class="font-semibold text-heading">${safeRoomName}</h3>
-                <p class="text-sm capitalize text-body">${safeRoomType} · ${room.inputs.length} × ${room.inputs.width} ft</p>
-                <p class="mt-1 text-xs text-body">${safePaintName} · ${escapeHtml(room.paint.sheen)}</p>
+            <div class="flex items-start justify-between gap-4">
+              <div class="min-w-0">
+                <h3 class="break-words text-[1.125rem] text-heading">${safeRoomName}</h3>
+                <p class="mt-0.5 text-sm first-letter:uppercase">${safeRoomType}, ${room.inputs.length} × ${room.inputs.width} ft</p>
+                <p class="mt-0.5 break-words text-[0.8125rem] text-muted">${safePaintName}, ${escapeHtml(room.paint.sheen)}</p>
               </div>
-              <span class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-heading border border-border">${roomFinishPurchaseGallons(room)} gal</span>
+              <p class="numeral shrink-0 text-[1.625rem] text-heading">${roomFinishPurchaseGallons(room)}<span class="font-sans text-sm text-muted"> gal</span></p>
             </div>
-            <div class="mt-4 flex flex-wrap gap-2">
-              <button type="button" data-action="select" data-room-id="${room.id}" class="rounded-full bg-white px-3 py-2 text-xs font-semibold text-heading border border-border">${selected ? 'Editing' : 'Edit'}</button>
-              <button type="button" data-action="duplicate" data-room-id="${room.id}" class="rounded-full bg-white px-3 py-2 text-xs font-semibold text-heading border border-border">Duplicate</button>
-              <button type="button" data-action="remove" data-room-id="${room.id}" ${state.project.rooms.length === 1 ? 'disabled aria-disabled="true"' : ''} class="rounded-full bg-white px-3 py-2 text-xs font-semibold text-heading border border-border disabled:cursor-not-allowed disabled:opacity-50">Remove</button>
+            <div class="mt-3 flex flex-wrap items-center gap-2">
+              <button type="button" data-action="select" data-room-id="${safeRoomId}" class="btn btn-secondary btn-sm ${selected ? 'bg-heading text-secondary' : ''}">${selected ? 'Editing' : 'Edit'}</button>
+              <button type="button" data-action="duplicate" data-room-id="${safeRoomId}" class="btn btn-ghost btn-sm">Duplicate</button>
+              <button type="button" data-action="remove" data-room-id="${safeRoomId}" ${onlyRoom ? 'disabled aria-disabled="true"' : ''} class="btn btn-ghost btn-sm">Remove</button>
             </div>
           `;
           return article;
@@ -957,21 +961,27 @@ const plannerSchema = {
         mobileProjectTotal.textContent = primerPurchaseTotal > 0
           ? `Project: ${finishPurchaseTotal} gal finish, ${primerPurchaseTotal} gal primer`
           : `Project: ${finishPurchaseTotal} gal finish paint`;
-        summaryCards.replaceChildren(...[
-          card('Rooms', String(summary.roomCount)),
-          card('Area', `${summary.totalPaintableArea} sq ft`),
-          card('Finish paint', `${finishPurchaseTotal} gal`),
-          card('Primer', `${primerPurchaseTotal} gal`),
-        ]);
+        // Project totals, drawn as the lower half of the receipt.
+        const totalsRule = document.createElement('hr');
+        totalsRule.className = 'receipt-rule';
+        summaryCards.replaceChildren(
+          detailRow('Rooms', String(summary.roomCount)),
+          detailRow('Area', `${summary.totalPaintableArea} sq ft`),
+          totalsRule,
+          totalRow('Finish paint', `${finishPurchaseTotal} gal`),
+          totalRow('Primer', `${primerPurchaseTotal} gal`, primerPurchaseTotal === 0),
+        );
 
         const rows = [
           ...summary.finishGroups.map((group) => planRow(
-            `${group.name} · ${group.sheen} · ${group.quality}`,
+            group.name,
+            `${group.sheen}, ${group.quality}`,
             group,
             `${group.surfaces.join(' and ')} for ${formatRoomNames(group.roomNames)}`,
           )),
           ...summary.primerGroups.map((group) => planRow(
             group.name,
+            '',
             group,
             `Primer for ${formatRoomNames(group.roomNames)}`,
           )),
@@ -1002,54 +1012,61 @@ const plannerSchema = {
           const estimate = room.estimate.estimateRange.likely;
           const roomPurchaseGallons = roomFinishPurchaseGallons(room);
           const item = document.createElement('article');
-          item.className = 'rounded-2xl border border-border bg-slate-50 p-4';
+          item.className = 'border-b border-border py-4 last:border-b-0 last:pb-0';
           const safeRoomName = escapeHtml(room.name);
           const safeSurface = escapeHtml(room.inputs.surfaceType.replace('-', ' '));
           const safeNote = escapeHtml(note);
           item.innerHTML = `
-            <div class="flex items-start justify-between gap-3">
-              <div>
-                <h3 class="font-semibold text-heading">${safeRoomName}</h3>
-                <p class="text-sm capitalize text-body">${safeSurface} · ${room.inputs.numCoats} coat${room.inputs.numCoats === 1 ? '' : 's'}</p>
+            <div class="flex items-start justify-between gap-4">
+              <div class="min-w-0">
+                <h3 class="break-words text-[1.125rem] text-heading">${safeRoomName}</h3>
+                <p class="mt-0.5 text-sm first-letter:uppercase">${safeSurface}, ${room.inputs.numCoats} coat${room.inputs.numCoats === 1 ? '' : 's'}</p>
               </div>
-              <span class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-heading border border-border">${roomPurchaseGallons} gal total</span>
+              <p class="numeral shrink-0 text-right text-[1.375rem] text-heading">${roomPurchaseGallons}<span class="font-sans text-sm text-muted"> gal total</span></p>
             </div>
-            <p class="mt-3 text-sm text-body">${safeNote}</p>
-            <p class="mt-3 text-sm text-heading">Estimated use: ${estimate.gallonsWithWaste.toFixed(1)} gal. Practical range: ${room.estimate.estimateRange.low.gallonsWithWaste.toFixed(1)} to ${room.estimate.estimateRange.high.gallonsWithWaste.toFixed(1)} gal.</p>
+            <p class="mt-3 text-sm">${safeNote}</p>
+            <p class="mt-2 text-sm text-heading">Estimated use: ${estimate.gallonsWithWaste.toFixed(1)} gal. Practical range: ${room.estimate.estimateRange.low.gallonsWithWaste.toFixed(1)} to ${room.estimate.estimateRange.high.gallonsWithWaste.toFixed(1)} gal.</p>
           `;
           return item;
         }));
       }
 
-      function card(label: string, value: string) {
+      // A plain line on the receipt, such as the room count.
+      function detailRow(label: string, value: string) {
         const element = document.createElement('div');
-        element.className = 'rounded-2xl border border-border bg-slate-50 p-4';
-        element.innerHTML = `
-          <p class="text-xs font-semibold uppercase tracking-wide text-body">${label}</p>
-          <p class="mt-2 text-2xl font-bold text-heading">${value}</p>
-        `;
+        element.className = 'receipt-row';
+        element.innerHTML = `<span>${label}</span><span>${value}</span>`;
         return element;
       }
 
-      function planRow(label: string, summary: { lowGallons: number; likelyGallons: number; highGallons: number; purchaseGallons: number }, note: string) {
+      // A total on the receipt: the label and the figure in the serif numeral size.
+      function totalRow(label: string, value: string, quiet = false) {
+        const element = document.createElement('div');
+        element.className = `receipt-total mt-1 ${quiet ? 'text-muted' : ''}`;
+        element.innerHTML = `<span>${label}</span><span class="receipt-total-value">${value}</span>`;
+        return element;
+      }
+
+      // One product on the receipt: name and gallons to buy on the first line, the details under it.
+      function planRow(label: string, descriptor: string, summary: { lowGallons: number; likelyGallons: number; highGallons: number; purchaseGallons: number }, note: string) {
         const item = document.createElement('div');
         const plan = planContainers(summary.likelyGallons);
         const safeLabel = escapeHtml(label);
+        const safeDescriptor = escapeHtml(descriptor);
         const safeNote = escapeHtml(note);
         const buyText = plan.total > 0
           ? `Buy ${plan.fiveGallon ? `${plan.fiveGallon} five-gallon bucket${plan.fiveGallon === 1 ? '' : 's'}` : ''}${plan.fiveGallon && plan.oneGallon ? ' and ' : ''}${plan.oneGallon ? `${plan.oneGallon} one-gallon can${plan.oneGallon === 1 ? '' : 's'}` : ''}`
           : 'No paint to buy. Check room measurements and openings.';
-        item.className = 'rounded-2xl border border-border bg-white p-4';
+        item.className = 'mt-5 first:mt-0';
         item.innerHTML = `
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <p class="font-semibold capitalize text-heading">${safeLabel}</p>
-              <p class="text-sm text-body">${safeNote}</p>
-            </div>
-            <span class="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">${summary.purchaseGallons} gal</span>
+          <div class="receipt-row">
+            <span class="min-w-0 [overflow-wrap:anywhere]">${safeLabel}</span>
+            <span>${summary.purchaseGallons} gal</span>
           </div>
-          <div class="mt-3 text-sm text-body">Estimated use: ${summary.likelyGallons.toFixed(1)} gal</div>
-          <div class="mt-2 font-medium text-heading">${buyText}</div>
+          ${descriptor ? `<p class="text-[0.8125rem] leading-snug text-muted first-letter:uppercase">${safeDescriptor}</p>` : ''}
+          <p class="text-[0.8125rem] leading-snug text-muted">${safeNote}</p>
+          <p class="text-[0.8125rem] leading-snug text-muted">Estimated use: ${summary.likelyGallons.toFixed(1)} gal</p>
+          <p class="mt-1.5 font-medium">${buyText}</p>
         `;
         return item;
       }
@@ -1217,3 +1234,26 @@ const plannerSchema = {
 
   <Footer />
 </Layout>
+
+<style is:global>
+  /* The planner draws its room rows and receipt lines in the browser, so these rules are global,
+     scoped under .planner-page. */
+
+  /* The pricing sentence and its link are built by src/utils/pro-cost-note.ts. */
+  .planner-page .hire-line a {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .planner-page .hire-line a:hover {
+    color: var(--color-primary-dark);
+    text-decoration-thickness: 2px;
+  }
+
+  @media print {
+    /* The printed sheet is plain, so the receipt drops its tape strip. */
+    .planner-page .receipt-tape {
+      display: none;
+    }
+  }
+</style>

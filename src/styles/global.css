@@ -48,6 +48,18 @@
     text-size-adjust: 100%;
   }
 
+  /* The header is sticky, so anchor jumps (#calculator and the like) stop below it.
+     Don't add scroll-mt-* to sections as well, or the two offsets stack. */
+  html {
+    scroll-padding-top: var(--header-offset, 6rem);
+  }
+
+  @media (min-width: 768px) {
+    html {
+      --header-offset: 5.25rem;
+    }
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     html {
       scroll-behavior: smooth;
@@ -171,8 +183,11 @@
   .callout                  Tip, note or caution: quiet fill with a terracotta left rule. No icons.
   .prose-linen              Article and long-text body: paragraphs, lists, h2/h3, tables, quotes.
   .numeral                  Serif tabular numbers for results and stats.
-  .result-panel (+ .result-number, .result-unit, .result-detail)
-                            The terracotta "you'll need" panel from the 1a design.
+  .panel-link               A whole panel that is a link (border darkens on hover, nothing moves).
+  .on-ink                   Add to a dark section that isn't .panel-ink so focus rings turn linen.
+  .estimate (+ .estimate-number, -unit, -range, -range-label, -range-value, -summary)
+                            The calculator answer: a big ink serif number beside the receipt.
+  .hire-line                The "Hiring a painter for this room usually runs..." sentence.
   .receipt (+ parts)        The shopping-list receipt for calculator results (see its block).
 */
 @layer components {
@@ -286,6 +301,28 @@
 
   .panel-ink :where(h1, h2, h3, h4, h5, h6, strong) {
     color: var(--color-on-ink);
+  }
+
+  /* Terracotta focus rings are too faint on ink (3.1:1), so dark areas use a linen ring. */
+  .panel-ink :focus-visible,
+  .on-ink :focus-visible {
+    outline-color: var(--color-on-ink);
+  }
+
+  /* A whole panel that is a link. Transition only the border: transition-colors would also
+     animate the focus ring in from the wrong color. */
+  .panel-link {
+    display: block;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 150ms ease;
+  }
+
+  .panel-link:hover {
+    border-color: var(--color-heading);
   }
 
   /* Fields */
@@ -412,56 +449,109 @@
     line-height: 1;
   }
 
-  /* Result panel (direction 1a) */
-  .result-panel {
-    padding: 1.75rem;
-    background-color: var(--color-accent);
-    color: var(--color-on-accent);
-    border-radius: 4px;
+  /*
+    Estimate block for calculator results. The receipt is the one bold element, so the number
+    beside it stays ink on the page instead of a filled color block.
+      <div class="estimate">
+        <div class="estimate-figure">
+          <p class="estimate-number">3</p>
+          <p class="estimate-unit">gallons</p>
+          <div class="estimate-range">
+            <div><span class="estimate-range-label">Low</span><span class="estimate-range-value">2.2</span></div>
+            <div class="is-likely">...</div>
+            <div>...</div>
+          </div>
+          <p class="estimate-summary">The likely calculation uses ...</p>
+        </div>
+        <div class="receipt">...</div>
+      </div>
+      <p class="hire-line">Hiring a painter for this room usually runs ... <a class="link">...</a></p>
+  */
+  .estimate {
+    display: grid;
+    gap: 2.5rem;
   }
 
-  .result-panel :where(h2, h3, strong) {
-    color: inherit;
+  @media (min-width: 768px) {
+    .estimate {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      align-items: start;
+      gap: 3rem;
+    }
   }
 
-  .result-panel a {
-    color: inherit;
-    font-weight: 600;
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 4px;
-  }
-
-  .result-number {
+  .estimate-number {
     font-family: var(--font-serif);
     font-weight: 400;
     font-synthesis: none;
-    font-size: clamp(5rem, 3.5rem + 6vw, 9rem);
+    font-size: clamp(4.5rem, 3rem + 6vw, 7.5rem);
     font-variant-numeric: lining-nums;
     letter-spacing: -0.02em;
     line-height: 0.85;
+    color: var(--color-heading);
   }
 
-  .result-unit {
+  .estimate-unit {
+    margin-top: 0.25rem;
     font-family: var(--font-serif);
     font-style: italic;
     font-weight: 400;
     font-synthesis: none;
-    font-size: clamp(1.5rem, 1.25rem + 1vw, 2.25rem);
+    font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem);
     line-height: 1.1;
+    color: var(--color-heading);
   }
 
-  .result-detail {
-    padding-top: 0.875rem;
-    border-top: 1px solid oklch(0.7 0.08 45);
+  .estimate-range {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 1.5rem;
+    border-block: 1px solid var(--color-border);
+  }
+
+  .estimate-range > * {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    padding: 0.75rem 0.75rem 0.75rem 0;
+  }
+
+  .estimate-range > * + * {
+    padding-left: 0.75rem;
+    border-left: 1px solid var(--color-border);
+  }
+
+  .estimate-range-label {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  .estimate-range-value {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-synthesis: none;
+    font-size: 1.75rem;
+    font-variant-numeric: lining-nums tabular-nums;
+    line-height: 1.1;
+    color: var(--color-heading);
+  }
+
+  .estimate-range .is-likely .estimate-range-label,
+  .estimate-range .is-likely .estimate-range-value {
+    color: var(--color-primary);
+  }
+
+  .estimate-summary {
+    margin-top: 1rem;
     font-size: 0.9375rem;
-    line-height: 1.5;
+    line-height: 1.55;
+    color: var(--color-body);
   }
 
-  @media (min-width: 768px) {
-    .result-panel {
-      padding: 2.5rem;
-    }
+  .hire-line {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--color-body);
   }
 
   /*
@@ -584,7 +674,7 @@
 
   /* Article body */
   .prose-linen {
-    max-width: 68ch;
+    max-width: 34rem; /* about 68 characters of Instrument Sans at 17px; 68ch would be about 92 */
     font-size: 1.0625rem;
     line-height: 1.7;
     color: var(--color-body);
@@ -630,14 +720,14 @@
     color: var(--color-accent);
   }
 
-  .prose-linen a {
+  .prose-linen a:not(.btn) {
     color: var(--color-primary);
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;
   }
 
-  .prose-linen a:hover {
+  .prose-linen a:not(.btn):hover {
     color: var(--color-primary-dark);
     text-decoration-thickness: 2px;
   }
@@ -667,6 +757,7 @@
 
   .prose-linen td {
     padding: 0.625rem 0.75rem;
+    line-height: 1.45;
     border-bottom: 1px solid var(--color-border);
     vertical-align: top;
   }

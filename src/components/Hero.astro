@@ -1,134 +1,149 @@
 ---
-// Hero Section - Visual impact with paint-themed design
+// Homepage hero, "Linen" direction 1a: the H1 and intro on the left, a quiet drawing of paint
+// chips on the right. There is no photo. The chips are plain CSS so nothing extra downloads.
+// Their names are made up and drawn from data-name with CSS, so they stay out of the page text
+// that search engines and screen readers read; the whole drawing is aria-hidden.
+const chips = [
+  { name: 'Washed Linen', color: 'oklch(0.88 0.022 72)' },
+  { name: 'Terracotta', color: 'var(--color-accent)' },
+  { name: 'Deep Olive', color: 'oklch(0.43 0.045 108)' },
+  { name: 'Soft Clay', color: 'oklch(0.74 0.06 48)' },
+];
 ---
 
-<section class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
-  <!-- Paint drip decoration -->
-  <div class="absolute top-0 left-0 right-0 h-3 bg-gradient-to-r from-amber-400 via-rose-400 to-cyan-400"></div>
+<section class="hero">
+  <div class="mx-auto grid max-w-4xl gap-8 px-4 pt-9 pb-6 md:grid-cols-[1.05fr_1fr] md:items-end md:gap-12 md:pt-16 md:pb-16 lg:pt-18">
+    <div class="flex flex-col gap-6 md:gap-7">
+      <h1 class="hero-title">Calculate Your Paint Like a Pro</h1>
 
-  <!-- Animated paint splatter background -->
-  <div class="absolute inset-0 opacity-10">
-    <svg class="absolute top-10 left-10 w-32 h-32 text-amber-400 animate-float" viewBox="0 0 100 100" fill="currentColor">
-      <circle cx="50" cy="50" r="40" />
-      <circle cx="20" cy="70" r="15" />
-      <circle cx="80" cy="30" r="12" />
-    </svg>
-    <svg class="absolute bottom-10 right-20 w-24 h-24 text-cyan-400 animate-float-delayed" viewBox="0 0 100 100" fill="currentColor">
-      <circle cx="50" cy="50" r="35" />
-      <circle cx="75" cy="70" r="18" />
-    </svg>
-    <svg class="absolute top-1/2 right-10 w-16 h-16 text-rose-400 animate-float" viewBox="0 0 100 100" fill="currentColor">
-      <circle cx="50" cy="50" r="30" />
-    </svg>
-  </div>
+      <p class="hero-intro">
+        Estimate paint for walls, ceilings, and trim. Adjust for openings, texture, primer, and extra coats.
+      </p>
 
-  <div class="relative max-w-4xl mx-auto px-4 py-12 md:py-16 text-center">
-    <!-- Badge -->
-    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-6 animate-fade-in">
-      <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-      <span class="text-sm font-medium">Free • No signup required</span>
-    </div>
-
-    <!-- Headline -->
-    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 animate-fade-in-up">
-      <span class="text-white">Calculate Your Paint</span>
-      <span class="block mt-2 bg-gradient-to-r from-amber-400 via-rose-400 to-cyan-400 bg-clip-text text-transparent">
-        Like a Pro
-      </span>
-    </h1>
-
-    <!-- Subheadline -->
-    <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-8 animate-fade-in-up-delayed">
-      Estimate paint for walls, ceilings, and trim. Adjust for openings, texture, primer, and extra coats.
-    </p>
-
-    <!-- CTA Button -->
-    <a
-      href="#calculator"
-      class="group inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-900 font-bold px-8 py-4 rounded-xl shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transition-all duration-300 hover:-translate-y-0.5 animate-fade-in-up-delayed-2"
-    >
-      Start Calculating
-      <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-      </svg>
-    </a>
-
-    <!-- Trust indicators -->
-    <div class="flex flex-wrap justify-center gap-6 mt-10 text-sm text-slate-400 animate-fade-in-up-delayed-3">
-      <div class="flex items-center gap-2">
-        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span>Professional accuracy</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span>Texture adjustments</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span>Primer estimates</span>
+      <div class="flex flex-col items-start gap-4">
+        <a href="#calculator" class="btn btn-primary">Start Calculating</a>
+        <p class="hero-note">
+          Free, no signup required. Professional accuracy, texture adjustments, and primer estimates.
+        </p>
       </div>
     </div>
-  </div>
 
-  <!-- Wave divider -->
-  <div class="absolute bottom-0 left-0 right-0">
-    <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-      <path d="M0 60V20C240 50 480 0 720 20C960 40 1200 10 1440 30V60H0Z" fill="#F8F7F4"/>
-    </svg>
+    <div class="chips" aria-hidden="true">
+      {chips.map((chip, i) => (
+        <div class={`chip chip-${i + 1}`} style={`--chip: ${chip.color}`} data-name={chip.name}>
+          <span class="chip-color"></span>
+        </div>
+      ))}
+    </div>
   </div>
 </section>
 
 <style>
-  @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(5deg); }
+  .hero-title {
+    font-size: 2.75rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
   }
 
-  @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  .hero-intro {
+    max-width: 30rem;
+    font-size: 1.125rem;
+    line-height: 1.55;
+    color: var(--color-body);
   }
 
-  @keyframes fade-in-up {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  .hero-note {
+    max-width: 26rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-muted);
   }
 
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
+  /* Paint chips laid on a table: the color runs to the edges and the name is printed on the
+     paper strip below it, like the chips at a paint counter. The chips sit high and low in
+     turn, so no chip covers another chip's name. On phones they shrink to a short row so the
+     calculator still shows on the first screen. */
+  .chips {
+    position: relative;
+    width: 100%;
+    max-width: 22rem;
+    aspect-ratio: 22 / 8;
   }
 
-  .animate-float-delayed {
-    animation: float 6s ease-in-out infinite;
-    animation-delay: 2s;
+  .chip {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: 27%;
+    overflow: hidden;
+    background-color: var(--color-paper);
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgb(60 40 20 / 0.06), 0 6px 14px rgb(60 40 20 / 0.06);
+    transform: rotate(var(--r));
   }
 
-  .animate-fade-in {
-    animation: fade-in 0.6s ease-out forwards;
+  .chip-color {
+    display: block;
+    aspect-ratio: 1 / 0.8;
+    background-color: var(--chip);
   }
 
-  .animate-fade-in-up {
-    animation: fade-in-up 0.6s ease-out forwards;
+  .chip::after {
+    content: attr(data-name);
+    display: block;
+    padding: 5px 7px 6px;
+    font-size: 0.6875rem;
+    line-height: 1.2;
+    color: var(--color-heading);
+    white-space: nowrap;
   }
 
-  .animate-fade-in-up-delayed {
-    animation: fade-in-up 0.6s ease-out 0.15s forwards;
-    opacity: 0;
+  .chip-1 { --x: 0%;    --y: 15%; --r: -4deg; }
+  .chip-2 { --x: 24%;   --y: 3%;  --r: 1deg; }
+  .chip-3 { --x: 48.5%; --y: 13%; --r: -1.5deg; }
+  .chip-4 { --x: 72%;   --y: 4%;  --r: 3.5deg; }
+
+  @media (min-width: 768px) {
+    .chips {
+      max-width: none;
+      aspect-ratio: 11 / 9;
+    }
+
+    .chip {
+      width: 41%;
+    }
+
+    .chip-color {
+      aspect-ratio: 1 / 1.05;
+    }
+
+    .chip::after {
+      padding: 8px 9px 10px;
+    }
+
+    .chip-1 { --x: 0%;    --y: 27%; --r: -5deg; }
+    .chip-2 { --x: 19.5%; --y: 8%;  --r: 1.5deg; }
+    .chip-3 { --x: 39%;   --y: 25%; --r: -2deg; }
+    .chip-4 { --x: 58.5%; --y: 7%;  --r: 4.5deg; }
+
+    .hero-title {
+      font-size: 3.75rem;
+    }
+
+    .hero-intro {
+      font-size: 1.1875rem;
+    }
   }
 
-  .animate-fade-in-up-delayed-2 {
-    animation: fade-in-up 0.6s ease-out 0.3s forwards;
-    opacity: 0;
-  }
+  @media (min-width: 1024px) {
+    .hero-title {
+      font-size: 4.75rem;
+    }
 
-  .animate-fade-in-up-delayed-3 {
-    animation: fade-in-up 0.6s ease-out 0.45s forwards;
-    opacity: 0;
+    .chip::after {
+      padding: 9px 11px 11px;
+      font-size: 0.75rem;
+    }
   }
 </style>

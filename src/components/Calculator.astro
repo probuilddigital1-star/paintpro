@@ -282,7 +282,7 @@ const { showPainterCta = true } = Astro.props;
       <fieldset class="calc-set">
         <legend class="calc-legend">Primer (Recommended for Best Results)</legend>
 
-        <div class="space-y-5">
+        <div class="flex flex-col gap-5">
           <label for="needs-primer" class="option-row">
             <input
               type="checkbox"
@@ -652,10 +652,6 @@ const { showPainterCta = true } = Astro.props;
     border-color: var(--color-muted);
   }
 
-  .option-row:has(input:checked) {
-    border-color: var(--color-heading);
-  }
-
   .option-row input {
     flex: none;
     width: 1.125rem;
@@ -830,7 +826,6 @@ const { showPainterCta = true } = Astro.props;
 
   .calc-results .receipt-item-name {
     display: block;
-    font-weight: 500;
     color: var(--color-heading);
   }
 
@@ -902,6 +897,11 @@ const { showPainterCta = true } = Astro.props;
   const surfaceTypeSelect = document.getElementById('surface-type') as HTMLSelectElement;
   const trimHeightContainer = document.getElementById('trim-height-container') as HTMLElement;
   const roomTypeSelect = document.getElementById('room-type') as HTMLSelectElement;
+
+  // A smooth scroll requested from script ignores the CSS reduced-motion rule, so ask here.
+  function scrollBehavior(): ScrollBehavior {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+  }
 
   // INP-optimized button feedback functions
   function showLoadingState() {
@@ -1215,7 +1215,7 @@ const { showPainterCta = true } = Astro.props;
 
         // Defer scroll to avoid blocking paint
         setTimeout(() => {
-          resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          resultsSection.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
         }, 0);
       });
     });
@@ -1232,6 +1232,6 @@ const { showPainterCta = true } = Astro.props;
     (document.getElementById('custom-height') as HTMLInputElement).required = false;
 
     // Scroll back to calculator
-    document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('calculator')?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
   });
 </script>

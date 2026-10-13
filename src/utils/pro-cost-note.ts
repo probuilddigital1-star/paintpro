@@ -14,7 +14,7 @@ const scopeWords: Record<ProCostScope, string> = {
 };
 
 export const PRO_COST_ARTICLE_PATH = '/blog/how-much-does-it-cost-to-paint-a-room';
-export const PRO_COST_LINK_CLASS = 'text-primary underline';
+export const PRO_COST_LINK_CLASS = 'link';
 
 /** A calculator result is either a room job or, when only the ceiling is painted, a ceiling job. */
 export function proCostScopeFor(surfaceType: CalculationInputs['surfaceType']): ProCostScope {

@@ -465,7 +465,11 @@
         </div>
         <div class="receipt">...</div>
       </div>
-      <p class="hire-line">Hiring a painter for this room usually runs ... <a class="link">...</a></p>
+        <div class="estimate-hire">
+          <p class="hire-line">Hiring a painter for this room usually runs ... <a class="link">...</a></p>
+          (painter quote card)
+        </div>
+      </div>
   */
   .estimate {
     display: grid;
@@ -475,8 +479,26 @@
   @media (min-width: 768px) {
     .estimate {
       grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      grid-template-areas:
+        "figure receipt"
+        "hire receipt";
+      grid-template-rows: auto 1fr;
       align-items: start;
       gap: 3rem;
+    }
+
+    .estimate > .estimate-figure {
+      grid-area: figure;
+    }
+
+    .estimate > .receipt {
+      grid-area: receipt;
+    }
+
+    /* The hiring line and painter card fill the space under the number on desktop, so the
+       painter option shows up without scrolling past the whole receipt. */
+    .estimate > .estimate-hire {
+      grid-area: hire;
     }
   }
 

@@ -158,17 +158,18 @@ const receiptSub = `${inputs.length}x${inputs.width} ft ${roomLabel}, ${inputs.n
         </p>
       )}
     </div>
-  </div>
 
-  <!-- Hiring line and the painter quote card (the room pages pass the card in this slot). -->
-  {Astro.slots.has('after-estimate') && (
-    <div class="mt-12 md:mt-14">
-      {proNote && (
-        <p class="hire-line mb-4 max-w-[36rem]">{proNote.text}<a href={proNote.href} class={proNote.linkClass}>{proNote.linkText}</a></p>
-      )}
-      <slot name="after-estimate" />
-    </div>
-  )}
+    <!-- Hiring line and the painter quote card (the room pages pass the card in this slot). In the
+         estimate grid: under the number beside the receipt on desktop, after the receipt on phones. -->
+    {Astro.slots.has('after-estimate') && (
+      <div class="estimate-hire">
+        {proNote && (
+          <p class="hire-line mb-4 max-w-[36rem]">{proNote.text}<a href={proNote.href} class={proNote.linkClass}>{proNote.linkText}</a></p>
+        )}
+        <slot name="after-estimate" />
+      </div>
+    )}
+  </div>
 
   <!-- The room tip, as a quiet note after the card. -->
   {recommendation && (

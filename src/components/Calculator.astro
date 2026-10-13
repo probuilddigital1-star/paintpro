@@ -426,15 +426,17 @@ const { showPainterCta = true } = Astro.props;
           <a href="/affiliate-disclosure" class="receipt-note-link">Details</a>
         </p>
       </div>
-    </div>
 
-    {/* Painter quote CTA. Lives inside the results container so it appears with the estimate. */}
-    {showPainterCta && (
-      <div class="mt-10 md:mt-14">
-        <p id="pro-cost-note" class="hire-line hidden mb-4 max-w-[40rem]"></p>
-        <PainterQuoteCTA src="calc" heading="Rather have a pro do it?" body="You've got your paint numbers. Get quotes from local painters for this job." />
-      </div>
-    )}
+      {/* Painter quote CTA. Lives inside the results container so it appears with the estimate.
+          It sits in the estimate grid: under the number beside the receipt on desktop, after the
+          receipt on phones. */}
+      {showPainterCta && (
+        <div class="estimate-hire">
+          <p id="pro-cost-note" class="hire-line hidden mb-4 max-w-[40rem]"></p>
+          <PainterQuoteCTA src="calc" heading="Rather have a pro do it?" body="You've got your paint numbers. Get quotes from local painters for this job." />
+        </div>
+      )}
+    </div>
 
     <!-- The quieter details: confidence, the breakdown, and the before-you-buy tips -->
     <div class="mt-10 grid gap-8 md:mt-12 md:grid-cols-2 md:gap-x-12">

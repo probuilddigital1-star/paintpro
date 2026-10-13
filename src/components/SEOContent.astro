@@ -72,7 +72,7 @@ const howToSchema = {
 };
 ---
 
-<section id="how-to-calculate" class="mx-auto max-w-4xl px-4 pt-14 pb-14 md:pt-20 md:pb-[4.5rem]">
+<section id="how-to-calculate" class="mx-auto max-w-4xl px-4 pt-14 pb-10 md:pt-20 md:pb-12">
   <!-- How to Calculate -->
   <article class="seo-block">
     <h2 class="seo-title">How to Calculate Paint Coverage</h2>
@@ -137,7 +137,7 @@ const howToSchema = {
     <p class="seo-text mt-5">
       Primer isn't always necessary, but it's essential in these situations:
     </p>
-    <ul class="seo-list mt-5 grid gap-x-12 gap-y-3 sm:grid-cols-2">
+    <ul class="seo-list seo-text mt-5 space-y-2.5">
       <li><strong>New drywall</strong>&nbsp;- absorbs paint unevenly without primer</li>
       <li><strong>Stained surfaces</strong>&nbsp;- primer blocks water stains and smoke damage</li>
       <li><strong>Dark to light colors</strong>&nbsp;- helps achieve true color in fewer coats</li>
@@ -176,12 +176,10 @@ const howToSchema = {
 <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
 
 <style>
-  /* Editorial sections: serif headings, text held to a readable width, hairline rules
-     between sections and between list items instead of boxed cards. */
+  /* Editorial sections: serif headings, text held to a readable width, open space between
+     sections and hairline rules between list items instead of boxed cards. */
   .seo-block + .seo-block {
-    margin-top: 3.5rem;
-    padding-top: 3.5rem;
-    border-top: 1px solid var(--color-border);
+    margin-top: 5.5rem;
   }
 
   .seo-title {
@@ -223,9 +221,7 @@ const howToSchema = {
   }
 
   .seo-list {
-    padding-left: 1.125rem;
-    font-size: 1rem;
-    line-height: 1.55;
+    padding-left: 1.25rem;
     list-style: disc;
   }
 
@@ -235,8 +231,7 @@ const howToSchema = {
 
   @media (min-width: 768px) {
     .seo-block + .seo-block {
-      margin-top: 4.5rem;
-      padding-top: 4.5rem;
+      margin-top: 7rem;
     }
 
     .seo-title {
